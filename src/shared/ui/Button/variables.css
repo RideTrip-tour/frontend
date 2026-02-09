@@ -1,0 +1,21 @@
+:root {
+  --scale-button: var(--active-scale);
+  --animation-speed-button-hover: var(--animation-speed-100);
+  --animation-speed-button-active: var(--animation-speed-70);
+
+  --btn-disabled-bg: var(--color-disabled-primary);
+  --btn-disabled-text: var(--color-disabled-secondary);
+}
+
+/* тут используем цвета только из переменных тем */
+body[data-theme="light"] {
+  --color-button-bg-primary-static: var(--color-blue-primary);
+
+  --color-button-bg-secondary-static: var(--color-blue-secondary);
+}
+
+body[data-theme="dark"] {
+  --color-button-bg-primary-static: var(--color-blue-primary);
+
+  --color-button-bg-secondary-static: var(--color-blue-secondary);
+}
