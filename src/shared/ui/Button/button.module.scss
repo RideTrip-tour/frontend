@@ -1,0 +1,94 @@
+/* примерная структура стилей компонентов */
+.button {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 6px;
+  padding: 15px 20px 12px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--btn-text);
+  background: var(--btn-bg);
+  transition: transform var(--animation-speed-button-active) ease, background-color var(--animation-speed-button-hover) ease;
+  transform-origin: center;
+  -webkit-tap-highlight-color: transparent;
+
+  &__icon {
+    &_img {
+      width: var(--icons-size-20);
+      height: var(--icons-size-20);
+    }
+  }
+
+  &__text{
+    font-size: var(--text-button-size);
+    line-height: var(--text-lh-button);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    background-color: var(--color-gray-dark);
+    color: var(--color-white-75);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(var(--scale-button));
+  }
+
+  &.pressed:not(:disabled) {
+    transform: scale(1.1);
+    transition: transform 80ms ease;
+  }
+
+  &.release:not(:disabled) {
+    animation: btnReleaseAnim 240ms cubic-bezier(.2,.8,.2,1) forwards;
+  }
+
+  @keyframes btnReleaseAnim {
+    0% {
+      transform: scale(1.1);
+    }
+    40% {
+      transform: scale(0.8);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}
+
+.button--action {
+  --btn-bg: var(--color-button-bg-action-static);
+  --btn-text: var(--color-button-text-action);
+  &:not(:disabled):hover {
+    --btn-bg: var(--color-button-bg-action-hover);
+  }
+}
+
+.button--primary {
+  --btn-bg: var(--color-button-bg-primary-static);
+  --btn-text: var(--color-button-text-primary);
+  &:not(:disabled):hover {
+    --btn-bg: var(--color-button-bg-primary-hover);
+  }
+}
+
+.button--secondary {
+  --btn-bg: var(--color-button-bg-secondary-static);
+  --btn-text: var(--color-button-text-secondary);
+  &:not(:disabled):hover {
+    --btn-bg: var(--color-button-bg-secondary-hover);
+  }
+}
+
+.button--iconOnly {
+  padding: 15px 20px;
+}
+
+.button--iconRight {
+  flex-direction: row-reverse;
+}

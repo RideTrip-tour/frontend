@@ -1,0 +1,10 @@
+body[data-theme="light"] {
+  /* тут прописываем основные цвета светлой темы */
+  --color-main: #FFFFFF;
+
+  --color-blue-primary: #0078FF;
+  --color-blue-secondary: #00c4ff;
+
+  --color-disabled-primary: #E0E0E0;
+  --color-disabled-secondary: #A0A0A0;
+}
