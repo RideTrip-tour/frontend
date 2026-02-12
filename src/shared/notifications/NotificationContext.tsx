@@ -1,7 +1,7 @@
-import { createContext, useContext, useState } from "react";
-import type { ReactNode } from "react";
+import { createContext, useContext, useState } from 'react';
+import type { ReactNode } from 'react';
 
-export type ToastType = "success" | "error" | "info";
+export type ToastType = 'success' | 'error' | 'info';
 
 export type Toast = {
   id: string;
@@ -18,7 +18,7 @@ const NotificationContext = createContext<NotificationContextType | null>(null);
 export function NotificationProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  const notify = (message: string, type: ToastType = "info") => {
+  const notify = (message: string, type: ToastType = 'info') => {
     const id = crypto.randomUUID();
 
     setToasts((prev) => [...prev, { id, message, type }]);
@@ -27,6 +27,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
       setToasts((prev) => prev.filter((t) => t.id !== id));
     }, 3000);
   };
+
+  registerNotifier(notify);
 
   return (
     <NotificationContext.Provider value={{ notify }}>
@@ -38,9 +40,9 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
 export function useNotify() {
   const ctx = useContext(NotificationContext);
-  if (!ctx)
-    throw new Error("useNotify must be used inside NotificationProvider");
+  if (!ctx) throw new Error('useNotify must be used inside NotificationProvider');
   return ctx.notify;
 }
 
-import { ToastContainer } from "./ToastContainer";
+import { ToastContainer } from './ToastContainer';
+import { registerNotifier } from './notifyBus';

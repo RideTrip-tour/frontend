@@ -78,3 +78,17 @@ Toast-система через Context API.
 ## Error Boundary
 
 Глобальный перехват ошибок React
+
+## Environment (Gateway only)
+
+Интерфейс **должен вызывать только шлюз**. URL-адрес шлюза настраивается с помощью переменных Vite env.
+
+Создайте env-файлы в корневом каталоге проекта:
+
+### `.env.development`
+
+```env
+VITE_API_URL=https://api.example.com
+VITE_API_PREFIX=/api
+
+```
