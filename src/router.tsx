@@ -11,6 +11,9 @@ const LoginPage = lazy(() =>
 const RegisterPage = lazy(() =>
   import("@/pages/RegisterPage").then((m) => ({ default: m.RegisterPage }))
 );
+const VerifyEmailPage = lazy(() =>
+  import("@/pages/VerifyEmailPage").then((m) => ({ default: m.VerifyEmailPage }))
+);
 
 export function AppRouter() {
   return (
@@ -27,6 +30,7 @@ export function AppRouter() {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/verify" element={<VerifyEmailPage />} />
       </Routes>
     </Suspense>
   );

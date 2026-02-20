@@ -29,3 +29,15 @@ export async function logoutRequest() {
     useAuthStore.getState().logout();
   }
 }
+
+export async function verifyEmailRequest(token: string) {
+  try {
+    const res = await apiClient.post<User>("/auth/verify", {
+      token,
+    });
+
+    return res.data;
+  } catch (e) {
+    throw handleApiError(e);
+  }
+}
