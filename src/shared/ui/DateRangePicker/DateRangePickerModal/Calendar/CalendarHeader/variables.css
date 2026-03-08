@@ -1,0 +1,18 @@
+:root {
+  --calendarheader-nav-bg: #eef2ff;
+  --calendarheader-nav-bg-disabled: #f3f4f6;
+
+  --calendarheader-nav-color: #4f46e5;
+  --calendarheader-nav-color-disabled: #d1d5db;
+
+  --calendarheader-title-color: #111827;
+  --calendarheader-arrow-color: #9ca3af;
+}
+
+body[data-theme="light"] {
+
+}
+
+body[data-theme="dark"] {
+
+}
