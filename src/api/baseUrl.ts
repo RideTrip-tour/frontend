@@ -9,11 +9,11 @@ function normalizePrefix(prefix: string) {
 }
 
 export function getApiBaseUrl(): string {
-  const url = import.meta.env.VITE_API_URL as string | undefined;
+  const url = (import.meta.env.VITE_API_URL as string | undefined)?.trim();
   const prefix = (import.meta.env.VITE_API_PREFIX as string | undefined) ?? '';
 
   if (!url) {
-    throw new Error('VITE_API_URL is not defined');
+    return normalizePrefix(prefix) || '/';
   }
 
   return `${normalizeUrl(url)}${normalizePrefix(prefix)}`;
