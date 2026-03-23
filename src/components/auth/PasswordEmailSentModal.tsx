@@ -1,4 +1,5 @@
-import styles from './PasswordEmailSentModal.module.scss';
+import { AuthShell } from './index';
+import styles from './AuthState.module.scss';
 
 type PasswordEmailSentModalProps = {
   onClose?: () => void;
@@ -7,15 +8,11 @@ type PasswordEmailSentModalProps = {
 
 export default function PasswordEmailSentModal({ onClose, onResend }: PasswordEmailSentModalProps) {
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
-        <button type="button" className={styles.closeButton} onClick={onClose} aria-label="Закрыть">
-          ×
-        </button>
+    <AuthShell onClose={onClose}>
+      <div className={styles.centerContent}>
+        <div className={`${styles.iconBox} ${styles.blueBox}`}>✉</div>
 
-        <div className={styles.icon}>✉</div>
-
-        <h2 className={styles.title}>
+        <h2 className={styles.bigTitle}>
           Письмо уже отправлено
           <br />
           на вашу почту
@@ -27,6 +24,6 @@ export default function PasswordEmailSentModal({ onClose, onResend }: PasswordEm
           Отправить ещё раз
         </button>
       </div>
-    </div>
+    </AuthShell>
   );
 }

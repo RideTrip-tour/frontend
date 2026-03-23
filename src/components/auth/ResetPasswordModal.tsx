@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
-import styles from './ResetPasswordModal.module.scss';
+import { AuthField, AuthShell } from './index';
+import styles from './AuthForm.module.scss';
 
 type ResetPasswordModalProps = {
   isLoading?: boolean;
@@ -11,6 +12,8 @@ type ResetPasswordModalProps = {
 
 type FieldStatus = 'default' | 'focus' | 'success' | 'error';
 
+const passwordHint = 'Минимум 8 символов, буквы и цифры';
+
 export default function ResetPasswordModal({
   isLoading = false,
   serverError = '',
@@ -19,6 +22,7 @@ export default function ResetPasswordModal({
 }: ResetPasswordModalProps) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -26,6 +30,7 @@ export default function ResetPasswordModal({
   const [confirmFocused, setConfirmFocused] = useState(false);
 
   const passwordValid = password.trim().length >= 8;
+  const confirmFilled = confirmPassword.trim().length > 0;
   const confirmValid = confirmPassword.trim().length >= 8;
   const passwordsMatch =
     password.trim().length > 0 && confirmPassword.trim().length > 0 && password === confirmPassword;
@@ -42,9 +47,9 @@ export default function ResetPasswordModal({
   const confirmStatus: FieldStatus = useMemo(() => {
     if (hasMismatchError) return 'error';
     if (confirmFocused) return 'focus';
-    if (confirmValid && passwordsMatch) return 'success';
+    if (confirmFilled && passwordsMatch) return 'success';
     return 'default';
-  }, [hasMismatchError, confirmFocused, confirmValid, passwordsMatch]);
+  }, [hasMismatchError, confirmFocused, confirmFilled, passwordsMatch]);
 
   const isSubmitEnabled = passwordValid && confirmValid && passwordsMatch && !isLoading;
 
@@ -59,90 +64,60 @@ export default function ResetPasswordModal({
   };
 
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
-        <button type="button" className={styles.closeButton} onClick={onClose} aria-label="Закрыть">
-          ×
+    <AuthShell title="Восстановление пароля" onClose={onClose}>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <AuthField
+          id="reset-password"
+          type="password"
+          label="Новый пароль"
+          value={password}
+          status={passwordStatus}
+          hint={passwordHint}
+          hintTone={hasMismatchError ? 'error' : 'default'}
+          labelTone={hasMismatchError ? 'error' : 'default'}
+          autoComplete="new-password"
+          showToggle
+          isPasswordVisible={showPassword}
+          onToggleVisibility={() => setShowPassword((prev) => !prev)}
+          onChange={setPassword}
+          onFocus={() => setPasswordFocused(true)}
+          onBlur={() => setPasswordFocused(false)}
+        />
+
+        <AuthField
+          id="reset-confirm-password"
+          type="password"
+          label="Повторите пароль"
+          value={confirmPassword}
+          status={confirmStatus}
+          hint={passwordHint}
+          hintTone={hasMismatchError ? 'error' : 'default'}
+          labelTone={hasMismatchError ? 'error' : 'default'}
+          autoComplete="new-password"
+          showToggle
+          isPasswordVisible={showConfirmPassword}
+          onToggleVisibility={() => setShowConfirmPassword((prev) => !prev)}
+          onChange={setConfirmPassword}
+          onFocus={() => setConfirmFocused(true)}
+          onBlur={() => setConfirmFocused(false)}
+        />
+
+        <div className={styles.statusBlock}>
+          {hasMismatchError ? (
+            <p className={styles.centerError}>{serverError}</p>
+          ) : (
+            <span className={styles.placeholder}>.</span>
+          )}
+        </div>
+
+        <button
+          type="submit"
+          className={`${styles.submitButton} ${isSubmitEnabled ? styles.submitActive : ''}`}
+          disabled={!isSubmitEnabled}
+        >
+          {isLoading ? <span className={styles.loader} /> : 'Обновить пароль'}
         </button>
-
-        <h2 className={styles.title}>Восстановление пароля</h2>
-
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.fieldGroup}>
-            <label className={styles.label} htmlFor="new-password">
-              Новый пароль
-            </label>
-
-            <div className={`${styles.inputWrapper} ${styles[passwordStatus]}`}>
-              <input
-                id="new-password"
-                type={showPassword ? 'text' : 'password'}
-                className={styles.input}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onFocus={() => setPasswordFocused(true)}
-                onBlur={() => setPasswordFocused(false)}
-                autoComplete="new-password"
-                placeholder=""
-              />
-
-              <button
-                type="button"
-                className={styles.eyeButton}
-                onClick={() => setShowPassword((prev) => !prev)}
-                aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
-              >
-                {showPassword ? '◉' : '◌'}
-              </button>
-            </div>
-
-            <p className={styles.hint}>Минимум 8 символов, буквы и цифры</p>
-          </div>
-
-          <div className={styles.fieldGroup}>
-            <label className={styles.label} htmlFor="confirm-password">
-              Повторите пароль
-            </label>
-
-            <div className={`${styles.inputWrapper} ${styles[confirmStatus]}`}>
-              <input
-                id="confirm-password"
-                type={showConfirmPassword ? 'text' : 'password'}
-                className={styles.input}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                onFocus={() => setConfirmFocused(true)}
-                onBlur={() => setConfirmFocused(false)}
-                autoComplete="new-password"
-                placeholder=""
-              />
-
-              <button
-                type="button"
-                className={styles.eyeButton}
-                onClick={() => setShowConfirmPassword((prev) => !prev)}
-                aria-label={showConfirmPassword ? 'Скрыть пароль' : 'Показать пароль'}
-              >
-                {showConfirmPassword ? '◉' : '◌'}
-              </button>
-            </div>
-
-            <p className={styles.hint}>Минимум 8 символов, буквы и цифры</p>
-          </div>
-
-          <div className={styles.errorBlock}>
-            {hasMismatchError ? serverError : <span className={styles.errorPlaceholder}>.</span>}
-          </div>
-
-          <button
-            type="submit"
-            className={`${styles.submitButton} ${isSubmitEnabled ? styles.submitActive : ''}`}
-            disabled={!isSubmitEnabled}
-          >
-            {isLoading ? <span className={styles.loader} /> : 'Обновить пароль'}
-          </button>
-        </form>
-      </div>
-    </div>
+      </form>
+    </AuthShell>
   );
 }

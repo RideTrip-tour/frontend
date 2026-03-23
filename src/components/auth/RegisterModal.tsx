@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
-import { AuthShell } from './index';
-import styles from './RegisterModal.module.scss';
+import { AuthCheckbox, AuthDivider, AuthField, AuthShell } from './index';
+import styles from './AuthForm.module.scss';
 
 type RegisterModalProps = {
   isLoading?: boolean;
@@ -22,6 +22,7 @@ type ErrorType = 'email-exists' | 'password-invalid' | 'password-mismatch' | '';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+const passwordHint = 'Минимум 8 символов, буквы и цифры';
 
 export default function RegisterModal({
   isLoading = false,
@@ -46,13 +47,16 @@ export default function RegisterModal({
   const emailValid = emailRegex.test(email.trim());
   const passwordValid = passwordRegex.test(password.trim());
   const confirmFilled = confirmPassword.trim().length > 0;
+  const confirmValid = confirmPassword.trim().length >= 8;
   const passwordsMatch =
     password.trim().length > 0 && confirmPassword.trim().length > 0 && password === confirmPassword;
 
   const errorType: ErrorType = useMemo(() => {
     if (serverError === 'Такой пользователь уже существует') return 'email-exists';
     if (serverError === 'Минимум 8 символов, буквы и цифры') return 'password-invalid';
-    if (serverError === 'Пароли не совпадают') return 'password-mismatch';
+    if (serverError === 'Пароли не совпадают' || serverError === 'Введенные пароли не совпадают') {
+      return 'password-mismatch';
+    }
     return '';
   }, [serverError]);
 
@@ -64,7 +68,9 @@ export default function RegisterModal({
   }, [errorType, emailFocused, emailValid]);
 
   const passwordStatus: FieldStatus = useMemo(() => {
-    if (errorType === 'password-invalid' || errorType === 'password-mismatch') return 'error';
+    if (errorType === 'password-invalid' || errorType === 'password-mismatch') {
+      return 'error';
+    }
     if (passwordFocused) return 'focus';
     if (passwordValid) return 'success';
     return 'default';
@@ -77,9 +83,10 @@ export default function RegisterModal({
     return 'default';
   }, [errorType, confirmFocused, confirmFilled, passwordsMatch]);
 
-  const showPasswordsMatch = !serverError && passwordValid && confirmFilled && passwordsMatch;
+  const showPasswordsMatch = !serverError && passwordValid && confirmValid && passwordsMatch;
+
   const isSubmitEnabled =
-    emailValid && passwordValid && passwordsMatch && acceptedTerms && !isLoading;
+    emailValid && passwordValid && confirmValid && passwordsMatch && acceptedTerms && !isLoading;
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -96,116 +103,66 @@ export default function RegisterModal({
   return (
     <AuthShell title="Регистрация" onClose={onClose}>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.fieldGroup}>
-          {errorType === 'email-exists' ? (
-            <p className={styles.topError}>Такой пользователь уже существует</p>
-          ) : (
-            <label className={styles.label} htmlFor="register-email">
-              Email
-            </label>
-          )}
+        <AuthField
+          id="register-email"
+          type="email"
+          label="Email"
+          value={email}
+          status={emailStatus}
+          topError={errorType === 'email-exists' ? 'Такой пользователь уже существует' : undefined}
+          autoComplete="email"
+          onChange={setEmail}
+          onFocus={() => setEmailFocused(true)}
+          onBlur={() => setEmailFocused(false)}
+        />
 
-          <div className={`${styles.inputWrapper} ${styles[emailStatus]}`}>
-            <input
-              id="register-email"
-              type="email"
-              className={styles.input}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onFocus={() => setEmailFocused(true)}
-              onBlur={() => setEmailFocused(false)}
-              autoComplete="email"
-            />
-          </div>
-        </div>
+        <AuthField
+          id="register-password"
+          type="password"
+          label="Пароль"
+          value={password}
+          status={passwordStatus}
+          hint={passwordHint}
+          hintTone={
+            errorType === 'password-invalid' ? 'error' : showPasswordsMatch ? 'success' : 'default'
+          }
+          labelTone={
+            errorType === 'password-invalid' || errorType === 'password-mismatch'
+              ? 'error'
+              : showPasswordsMatch
+                ? 'success'
+                : 'default'
+          }
+          autoComplete="new-password"
+          showToggle
+          isPasswordVisible={showPassword}
+          onToggleVisibility={() => setShowPassword((prev) => !prev)}
+          onChange={setPassword}
+          onFocus={() => setPasswordFocused(true)}
+          onBlur={() => setPasswordFocused(false)}
+        />
 
-        <div className={styles.fieldGroup}>
-          <label
-            className={`${styles.label} ${
-              errorType === 'password-invalid' || errorType === 'password-mismatch'
-                ? styles.labelError
-                : showPasswordsMatch
-                  ? styles.labelSuccess
-                  : ''
-            }`}
-            htmlFor="register-password"
-          >
-            Пароль
-          </label>
-
-          <div className={`${styles.inputWrapper} ${styles[passwordStatus]}`}>
-            <input
-              id="register-password"
-              type={showPassword ? 'text' : 'password'}
-              className={styles.input}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onFocus={() => setPasswordFocused(true)}
-              onBlur={() => setPasswordFocused(false)}
-              autoComplete="new-password"
-            />
-
-            <button
-              type="button"
-              className={styles.eyeButton}
-              onClick={() => setShowPassword((prev) => !prev)}
-              aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
-            >
-              {showPassword ? '◉' : '◌'}
-            </button>
-          </div>
-
-          <p
-            className={`${styles.hint} ${
-              errorType === 'password-invalid'
-                ? styles.hintError
-                : showPasswordsMatch
-                  ? styles.hintSuccess
-                  : ''
-            }`}
-          >
-            Минимум 8 символов, буквы и цифры
-          </p>
-        </div>
-
-        <div className={styles.fieldGroup}>
-          <label
-            className={`${styles.label} ${
-              errorType === 'password-mismatch'
-                ? styles.labelError
-                : showPasswordsMatch
-                  ? styles.labelSuccess
-                  : ''
-            }`}
-            htmlFor="register-confirm-password"
-          >
-            Повторите пароль
-          </label>
-
-          <div className={`${styles.inputWrapper} ${styles[confirmStatus]}`}>
-            <input
-              id="register-confirm-password"
-              type={showConfirmPassword ? 'text' : 'password'}
-              className={styles.input}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              onFocus={() => setConfirmFocused(true)}
-              onBlur={() => setConfirmFocused(false)}
-              autoComplete="new-password"
-            />
-
-            <button
-              type="button"
-              className={styles.eyeButton}
-              onClick={() => setShowConfirmPassword((prev) => !prev)}
-              aria-label={showConfirmPassword ? 'Скрыть пароль' : 'Показать пароль'}
-            >
-              {showConfirmPassword ? '◉' : '◌'}
-            </button>
-          </div>
-
-          <p className={styles.hint}>Минимум 8 символов, буквы и цифры</p>
-        </div>
+        <AuthField
+          id="register-confirm-password"
+          type="password"
+          label="Повторите пароль"
+          value={confirmPassword}
+          status={confirmStatus}
+          hint={passwordHint}
+          hintTone={
+            errorType === 'password-mismatch' ? 'error' : showPasswordsMatch ? 'success' : 'default'
+          }
+          labelTone={
+            errorType === 'password-mismatch' ? 'error' : showPasswordsMatch ? 'success' : 'default'
+          }
+          autoComplete="new-password"
+          showToggle
+          isPasswordVisible={showConfirmPassword}
+          onToggleVisibility={() => setShowConfirmPassword((prev) => !prev)}
+          onChange={setConfirmPassword}
+          onFocus={() => setConfirmFocused(true)}
+          onBlur={() => setConfirmFocused(false)}
+        />
 
         <div className={styles.statusBlock}>
           {errorType === 'password-mismatch' ? (
@@ -217,21 +174,14 @@ export default function RegisterModal({
           )}
         </div>
 
-        <label className={styles.checkboxRow}>
-          <input
-            type="checkbox"
-            checked={acceptedTerms}
-            onChange={(e) => setAcceptedTerms(e.target.checked)}
-            className={styles.checkboxInput}
-          />
-          <span className={styles.checkboxBox}>{acceptedTerms ? '✓' : ''}</span>
-          <span className={styles.checkboxText}>
+        <AuthCheckbox checked={acceptedTerms} onChange={setAcceptedTerms}>
+          <span>
             Я соглашаюсь с{' '}
             <button type="button" className={styles.linkButtonInline} onClick={onTermsClick}>
               Условиями использования
             </button>
           </span>
-        </label>
+        </AuthCheckbox>
 
         <button
           type="submit"
@@ -241,11 +191,7 @@ export default function RegisterModal({
           {isLoading ? <span className={styles.loader} /> : 'Создать аккаунт'}
         </button>
 
-        <div className={styles.divider}>
-          <span className={styles.dividerLine} />
-          <span className={styles.dividerText}>Или</span>
-          <span className={styles.dividerLine} />
-        </div>
+        <AuthDivider />
 
         <p className={styles.footerText}>
           Уже есть аккаунт?{' '}

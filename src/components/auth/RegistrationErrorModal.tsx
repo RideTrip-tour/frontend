@@ -1,5 +1,5 @@
 import { AuthShell } from './index';
-import styles from './RegistrationState.module.scss';
+import styles from './AuthState.module.scss';
 
 type RegistrationErrorModalProps = {
   onClose?: () => void;

@@ -6,63 +6,50 @@
   justify-content: center;
   padding: 24px;
   background: #dbe4ef;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
 }
 
 .modal {
   position: relative;
-  width: min(100%, 590px);
-  min-height: 610px;
-  padding: 56px 48px 44px;
-  border: 1.5px solid #1f6fe5;
-  border-radius: 34px;
-  background: #f8f8f8;
-  box-shadow: 0 10px 30px rgba(50, 84, 122, 0.18);
-}
-
-.compact {
-  min-height: 520px;
+  width: 620px;
+  min-height: 672px;
+  padding: 80px 130px;
+  border: 1px solid #0e68d4;
+  border-radius: 40px;
+  background: #ffffff;
+  box-shadow: 0 0 20px rgba(14, 104, 212, 0.18);
+  box-sizing: border-box;
 }
 
 .closeButton {
   position: absolute;
-  top: 34px;
-  right: 38px;
+  top: 50px;
+  right: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
   border: none;
   background: transparent;
-  font-size: 44px;
+  color: #1f1f1f;
+  font-size: 32px;
   line-height: 1;
-  color: #222;
   cursor: pointer;
 }
 
 .title {
-  margin: 88px 0 36px;
+  margin: 0 0 32px;
   text-align: center;
-  font-weight: 700;
-  font-size: 28px;
+  font-size: 32px;
   line-height: 1.2;
-  color: #222;
-}
-
-.content {
-  width: 100%;
-}
-
-@media (max-width: 640px) {
-  .modal {
-    min-height: auto;
-    padding: 48px 24px 32px;
-    border-radius: 28px;
-  }
-
-  .closeButton {
-    top: 22px;
-    right: 24px;
-    font-size: 40px;
-  }
-
-  .title {
-    margin-top: 48px;
-    font-size: 24px;
-  }
+  font-weight: 700;
+  color: #1f1f1f;
 }

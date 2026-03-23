@@ -1,4 +1,5 @@
-import styles from './PasswordResetSuccessModal.module.scss';
+import { AuthShell } from './index';
+import styles from './AuthState.module.scss';
 
 type PasswordResetSuccessModalProps = {
   onClose?: () => void;
@@ -10,15 +11,11 @@ export default function PasswordResetSuccessModal({
   onGoToCabinet
 }: PasswordResetSuccessModalProps) {
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
-        <button type="button" className={styles.closeButton} onClick={onClose} aria-label="Закрыть">
-          ×
-        </button>
+    <AuthShell onClose={onClose}>
+      <div className={styles.centerContent}>
+        <div className={styles.planeIcon}>✈</div>
 
-        <div className={styles.icon}>✈</div>
-
-        <h2 className={styles.title}>
+        <h2 className={styles.bigTitle}>
           Поздравляем, Вы успешно
           <br />
           изменили пароль
@@ -28,6 +25,6 @@ export default function PasswordResetSuccessModal({
           Войти в кабинет
         </button>
       </div>
-    </div>
+    </AuthShell>
   );
 }
