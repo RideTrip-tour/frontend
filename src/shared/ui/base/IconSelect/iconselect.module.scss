@@ -1,0 +1,122 @@
+.iconselect {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  width: 264px;
+
+  &__trigger {
+    padding-right: 8px;
+    background: var(--icon-select-trigger-bg);
+    border-radius: var(--radius-100);
+
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  &__iconWrap {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-100);
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  &__label {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__labelText {
+    color: var(--icon-select-label-color);
+    font-family: var(--text-font-family), sans-serif;
+    font-size: var(--font-body-2-size);
+    font-weight: var(--font-semi-bold);
+    line-height: var(--text-line-height-20);
+    letter-spacing: 0.24px;
+    white-space: nowrap;
+  }
+
+  &__arrow {
+    color: var(--icon-select-label-color);
+    flex-shrink: 0;
+  }
+
+  &__value {
+    align-self: stretch;
+    color: var(--icon-select-value-color);
+    font-family: var(--text-font-family), sans-serif;
+    font-size: var(--font-body-2-size);
+    font-weight: var(--font-body-2-weight);
+    line-height: var(--text-line-height-20);
+    letter-spacing: 0.24px;
+    white-space: nowrap;
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+
+    background: var(--icon-select-dropdown-bg);
+    border-bottom-left-radius: var(--radius-20);
+    border-bottom-right-radius: var(--radius-20);
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    z-index: 1;
+    box-shadow: var(--shadow-2);
+  }
+
+  &__option {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+
+    &:first-child {
+      margin-top: 30px;
+    }
+  }
+
+  &__optionText {
+    font-family: var(--text-font-family), sans-serif;
+    font-size: var(--font-body-2-size);
+    line-height: var(--text-line-height-20);
+    letter-spacing: 0.24px;
+
+    color: var(--icon-select-option-color);
+  }
+
+  &__option:hover &__optionText {
+    color: var(--icon-select-option-hover-color);
+  }
+
+  &__divider {
+    width: 100%;
+    height: 1px;
+    background: var(--icon-select-divider);
+  }
+}

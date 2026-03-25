@@ -1,0 +1,17 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+  --modal-bg: var(--color-white);
+
+  --modal-title-color: var(--color-black);
+  --modal-body-color: var(--color-black);
+
+  --modal-close-color: var(--color-gray-dark);
+}
+
+body[data-theme="dark"] {
+
+}

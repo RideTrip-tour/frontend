@@ -1,0 +1,17 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --advantage-card-bg: var(--color-white-1);
+  --advantage-card-icon-bg: var(--color-blue-dark-1-10);
+
+  --advantage-card-icon-color: var(--color-blue);
+
+  --advantage-card-title-color: var(--color-black);
+  --advantage-card-text-color: var(--color-gray-dark);
+}
+
+body[data-theme="dark"] {
+
+}

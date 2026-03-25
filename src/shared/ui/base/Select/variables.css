@@ -1,0 +1,13 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --select-bg: var(--color-white-1);
+  --select-text: var(--color-gray-dark);
+  --select-divider: var(--color-blue-dark-1-10);
+}
+
+body[data-theme="dark"] {
+
+}

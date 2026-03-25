@@ -1,0 +1,21 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --input-bg: var(--color-white);
+  --input-bg-disabled: var(--color-white-1);
+
+  --input-border-default: var(--color-gray);
+  --input-border-focus: var(--color-blue);
+
+  --input-text: var(--color-gray-dark);
+  --input-placeholder: var(--color-gray-dark);
+
+  --input-error-text: var(--color-red);
+  --input-border-error: var(--color-red);
+}
+
+body[data-theme="dark"] {
+
+}
