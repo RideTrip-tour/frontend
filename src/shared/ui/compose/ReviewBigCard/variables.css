@@ -1,0 +1,15 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --reviewcard-bg: var(--color-white);
+  --reviewcard-shadow: rgba(26, 26, 26, 0.15);
+
+  --reviewcard-text-color: var(--color-black);
+  --reviewcard-text-secondary: var(--color-gray-dark);
+}
+
+body[data-theme="dark"] {
+
+}

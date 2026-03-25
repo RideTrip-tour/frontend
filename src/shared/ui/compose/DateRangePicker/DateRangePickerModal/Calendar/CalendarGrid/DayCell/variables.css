@@ -1,0 +1,19 @@
+:root {
+  --daycell-selected-bg: #4f46e5;
+  --daycell-range-bg: #eef2ff;
+
+  --daycell-text: #374151;
+  --daycell-text-selected: #ffffff;
+  --daycell-text-disabled: #d1d5db;
+  --daycell-text-weekend: #ef4444;
+
+  --daycell-today-outline: #ef4444;
+}
+
+body[data-theme="light"] {
+
+}
+
+body[data-theme="dark"] {
+
+}

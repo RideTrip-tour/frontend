@@ -1,0 +1,86 @@
+.drumroller {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  user-select: none;
+  touch-action: none;
+  cursor: grab;
+
+  &--dragging {
+    cursor: grabbing;
+  }
+
+  &__centerBand {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: var(--drumroller-center-bg);
+    border-top: 1.5px solid var(--drumroller-center-border);
+    border-bottom: 1.5px solid var(--drumroller-center-border);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &__item {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    pointer-events: auto;
+
+    transition:
+    font-size 150ms,
+    color 150ms,
+    opacity 150ms;
+
+    &--selected {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--drumroller-text-selected);
+      z-index: 1;
+    }
+
+    &--near {
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--drumroller-text-default);
+    }
+
+    &--far {
+      font-weight: 400;
+      font-size: 11px;
+      color: var(--drumroller-text-default);
+    }
+
+    &--disabled {
+      cursor: default;
+      color: var(--drumroller-text-disabled);
+    }
+  }
+
+  &__gradientTop,
+  &__gradientBottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 25px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &__gradientTop {
+    top: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,1), transparent);
+  }
+
+  &__gradientBottom {
+    bottom: 0;
+    background: linear-gradient(to top, rgba(255,255,255,1), transparent);
+  }
+}

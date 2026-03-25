@@ -1,0 +1,101 @@
+.card {
+  width: 592px;
+  padding: 20px 24px;
+  background: var(--reviewcard-bg);
+  box-shadow: 0px 3px 10px 2px var(--reviewcard-shadow);
+  border-radius: var(--radius-20);
+
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 36px;
+
+  &__body {
+    align-self: stretch;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 26px;
+  }
+
+  &__author {
+    width: 194px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  &__avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: var(--radius-100);
+    object-fit: cover;
+    background: var(--color-gray);
+    display: block;
+  }
+
+  &__authorInfo {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  &__name {
+    align-self: stretch;
+    color: var(--reviewcard-text-color);
+    font-family: var(--text-font-family), sans-serif;
+    font-size: var(--font-body-1-size);
+    font-weight: var(--font-bold);
+    line-height: var(--text-line-height-24);
+    letter-spacing: 0.27px;
+  }
+
+  &__text {
+    margin: 0;
+    color: var(--reviewcard-text-color);
+    font-family: var(--text-font-family), sans-serif;
+    font-size: var(--font-body-2-size);
+    font-weight: var(--font-body-2-weight);
+    line-height: var(--text-line-height-20);
+    letter-spacing: 0.24px;
+    word-wrap: break-word;
+  }
+
+  &__footer {
+    align-self: stretch;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__date {
+    width: 74px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  &__dateLabel,
+  &__dateValue {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: right;
+    color: var(--reviewcard-text-secondary);
+    font-family: var(--text-font-family), sans-serif;
+    font-size: var(--font-body-2-size);
+    font-weight: var(--font-body-2-weight);
+    line-height: var(--text-line-height-20);
+    letter-spacing: 0.24px;
+  }
+}

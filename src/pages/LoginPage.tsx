@@ -16,7 +16,9 @@ export function LoginPage() {
   return (
     <div>
       <h1>Login</h1>
-      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleLogin}           style={{
+        marginTop: '100px'
+      }}>Login</button>
     </div>
   );
 }

@@ -2,24 +2,26 @@ import { Header, Footer } from "@/components";
 import { useEffect } from "react";
 import { useAuthStore } from "@/store";
 import { AppRouter } from "@/router";
+import './index.css'
+import '@/shared/styles/themes/index.css'
+import './shared/styles/main/index.css'
 
 export function App() {
   const checkAuth = useAuthStore((s) => s.checkAuth);
 
   useEffect(() => {
     checkAuth();
+    document.body.setAttribute('data-theme', 'light')
   }, [checkAuth]);
   return (
-    <div
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
-    >
+    <>
       <Header />
 
-      <main style={{ flex: 1, padding: "24px 0" }}>
+      <main>
         <AppRouter />
       </main>
 
       <Footer />
-    </div>
+    </>
   );
 }

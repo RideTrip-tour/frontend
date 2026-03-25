@@ -1,0 +1,15 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --toggle-bg: var(--color-blue-dark-1-10);
+  --toggle-bg-active: var(--color-white);
+  --toggle-outline-active: var(--color-blue);
+
+  --toggle-text-color: var(--color-black);
+}
+
+body[data-theme="dark"] {
+
+}
