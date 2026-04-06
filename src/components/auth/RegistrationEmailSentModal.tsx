@@ -1,5 +1,6 @@
 import { AuthShell } from './index';
 import styles from './AuthState.module.scss';
+import EmailIcon from '@/assets/icons/email.svg';
 
 type RegistrationEmailSentModalProps = {
   onClose?: () => void;
@@ -13,7 +14,9 @@ export default function RegistrationEmailSentModal({
   return (
     <AuthShell onClose={onClose}>
       <div className={styles.centerContent}>
-        <div className={`${styles.iconBox} ${styles.blueBox}`}>✉</div>
+        <div className={`${styles.iconBox} ${styles.blueBox}`}>
+          <img src={EmailIcon} alt="электронная почта" />
+        </div>
 
         <h2 className={styles.bigTitle}>
           Подтвердите email —

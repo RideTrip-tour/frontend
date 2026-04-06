@@ -3,7 +3,6 @@ import type { FormEvent } from 'react';
 import { AuthDivider, AuthShell } from './index';
 import AuthField from './AuthField';
 import styles from './AuthForm.module.scss';
-import Loader from '@/assets/icons/loader.svg';
 
 type Props = {
   isLoading?: boolean;
@@ -65,8 +64,13 @@ export default function LoginModal({
           label="Email"
           type="email"
           value={email}
-          status={serverError ? 'error' : emailStatus}
-          hintTone={emailStatus === 'success' ? 'success' : 'default'}
+          status={emailStatus}
+          // hint={
+          //   emailStatus === 'success' ? 'Email введён корректно' : serverError ? serverError : ''
+          // }
+          hintTone={
+            emailStatus === 'success' ? 'success' : emailStatus === 'error' ? 'error' : 'default'
+          }
           onChange={setEmail}
           onFocus={() => setEmailFocused(true)}
           onBlur={() => setEmailFocused(false)}
@@ -77,16 +81,24 @@ export default function LoginModal({
           label="Пароль"
           type="password"
           value={password}
-          status={serverError ? 'error' : passwordStatus}
+          status={passwordStatus}
           hint={
-            passwordFocused || serverError
+            passwordFocused
               ? 'Минимум 8 символов, букв и цифры'
               : passwordStatus === 'success'
-                ? 'Минимум 8 символов, букв и цифры'
-                : ''
+                ? 'Пароль подходит'
+                : serverError
+                  ? serverError
+                  : ''
           }
           hintTone={
-            passwordFocused ? 'default' : passwordStatus === 'success' ? 'success' : 'default'
+            passwordFocused
+              ? 'default'
+              : passwordStatus === 'success'
+                ? 'success'
+                : passwordStatus === 'error'
+                  ? 'error'
+                  : 'default'
           }
           showToggle
           isPasswordVisible={showPassword}
@@ -97,18 +109,34 @@ export default function LoginModal({
           isLast={true}
         />
 
+        {/* <AuthField
+          label="Пароль"
+          type="password"
+          value={password}
+          status={passwordStatus}
+          hint={passwordStatus === 'success' ? 'Пароль подходит' : serverError ? serverError : ''}
+          hintTone={
+            passwordStatus === 'success'
+              ? 'success'
+              : passwordStatus === 'error'
+                ? 'error'
+                : 'default'
+          }
+          showToggle
+          isPasswordVisible={showPassword}
+          onToggleVisibility={() => setShowPassword((p) => !p)}
+          onChange={setPassword}
+          onFocus={() => setPasswordFocused(true)}
+          onBlur={() => setPasswordFocused(false)}
+          isLast={true}
+        /> */}
+
         <button type="button" className={styles.linkButton} onClick={onForgotPassword}>
           Забыли пароль?
         </button>
 
-        {serverError && <p className={styles.centerError}>{serverError}</p>}
-
-        <button
-          type="submit"
-          className={`${styles.submitButton} ${isSubmitEnabled ? styles.submitActive : ''}`}
-          disabled={!isSubmitEnabled || !!serverError}
-        >
-          {isLoading ? <img src={Loader} alt="Загрузка" className={styles.loader} /> : 'Войти'}
+        <button className={styles.submitButton} disabled={!isSubmitEnabled}>
+          {isLoading ? '...' : 'Войти'}
         </button>
 
         <AuthDivider />

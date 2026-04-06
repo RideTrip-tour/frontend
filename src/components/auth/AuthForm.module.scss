@@ -12,7 +12,7 @@
 }
 
 .fieldGroup {
-  margin-bottom: 18px;
+  margin-bottom: 32px;
 
   .inputWrapper {
     position: relative;
@@ -69,13 +69,17 @@
     color: #9ea8b5;
   }
 
-  .labelSuccess.floating {
-    color: #52c878;
-  }
+  // .labelSuccess.floating {
+  //   color: #52c878;
+  // }
 
-  .labelError.floating {
-    color: #ff4d3f;
-  }
+  // .labelError.floating {
+  //   color: #ff4d3f;
+  // }
+}
+
+.lastFieldGroup {
+  margin-bottom: 4px;
 }
 
 .label,
@@ -112,7 +116,7 @@
 }
 
 .success {
-  border-color: #52c878;
+  border-color: #52c878 !important;
 }
 
 .error {
@@ -146,9 +150,9 @@
   color: #ff4d3f;
 }
 
-.hintSuccess {
-  color: #52c878;
-}
+// .hintSuccess {
+//   color: #52c878;
+// }
 
 .statusBlock {
   min-height: 26px;
@@ -159,10 +163,9 @@
 }
 
 .centerError {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.2;
-  color: #ff4d3f;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #d92d20;
   text-align: center;
 }
 
@@ -180,7 +183,7 @@
 }
 
 .description {
-  margin: 8px 0 20px;
+  margin-bottom: 8px;
   text-align: center;
   font-size: 14px;
   line-height: 1.4;
@@ -189,7 +192,7 @@
 
 .linkButton {
   display: inline-block;
-  margin: -6px 0 16px;
+  margin-bottom: 32px;
   padding: 0;
   border: none;
   background: transparent;
@@ -271,9 +274,17 @@
   transition: background 0.2s ease;
 }
 
-.submitActive {
+.submitButton.updatePassword {
+  margin-top: 32px;
+}
+
+.submitButton.submitActive {
   background: #0e68d4;
   cursor: pointer;
+}
+
+.inputWrapper.error {
+  border-color: #d92d20;
 }
 
 .loader {
@@ -289,7 +300,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  margin: 34px 0 18px;
+  margin: 32px 0 20px;
 }
 
 .dividerLine {

@@ -30,7 +30,6 @@ export default function ResetPasswordModal({
   const [confirmFocused, setConfirmFocused] = useState(false);
 
   const passwordValid = password.trim().length >= 8;
-  const confirmFilled = confirmPassword.trim().length > 0;
   const confirmValid = confirmPassword.trim().length >= 8;
   const passwordsMatch =
     password.trim().length > 0 && confirmPassword.trim().length > 0 && password === confirmPassword;
@@ -47,9 +46,9 @@ export default function ResetPasswordModal({
   const confirmStatus: FieldStatus = useMemo(() => {
     if (hasMismatchError) return 'error';
     if (confirmFocused) return 'focus';
-    if (confirmFilled && passwordsMatch) return 'success';
+    if (confirmValid && passwordsMatch) return 'success';
     return 'default';
-  }, [hasMismatchError, confirmFocused, confirmFilled, passwordsMatch]);
+  }, [hasMismatchError, confirmFocused, confirmValid, passwordsMatch]);
 
   const isSubmitEnabled = passwordValid && confirmValid && passwordsMatch && !isLoading;
 
@@ -74,7 +73,6 @@ export default function ResetPasswordModal({
           status={passwordStatus}
           hint={passwordHint}
           hintTone={hasMismatchError ? 'error' : 'default'}
-          labelTone={hasMismatchError ? 'error' : 'default'}
           autoComplete="new-password"
           showToggle
           isPasswordVisible={showPassword}
@@ -82,6 +80,7 @@ export default function ResetPasswordModal({
           onChange={setPassword}
           onFocus={() => setPasswordFocused(true)}
           onBlur={() => setPasswordFocused(false)}
+          isLast={false}
         />
 
         <AuthField
@@ -92,7 +91,6 @@ export default function ResetPasswordModal({
           status={confirmStatus}
           hint={passwordHint}
           hintTone={hasMismatchError ? 'error' : 'default'}
-          labelTone={hasMismatchError ? 'error' : 'default'}
           autoComplete="new-password"
           showToggle
           isPasswordVisible={showConfirmPassword}
@@ -100,19 +98,14 @@ export default function ResetPasswordModal({
           onChange={setConfirmPassword}
           onFocus={() => setConfirmFocused(true)}
           onBlur={() => setConfirmFocused(false)}
+          isLast={true}
         />
 
-        <div className={styles.statusBlock}>
-          {hasMismatchError ? (
-            <p className={styles.centerError}>{serverError}</p>
-          ) : (
-            <span className={styles.placeholder}>.</span>
-          )}
-        </div>
+        {hasMismatchError && <p className={styles.centerError}>{serverError}</p>}
 
         <button
           type="submit"
-          className={`${styles.submitButton} ${isSubmitEnabled ? styles.submitActive : ''}`}
+          className={`${styles.submitButton} ${styles.updatePassword} ${isSubmitEnabled ? styles.submitActive : ''}`}
           disabled={!isSubmitEnabled}
         >
           {isLoading ? <span className={styles.loader} /> : 'Обновить пароль'}

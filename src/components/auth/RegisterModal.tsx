@@ -46,7 +46,6 @@ export default function RegisterModal({
 
   const emailValid = emailRegex.test(email.trim());
   const passwordValid = passwordRegex.test(password.trim());
-  const confirmFilled = confirmPassword.trim().length > 0;
   const confirmValid = confirmPassword.trim().length >= 8;
   const passwordsMatch =
     password.trim().length > 0 && confirmPassword.trim().length > 0 && password === confirmPassword;
@@ -54,9 +53,8 @@ export default function RegisterModal({
   const errorType: ErrorType = useMemo(() => {
     if (serverError === 'Такой пользователь уже существует') return 'email-exists';
     if (serverError === 'Минимум 8 символов, буквы и цифры') return 'password-invalid';
-    if (serverError === 'Пароли не совпадают' || serverError === 'Введенные пароли не совпадают') {
+    if (serverError === 'Пароли не совпадают' || serverError === 'Введенные пароли не совпадают')
       return 'password-mismatch';
-    }
     return '';
   }, [serverError]);
 
@@ -68,9 +66,7 @@ export default function RegisterModal({
   }, [errorType, emailFocused, emailValid]);
 
   const passwordStatus: FieldStatus = useMemo(() => {
-    if (errorType === 'password-invalid' || errorType === 'password-mismatch') {
-      return 'error';
-    }
+    if (errorType === 'password-invalid' || errorType === 'password-mismatch') return 'error';
     if (passwordFocused) return 'focus';
     if (passwordValid) return 'success';
     return 'default';
@@ -79,9 +75,9 @@ export default function RegisterModal({
   const confirmStatus: FieldStatus = useMemo(() => {
     if (errorType === 'password-mismatch') return 'error';
     if (confirmFocused) return 'focus';
-    if (confirmFilled && passwordsMatch) return 'success';
+    if (confirmValid && passwordsMatch) return 'success';
     return 'default';
-  }, [errorType, confirmFocused, confirmFilled, passwordsMatch]);
+  }, [errorType, confirmFocused, confirmValid, passwordsMatch]);
 
   const showPasswordsMatch = !serverError && passwordValid && confirmValid && passwordsMatch;
 
@@ -101,7 +97,7 @@ export default function RegisterModal({
   };
 
   return (
-    <AuthShell title="Регистрация" onClose={onClose}>
+    <AuthShell title="Регистрация" onClose={onClose} customStyle={{ padding: '50px 130px' }}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <AuthField
           id="register-email"
@@ -109,11 +105,12 @@ export default function RegisterModal({
           label="Email"
           value={email}
           status={emailStatus}
-          topError={errorType === 'email-exists' ? 'Такой пользователь уже существует' : undefined}
+          hintTone={errorType === 'email-exists' ? 'error' : 'default'}
           autoComplete="email"
           onChange={setEmail}
           onFocus={() => setEmailFocused(true)}
           onBlur={() => setEmailFocused(false)}
+          isLast={false}
         />
 
         <AuthField
@@ -126,13 +123,6 @@ export default function RegisterModal({
           hintTone={
             errorType === 'password-invalid' ? 'error' : showPasswordsMatch ? 'success' : 'default'
           }
-          labelTone={
-            errorType === 'password-invalid' || errorType === 'password-mismatch'
-              ? 'error'
-              : showPasswordsMatch
-                ? 'success'
-                : 'default'
-          }
           autoComplete="new-password"
           showToggle
           isPasswordVisible={showPassword}
@@ -140,6 +130,7 @@ export default function RegisterModal({
           onChange={setPassword}
           onFocus={() => setPasswordFocused(true)}
           onBlur={() => setPasswordFocused(false)}
+          isLast={false}
         />
 
         <AuthField
@@ -152,9 +143,6 @@ export default function RegisterModal({
           hintTone={
             errorType === 'password-mismatch' ? 'error' : showPasswordsMatch ? 'success' : 'default'
           }
-          labelTone={
-            errorType === 'password-mismatch' ? 'error' : showPasswordsMatch ? 'success' : 'default'
-          }
           autoComplete="new-password"
           showToggle
           isPasswordVisible={showConfirmPassword}
@@ -162,6 +150,7 @@ export default function RegisterModal({
           onChange={setConfirmPassword}
           onFocus={() => setConfirmFocused(true)}
           onBlur={() => setConfirmFocused(false)}
+          isLast={true}
         />
 
         <div className={styles.statusBlock}>

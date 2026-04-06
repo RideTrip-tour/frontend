@@ -1,5 +1,6 @@
 import { AuthShell } from './index';
 import styles from './AuthState.module.scss';
+import WarningIcon from '@/assets/icons/warning.svg';
 
 type RegistrationErrorModalProps = {
   onClose?: () => void;
@@ -10,7 +11,9 @@ export default function RegistrationErrorModal({ onClose, onRetry }: Registratio
   return (
     <AuthShell onClose={onClose}>
       <div className={styles.centerContent}>
-        <div className={`${styles.iconBox} ${styles.redBox}`}>!</div>
+        <div className={styles.iconBox}>
+          <img src={WarningIcon} alt="Ошибка при регистрации" />
+        </div>
 
         <h2 className={styles.bigTitle}>
           Произошла ошибка

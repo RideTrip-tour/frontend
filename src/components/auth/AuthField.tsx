@@ -1,5 +1,7 @@
 import { useId } from 'react';
 import styles from './AuthForm.module.scss';
+import EyeIcon from '@/assets/icons/eye.svg';
+import NonEyeIcon from '@/assets/icons/non-eye.svg';
 
 export type AuthFieldStatus = 'default' | 'focus' | 'success' | 'error';
 
@@ -20,6 +22,7 @@ type Props = {
   onChange: (value: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;
+  isLast: boolean;
 };
 
 export default function AuthField({
@@ -38,7 +41,8 @@ export default function AuthField({
   onToggleVisibility,
   onChange,
   onFocus,
-  onBlur
+  onBlur,
+  isLast
 }: Props) {
   const generatedId = useId();
   const inputId = id ?? generatedId;
@@ -47,7 +51,7 @@ export default function AuthField({
   const isFloating = value.length > 0 || status === 'focus';
 
   return (
-    <div className={styles.fieldGroup}>
+    <div className={`${styles.fieldGroup} ${isLast ? styles.lastFieldGroup : ''}`}>
       <div
         className={`${styles.inputWrapper} ${
           status === 'focus'
@@ -72,6 +76,7 @@ export default function AuthField({
           onBlur={onBlur}
         />
 
+        {/* надо подправить TODO */}
         <label
           htmlFor={inputId}
           className={`${styles.floatingLabel} ${isFloating ? styles.floating : ''} ${
@@ -88,7 +93,11 @@ export default function AuthField({
             onClick={onToggleVisibility}
             aria-label={isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'}
           >
-            {isPasswordVisible ? '◉' : '◌'}
+            {isPasswordVisible ? (
+              <img src={EyeIcon} alt="Закрыть просмотр пароля" />
+            ) : (
+              <img src={NonEyeIcon} alt="Открыть просмотр пароля" />
+            )}
           </button>
         )}
       </div>

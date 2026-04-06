@@ -49,10 +49,10 @@ export function HomePage() {
         {[
           'login',
           'forgot',
-          'reset',
-          'register',
           'password-email-sent',
+          'reset',
           'password-reset-success',
+          'register',
           'registration-email-sent',
           'registration-success',
           'registration-error'

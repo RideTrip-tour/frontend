@@ -1,5 +1,6 @@
 import { AuthShell } from './index';
 import styles from './AuthState.module.scss';
+import AirplaceIcon from '@/assets/icons/airplace.svg';
 
 type RegistrationSuccessModalProps = {
   onClose?: () => void;
@@ -11,9 +12,11 @@ export default function RegistrationSuccessModal({
   onHomeClick
 }: RegistrationSuccessModalProps) {
   return (
-    <AuthShell onClose={onClose}>
+    <AuthShell onClose={onClose} customStyle={{ padding: '196px 114px' }}>
       <div className={styles.centerContent}>
-        <div className={styles.planeIcon}>✈</div>
+        <div className={styles.planeIcon}>
+          <img src={AirplaceIcon} alt="Самолетик" />
+        </div>
 
         <h2 className={styles.bigTitle}>
           Поздравляем, Вы успешно
