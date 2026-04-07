@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import style from './toursFinder.module.scss'
+import style from './toursfinder.module.scss'
 import './variables.css'
 import Select from '@/shared/ui/base/Select'
 import Input from '@/shared/ui/base/Input'
