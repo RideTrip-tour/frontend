@@ -104,7 +104,7 @@ export default function AuthField({
 
       {hint && (
         <p
-          className={`${styles.hint} ${
+          className={`${styles.hint} ${styles.visible} ${
             hintTone === 'error'
               ? styles.hintError
               : hintTone === 'success'

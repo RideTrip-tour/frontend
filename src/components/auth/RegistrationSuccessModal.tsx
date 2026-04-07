@@ -12,7 +12,7 @@ export default function RegistrationSuccessModal({
   onHomeClick
 }: RegistrationSuccessModalProps) {
   return (
-    <AuthShell onClose={onClose} customStyle={{ padding: '196px 114px' }}>
+    <AuthShell onClose={onClose} customStyle={{ padding: '122px 114px' }}>
       <div className={styles.centerContent}>
         <div className={styles.planeIcon}>
           <img src={AirplaceIcon} alt="Самолетик" />

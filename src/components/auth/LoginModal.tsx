@@ -16,8 +16,6 @@ type Props = {
 
 type FieldStatus = 'default' | 'focus' | 'success' | 'error';
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 export default function LoginModal({
   isLoading = false,
   serverError = '',
@@ -33,7 +31,23 @@ export default function LoginModal({
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
 
-  const isEmailValid = emailRegex.test(email.trim());
+  const isEmailValid = useMemo(() => {
+    const trimmed = email.trim();
+    if (trimmed.length < 8) return false;
+
+    const parts = trimmed.split('@');
+    if (parts.length !== 2) return false;
+
+    const local = parts[0];
+    const domain = parts[1];
+
+    if (!/^[A-Za-z]+$/.test(local)) return false;
+
+    if (!domain.includes('.')) return false;
+
+    return true;
+  }, [email]);
+
   const isPasswordValid = password.length >= 8;
 
   const emailStatus: FieldStatus = useMemo(() => {
@@ -78,13 +92,13 @@ export default function LoginModal({
           type="password"
           value={password}
           status={serverError ? 'error' : passwordStatus}
-          hint={
-            passwordFocused || serverError
-              ? 'Минимум 8 символов, букв и цифры'
-              : passwordStatus === 'success'
-                ? 'Минимум 8 символов, букв и цифры'
-                : ''
-          }
+          // hint={
+          //   passwordFocused || serverError
+          //     ? 'Минимум 8 символов, букв и цифры'
+          //     : passwordStatus === 'success'
+          //       ? 'Минимум 8 символов, букв и цифры'
+          //       : ''
+          // }
           hintTone={
             passwordFocused ? 'default' : passwordStatus === 'success' ? 'success' : 'default'
           }

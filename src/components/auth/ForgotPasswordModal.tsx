@@ -56,11 +56,13 @@ export default function ForgotPasswordModal({
           label="Email"
           value={email}
           status={fieldStatus}
-          topError={hasServerError ? serverError : undefined}
+          hint={hasServerError ? serverError : ''}
+          hintTone={hasServerError ? 'error' : 'default'}
           autoComplete="email"
           onChange={setEmail}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          isLast={true} // последний элемент формы перед описанием
         />
 
         <p className={styles.description}>

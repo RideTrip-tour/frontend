@@ -97,7 +97,7 @@ export default function RegisterModal({
   };
 
   return (
-    <AuthShell title="Регистрация" onClose={onClose} customStyle={{ padding: '50px 130px' }}>
+    <AuthShell title="Регистрация" onClose={onClose} customStyle={{ padding: '52px 130px' }}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <AuthField
           id="register-email"

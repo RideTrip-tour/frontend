@@ -144,6 +144,21 @@
   font-size: 12px;
   line-height: 1.25;
   color: #c4c9cf;
+
+  opacity: 0;
+  transform: translateY(-4px);
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    max-height 0.25s ease;
+}
+
+.hint.visible {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 40px;
 }
 
 .hintError {
