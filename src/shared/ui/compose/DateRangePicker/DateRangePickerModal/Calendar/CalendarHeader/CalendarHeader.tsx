@@ -13,7 +13,7 @@ interface CalendarHeaderProps {
   onOpenDrumPicker: () => void
 }
 
-export function CalendarHeader({
+function CalendarHeader({
                                  displayYear,
                                  displayMonth,
                                  isPrevMonthDisabled,
@@ -79,3 +79,5 @@ export function CalendarHeader({
     </div>
   )
 }
+
+export default CalendarHeader

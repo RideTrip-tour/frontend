@@ -1,8 +1,8 @@
 import {
   forwardRef,
   Children,
-  ReactNode,
-  RefObject, CSSProperties
+  type ReactNode,
+  type RefObject, type CSSProperties
 } from 'react'
 import './variables.css'
 import style from './scrollslider.module.scss'
@@ -21,7 +21,7 @@ interface ScrollSliderProps {
   direction?: ScrollDirection
   columns?: number
 
-  onLoadMore?: (count: number) => void | Promise<void>
+  onLoadMore?: (count?: number) => void | Promise<void>;
   loadThreshold?: number
   itemsPerLoad?: number
   maxItems?: number

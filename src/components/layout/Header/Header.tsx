@@ -1,7 +1,7 @@
 import { Button } from '@/shared/ui/base/Button'
 import style from './header.module.scss'
-import {NavItem} from '@/shared/ui/base/NavItem/NavItem.tsx'
 import {useNavigate} from 'react-router-dom'
+import NavItem from '@/shared/ui/base/NavItem'
 
 export function Header() {
   const navigate = useNavigate();

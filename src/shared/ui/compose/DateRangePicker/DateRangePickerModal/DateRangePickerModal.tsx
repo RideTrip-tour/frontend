@@ -4,15 +4,12 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import type { SelectionTab } from '@/shared/ui/compose/DateRangePicker/types.ts'
 import { MAX_FUTURE_MONTHS, MONTH_LABELS_RU } from '@/shared/ui/compose/DateRangePicker/constants.ts'
 import { formatDisplayDate } from '@/shared/ui/compose/DateRangePicker/utils.ts'
-import {
-  DrumRoller
-} from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarHeader/DrumRoller/DrumRoller.tsx'
-import {
-  CalendarHeader
-} from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarHeader/CalendarHeader.tsx'
-import {
-  CalendarGrid
-} from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid/CalendarGrid.tsx'
+import CalendarHeader
+  from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarHeader'
+import DrumRoller
+  from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarHeader/DrumRoller'
+import CalendarGrid
+  from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid'
 
 interface DateRangePickerModalProps {
   today: Date;
@@ -22,7 +19,7 @@ interface DateRangePickerModalProps {
   onClose: () => void;
 }
 
-export function DateRangePickerModal({
+function DateRangePickerModal({
                                        today,
                                        initialFrom,
                                        initialTo,
@@ -301,3 +298,5 @@ export function DateRangePickerModal({
     </div>
   );
 }
+
+export default DateRangePickerModal

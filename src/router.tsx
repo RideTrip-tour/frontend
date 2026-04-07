@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
-const HomePage = lazy(() => import("@/pages/Home/HomePage"));
+const HomePage = lazy(() => import("@/pages/Home"));
 const LoginPage = lazy(() =>
   import("@/pages/LoginPage").then((m) => ({ default: m.LoginPage }))
 );

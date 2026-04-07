@@ -8,7 +8,7 @@ interface DayCellProps {
   onClick: (date: Date) => void
 }
 
-export function DayCell({ date, flags, onClick }: DayCellProps) {
+function DayCell({ date, flags, onClick }: DayCellProps) {
   const {
     isToday,
     isWeekend,
@@ -43,3 +43,5 @@ export function DayCell({ date, flags, onClick }: DayCellProps) {
     </div>
   )
 }
+
+export default DayCell

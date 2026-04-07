@@ -1,8 +1,8 @@
 import './variables.css'
 import style from './input.module.scss'
 import {
-  ChangeEvent,
-  KeyboardEvent,
+  type ChangeEvent,
+  type KeyboardEvent,
   useEffect,
   useRef,
   useState

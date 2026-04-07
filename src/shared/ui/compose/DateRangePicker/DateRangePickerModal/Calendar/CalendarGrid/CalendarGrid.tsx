@@ -5,13 +5,10 @@ import type { DayCellFlags, SelectionTab } from '@/shared/ui/compose/DateRangePi
 import { areSameDay, buildCalendarCells } from '@/shared/ui/compose/DateRangePicker/utils.ts'
 import { WEEKDAY_LABELS_SHORT } from '@/shared/ui/compose/DateRangePicker/constants.ts'
 
-import {
-  WeekdayHeaderCell
-} from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid/WeekdayHeaderCell/WeekdayHeaderCell.tsx'
-
-import {
-  DayCell
-} from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid/DayCell/DayCell.tsx'
+import DayCell
+  from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid/DayCell'
+import WeekdayHeaderCell
+  from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid/WeekdayHeaderCell'
 
 interface CalendarGridProps {
   displayYear: number
@@ -23,7 +20,7 @@ interface CalendarGridProps {
   onDayClick: (date: Date) => void
 }
 
-export function CalendarGrid({
+function CalendarGrid({
                                displayYear,
                                displayMonth,
                                selectionFrom,
@@ -113,3 +110,5 @@ export function CalendarGrid({
     </div>
   );
 }
+
+export default CalendarGrid
