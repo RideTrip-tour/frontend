@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import type {
   AxiosInstance,
   AxiosResponse,
@@ -11,6 +11,11 @@ type RefreshResponse = {
   token: string;
   user?: { id: string; email: string; name: string };
 };
+
+interface CustomRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
+
 //я предполагаю что что эндпоит будет  POST /auth/refresh => { token, user? }
 // очередь refresh, чтобы параллельные 401 не делали много refresh-запросов
 let isRefreshing = false;
@@ -34,7 +39,6 @@ export function setupInterceptors(client: AxiosInstance) {
   client.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const token = useAuthStore.getState().token;
     if (token) {
-      config.headers = config.headers ?? {};
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -44,18 +48,19 @@ export function setupInterceptors(client: AxiosInstance) {
   client.interceptors.response.use(
     (res: AxiosResponse) => res,
     async (err: unknown) => {
-      const axiosErr = err as any;
-      const status: number | undefined = axiosErr?.response?.status;
-      const original = axiosErr?.config as
-        | (InternalAxiosRequestConfig & { _retry?: boolean })
-        | undefined;
+      if (!isAxiosError(err)) {
+        throw normalizeAxiosError(err);
+      }
+
+      const status = err.response?.status;
+      const original = err.config as CustomRequestConfig | undefined;
 
       // единая обработка не-axios ошибок
       if (!original) {
         throw normalizeAxiosError(err);
       }
 
-      const url = String(original.url || "");
+      const url = original.url || "";
 
       // Не пытаемся рефрешить:
       // - если не 401
@@ -78,7 +83,6 @@ export function setupInterceptors(client: AxiosInstance) {
           throw new ApiError("Unauthorized", { status: 401, url });
         }
 
-        original.headers = original.headers ?? {};
         original.headers.Authorization = `Bearer ${token}`;
         return client(original);
       }
@@ -102,15 +106,22 @@ export function setupInterceptors(client: AxiosInstance) {
         }
 
         const prevUser = useAuthStore.getState().user;
+        const userToSet = refreshRes.data.user || prevUser;
+
+        if (!userToSet) {
+          resolveWaiters(null);
+          useAuthStore.getState().logout();
+          throw new ApiError("User data missing", { status: 401 });
+        }
+
         useAuthStore.getState().login({
           token: newToken,
-          user: refreshRes.data.user ?? (prevUser as any)
+          user: userToSet
         });
 
         resolveWaiters(newToken);
 
         // повторяем исходный запрос с новым токеном
-        original.headers = original.headers ?? {};
         original.headers.Authorization = `Bearer ${newToken}`;
         return client(original);
       } catch (e) {

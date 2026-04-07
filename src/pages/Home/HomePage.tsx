@@ -9,11 +9,11 @@ function HomePage() {
   return (
     <>
       <Welcome />
-      <Choice/>
-      <Recommendations/>
-      <Planning/>
-      <PersonalSelection/>
-      <Clients/>
+      <Choice />
+      <Recommendations />
+      <Planning />
+      <PersonalSelection />
+      <Clients />
     </>
   )
 }

@@ -10,6 +10,7 @@
     "build:prod": "tsc -b && vite build --mode production",
     "lint": "eslint .",
     "preview": "vite preview --mode production",
+    "typecheck": "tsc --noEmit",
     "check:no-direct-urls": "node scripts/check-no-direct-urls.mjs",
     "check": "npm run lint && npm run typecheck && npm run check:no-direct-urls"
   },

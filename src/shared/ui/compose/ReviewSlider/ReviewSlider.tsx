@@ -112,7 +112,6 @@ const ReviewSlider: React.FC<ReviewSliderProps> = ({
 
   const isAtStart = currentOffset <= 1
   const isAtEnd = currentOffset >= maxOffset - 1 || maxOffset <= 0
-  const progress = maxOffset > 0 ? (currentOffset / maxOffset) * 100 : 0
 
   return (
     <div className={`${style.reviewsliderWrapper} ${className || ''}`}>

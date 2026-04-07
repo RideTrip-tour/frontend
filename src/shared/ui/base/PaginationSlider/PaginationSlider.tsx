@@ -1,4 +1,5 @@
-import {useState, useRef, useEffect, MouseEvent, TouchEvent, ReactNode, RefObject} from 'react'
+import { useState, useRef } from 'react'
+import type { MouseEvent, TouchEvent, ReactNode, RefObject } from 'react'
 import './variables.css'
 import style from './paginationslider.module.scss'
 import PaginationDots from './PaginationDots'
@@ -10,7 +11,7 @@ import {wrapSliderChildren} from '@/utils/wrapChildrenWithIndex.tsx'
 interface PaginationSliderProps {
   children: ReactNode
   showPagination?: boolean
-  onLoadMore?: (count: number) => void | Promise<void>
+  onLoadMore?: (count?: number) => void | Promise<void>
   loadThreshold?: number
   itemsPerLoad?: number
   maxItems?: number
@@ -35,7 +36,8 @@ const PaginationSlider = ({
   const [startX, setStartX] = useState(0)
   const [translateX, setTranslateX] = useState(0)
 
-  const sliderRef = useRef<HTMLDivElement | null>(null);
+  const sliderRef = useRef<HTMLDivElement | null>(null)
+
   const childrenArray = Array.isArray(children) ? children : [children]
   const totalItems = childrenArray.length
 
@@ -50,28 +52,27 @@ const PaginationSlider = ({
     enabled: !!onLoadMore
   })
 
-  const totalSlidesRef = useRef(totalItems)
   const showLoader = shouldShowLoader && isLoading
 
-  useEffect(() => {
-    if (!showLoader) {
-      totalSlidesRef.current = totalItems
-    }
-  }, [totalItems, showLoader])
+  const totalSlides = showLoader ? totalItems + 1 : totalItems
 
-  const totalSlides = showLoader ? totalSlidesRef.current + 1 : totalItems
-
-  const getPositionX = (e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => {
+  const getPositionX = (
+    e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>
+  ) => {
     return 'touches' in e ? e.touches[0].clientX : e.clientX
   }
 
-  const handleStart = (e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => {
+  const handleStart = (
+    e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>
+  ) => {
     setIsDragging(true)
     setStartX(getPositionX(e))
     setTranslateX(-currentSlide * 100)
   }
 
-  const handleMove = (e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => {
+  const handleMove = (
+    e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>
+  ) => {
     if (!isDragging || !sliderRef.current) return
 
     const currentX = getPositionX(e)
@@ -86,6 +87,7 @@ const PaginationSlider = ({
     if (!isDragging || !sliderRef.current) return
 
     setIsDragging(false)
+
     const slideWidth = sliderRef.current.offsetWidth
     const movedBy = ((translateX + currentSlide * 100) * slideWidth) / 100
 

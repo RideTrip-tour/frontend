@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center;
   margin-top: 65px;
+  z-index: 999;
   &__inner {
     position: relative;
     display: flex;
@@ -14,6 +15,10 @@
     height: 48px;
     max-width: 1435px;
     width: 100%;
+    border: solid 1px var(--color-white-30);
+    border-radius: 50px;
+    padding: 14px 24px;
+    backdrop-filter: blur(10px);
   }
 
   &__logo {
