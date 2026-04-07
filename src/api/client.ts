@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { InternalAxiosRequestConfig } from 'axios';
+import type { AxiosError } from 'axios'
 import { getApiBaseUrl } from './baseUrl';
 import { useAuthStore } from '@/store';
 import { normalizeAxiosError, ApiError } from './errors';
@@ -52,7 +53,7 @@ apiClient.interceptors.response.use(
   (res) => res,
 
   async (err: unknown) => {
-    const axiosErr = err as any;
+    const axiosErr = err as AxiosError
 
     const status: number | undefined = axiosErr?.response?.status;
     const original = axiosErr?.config as

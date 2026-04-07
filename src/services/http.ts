@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {type AxiosRequestConfig, AxiosError } from "axios";
 import { useAuthStore } from "@/store";
 
 const API_URL = import.meta.env.VITE_API_URL as string;
@@ -30,11 +30,11 @@ http.interceptors.request.use((config) => {
 // RESPONSE interceptor: ловим 401 → refresh → retry
 http.interceptors.response.use(
   (res) => res,
-  async (error) => {
-    const original = error.config as any;
+  async (error: AxiosError & { config?: AxiosRequestConfig & { _retry?: boolean } }) => {
+    const original = error.config;
     const status = error?.response?.status;
 
-    if (status !== 401 || original?._retry) {
+    if (!original || status !== 401 || original?._retry) {
       return Promise.reject(error);
     }
 
@@ -45,7 +45,9 @@ http.interceptors.response.use(
       return new Promise((resolve, reject) => {
         pending.push((newToken) => {
           if (!newToken) return reject(error);
-          original.headers.Authorization = `Bearer ${newToken}`;
+          if (original.headers) {
+            original.headers.Authorization = `Bearer ${newToken}`
+          }
           resolve(http(original));
         });
       });
@@ -70,12 +72,14 @@ http.interceptors.response.use(
       const prevUser = useAuthStore.getState().user;
       useAuthStore.getState().login({
         token: newToken,
-        user: refreshRes.data?.user ?? (prevUser as any)
-      });
+        user: refreshRes.data?.user ?? prevUser
+      })
 
       resolvePending(newToken);
 
-      original.headers.Authorization = `Bearer ${newToken}`;
+      if (original.headers) {
+        original.headers.Authorization = `Bearer ${newToken}`;
+      }
       return http(original);
     } catch (e) {
       useAuthStore.getState().logout();

@@ -1,6 +1,8 @@
 :root {
   --animation-speed-button: var(--animation-speed-100);
-  --shadow-button: var(--shadow-2)
+  --shadow-button: var(--shadow-2);
+  --text-lh-button: var(--text-line-height-20);
+  --text-button-size: var(--text-size-16)
 }
 
 body[data-theme="light"] {

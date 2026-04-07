@@ -1,6 +1,5 @@
 import './variables.css'
-import style from './pagination.module.scss'
-import { useState, ChangeEvent, KeyboardEvent } from 'react'
+import { useState, type ChangeEvent, type KeyboardEvent } from 'react'
 
 interface PaginationProps {
   currentPage: number

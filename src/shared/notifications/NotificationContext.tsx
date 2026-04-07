@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react';
+// import { useContext } from 'react';
+import { createContext, useState } from 'react';
 import type { ReactNode } from 'react';
 
 export type ToastType = 'success' | 'error' | 'info';
@@ -38,11 +39,11 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useNotify() {
-  const ctx = useContext(NotificationContext);
-  if (!ctx) throw new Error('useNotify must be used inside NotificationProvider');
-  return ctx.notify;
-}
+// export function useNotify() {
+//   const ctx = useContext(NotificationContext);
+//   if (!ctx) throw new Error('useNotify must be used inside NotificationProvider');
+//   return ctx.notify;
+// }
 
 import { ToastContainer } from './ToastContainer';
 import { registerNotifier } from './notifyBus';

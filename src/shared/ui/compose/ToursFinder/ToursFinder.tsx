@@ -58,7 +58,8 @@ export const ToursFinder = () => {
   return (
     <div className={style.toursFinder}>
       <div className={style.input}>
-        <div className={style.groupTitle}>Направление</div>
+        <div className={style.groupTitle}
+        onClick={()=>{console.log('Направление:', destination)}}>Направление</div>
         <Input
           placeholder='Укажите место назначения, например “Сочи”'
           onSubmit={setDestination}

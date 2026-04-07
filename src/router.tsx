@@ -1,7 +1,5 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { ProtectedRoute } from "@/components";
-import HomePage1 from '@/pages/Home/HomePage.tsx'
 
 const HomePage = lazy(() => import("@/pages/Home/HomePage"));
 const LoginPage = lazy(() =>
