@@ -1,4 +1,4 @@
-import {RefObject, useEffect, useRef, useState} from 'react'
+import {type RefObject, useEffect, useRef, useState} from 'react'
 
 interface UseInfiniteLoaderProps {
   onLoadMore?: (count: number | undefined) => void | Promise<void>;

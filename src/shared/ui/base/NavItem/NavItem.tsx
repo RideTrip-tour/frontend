@@ -3,7 +3,7 @@ import type { NavLinkRenderProps } from 'react-router-dom'
 import style from './navitem.module.scss'
 import './variables.css'
 
-export function NavItem({ to, label }: { to: string; label: string }) {
+function NavItem({ to, label }: { to: string; label: string }) {
   return (
     <NavLink
       to={to}
@@ -17,3 +17,5 @@ export function NavItem({ to, label }: { to: string; label: string }) {
     </NavLink>
   )
 }
+
+export default NavItem

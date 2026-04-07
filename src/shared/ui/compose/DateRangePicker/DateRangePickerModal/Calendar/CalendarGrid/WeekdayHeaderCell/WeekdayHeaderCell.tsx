@@ -1,7 +1,7 @@
 import style from './weekdayheadercell.module.scss'
 import './variables.css'
 
-export function WeekdayHeaderCell({ label }: { label: string }) {
+function WeekdayHeaderCell({ label }: { label: string }) {
   const isWeekend = label === "Сб" || label === "Вс";
 
   const className = [
@@ -15,3 +15,5 @@ export function WeekdayHeaderCell({ label }: { label: string }) {
     </div>
   );
 }
+
+export default WeekdayHeaderCell

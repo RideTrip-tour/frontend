@@ -1,6 +1,6 @@
 import style from './drumroller.module.scss'
 import './variables.css'
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, type MouseEvent as ReactMouseEvent } from "react";
 import {
   DRUM_HALF_ITEMS,
   DRUM_ITEM_HEIGHT_PX,
@@ -15,7 +15,7 @@ export interface DrumRollerProps {
   onChange: (index: number) => void;
 }
 
-export function DrumRoller({
+function DrumRoller({
                              items,
                              selectedIndex,
                              minValidIndex = 0,
@@ -54,7 +54,7 @@ export function DrumRoller({
     }
   }, []);
 
-  const handleMouseDown = useCallback((e: MouseEvent) => {
+  const handleMouseDown = useCallback((e: ReactMouseEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
     e.preventDefault();
     isDraggingRef.current = true;
@@ -197,3 +197,5 @@ export function DrumRoller({
     </div>
   );
 }
+
+export default DrumRoller

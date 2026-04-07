@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react'
+import {type ReactNode, useState } from 'react'
 import './variables.css'
 import style from './tooltip.module.scss'
 
