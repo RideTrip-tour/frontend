@@ -4,12 +4,13 @@ import { AuthDivider, AuthField, AuthShell } from './index';
 import styles from './AuthForm.module.scss';
 
 type ForgotPasswordModalProps = {
-  isLoading?: boolean;
-  serverError?: string;
+  email?: string;
+  isLoading: boolean;
+  serverError: string;
   onClose?: () => void;
   onBackToLogin?: () => void;
   onRegisterClick?: () => void;
-  onSubmit?: (email: string) => void | Promise<void>;
+  onSubmit: (email: string) => void | Promise<void>;
 };
 
 type FieldStatus = 'default' | 'focus' | 'success' | 'error';
@@ -17,34 +18,33 @@ type FieldStatus = 'default' | 'focus' | 'success' | 'error';
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function ForgotPasswordModal({
-  isLoading = false,
-  serverError = '',
+  email: initialEmail = '',
+  isLoading,
+  serverError,
   onClose,
   onBackToLogin,
   onRegisterClick,
   onSubmit
 }: ForgotPasswordModalProps) {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(initialEmail);
   const [isFocused, setIsFocused] = useState(false);
 
-  const hasServerError = Boolean(serverError);
-  const isFilled = email.trim().length > 0;
-  const isValid = emailRegex.test(email.trim());
-
+  // статус поля
   const fieldStatus: FieldStatus = useMemo(() => {
-    if (hasServerError) return 'error';
+    if (serverError) return 'error';
     if (isFocused) return 'focus';
-    if (isFilled && isValid) return 'success';
+    if (email.trim().length > 0 && emailRegex.test(email.trim())) return 'success';
     return 'default';
-  }, [hasServerError, isFocused, isFilled, isValid]);
+  }, [email, isFocused, serverError]);
 
-  const isSubmitEnabled = isValid && !isLoading;
+  const stringError = serverError ? 'Такой пользователь не существует' : '';
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const isSubmitEnabled = emailRegex.test(email.trim()) && !isLoading;
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isSubmitEnabled) return;
-
-    await onSubmit?.(email.trim());
+    onSubmit(email.trim());
   };
 
   return (
@@ -56,13 +56,13 @@ export default function ForgotPasswordModal({
           label="Email"
           value={email}
           status={fieldStatus}
-          hint={hasServerError ? serverError : ''}
-          hintTone={hasServerError ? 'error' : 'default'}
+          hint={stringError}
+          hintTone={serverError ? 'error' : 'default'}
           autoComplete="email"
           onChange={setEmail}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          isLast={true} // последний элемент формы перед описанием
+          isLast={true}
         />
 
         <p className={styles.description}>
@@ -82,13 +82,13 @@ export default function ForgotPasswordModal({
         <AuthDivider />
 
         <p className={styles.footerText}>
-          {hasServerError ? 'Нет аккаунта? ' : 'Уже есть аккаунт? '}
+          {serverError ? 'Нет аккаунта? ' : 'Уже есть аккаунт? '}
           <button
             type="button"
             className={styles.footerLink}
-            onClick={hasServerError ? onRegisterClick : onBackToLogin}
+            onClick={serverError ? onRegisterClick : onBackToLogin}
           >
-            {hasServerError ? 'Зарегистрироваться' : 'Войти'}
+            {serverError ? 'Зарегистрироваться' : 'Войти'}
           </button>
         </p>
       </form>

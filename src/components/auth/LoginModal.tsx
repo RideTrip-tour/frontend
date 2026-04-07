@@ -6,23 +6,23 @@ import styles from './AuthForm.module.scss';
 import Loader from '@/assets/icons/loader.svg';
 
 type Props = {
-  isLoading?: boolean;
-  serverError?: string;
+  isLoading: boolean;
+  serverError: string;
   onClose?: () => void;
-  onSubmit?: (data: { email: string; password: string }) => void | Promise<void>;
   onForgotPassword?: () => void;
   onRegisterClick?: () => void;
+  onSubmit: (data: { email: string; password: string }) => void;
 };
 
 type FieldStatus = 'default' | 'focus' | 'success' | 'error';
 
 export default function LoginModal({
-  isLoading = false,
-  serverError = '',
+  isLoading,
+  serverError,
   onClose,
-  onSubmit,
   onForgotPassword,
-  onRegisterClick
+  onRegisterClick,
+  onSubmit
 }: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -41,7 +41,7 @@ export default function LoginModal({
     const local = parts[0];
     const domain = parts[1];
 
-    if (!/^[A-Za-z]+$/.test(local)) return false;
+    if (!/^[A-Za-z.]+$/.test(local)) return false;
 
     if (!domain.includes('.')) return false;
 
@@ -50,26 +50,27 @@ export default function LoginModal({
 
   const isPasswordValid = password.length >= 8;
 
+  // Поля статусы для border
   const emailStatus: FieldStatus = useMemo(() => {
-    if (serverError) return 'error';
     if (emailFocused) return 'focus';
+    if (serverError && email.length > 0) return 'error';
     if (email && isEmailValid) return 'success';
     return 'default';
   }, [emailFocused, isEmailValid, serverError, email]);
 
   const passwordStatus: FieldStatus = useMemo(() => {
-    if (serverError) return 'error';
     if (passwordFocused) return 'focus';
+    if (serverError && password.length > 0) return 'error';
     if (password && isPasswordValid) return 'success';
     return 'default';
   }, [passwordFocused, isPasswordValid, serverError, password]);
 
   const isSubmitEnabled = isEmailValid && isPasswordValid && !isLoading;
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!isSubmitEnabled) return;
-    await onSubmit?.({ email, password });
+    onSubmit({ email: email.trim(), password });
   };
 
   return (
@@ -79,7 +80,7 @@ export default function LoginModal({
           label="Email"
           type="email"
           value={email}
-          status={serverError ? 'error' : emailStatus}
+          status={emailStatus}
           hintTone={emailStatus === 'success' ? 'success' : 'default'}
           onChange={setEmail}
           onFocus={() => setEmailFocused(true)}
@@ -91,14 +92,7 @@ export default function LoginModal({
           label="Пароль"
           type="password"
           value={password}
-          status={serverError ? 'error' : passwordStatus}
-          // hint={
-          //   passwordFocused || serverError
-          //     ? 'Минимум 8 символов, букв и цифры'
-          //     : passwordStatus === 'success'
-          //       ? 'Минимум 8 символов, букв и цифры'
-          //       : ''
-          // }
+          status={passwordStatus}
           hintTone={
             passwordFocused ? 'default' : passwordStatus === 'success' ? 'success' : 'default'
           }
@@ -115,12 +109,12 @@ export default function LoginModal({
           Забыли пароль?
         </button>
 
-        {serverError && <p className={styles.centerError}>{serverError}</p>}
+        {serverError && <p className={styles.centerError}>Email или пароль введены неверно</p>}
 
         <button
           type="submit"
           className={`${styles.submitButton} ${isSubmitEnabled ? styles.submitActive : ''}`}
-          disabled={!isSubmitEnabled || !!serverError}
+          disabled={!isSubmitEnabled || isLoading}
         >
           {isLoading ? <img src={Loader} alt="Загрузка" className={styles.loader} /> : 'Войти'}
         </button>

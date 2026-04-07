@@ -53,10 +53,11 @@ export function normalizeAxiosError(err: unknown): ApiError {
 
   // network
   if (e?.message === 'Network Error' || !e?.response) {
-    return new ApiError('Network error', {
-      code: 'NETWORK',
-      url: e?.config?.url
-    });
+    console.log('Network error');
+    // return new ApiError('Network error', {
+    //   code: 'NETWORK',
+    //   url: e?.config?.url
+    // });
   }
 
   // timeout

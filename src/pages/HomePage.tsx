@@ -10,6 +10,8 @@ import {
   RegistrationSuccessModal,
   ResetPasswordModal
 } from '../components/auth';
+import { apiClient } from '@/api/client';
+import { ApiError } from '@/api/errors';
 
 type View =
   | 'login'
@@ -26,12 +28,13 @@ export function HomePage() {
   const [view, setView] = useState<View>('login');
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState('');
+  const [email, setEmail] = useState(''); // нужна для Forgot/PasswordEmailSent
 
   const fakeDelay = () => new Promise<void>((resolve) => setTimeout(resolve, 1200));
 
   return (
     <div style={{ minHeight: '100vh', position: 'relative' }}>
-      {/* dev-кнопки для переключения между модалками */}
+      {/* dev-кнопки */}
       <div
         style={{
           position: 'fixed',
@@ -87,16 +90,27 @@ export function HomePage() {
           onClose={() => console.log('close')}
           onForgotPassword={() => setView('forgot')}
           onRegisterClick={() => setView('register')}
-          onSubmit={async ({ email, password }) => {
+          onSubmit={async ({ email: loginEmail, password }) => {
             setServerError('');
             setIsLoading(true);
-            await fakeDelay();
 
-            if (email !== 'travel.designer@mail.ru' || password !== 'Travel26') {
-              setServerError('Email или пароль введены неверно');
+            try {
+              setEmail(loginEmail); // сохраняем email для последующих модалок
+              await apiClient.post('/api/auth/login', {
+                grant_type: 'password',
+                username: loginEmail,
+                password
+              });
+
+              console.log('Login successful');
+              // переход куда нужно
+            } catch (err: any) {
+              if (err.response?.data?.detail) setServerError(err.response.data.detail);
+              else if (err instanceof ApiError) setServerError(err.message);
+              else setServerError('Ошибка сервера');
+            } finally {
+              setIsLoading(false);
             }
-
-            setIsLoading(false);
           }}
         />
       )}
@@ -104,23 +118,39 @@ export function HomePage() {
       {/* FORGOT PASSWORD */}
       {view === 'forgot' && (
         <ForgotPasswordModal
+          email={email}
+          isLoading={isLoading}
+          serverError={serverError}
           onClose={() => console.log('close')}
           onBackToLogin={() => setView('login')}
           onRegisterClick={() => setView('register')}
-          onSubmit={async (email: string) => {
+          onSubmit={async (email) => {
             setServerError('');
             setIsLoading(true);
+            setEmail(email);
 
-            await fakeDelay();
-
-            if (email !== 'travel.designer@mail.ru') {
-              setServerError('Такой пользователь не существует');
-            } else {
+            try {
+              await apiClient.post('/api/auth/forgot-password', { email });
               setView('password-email-sent');
+            } catch (err: any) {
+              if (err.response?.data?.detail) setServerError(err.response.data.detail);
+              else if (err instanceof ApiError) setServerError(err.message);
+              else setServerError('Ошибка сервера');
+            } finally {
+              setIsLoading(false);
             }
-
-            setIsLoading(false);
           }}
+        />
+      )}
+
+      {/* PASSWORD EMAIL SENT */}
+      {view === 'password-email-sent' && (
+        <PasswordEmailSentModal
+          email={email}
+          isLoading={isLoading}
+          onClose={() => console.log('close')}
+          setIsLoading={setIsLoading}
+          setServerError={setServerError}
         />
       )}
 
@@ -130,24 +160,32 @@ export function HomePage() {
           isLoading={isLoading}
           serverError={serverError}
           onClose={() => console.log('close')}
-          onSubmit={async (data: { password: string; confirmPassword: string }) => {
-            const { password, confirmPassword } = data;
+          onSubmit={async ({ password, confirmPassword }) => {
             setServerError('');
-
             if (password !== confirmPassword) {
               setServerError('Пароли не совпадают');
               return;
             }
 
             setIsLoading(true);
-            await fakeDelay();
-            setIsLoading(false);
-
-            setView('password-reset-success');
+            try {
+              await apiClient.post('/api/auth/reset-password', {
+                token: 'тут_токен_из_ссылки', // должен быть реальный токен
+                password
+              });
+              setView('password-reset-success');
+            } catch (err: any) {
+              if (err.response?.data?.detail) setServerError(err.response.data.detail);
+              else if (err instanceof ApiError) setServerError(err.message);
+              else setServerError('Ошибка сервера');
+            } finally {
+              setIsLoading(false);
+            }
           }}
         />
       )}
 
+      {/* REGISTER */}
       {view === 'register' && (
         <RegisterModal
           isLoading={isLoading}
@@ -155,50 +193,27 @@ export function HomePage() {
           onClose={() => console.log('close')}
           onLoginClick={() => setView('login')}
           onTermsClick={() => console.log('terms')}
-          onSubmit={async (data: {
-            email: string;
-            password: string;
-            confirmPassword: string;
-            acceptedTerms: boolean;
-          }) => {
-            const { email, password, confirmPassword, acceptedTerms } = data;
-
+          onSubmit={async ({ email, password, confirmPassword, acceptedTerms }) => {
             setServerError('');
-
-            if (email === 'travel.designer@mail.ru') {
-              setServerError('Такой пользователь уже существует');
-              return;
-            }
-
-            if (!/^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(password)) {
-              setServerError('Минимум 8 символов, буквы и цифры');
-              return;
-            }
-
-            if (password !== confirmPassword) {
-              setServerError('Пароли не совпадают');
-              return;
-            }
 
             if (!acceptedTerms) return;
 
             setIsLoading(true);
-            await fakeDelay();
-            setIsLoading(false);
-
-            setView('registration-email-sent');
+            try {
+              await apiClient.post('/api/auth/register', { email, password });
+              setView('registration-email-sent');
+            } catch (err: any) {
+              if (err.response?.data?.detail) setServerError(err.response.data.detail);
+              else if (err instanceof ApiError) setServerError(err.message);
+              else setServerError('Ошибка сервера');
+            } finally {
+              setIsLoading(false);
+            }
           }}
         />
       )}
 
       {/* OTHER MODALS */}
-      {view === 'password-email-sent' && (
-        <PasswordEmailSentModal
-          onClose={() => console.log('close')}
-          onResend={() => console.log('resend')}
-        />
-      )}
-
       {view === 'password-reset-success' && (
         <PasswordResetSuccessModal
           onClose={() => console.log('close')}
@@ -208,8 +223,36 @@ export function HomePage() {
 
       {view === 'registration-email-sent' && (
         <RegistrationEmailSentModal
+          email={email}
+          isLoading={isLoading}
+          serverError={serverError}
           onClose={() => console.log('close')}
-          onResend={() => console.log('resend')}
+          onResend={async () => {
+            setServerError('');
+            setIsLoading(true);
+
+            try {
+              // ВАЖНО:
+              // По текущему openapi отдельной ручки resend verification email нет.
+              // Когда бэк добавит endpoint, сюда нужно будет поставить реальный запрос.
+
+              throw new Error(
+                'Эндпоинт повторной отправки письма подтверждения не найден в текущем API'
+              );
+            } catch (err: any) {
+              if (err.response?.data?.detail) {
+                setServerError(err.response.data.detail);
+              } else if (err instanceof ApiError) {
+                setServerError(err.message);
+              } else {
+                setServerError(
+                  'Для повторной отправки письма бэкенд пока не предоставляет отдельную ручку'
+                );
+              }
+            } finally {
+              setIsLoading(false);
+            }
+          }}
         />
       )}
 

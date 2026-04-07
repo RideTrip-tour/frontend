@@ -34,21 +34,22 @@ export default function ResetPasswordModal({
   const passwordsMatch =
     password.trim().length > 0 && confirmPassword.trim().length > 0 && password === confirmPassword;
 
-  const hasMismatchError = Boolean(serverError);
+  // флаг ошибки несоответствия паролей
+  const hasMismatchError = !passwordsMatch && confirmPassword.length > 0;
 
   const passwordStatus: FieldStatus = useMemo(() => {
-    if (hasMismatchError) return 'error';
+    if (hasMismatchError || serverError) return 'error';
     if (passwordFocused) return 'focus';
     if (passwordValid) return 'success';
     return 'default';
-  }, [hasMismatchError, passwordFocused, passwordValid]);
+  }, [hasMismatchError, serverError, passwordFocused, passwordValid]);
 
   const confirmStatus: FieldStatus = useMemo(() => {
-    if (hasMismatchError) return 'error';
+    if (hasMismatchError || serverError) return 'error';
     if (confirmFocused) return 'focus';
     if (confirmValid && passwordsMatch) return 'success';
     return 'default';
-  }, [hasMismatchError, confirmFocused, confirmValid, passwordsMatch]);
+  }, [hasMismatchError, serverError, confirmFocused, confirmValid, passwordsMatch]);
 
   const isSubmitEnabled = passwordValid && confirmValid && passwordsMatch && !isLoading;
 
@@ -72,7 +73,7 @@ export default function ResetPasswordModal({
           value={password}
           status={passwordStatus}
           hint={passwordHint}
-          hintTone={hasMismatchError ? 'error' : 'default'}
+          hintTone={passwordStatus === 'error' ? 'error' : 'default'}
           autoComplete="new-password"
           showToggle
           isPasswordVisible={showPassword}
@@ -90,7 +91,7 @@ export default function ResetPasswordModal({
           value={confirmPassword}
           status={confirmStatus}
           hint={passwordHint}
-          hintTone={hasMismatchError ? 'error' : 'default'}
+          hintTone={confirmStatus === 'error' ? 'error' : 'default'}
           autoComplete="new-password"
           showToggle
           isPasswordVisible={showConfirmPassword}
@@ -101,7 +102,7 @@ export default function ResetPasswordModal({
           isLast={true}
         />
 
-        {hasMismatchError && <p className={styles.centerError}>{serverError}</p>}
+        {hasMismatchError && <p className={styles.centerError}>Введенные пароли не совпадают</p>}
 
         <button
           type="submit"

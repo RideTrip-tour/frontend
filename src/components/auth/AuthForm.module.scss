@@ -141,7 +141,7 @@
 
 .hint {
   margin: 6px 0 0 14px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.25;
   color: #c4c9cf;
 
@@ -161,9 +161,9 @@
   max-height: 40px;
 }
 
-.hintError {
-  color: #ff4d3f;
-}
+// .hintError {
+//   color: #ff4d3f;
+// }
 
 // .hintSuccess {
 //   color: #52c878;
@@ -177,17 +177,17 @@
   justify-content: center;
 }
 
-.centerError {
+.notifyPassword {
   margin-bottom: 8px;
   font-size: 16px;
+}
+
+.centerError {
   color: #d92d20;
   text-align: center;
 }
 
 .centerSuccess {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.2;
   color: #52c878;
   text-align: center;
 }

@@ -1,15 +1,16 @@
 import { useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
-import { AuthCheckbox, AuthDivider, AuthField, AuthShell } from './index';
+import { AuthField, AuthShell, AuthDivider, AuthCheckbox } from './index';
 import styles from './AuthForm.module.scss';
+import Loader from '@/assets/icons/loader.svg';
 
 type RegisterModalProps = {
-  isLoading?: boolean;
-  serverError?: string;
+  isLoading: boolean;
+  serverError: string;
   onClose?: () => void;
   onLoginClick?: () => void;
   onTermsClick?: () => void;
-  onSubmit?: (data: {
+  onSubmit: (data: {
     email: string;
     password: string;
     confirmPassword: string;
@@ -18,15 +19,12 @@ type RegisterModalProps = {
 };
 
 type FieldStatus = 'default' | 'focus' | 'success' | 'error';
-type ErrorType = 'email-exists' | 'password-invalid' | 'password-mismatch' | '';
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 const passwordHint = 'Минимум 8 символов, буквы и цифры';
 
 export default function RegisterModal({
-  isLoading = false,
-  serverError = '',
+  isLoading,
+  serverError,
   onClose,
   onLoginClick,
   onTermsClick,
@@ -44,60 +42,83 @@ export default function RegisterModal({
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [confirmFocused, setConfirmFocused] = useState(false);
 
-  const emailValid = emailRegex.test(email.trim());
-  const passwordValid = passwordRegex.test(password.trim());
-  const confirmValid = confirmPassword.trim().length >= 8;
-  const passwordsMatch =
-    password.trim().length > 0 && confirmPassword.trim().length > 0 && password === confirmPassword;
+  const cleanEmail = email.trim();
+  const cleanPassword = password.trim();
+  const cleanConfirmPassword = confirmPassword.trim();
 
-  const errorType: ErrorType = useMemo(() => {
-    if (serverError === 'Такой пользователь уже существует') return 'email-exists';
-    if (serverError === 'Минимум 8 символов, буквы и цифры') return 'password-invalid';
-    if (serverError === 'Пароли не совпадают' || serverError === 'Введенные пароли не совпадают')
-      return 'password-mismatch';
-    return '';
-  }, [serverError]);
+  const emailValid = useMemo(() => {
+    if (cleanEmail.length < 8) return false;
+
+    const parts = cleanEmail.split('@');
+    if (parts.length !== 2) return false;
+
+    const local = parts[0];
+    const domain = parts[1];
+
+    if (!/^[A-Za-z0-9._-]+$/.test(local)) return false;
+    if (!domain.includes('.')) return false;
+
+    return true;
+  }, [cleanEmail]);
+
+  const passwordValid = useMemo(() => {
+    return /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(cleanPassword);
+  }, [cleanPassword]);
+
+  const passwordsMatch = useMemo(() => {
+    return (
+      cleanPassword.length > 0 &&
+      cleanConfirmPassword.length > 0 &&
+      cleanPassword === cleanConfirmPassword
+    );
+  }, [cleanPassword, cleanConfirmPassword]);
+
+  const hasMismatchError = useMemo(() => {
+    return cleanConfirmPassword.length > 0 && !passwordsMatch;
+  }, [cleanConfirmPassword, passwordsMatch]);
+
+  const passwordsAreOk = useMemo(() => {
+    return passwordValid && passwordsMatch;
+  }, [passwordValid, passwordsMatch]);
 
   const emailStatus: FieldStatus = useMemo(() => {
-    if (errorType === 'email-exists') return 'error';
-    if (emailFocused) return 'focus';
+    if (serverError) return 'error';
     if (emailValid) return 'success';
+    if (emailFocused) return 'focus';
     return 'default';
-  }, [errorType, emailFocused, emailValid]);
+  }, [serverError, emailValid, emailFocused]);
 
   const passwordStatus: FieldStatus = useMemo(() => {
-    if (errorType === 'password-invalid' || errorType === 'password-mismatch') return 'error';
-    if (passwordFocused) return 'focus';
+    if (serverError || hasMismatchError) return 'error';
     if (passwordValid) return 'success';
+    if (passwordFocused) return 'focus';
     return 'default';
-  }, [errorType, passwordFocused, passwordValid]);
+  }, [serverError, hasMismatchError, passwordValid, passwordFocused]);
 
   const confirmStatus: FieldStatus = useMemo(() => {
-    if (errorType === 'password-mismatch') return 'error';
+    if (serverError || hasMismatchError) return 'error';
+    if (passwordsAreOk) return 'success';
     if (confirmFocused) return 'focus';
-    if (confirmValid && passwordsMatch) return 'success';
     return 'default';
-  }, [errorType, confirmFocused, confirmValid, passwordsMatch]);
-
-  const showPasswordsMatch = !serverError && passwordValid && confirmValid && passwordsMatch;
+  }, [serverError, hasMismatchError, passwordsAreOk, confirmFocused]);
 
   const isSubmitEnabled =
-    emailValid && passwordValid && confirmValid && passwordsMatch && acceptedTerms && !isLoading;
+    emailValid && passwordValid && passwordsMatch && acceptedTerms && !isLoading;
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isSubmitEnabled) return;
 
-    await onSubmit?.({
-      email: email.trim(),
-      password: password.trim(),
-      confirmPassword: confirmPassword.trim(),
+    onSubmit({
+      email: cleanEmail,
+      password: cleanPassword,
+      confirmPassword: cleanConfirmPassword,
       acceptedTerms
     });
   };
 
   return (
-    <AuthShell title="Регистрация" onClose={onClose} customStyle={{ padding: '52px 130px' }}>
+    <AuthShell title="Регистрация" onClose={onClose} customStyle={{ padding: '36px 130px' }}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <AuthField
           id="register-email"
@@ -105,8 +126,7 @@ export default function RegisterModal({
           label="Email"
           value={email}
           status={emailStatus}
-          hintTone={errorType === 'email-exists' ? 'error' : 'default'}
-          autoComplete="email"
+          hintTone={emailStatus === 'success' ? 'success' : 'default'}
           onChange={setEmail}
           onFocus={() => setEmailFocused(true)}
           onBlur={() => setEmailFocused(false)}
@@ -121,9 +141,12 @@ export default function RegisterModal({
           status={passwordStatus}
           hint={passwordHint}
           hintTone={
-            errorType === 'password-invalid' ? 'error' : showPasswordsMatch ? 'success' : 'default'
+            passwordStatus === 'error'
+              ? 'error'
+              : passwordStatus === 'success'
+                ? 'success'
+                : 'default'
           }
-          autoComplete="new-password"
           showToggle
           isPasswordVisible={showPassword}
           onToggleVisibility={() => setShowPassword((prev) => !prev)}
@@ -141,27 +164,20 @@ export default function RegisterModal({
           status={confirmStatus}
           hint={passwordHint}
           hintTone={
-            errorType === 'password-mismatch' ? 'error' : showPasswordsMatch ? 'success' : 'default'
+            confirmStatus === 'error'
+              ? 'error'
+              : confirmStatus === 'success'
+                ? 'success'
+                : 'default'
           }
-          autoComplete="new-password"
           showToggle
           isPasswordVisible={showConfirmPassword}
           onToggleVisibility={() => setShowConfirmPassword((prev) => !prev)}
           onChange={setConfirmPassword}
           onFocus={() => setConfirmFocused(true)}
           onBlur={() => setConfirmFocused(false)}
-          isLast={true}
+          isLast={false}
         />
-
-        <div className={styles.statusBlock}>
-          {errorType === 'password-mismatch' ? (
-            <p className={styles.centerError}>Пароли не совпадают</p>
-          ) : showPasswordsMatch ? (
-            <p className={styles.centerSuccess}>Пароли совпадают</p>
-          ) : (
-            <span className={styles.placeholder}>.</span>
-          )}
-        </div>
 
         <AuthCheckbox checked={acceptedTerms} onChange={setAcceptedTerms}>
           <span>
@@ -172,12 +188,24 @@ export default function RegisterModal({
           </span>
         </AuthCheckbox>
 
+        {hasMismatchError && (
+          <p className={`${styles.notifyPassword} ${styles.centerError}`}>Пароли не совпадают</p>
+        )}
+
+        {passwordsAreOk && (
+          <p className={`${styles.notifyPassword} ${styles.centerSuccess}`}>Пароли совпадают</p>
+        )}
+
         <button
           type="submit"
           className={`${styles.submitButton} ${isSubmitEnabled ? styles.submitActive : ''}`}
           disabled={!isSubmitEnabled}
         >
-          {isLoading ? <span className={styles.loader} /> : 'Создать аккаунт'}
+          {isLoading ? (
+            <img src={Loader} alt="Загрузка" className={styles.loader} />
+          ) : (
+            'Создать аккаунт'
+          )}
         </button>
 
         <AuthDivider />
