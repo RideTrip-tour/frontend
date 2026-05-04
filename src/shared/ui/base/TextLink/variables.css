@@ -1,0 +1,12 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --textlink-color: var(--color-blue);
+  --textlink-color-hover: var(--color-blue-light);
+}
+
+body[data-theme="dark"] {
+
+}

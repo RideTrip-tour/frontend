@@ -3,7 +3,7 @@
 }
 
 body[data-theme="light"] {
-  --tooltip-bg: var(--color-black);
+  --tooltip-bg: var(--color-gray-dark);
   --tooltip-text: var(--color-white);
 }
 

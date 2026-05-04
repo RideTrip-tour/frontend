@@ -26,7 +26,6 @@ const Tooltip = ({
       {visible && (
         <div className={`${style.tooltip__content} ${style[`tooltip__content--${position}`]}`}>
           {text}
-          <span className={style.tooltip__arrow} />
         </div>
       )}
     </div>

@@ -1,0 +1,12 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --page-section-bg: var(--color-white);
+  --page-section-shadow: var(--shadow-2);
+}
+
+body[data-theme="dark"] {
+
+}

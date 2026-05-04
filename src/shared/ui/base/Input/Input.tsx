@@ -11,34 +11,58 @@ import {
 interface InputProps {
   onSubmit: (value: string) => void
   validate?: (value: string) => boolean
+  onChange?: (value: string) => void
   debounce?: number
   icon?: string
   autoSubmit?: boolean
   disabled?: boolean
+  readOnly?: boolean
   placeholder?: string
   errorMessage?: string
+  value?: string
+  defaultValue?: string
+  id?: string
+  name?: string
+  label?: string
+  'aria-label'?: string
+  'aria-describedby'?: string
+  maxLength?: number
 }
 
 const Input = ({
                  validate,
                  onSubmit,
+                 onChange,
                  debounce = 1500,
                  icon,
                  autoSubmit = false,
                  disabled = false,
+                 readOnly = false,
                  placeholder = "Введите текст...",
-                 errorMessage
+                 errorMessage,
+                 value,
+                 defaultValue,
+                 id,
+                 name,
+                 label,
+                 'aria-label': ariaLabel,
+                 'aria-describedby': ariaDescribedBy,
+                 maxLength
                }: InputProps) => {
 
-  const [inputValue, setInputValue] = useState('')
+  const isControlled = value !== undefined
+
+  const [internalValue, setInternalValue] = useState(defaultValue ?? '')
   const [isValid, setIsValid] = useState(true)
   const [isFocused, setIsFocused] = useState(false)
+
+  const inputValue = isControlled ? value : internalValue
 
   const inputRef = useRef<HTMLInputElement | null>(null)
   const debounceTimeoutRef = useRef<number | null>(null)
 
   const handleWrapperClick = () => {
-    if (!disabled) {
+    if (!disabled && !readOnly) {
       inputRef.current?.focus()
     }
   }
@@ -81,8 +105,11 @@ const Input = ({
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value
 
-    setInputValue(newValue)
+    if (!isControlled) {
+      setInternalValue(newValue)
+    }
 
+    onChange?.(newValue)
     runValidation(newValue)
 
     if (autoSubmit && debounce && debounce > 0) {
@@ -92,7 +119,6 @@ const Input = ({
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-
       event.preventDefault()
 
       if (debounceTimeoutRef.current) {
@@ -105,6 +131,13 @@ const Input = ({
       }
     }
   }
+
+  useEffect(() => {
+    if (disabled && debounceTimeoutRef.current) {
+      window.clearTimeout(debounceTimeoutRef.current)
+      debounceTimeoutRef.current = null
+    }
+  }, [disabled])
 
   useEffect(() => {
     return () => {
@@ -124,6 +157,12 @@ const Input = ({
   return (
     <div className={style.inputWrapper}>
 
+      {label && (
+        <label htmlFor={id} className={style.inputLabel}>
+          {label}
+        </label>
+      )}
+
       {!isValid && errorMessage && (
         <div className={style.inputError}>
           {errorMessage}
@@ -136,14 +175,18 @@ const Input = ({
 
           {icon && (
             <span className={style.input__icon}>
-              <img src={icon} className={style.input__icon_img} alt="icon"/>
+              <img src={icon} className={style.input__icon_img} alt="icon" />
             </span>
           )}
 
           <input
             ref={inputRef}
+            id={id}
+            name={name}
             type="text"
             disabled={disabled}
+            readOnly={readOnly}
+            maxLength={maxLength}
             className={style.input__field}
             value={inputValue}
             onChange={handleChange}
@@ -151,6 +194,8 @@ const Input = ({
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             aria-invalid={!isValid}
+            aria-label={ariaLabel}
+            aria-describedby={ariaDescribedBy}
             placeholder={placeholder}
           />
 

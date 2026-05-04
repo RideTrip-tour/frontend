@@ -1,0 +1,11 @@
+:root {
+}
+
+body[data-theme="light"] {
+  --profile-photo-bg: var(--color-blue-dark-1-10);
+  --profile-photo-icon: var(--color-blue);
+}
+
+body[data-theme="dark"] {
+
+}

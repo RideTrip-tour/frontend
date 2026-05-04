@@ -6,6 +6,9 @@ body[data-theme="light"] {
   --select-bg: var(--color-white-1);
   --select-text: var(--color-gray-dark);
   --select-divider: var(--color-blue-dark-1-10);
+  --select-arrow: var(--color-black);
+  --select-hover-text: var(--color-blue);
+  --select-secondary-border: var(--color-gray)
 }
 
 body[data-theme="dark"] {

@@ -1,0 +1,26 @@
+.checkbox {
+  display: inline-flex;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox__box {
+  width: 22px;
+  height: 22px;
+
+  border-radius: 6px;
+
+  background-color: var(--checkbox-bg);
+  border: 1px solid var(--checkbox-border);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.checkbox[aria-checked="true"] .checkbox__box {
+  background-color: var(--checkbox-bg-active);
+  border-color: var(--checkbox-bg-active);
+}

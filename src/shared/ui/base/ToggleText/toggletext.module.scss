@@ -4,6 +4,7 @@
   overflow: hidden;
   border-radius: var(--radius-100);
   opacity: 0.7;
+  width: var(--toggle-width, fit-content);
 
   display: inline-flex;
   justify-content: center;
@@ -32,9 +33,9 @@
       &_text {
         color: var(--toggle-text-color);
         font-family: var(--text-font-family), sans-serif;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 20px;
+        font-size: var(--font-body-2-size);
+        font-weight: var(--font-medium);
+        line-height: var(--text-line-height-20);
         letter-spacing: 0.24px;
         white-space: nowrap;
       }
