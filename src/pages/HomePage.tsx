@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
@@ -33,18 +33,23 @@ type View =
 
 const t = { duration: 0.25, ease: 'easeInOut' } as const;
 
-const slideDownExit = {
-  initial: { opacity: 0, y: -30 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: 30 },
+const fade = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
   transition: t
 };
+
+function viewFromParam(param: string | null): View | null {
+  if (param === 'login' || param === 'register' || param === 'forgot') return param;
+  return null;
+}
 
 export function HomePage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const [view, setView] = useState<View>('login');
+  const [view, setView] = useState<View>('none');
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState('');
   const [email, setEmail] = useState('');
@@ -55,8 +60,21 @@ export function HomePage() {
     if (token) {
       setVerifyToken(token);
       setView('verify');
+      return;
+    }
+
+    const auth = viewFromParam(searchParams.get('auth'));
+    if (auth) {
+      setView(auth);
+      setServerError('');
+      setIsLoading(false);
     }
   }, [searchParams]);
+
+  const closeAuth = useCallback(() => {
+    setView('none');
+    navigate('/', { replace: true });
+  }, [navigate]);
 
   const handleUnifiedSubmit = async (
     modalView: 'login' | 'register' | 'forgot',
@@ -70,6 +88,7 @@ export function HomePage() {
 
       if (modalView === 'login') {
         await loginRequest(data.email, data.password!);
+        closeAuth();
       } else if (modalView === 'register') {
         await registerRequest({ email: data.email, password: data.password! });
         setView('registration-email-sent');
@@ -90,12 +109,12 @@ export function HomePage() {
     <div style={{ minHeight: '100vh', position: 'relative', padding: '20px' }}>
       <AnimatePresence mode="wait">
         {showUnified && (
-          <motion.div key="auth" {...slideDownExit}>
+          <motion.div key="auth" {...fade}>
             <UnifiedAuthModal
               initialView={view as 'login' | 'register' | 'forgot'}
               isLoading={isLoading}
               serverError={serverError}
-              onClose={() => setView('none')}
+              onClose={closeAuth}
               onClearError={() => setServerError('')}
               onSubmit={handleUnifiedSubmit}
             />
@@ -103,22 +122,22 @@ export function HomePage() {
         )}
 
         {view === 'registration-email-sent' && (
-          <motion.div key="reg-email-sent" {...slideDownExit}>
+          <motion.div key="reg-email-sent" {...fade}>
             <RegistrationEmailSentModal
               email={email}
               isLoading={isLoading}
               serverError={serverError}
-              onClose={() => setView('none')}
+              onClose={closeAuth}
             />
           </motion.div>
         )}
 
         {view === 'password-email-sent' && (
-          <motion.div key="password-email-sent" {...slideDownExit}>
+          <motion.div key="password-email-sent" {...fade}>
             <PasswordEmailSentModal
               email={email}
               isLoading={isLoading}
-              onClose={() => setView('none')}
+              onClose={closeAuth}
               setIsLoading={setIsLoading}
               setServerError={setServerError}
             />
@@ -126,9 +145,9 @@ export function HomePage() {
         )}
 
         {view === 'password-reset-success' && (
-          <motion.div key="password-reset-success" {...slideDownExit}>
+          <motion.div key="password-reset-success" {...fade}>
             <PasswordResetSuccessModal
-              onClose={() => setView('none')}
+              onClose={closeAuth}
               onGoToCabinet={() => setView('login')}
             />
           </motion.div>
@@ -139,7 +158,7 @@ export function HomePage() {
             <ResetPasswordModal
               isLoading={isLoading}
               serverError={serverError}
-              onClose={() => setView('none')}
+              onClose={closeAuth}
               onSubmit={async ({ password, confirmPassword }: { password: string; confirmPassword: string }) => {
                 setServerError('');
                 if (password !== confirmPassword) {
@@ -182,13 +201,10 @@ export function HomePage() {
         )}
 
         {view === 'verify' && verifyToken && (
-          <motion.div key="verify" {...slideDownExit}>
+          <motion.div key="verify" {...fade}>
             <VerifyModal
               token={verifyToken}
-              onClose={() => {
-                setView('none');
-                navigate('/', { replace: true });
-              }}
+              onClose={closeAuth}
               onComplete={(success) => {
                 setView(success ? 'registration-success' : 'registration-error');
               }}

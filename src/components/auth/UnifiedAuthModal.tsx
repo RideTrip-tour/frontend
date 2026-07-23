@@ -28,8 +28,6 @@ type FieldStatus = 'default' | 'focus' | 'success' | 'error';
 
 const passwordHint = 'Минимум 8 символов, латиница, буквы и цифры';
 
-const t = { duration: 0.25, ease: 'easeInOut' } as const;
-
 export default function UnifiedAuthModal({
   initialView = 'login',
   isLoading,
@@ -141,13 +139,21 @@ export default function UnifiedAuthModal({
   };
 
   return (
-    <div className={shellStyles.overlay}>
-      <div className={shellStyles.modal} style={{ height: '672px', overflow: 'hidden', padding: '0 130px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+    <div className={shellStyles.overlay} onClick={onClose}>
+      <motion.div
+        className={shellStyles.modal}
+        style={{ height: '672px', overflow: 'hidden', padding: '0 130px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+        initial={{ y: '100vh' }}
+        animate={{ y: 0 }}
+        exit={{ y: '100vh' }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        onClick={(e) => e.stopPropagation()}
+      >
         <button type="button" className={shellStyles.closeButton} onClick={onClose}>
           <img src={CloseIcon} alt="Закрыть" />
         </button>
 
-        <motion.h2 layout="position" className={shellStyles.title} transition={t}>
+        <h2 className={shellStyles.title}>
           <div style={{ position: 'relative', minHeight: '1.2em' }}>
             <AnimatePresence initial={false}>
               <motion.span
@@ -162,30 +168,27 @@ export default function UnifiedAuthModal({
               </motion.span>
             </AnimatePresence>
           </div>
-        </motion.h2>
+        </h2>
 
         <form className={formStyles.form} onSubmit={handleSubmit}>
-          <motion.div layout="position" transition={t}>
-            <AuthField
-              id="unified-email"
-              type="email"
-              label="Email"
-              value={email}
-              status={emailStatus}
-              hintTone={emailStatus === 'success' ? 'success' : 'default'}
-              autoComplete="email"
-              onChange={setEmail}
-              onFocus={() => setEmailFocused(true)}
-              onBlur={() => setEmailFocused(false)}
-              isLast={view === 'forgot'}
-            />
-          </motion.div>
+          <AuthField
+            id="unified-email"
+            type="email"
+            label="Email"
+            value={email}
+            status={emailStatus}
+            hintTone={emailStatus === 'success' ? 'success' : 'default'}
+            autoComplete="email"
+            onChange={setEmail}
+            onFocus={() => setEmailFocused(true)}
+            onBlur={() => setEmailFocused(false)}
+            isLast={view === 'forgot'}
+          />
 
           <AnimatePresence initial={false} mode="popLayout">
             {view === 'forgot' && (
               <motion.p
                 key="forgot-description"
-                layout="position"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeInOut' } }}
                 exit={{ opacity: 0, y: 20, transition: { duration: 0.2, ease: 'easeInOut' } }}
@@ -200,11 +203,10 @@ export default function UnifiedAuthModal({
             {view !== 'forgot' && (
               <motion.div
                 key="password-field-wrapper"
-                layout="position"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 30 }}
-                transition={t}
+                transition={{ duration: 0.25, ease: 'easeInOut' }}
               >
                 <AuthField
                   id="unified-password"
@@ -236,11 +238,10 @@ export default function UnifiedAuthModal({
             {view === 'register' && (
               <motion.div
                 key="register-extras"
-                layout="position"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 30 }}
-                transition={t}
+                transition={{ duration: 0.25, ease: 'easeInOut' }}
               >
                 <AuthField
                   id="unified-confirm-password"
@@ -273,7 +274,6 @@ export default function UnifiedAuthModal({
             {view === 'login' && (
               <motion.div
                 key="forgot-password-link"
-                layout="position"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
@@ -292,112 +292,108 @@ export default function UnifiedAuthModal({
 
           {serverError && <p className={formStyles.centerError}>{serverError}</p>}
 
-          <motion.div layout="position" transition={t}>
-            <motion.button
-              layout="position"
-              type="submit"
-              className={`${formStyles.submitButton} ${isSubmitEnabled ? formStyles.submitActive : ''}`}
-              disabled={!isSubmitEnabled || isLoading}
-              transition={t}
-            >
-              <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '48px' }}>
-                <AnimatePresence initial={false}>
-                  {isLoading ? (
-                    <motion.img
-                      key="loader"
-                      style={{ position: 'absolute' }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.15 }}
-                      src={Loader}
-                      alt="Загрузка"
-                      className={formStyles.loader}
-                    />
-                  ) : (
-                    <motion.span
-                      key={view}
-                      style={{ position: 'absolute' }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.15 }}
-                    >
-                      {view === 'login' ? 'Войти' : view === 'register' ? 'Создать аккаунт' : 'Сбросить пароль'}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.button>
+          <button
+            type="submit"
+            className={`${formStyles.submitButton} ${isSubmitEnabled ? formStyles.submitActive : ''}`}
+            disabled={!isSubmitEnabled || isLoading}
+          >
+            <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '48px' }}>
+              <AnimatePresence initial={false}>
+                {isLoading ? (
+                  <motion.img
+                    key="loader"
+                    style={{ position: 'absolute' }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                    src={Loader}
+                    alt="Загрузка"
+                    className={formStyles.loader}
+                  />
+                ) : (
+                  <motion.span
+                    key={view}
+                    style={{ position: 'absolute' }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    {view === 'login' ? 'Войти' : view === 'register' ? 'Создать аккаунт' : 'Сбросить пароль'}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </div>
+          </button>
 
-            <AuthDivider />
+          <AuthDivider />
 
-            <motion.div layout="position" className={formStyles.footerText}>
-              <div style={{ position: 'relative', minHeight: '1.2em' }}>
-                <AnimatePresence initial={false}>
-                  {view === 'login' && (
-                    <motion.span
-                      key="login"
-                      style={{ position: 'absolute', left: 0, right: 0 }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.15 }}
+          <div className={formStyles.footerText}>
+            <div style={{ position: 'relative', minHeight: '1.2em' }}>
+              <AnimatePresence initial={false}>
+                {view === 'login' && (
+                  <motion.span
+                    key="login"
+                    style={{ position: 'absolute', left: 0, right: 0 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    Нет аккаунта?{' '}
+                    <button
+                      type="button"
+                      className={formStyles.registerLink}
+                      onClick={() => switchView('register')}
                     >
-                      Нет аккаунта?{' '}
-                      <button
-                        type="button"
-                        className={formStyles.registerLink}
-                        onClick={() => switchView('register')}
-                      >
-                        Зарегистрироваться
-                      </button>
-                    </motion.span>
-                  )}
-                  {view === 'register' && (
-                    <motion.span
-                      key="register"
-                      style={{ position: 'absolute', left: 0, right: 0 }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.15 }}
+                      Зарегистрироваться
+                    </button>
+                  </motion.span>
+                )}
+                {view === 'register' && (
+                  <motion.span
+                    key="register"
+                    style={{ position: 'absolute', left: 0, right: 0 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    Уже есть аккаунт?{' '}
+                    <button
+                      type="button"
+                      className={formStyles.footerLink}
+                      onClick={() => switchView('login')}
                     >
-                      Уже есть аккаунт?{' '}
-                      <button
-                        type="button"
-                        className={formStyles.footerLink}
-                        onClick={() => switchView('login')}
-                      >
-                        Войти
-                      </button>
-                    </motion.span>
-                  )}
-                  {view === 'forgot' && (
-                    <motion.span
-                      key="forgot"
-                      style={{ position: 'absolute', left: 0, right: 0 }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.15 }}
+                      Войти
+                    </button>
+                  </motion.span>
+                )}
+                {view === 'forgot' && (
+                  <motion.span
+                    key="forgot"
+                    style={{ position: 'absolute', left: 0, right: 0 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    Вспомнили пароль?{' '}
+                    <button
+                      type="button"
+                      className={formStyles.footerLink}
+                      onClick={() => switchView('login')}
                     >
-                      Вспомнили пароль?{' '}
-                      <button
-                        type="button"
-                        className={formStyles.footerLink}
-                        onClick={() => switchView('login')}
-                      >
-                        Войти
-                      </button>
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.div>
-          </motion.div>
+                      Войти
+                    </button>
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 }
