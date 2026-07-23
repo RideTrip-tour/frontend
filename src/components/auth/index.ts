@@ -12,3 +12,4 @@ export { default as RegistrationEmailSentModal } from './RegistrationEmailSentMo
 export { default as RegistrationSuccessModal } from './RegistrationSuccessModal';
 export { default as RegistrationErrorModal } from './RegistrationErrorModal';
 export { default as VerifyModal } from './VerifyModal';
+export { default as TestMenuModal } from './TestMenuModal';

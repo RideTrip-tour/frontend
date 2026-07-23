@@ -1,11 +1,12 @@
-import axios, {type AxiosRequestConfig, AxiosError } from "axios";
+import axios from "axios";
 import { useAuthStore } from "@/store";
+import { getApiBaseUrl } from "@/api/baseUrl";
 
-const API_URL = import.meta.env.VITE_API_URL as string;
+const baseURL = getApiBaseUrl();
 
 export const http = axios.create({
-  baseURL: API_URL,
-  withCredentials: true // важно, если refresh-token в httpOnly cookie
+  baseURL,
+  withCredentials: true
 });
 
 // --- очередь refresh, чтобы не было 10 refresh параллельно
@@ -40,7 +41,7 @@ http.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      await axios.post(`${API_URL}/auth/refresh`, {}, { withCredentials: true });
+      await axios.post(`${baseURL}/auth/refresh`, {}, { withCredentials: true });
       resolvePending();
       return http(original);
     } catch (e) {

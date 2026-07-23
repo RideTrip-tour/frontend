@@ -185,7 +185,7 @@ export default function UnifiedAuthModal({
             isLast={view === 'forgot'}
           />
 
-          <AnimatePresence initial={false} mode="popLayout">
+          <AnimatePresence initial={false}>
             {view === 'forgot' && (
               <motion.p
                 key="forgot-description"
@@ -203,10 +203,11 @@ export default function UnifiedAuthModal({
             {view !== 'forgot' && (
               <motion.div
                 key="password-field-wrapper"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 30, height: 0 }}
+                animate={{ opacity: 1, y: 0, height: 'auto' }}
+                exit={{ opacity: 0, y: 30, height: 0 }}
                 transition={{ duration: 0.25, ease: 'easeInOut' }}
+                style={{ overflow: 'hidden' }}
               >
                 <AuthField
                   id="unified-password"
@@ -230,18 +231,29 @@ export default function UnifiedAuthModal({
                   onChange={setPassword}
                   onFocus={() => setPasswordFocused(true)}
                   onBlur={() => setPasswordFocused(false)}
-                  isLast={false}
+                  isLast={view === 'login'}
                 />
+
+                {view === 'login' && (
+                  <button
+                    type="button"
+                    className={formStyles.linkButton}
+                    onClick={() => switchView('forgot')}
+                  >
+                    Забыли пароль?
+                  </button>
+                )}
               </motion.div>
             )}
 
             {view === 'register' && (
               <motion.div
                 key="register-extras"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 30, height: 0 }}
+                animate={{ opacity: 1, y: 0, height: 'auto' }}
+                exit={{ opacity: 0, y: 30, height: 0 }}
                 transition={{ duration: 0.25, ease: 'easeInOut' }}
+                style={{ overflow: 'hidden' }}
               >
                 <AuthField
                   id="unified-confirm-password"
@@ -266,26 +278,6 @@ export default function UnifiedAuthModal({
                     </button>
                   </span>
                 </AuthCheckbox>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <AnimatePresence initial={false} mode="popLayout">
-            {view === 'login' && (
-              <motion.div
-                key="forgot-password-link"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2, ease: 'easeInOut' }}
-              >
-                <button
-                  type="button"
-                  className={formStyles.linkButton}
-                  onClick={() => switchView('forgot')}
-                >
-                  Забыли пароль?
-                </button>
               </motion.div>
             )}
           </AnimatePresence>

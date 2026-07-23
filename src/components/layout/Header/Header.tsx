@@ -1,10 +1,12 @@
 import { Button } from '@/shared/ui/base/Button'
 import style from './header.module.scss'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import NavItem from '@/shared/ui/base/NavItem'
+import { useAuthStore } from '@/store'
 
 export function Header() {
   const navigate = useNavigate();
+  const isAuth = useAuthStore((s) => s.isAuth);
 
   return (
     <header className={style.header}>
@@ -20,9 +22,9 @@ export function Header() {
           </nav>
 
           <Button
-            text="Авторизация"
+            text={isAuth ? 'Профиль' : 'Авторизация'}
             icon="material-symbols:arrow-forward-rounded"
-            onClick={() =>  navigate("/login") }
+            onClick={() => isAuth ? navigate('/?menu=1') : navigate('/?auth=login')}
             variant="primary"
           />
 

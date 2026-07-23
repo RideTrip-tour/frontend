@@ -61,7 +61,7 @@ export async function changePasswordRequest(data: { current_password: string; ne
 }
 
 export async function meRequest() {
-  const res = await http.get<User>("/auth/me");
+  const res = await http.get<User>("/users/me");
   return res.data;
 }
 

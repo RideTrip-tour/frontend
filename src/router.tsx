@@ -1,16 +1,14 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { ProtectedRoute } from "@/components";
 
-const HomePage = lazy(() =>
-  import("@/pages/HomePage").then((m) => ({ default: m.HomePage }))
-);
+const HomePage = lazy(() => import("@/pages/Home"));
 const LoginPage = lazy(() =>
   import("@/pages/LoginPage").then((m) => ({ default: m.LoginPage }))
 );
 const RegisterPage = lazy(() =>
   import("@/pages/RegisterPage").then((m) => ({ default: m.RegisterPage }))
 );
+
 
 export function AppRouter() {
   return (
@@ -26,8 +24,6 @@ export function AppRouter() {
         {/*    </ProtectedRoute>*/}
         {/*  }*/}
         {/*/>*/}
-
-        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>

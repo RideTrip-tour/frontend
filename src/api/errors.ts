@@ -1,4 +1,4 @@
-import { AxiosError, isAxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import type { AxiosError } from 'axios';
 import { getErrorMessage } from './authErrorCodes';
 
@@ -58,7 +58,7 @@ export function normalizeAxiosError(err: unknown): ApiError {
   if (err instanceof ApiError) return err;
 
   if (isAxiosError(err)) {
-    const e = err as AxiosError<{ message?: string; error?: string }>;
+    const e = err as AxiosError<{ detail?: unknown; message?: string; error?: string }>;
 
   // network
   if (e?.message === 'Network Error' || !e?.response) {
