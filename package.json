@@ -12,24 +12,30 @@
     "preview": "vite preview --mode production",
     "typecheck": "tsc --noEmit",
     "check:no-direct-urls": "node scripts/check-no-direct-urls.mjs",
-    "check": "npm run lint && npm run typecheck && npm run check:no-direct-urls"
+    "check": "npm run lint && npm run typecheck && npm run check:no-direct-urls",
+    "generate-api": "openapi --input https://trip.elmobil.ru/api/auth/openapi.json --output src/api",
+    "generate-api-orfal": "NODE_ENV=development orval",
+    "generate-api-orfal:prod": "NODE_ENV=production orval"
   },
   "dependencies": {
+    "@iconify/react": "^6.0.2",
     "axios": "^1.13.4",
+    "framer-motion": "^12.42.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0",
+    "sass": "^1.98.0",
     "zustand": "^5.0.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
-    "@iconify/react": "^6.0.2",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^5.1.1",
     "axios-mock-adapter": "^2.1.0",
+    "dotenv": "^17.3.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
@@ -37,10 +43,16 @@
     "install": "^0.13.0",
     "npm": "^11.11.0",
     "jsdom": "^28.0.0",
+    "openapi-typescript-codegen": "^0.30.0",
+    "orval": "^7.11.2",
     "sass-embedded": "^1.97.3",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4",
+    "vite-plugin-svgr": "^5.2.0",
     "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

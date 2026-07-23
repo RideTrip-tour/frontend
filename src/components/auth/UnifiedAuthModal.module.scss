@@ -1,0 +1,48 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #1f1f1f;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.title {
+  margin: 0 0 52px;
+  text-align: center;
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #1f1f1f;
+}

@@ -1,7 +1,10 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
+import { ProtectedRoute } from "@/components";
 
-const HomePage = lazy(() => import("@/pages/Home"));
+const HomePage = lazy(() =>
+  import("@/pages/HomePage").then((m) => ({ default: m.HomePage }))
+);
 const LoginPage = lazy(() =>
   import("@/pages/LoginPage").then((m) => ({ default: m.LoginPage }))
 );
@@ -13,6 +16,8 @@ export function AppRouter() {
   return (
     <Suspense fallback={<div>Loading page...</div>}>
       <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/users/me/" element={<HomePage />} />
         {/*<Route*/}
         {/*  path="/"*/}
         {/*  element={*/}

@@ -25,13 +25,18 @@ export function normalizeAxiosError(err: unknown): ApiError {
       });
     }
 
-    // network
-    if (e.message === 'Network Error' || !e.response) {
-      return new ApiError('Network error. Check your connection.', {
-        code: 'NETWORK',
-        details: { originalMessage: e.message }
-      });
-    }
+  // network
+  if (e?.message === 'Network Error' || !e?.response) {
+    console.log('Network error');
+    // return new ApiError('Network error. Check your connection.', {
+    //   code: 'NETWORK',
+    //   details: { originalMessage: e?.message }
+    // });
+    return new ApiError('', {
+      code: 'NETWORK',
+      details: { originalMessage: e?.message }
+    });
+  }
 
     const status = e.response.status;
     const data = e.response.data;

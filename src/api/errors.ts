@@ -1,4 +1,6 @@
 import { AxiosError, isAxiosError } from 'axios';
+import type { AxiosError } from 'axios';
+import { getErrorMessage } from './authErrorCodes';
 
 export type ApiErrorCode =
   | 'NETWORK'
@@ -48,19 +50,23 @@ function mapStatusToCode(status?: number): ApiErrorCode {
   return 'UNKNOWN';
 }
 
+export function handleApiError(err: unknown): ApiError {
+  return err instanceof ApiError ? err : normalizeAxiosError(err);
+}
+
 export function normalizeAxiosError(err: unknown): ApiError {
   if (err instanceof ApiError) return err;
 
   if (isAxiosError(err)) {
     const e = err as AxiosError<{ message?: string; error?: string }>;
 
-    // network
-    if (e.message === 'Network Error' || !e.response) {
-      return new ApiError('Network error', {
-        code: 'NETWORK',
-        url: e.config?.url
-      });
-    }
+  // network
+  if (e?.message === 'Network Error' || !e?.response) {
+    return new ApiError('Network error', {
+      code: 'NETWORK',
+      url: e?.config?.url
+    });
+  }
 
     // timeout
     if (e.code === 'ECONNABORTED' || e.code === 'ETIMEDOUT') {
@@ -70,11 +76,13 @@ export function normalizeAxiosError(err: unknown): ApiError {
       });
     }
 
-    const status = e.response?.status;
-    const data = e.response?.data;
-    const url = e.config?.url;
+  const status = e?.response?.status;
+  const data = e?.response?.data;
+  const url = e?.config?.url;
 
-    const message = data?.message || data?.error || e.message || 'Request failed';
+  const detail = data?.detail ?? data?.message ?? data?.error;
+  const translated = getErrorMessage(detail);
+  const message = translated ?? String(detail ?? e?.message ?? 'Request failed');
 
     return new ApiError(String(message), {
       status,
