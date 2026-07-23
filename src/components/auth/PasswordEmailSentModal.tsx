@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react';
 import { AuthShell } from './index';
 import styles from './AuthState.module.scss';
 import EmailIcon from '@/assets/icons/email.svg';
 import { apiClient } from '@/api/client';
-import { ApiError } from '@/api/ApiError';
+import { getErrorMessage } from '@/api/authErrorCodes';
 
 type PasswordEmailSentModalProps = {
   email: string;
@@ -19,24 +20,35 @@ export default function PasswordEmailSentModal({
   setIsLoading,
   setServerError
 }: PasswordEmailSentModalProps) {
+  const [cooldown, setCooldown] = useState(60);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setInterval(() => setCooldown((c) => c - 1), 1000);
+    return () => clearInterval(timer);
+  }, [cooldown]);
+
+  useEffect(() => {
+    setCooldown(60);
+  }, []);
+
   const handleResend = async () => {
     setServerError('');
     setIsLoading(true);
 
     try {
-      await apiClient.post('/api/auth/forgot-password', { email });
+      await apiClient.post('/auth/forgot-password', { email });
+      setCooldown(60);
     } catch (err: any) {
-      if (err.response?.data?.detail) {
-        setServerError(err.response.data.detail);
-      } else if (err instanceof ApiError) {
-        setServerError(err.message);
-      } else {
-        setServerError('Ошибка сервера');
-      }
+      const rawDetail = err.response?.data?.detail ?? err.data?.detail;
+      const translated = getErrorMessage(rawDetail);
+      setServerError(translated ?? err.message ?? 'Ошибка сервера');
     } finally {
       setIsLoading(false);
     }
   };
+
+  const disabled = isLoading || cooldown > 0;
 
   return (
     <AuthShell onClose={onClose}>
@@ -53,13 +65,8 @@ export default function PasswordEmailSentModal({
 
         <p className={styles.text}>Письмо не пришло? Проверьте папку «Спам»</p>
 
-        <button
-          type="button"
-          className={styles.linkButton}
-          onClick={handleResend}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Отправка...' : 'Отправить ещё раз'}
+        <button type="button" className={styles.linkButton} onClick={handleResend} disabled={disabled}>
+          {isLoading ? 'Отправка...' : cooldown > 0 ? `Отправить ещё раз (${cooldown}с)` : 'Отправить ещё раз'}
         </button>
       </div>
     </AuthShell>

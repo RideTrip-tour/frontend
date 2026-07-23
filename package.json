@@ -17,7 +17,9 @@
     "generate-api-orfal:prod": "NODE_ENV=production orval"
   },
   "dependencies": {
+    "@iconify/react": "^6.0.2",
     "axios": "^1.13.4",
+    "framer-motion": "^12.42.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0",

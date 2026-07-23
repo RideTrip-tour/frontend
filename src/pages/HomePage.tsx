@@ -1,17 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
-  ForgotPasswordModal,
-  LoginModal,
   PasswordEmailSentModal,
   PasswordResetSuccessModal,
-  RegisterModal,
   RegistrationEmailSentModal,
   RegistrationErrorModal,
   RegistrationSuccessModal,
-  ResetPasswordModal
+  ResetPasswordModal,
+  UnifiedAuthModal,
+  VerifyModal
 } from '../components/auth';
-import { apiClient } from '@/api/client';
-import { ApiError } from '@/api/errors';
+import {
+  loginRequest,
+  registerRequest,
+  forgotPasswordRequest,
+  resetPasswordRequest
+} from '@/services/authService';
 
 type View =
   | 'login'
@@ -22,253 +27,175 @@ type View =
   | 'password-reset-success'
   | 'registration-email-sent'
   | 'registration-success'
-  | 'registration-error';
+  | 'registration-error'
+  | 'verify'
+  | 'none';
+
+const t = { duration: 0.25, ease: 'easeInOut' } as const;
+
+const slideDownExit = {
+  initial: { opacity: 0, y: -30 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: 30 },
+  transition: t
+};
 
 export function HomePage() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const [view, setView] = useState<View>('login');
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState('');
-  const [email, setEmail] = useState(''); // нужна для Forgot/PasswordEmailSent
+  const [email, setEmail] = useState('');
+  const [verifyToken, setVerifyToken] = useState('');
 
-  const fakeDelay = () => new Promise<void>((resolve) => setTimeout(resolve, 1200));
+  useEffect(() => {
+    const token = searchParams.get('verify_token');
+    if (token) {
+      setVerifyToken(token);
+      setView('verify');
+    }
+  }, [searchParams]);
+
+  const handleUnifiedSubmit = async (
+    modalView: 'login' | 'register' | 'forgot',
+    data: { email: string; password?: string }
+  ) => {
+    setServerError('');
+    setIsLoading(true);
+
+    try {
+      setEmail(data.email);
+
+      if (modalView === 'login') {
+        await loginRequest(data.email, data.password!);
+      } else if (modalView === 'register') {
+        await registerRequest({ email: data.email, password: data.password! });
+        setView('registration-email-sent');
+      } else if (modalView === 'forgot') {
+        await forgotPasswordRequest(data.email);
+        setView('password-email-sent');
+      }
+    } catch (err: any) {
+      setServerError(err.message || 'Ошибка сервера');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const showUnified = view === 'login' || view === 'forgot' || view === 'register';
 
   return (
-    <div style={{ minHeight: '100vh', position: 'relative' }}>
-      {/* dev-кнопки */}
-      <div
-        style={{
-          position: 'fixed',
-          top: 16,
-          left: 16,
-          zIndex: 9999,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 6,
-          padding: 10,
-          background: '#111',
-          borderRadius: 8
-        }}
-      >
-        {[
-          'login',
-          'forgot',
-          'password-email-sent',
-          'reset',
-          'password-reset-success',
-          'register',
-          'registration-email-sent',
-          'registration-success',
-          'registration-error'
-        ].map((v) => (
-          <button
-            key={v}
-            onClick={() => {
-              setView(v as View);
-              setServerError('');
-              setIsLoading(false);
+    <div style={{ minHeight: '100vh', position: 'relative', padding: '20px' }}>
+      <AnimatePresence mode="wait">
+        {showUnified && (
+          <motion.div key="auth" {...slideDownExit}>
+            <UnifiedAuthModal
+              initialView={view as 'login' | 'register' | 'forgot'}
+              isLoading={isLoading}
+              serverError={serverError}
+              onClose={() => setView('none')}
+              onClearError={() => setServerError('')}
+              onSubmit={handleUnifiedSubmit}
+            />
+          </motion.div>
+        )}
+
+        {view === 'registration-email-sent' && (
+          <motion.div key="reg-email-sent" {...slideDownExit}>
+            <RegistrationEmailSentModal
+              email={email}
+              isLoading={isLoading}
+              serverError={serverError}
+              onClose={() => setView('none')}
+            />
+          </motion.div>
+        )}
+
+        {view === 'password-email-sent' && (
+          <motion.div key="password-email-sent" {...slideDownExit}>
+            <PasswordEmailSentModal
+              email={email}
+              isLoading={isLoading}
+              onClose={() => setView('none')}
+              setIsLoading={setIsLoading}
+              setServerError={setServerError}
+            />
+          </motion.div>
+        )}
+
+        {view === 'password-reset-success' && (
+          <motion.div key="password-reset-success" {...slideDownExit}>
+            <PasswordResetSuccessModal
+              onClose={() => setView('none')}
+              onGoToCabinet={() => setView('login')}
+            />
+          </motion.div>
+        )}
+
+        {view === 'reset' && (
+          <motion.div key="reset">
+            <ResetPasswordModal
+              isLoading={isLoading}
+              serverError={serverError}
+              onClose={() => setView('none')}
+              onSubmit={async ({ password, confirmPassword }: { password: string; confirmPassword: string }) => {
+                setServerError('');
+                if (password !== confirmPassword) {
+                  setServerError('Пароли не совпадают');
+                  return;
+                }
+
+                setIsLoading(true);
+                try {
+                  await resetPasswordRequest({
+                    token: 'тут_токен_из_ссылки',
+                    password
+                  });
+                  setView('password-reset-success');
+                } catch (err: any) {
+                  setServerError(err.message || 'Ошибка сервера');
+                } finally {
+                  setIsLoading(false);
+                }
+              }}
+            />
+          </motion.div>
+        )}
+
+        {view === 'registration-success' && (
+          <RegistrationSuccessModal
+            onClose={() => navigate('/', { replace: true })}
+            onHomeClick={() => navigate('/', { replace: true })}
+          />
+        )}
+
+        {view === 'registration-error' && (
+          <RegistrationErrorModal
+            onClose={() => navigate('/', { replace: true })}
+            onRetry={() => {
+              setView('register');
+              navigate('/', { replace: true });
             }}
-            style={{
-              padding: '5px 8px',
-              fontSize: 11,
-              borderRadius: 6,
-              border: 'none',
-              cursor: 'pointer',
-              background: view === v ? '#1f6fe5' : '#333',
-              color: '#fff'
-            }}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
+          />
+        )}
 
-      {/* LOGIN */}
-      {view === 'login' && (
-        <LoginModal
-          isLoading={isLoading}
-          serverError={serverError}
-          onClose={() => console.log('close')}
-          onForgotPassword={() => setView('forgot')}
-          onRegisterClick={() => setView('register')}
-          onSubmit={async ({ email: loginEmail, password }) => {
-            setServerError('');
-            setIsLoading(true);
-
-            try {
-              setEmail(loginEmail); // сохраняем email для последующих модалок
-              await apiClient.post('/api/auth/login', {
-                grant_type: 'password',
-                username: loginEmail,
-                password
-              });
-
-              console.log('Login successful');
-              // переход куда нужно
-            } catch (err: any) {
-              if (err.response?.data?.detail) setServerError(err.response.data.detail);
-              else if (err instanceof ApiError) setServerError(err.message);
-              else setServerError('Ошибка сервера');
-            } finally {
-              setIsLoading(false);
-            }
-          }}
-        />
-      )}
-
-      {/* FORGOT PASSWORD */}
-      {view === 'forgot' && (
-        <ForgotPasswordModal
-          email={email}
-          isLoading={isLoading}
-          serverError={serverError}
-          onClose={() => console.log('close')}
-          onBackToLogin={() => setView('login')}
-          onRegisterClick={() => setView('register')}
-          onSubmit={async (email) => {
-            setServerError('');
-            setIsLoading(true);
-            setEmail(email);
-
-            try {
-              await apiClient.post('/api/auth/forgot-password', { email });
-              setView('password-email-sent');
-            } catch (err: any) {
-              if (err.response?.data?.detail) setServerError(err.response.data.detail);
-              else if (err instanceof ApiError) setServerError(err.message);
-              else setServerError('Ошибка сервера');
-            } finally {
-              setIsLoading(false);
-            }
-          }}
-        />
-      )}
-
-      {/* PASSWORD EMAIL SENT */}
-      {view === 'password-email-sent' && (
-        <PasswordEmailSentModal
-          email={email}
-          isLoading={isLoading}
-          onClose={() => console.log('close')}
-          setIsLoading={setIsLoading}
-          setServerError={setServerError}
-        />
-      )}
-
-      {/* RESET PASSWORD */}
-      {view === 'reset' && (
-        <ResetPasswordModal
-          isLoading={isLoading}
-          serverError={serverError}
-          onClose={() => console.log('close')}
-          onSubmit={async ({ password, confirmPassword }) => {
-            setServerError('');
-            if (password !== confirmPassword) {
-              setServerError('Пароли не совпадают');
-              return;
-            }
-
-            setIsLoading(true);
-            try {
-              await apiClient.post('/api/auth/reset-password', {
-                token: 'тут_токен_из_ссылки', // должен быть реальный токен
-                password
-              });
-              setView('password-reset-success');
-            } catch (err: any) {
-              if (err.response?.data?.detail) setServerError(err.response.data.detail);
-              else if (err instanceof ApiError) setServerError(err.message);
-              else setServerError('Ошибка сервера');
-            } finally {
-              setIsLoading(false);
-            }
-          }}
-        />
-      )}
-
-      {/* REGISTER */}
-      {view === 'register' && (
-        <RegisterModal
-          isLoading={isLoading}
-          serverError={serverError}
-          onClose={() => console.log('close')}
-          onLoginClick={() => setView('login')}
-          onTermsClick={() => console.log('terms')}
-          onSubmit={async ({ email, password, confirmPassword, acceptedTerms }) => {
-            setServerError('');
-
-            if (!acceptedTerms) return;
-
-            setIsLoading(true);
-            try {
-              await apiClient.post('/api/auth/register', { email, password });
-              setView('registration-email-sent');
-            } catch (err: any) {
-              if (err.response?.data?.detail) setServerError(err.response.data.detail);
-              else if (err instanceof ApiError) setServerError(err.message);
-              else setServerError('Ошибка сервера');
-            } finally {
-              setIsLoading(false);
-            }
-          }}
-        />
-      )}
-
-      {/* OTHER MODALS */}
-      {view === 'password-reset-success' && (
-        <PasswordResetSuccessModal
-          onClose={() => console.log('close')}
-          onGoToCabinet={() => setView('login')}
-        />
-      )}
-
-      {view === 'registration-email-sent' && (
-        <RegistrationEmailSentModal
-          email={email}
-          isLoading={isLoading}
-          serverError={serverError}
-          onClose={() => console.log('close')}
-          onResend={async () => {
-            setServerError('');
-            setIsLoading(true);
-
-            try {
-              // ВАЖНО:
-              // По текущему openapi отдельной ручки resend verification email нет.
-              // Когда бэк добавит endpoint, сюда нужно будет поставить реальный запрос.
-
-              throw new Error(
-                'Эндпоинт повторной отправки письма подтверждения не найден в текущем API'
-              );
-            } catch (err: any) {
-              if (err.response?.data?.detail) {
-                setServerError(err.response.data.detail);
-              } else if (err instanceof ApiError) {
-                setServerError(err.message);
-              } else {
-                setServerError(
-                  'Для повторной отправки письма бэкенд пока не предоставляет отдельную ручку'
-                );
-              }
-            } finally {
-              setIsLoading(false);
-            }
-          }}
-        />
-      )}
-
-      {view === 'registration-success' && (
-        <RegistrationSuccessModal
-          onClose={() => console.log('close')}
-          onHomeClick={() => console.log('home')}
-        />
-      )}
-
-      {view === 'registration-error' && (
-        <RegistrationErrorModal
-          onClose={() => console.log('close')}
-          onRetry={() => setView('register')}
-        />
-      )}
+        {view === 'verify' && verifyToken && (
+          <motion.div key="verify" {...slideDownExit}>
+            <VerifyModal
+              token={verifyToken}
+              onClose={() => {
+                setView('none');
+                navigate('/', { replace: true });
+              }}
+              onComplete={(success) => {
+                setView(success ? 'registration-success' : 'registration-error');
+              }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

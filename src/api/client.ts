@@ -17,7 +17,6 @@ export const apiClient = axios.create({
   }
 });
 
-// отдельный клиент для refresh
 const refreshClient = axios.create({
   baseURL,
   timeout: 10_000,
@@ -28,25 +27,13 @@ const refreshClient = axios.create({
   }
 });
 
-// refresh очередь
 let isRefreshing = false;
-let waiters: Array<(token: string | null) => void> = [];
+let waiters: Array<() => void> = [];
 
-function resolveWaiters(token: string | null) {
-  waiters.forEach((cb) => cb(token));
+function resolveWaiters() {
+  waiters.forEach((cb) => cb());
   waiters = [];
 }
-
-apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const token = useAuthStore.getState().token;
-
-  if (token) {
-    config.headers = config.headers ?? {};
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-
-  return config;
-});
 
 apiClient.interceptors.response.use(
   (res) => res,
@@ -67,7 +54,6 @@ apiClient.interceptors.response.use(
 
     const url = String(original.url || '');
 
-    // ---- не refresh кейсы ----
     if (status !== 401 || original._retry || url.includes('/auth/refresh')) {
       const apiErr = normalizeAxiosError(err);
 
@@ -84,63 +70,28 @@ apiClient.interceptors.response.use(
 
     original._retry = true;
 
-    // ---- refresh уже выполняется ----
     if (isRefreshing) {
-      const token = await new Promise<string | null>((resolve) => waiters.push(resolve));
-
-      if (!token) {
+      const ok = await new Promise<boolean>((resolve) => waiters.push(() => resolve(true)));
+      if (!ok) {
         useAuthStore.getState().logout();
         const apiErr = new ApiError('Session expired', { status: 401 });
         notifyGlobal(apiErr.message);
         throw apiErr;
       }
-
-      original.headers = original.headers ?? {};
-      original.headers.Authorization = `Bearer ${token}`;
-
       return apiClient(original);
     }
 
-    // ---- запускаем refresh ----
     isRefreshing = true;
 
     try {
-      const res = await refreshClient.post('/auth/refresh', {});
-
-      const newToken: string | undefined = res.data?.token;
-
-      if (!newToken) {
-        resolveWaiters(null);
-        useAuthStore.getState().logout();
-
-        const apiErr = new ApiError('Session expired', {
-          status: 401
-        });
-
-        notifyGlobal(apiErr.message);
-        throw apiErr;
-      }
-
-      const prevUser = useAuthStore.getState().user;
-
-      useAuthStore.getState().login({
-        token: newToken,
-        user: res.data?.user ?? prevUser
-      });
-
-      resolveWaiters(newToken);
-
-      original.headers = original.headers ?? {};
-      original.headers.Authorization = `Bearer ${newToken}`;
-
+      await refreshClient.post('/auth/refresh', {});
+      resolveWaiters();
       return apiClient(original);
     } catch (e) {
-      resolveWaiters(null);
+      resolveWaiters();
       useAuthStore.getState().logout();
-
       const apiErr = normalizeAxiosError(e);
       notifyGlobal(apiErr.message);
-
       throw apiErr;
     } finally {
       isRefreshing = false;

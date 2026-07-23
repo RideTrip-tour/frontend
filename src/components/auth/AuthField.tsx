@@ -1,7 +1,6 @@
-import { useId } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
+import { Icon } from '@iconify/react';
 import styles from './AuthForm.module.scss';
-import EyeIcon from '@/assets/icons/eye.svg';
-import NonEyeIcon from '@/assets/icons/non-eye.svg';
 
 export type AuthFieldStatus = 'default' | 'focus' | 'success' | 'error';
 
@@ -44,11 +43,28 @@ export default function AuthField({
   onBlur,
   isLast
 }: Props) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [autofillActive, setAutofillActive] = useState(false);
+
   const generatedId = useId();
   const inputId = id ?? generatedId;
   const inputType = type === 'password' ? (isPasswordVisible ? 'text' : 'password') : type;
 
-  const isFloating = value.length > 0 || status === 'focus';
+  const isFloating = value.length > 0 || status === 'focus' || autofillActive;
+
+  useEffect(() => {
+    const input = inputRef.current;
+    if (!input) return;
+
+    const handleInput = () => {
+      const nv = input.value;
+      if (nv) setAutofillActive(false);
+      if (nv !== value) onChange(nv);
+    };
+
+    input.addEventListener('input', handleInput);
+    return () => input.removeEventListener('input', handleInput);
+  }, [value, onChange]);
 
   return (
     <div className={`${styles.fieldGroup} ${isLast ? styles.lastFieldGroup : ''}`}>
@@ -64,19 +80,26 @@ export default function AuthField({
         }`}
       >
         <input
+          ref={inputRef}
           id={inputId}
           name={name}
           type={inputType}
           className={styles.input}
-          value={value}
-          placeholder={isFloating ? '' : placeholder}
           autoComplete={autoComplete}
-          onChange={(e) => onChange(e.target.value)}
+          placeholder={isFloating ? '' : placeholder}
+          onAnimationStart={(e) => {
+            if (e.animationName.includes('autofill')) {
+              setAutofillActive(true);
+            }
+          }}
+          onChange={(e) => {
+            setAutofillActive(false);
+            onChange(e.target.value);
+          }}
           onFocus={onFocus}
           onBlur={onBlur}
         />
 
-        {/* надо подправить TODO */}
         <label
           htmlFor={inputId}
           className={`${styles.floatingLabel} ${isFloating ? styles.floating : ''} ${
@@ -94,9 +117,9 @@ export default function AuthField({
             aria-label={isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'}
           >
             {isPasswordVisible ? (
-              <img src={EyeIcon} alt="Закрыть просмотр пароля" />
+              <Icon icon="mdi:eye" width="24" height="24" />
             ) : (
-              <img src={NonEyeIcon} alt="Открыть просмотр пароля" />
+              <Icon icon="mdi:eye-off" width="24" height="24" />
             )}
           </button>
         )}

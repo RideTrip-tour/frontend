@@ -5,6 +5,7 @@ import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   plugins: [react(), svgr()],
+  optimizeDeps: { include: ['@iconify/react'] },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')

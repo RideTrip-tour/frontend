@@ -13,7 +13,7 @@ export function getApiBaseUrl(): string {
   const prefix = (import.meta.env.VITE_API_PREFIX as string | undefined) ?? '';
 
   if (!url) {
-    throw new Error('VITE_API_URL is not defined');
+    return normalizePrefix(prefix);
   }
 
   return `${normalizeUrl(url)}${normalizePrefix(prefix)}`;

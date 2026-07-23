@@ -1,7 +1,7 @@
+import { useEffect, useState } from 'react';
 import { AuthShell } from './index';
 import styles from './AuthState.module.scss';
 import EmailIcon from '@/assets/icons/email.svg';
-import Loader from '@/assets/icons/loader.svg';
 
 type RegistrationEmailSentModalProps = {
   email: string;
@@ -18,6 +18,26 @@ export default function RegistrationEmailSentModal({
   onClose,
   onResend
 }: RegistrationEmailSentModalProps) {
+  const [cooldown, setCooldown] = useState(60);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setInterval(() => setCooldown((c) => c - 1), 1000);
+    return () => clearInterval(timer);
+  }, [cooldown]);
+
+  useEffect(() => {
+    setCooldown(60);
+  }, []);
+
+  const handleResend = async () => {
+    if (!onResend) return;
+    await onResend();
+    setCooldown(60);
+  };
+
+  const disabled = isLoading || cooldown > 0;
+
   return (
     <AuthShell onClose={onClose}>
       <div className={styles.centerContent}>
@@ -39,12 +59,8 @@ export default function RegistrationEmailSentModal({
 
         {serverError && <p className={styles.centerError}>{serverError}</p>}
 
-        <button type="button" className={styles.linkButton} onClick={onResend} disabled={isLoading}>
-          {isLoading ? (
-            <img src={Loader} alt="Загрузка" className={styles.loader} />
-          ) : (
-            'Отправить ещё раз'
-          )}
+        <button type="button" className={styles.linkButton} onClick={handleResend} disabled={disabled}>
+          {isLoading ? 'Отправка...' : cooldown > 0 ? `Отправить ещё раз (${cooldown}с)` : 'Отправить ещё раз'}
         </button>
       </div>
     </AuthShell>

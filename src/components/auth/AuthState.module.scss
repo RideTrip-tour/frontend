@@ -57,3 +57,19 @@
 .linkButton {
   font-size: 14px;
 }
+
+.loader {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 24px;
+  border: 3px solid #e0e4ea;
+  border-top-color: #0e68d4;
+  border-radius: 50%;
+  animation: spin 0.85s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
