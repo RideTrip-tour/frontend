@@ -35,6 +35,10 @@ export async function forgotPasswordRequest(email: string) {
   }
 }
 
+export async function resendForgotPasswordEmail(email: string) {
+  await apiClient.post("/auth/forgot-password", { email });
+}
+
 export async function resetPasswordRequest(data: { token: string; password: string }) {
   try {
     await apiClient.post("/auth/reset-password", data);
@@ -73,7 +77,21 @@ export async function logoutRequest() {
   }
 }
 
-export async function createProfileRequest(data: any) {
+export type ProfileData = {
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  age: number;
+  about_me: string;
+  activities: string[];
+  country: string;
+  city: string;
+  citizenship: string;
+  currency: string;
+  avatar_url: string;
+};
+
+export async function createProfileRequest(data: ProfileData) {
   try {
     const res = await apiClient.post("/profile/", data);
     return res.data;

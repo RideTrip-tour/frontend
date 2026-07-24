@@ -1,6 +1,11 @@
 import axios from "axios";
+import type { InternalAxiosRequestConfig } from "axios";
 import { useAuthStore } from "@/store";
 import { getApiBaseUrl } from "@/api/baseUrl";
+
+type RetryConfig = InternalAxiosRequestConfig & {
+  _retry?: boolean;
+};
 
 const baseURL = getApiBaseUrl();
 
@@ -22,7 +27,7 @@ function resolvePending() {
 http.interceptors.response.use(
   (res) => res,
   async (error) => {
-    const original = error.config as any;
+    const original = error.config as RetryConfig;
     const status = error?.response?.status;
 
     if (status !== 401 || original?._retry) {

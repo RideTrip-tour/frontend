@@ -15,8 +15,8 @@ export function ProfileTestForm() {
     currency: 'RUB',
     avatar_url: ''
   });
-  const [response, setResponse] = useState<any>(null);
-  const [error, setError] = useState<any>(null);
+  const [response, setResponse] = useState<unknown>(null);
+  const [error, setError] = useState<unknown>(null);
 
   const handlePost = async () => {
     setError(null);
@@ -46,7 +46,7 @@ export function ProfileTestForm() {
             onChange={(e) => {
                 try {
                     setData(JSON.parse(e.target.value));
-                } catch (err) {
+                } catch {
                     console.error('Invalid JSON');
                 }
             }}
@@ -56,8 +56,8 @@ export function ProfileTestForm() {
             <button onClick={handlePost}>POST</button>
             <button onClick={handleGet}>GET me</button>
         </div>
-        {response && <pre style={{ fontSize: '10px', background: '#eee', marginTop: '10px', padding: '5px', maxHeight: '100px', overflow: 'auto' }}>{JSON.stringify(response, null, 2)}</pre>}
-        {error && <pre style={{ fontSize: '10px', color: 'red', marginTop: '10px', padding: '5px' }}>{JSON.stringify(error, null, 2)}</pre>}
+        {response !== null && response !== undefined && <pre style={{ fontSize: '10px', background: '#eee', marginTop: '10px', padding: '5px', maxHeight: '100px', overflow: 'auto' }}>{JSON.stringify(response, null, 2)}</pre>}
+        {error !== null && error !== undefined && <pre style={{ fontSize: '10px', color: 'red', marginTop: '10px', padding: '5px' }}>{JSON.stringify(error, null, 2)}</pre>}
     </div>
   );
 }

@@ -103,8 +103,8 @@ function HomePage() {
         await forgotPasswordRequest(data.email);
         setView('password-email-sent');
       }
-    } catch (err: any) {
-      setServerError(err.message || 'Ошибка сервера');
+    } catch (err) {
+      setServerError(err instanceof Error ? err.message : 'Ошибка сервера');
     } finally {
       setIsLoading(false);
     }

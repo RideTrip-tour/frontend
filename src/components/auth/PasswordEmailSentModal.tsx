@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { AuthShell } from './index';
 import styles from './AuthState.module.scss';
 import EmailIcon from '@/assets/icons/email.svg';
-import { apiClient } from '@/api/client';
-import { getErrorMessage } from '@/api/authErrorCodes';
+import { resendForgotPasswordEmail } from '@/services/authService';
 
 type PasswordEmailSentModalProps = {
   email: string;
@@ -37,12 +36,10 @@ export default function PasswordEmailSentModal({
     setIsLoading(true);
 
     try {
-      await apiClient.post('/auth/forgot-password', { email });
+      await resendForgotPasswordEmail(email);
       setCooldown(60);
-    } catch (err: any) {
-      const rawDetail = err.response?.data?.detail ?? err.data?.detail;
-      const translated = getErrorMessage(rawDetail);
-      setServerError(translated ?? err.message ?? 'Ошибка сервера');
+    } catch (err) {
+      setServerError(err instanceof Error ? err.message : 'Ошибка сервера');
     } finally {
       setIsLoading(false);
     }

@@ -26,10 +26,6 @@ export default function RegistrationEmailSentModal({
     return () => clearInterval(timer);
   }, [cooldown]);
 
-  useEffect(() => {
-    setCooldown(60);
-  }, []);
-
   const handleResend = async () => {
     if (!onResend) return;
     await onResend();
