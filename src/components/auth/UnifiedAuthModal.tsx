@@ -29,13 +29,13 @@ type FieldStatus = 'default' | 'focus' | 'success' | 'error';
 const passwordHint = 'Минимум 8 символов, латиница, буквы и цифры';
 
 export default function UnifiedAuthModal({
-  initialView = 'login',
-  isLoading,
-  serverError,
-  onClose,
-  onClearError,
-  onSubmit
-}: UnifiedAuthModalProps) {
+                                           initialView = 'login',
+                                           isLoading,
+                                           serverError,
+                                           onClose,
+                                           onClearError,
+                                           onSubmit
+                                         }: UnifiedAuthModalProps) {
   const [view, setView] = useState<'login' | 'register' | 'forgot'>(initialView);
 
   const [email, setEmail] = useState('');
@@ -138,6 +138,12 @@ export default function UnifiedAuthModal({
     setView(newView);
   };
 
+  const contentHeight = useMemo(() => {
+    if (view === 'login') return 120;
+    if (view === 'register') return 250;
+    return 50;
+  }, [view]);
+
   return (
     <div className={shellStyles.overlay} onClick={onClose}>
       <motion.div
@@ -182,59 +188,53 @@ export default function UnifiedAuthModal({
             onChange={setEmail}
             onFocus={() => setEmailFocused(true)}
             onBlur={() => setEmailFocused(false)}
-            isLast={view === 'forgot'}
+            isLast={false}
           />
 
-          <AnimatePresence initial={false}>
-            {view === 'forgot' && (
-              <motion.p
-                key="forgot-description"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeInOut' } }}
-                exit={{ opacity: 0, y: 20, transition: { duration: 0.2, ease: 'easeInOut' } }}
-                className={formStyles.description}
-              >
-                Мы отправим ссылку для создания
-                <br />
-                нового пароля.
-              </motion.p>
-            )}
+          <motion.div
+            animate={{ height: contentHeight }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            style={{ position: 'relative' }}
+          >
+            <AnimatePresence initial={false}>
+              {view === 'forgot' && (
+                <motion.p
+                  key="forgot-description"
+                  initial={{ opacity: 0, y: 100 }}
+                  animate={{ opacity: 1, y: 0, position: 'absolute', left: 0, right: 0 }}
+                  exit={{ opacity: 0, y: 100 }}
+                  transition={{ duration: 0.25, ease: 'easeInOut' }}
+                  className={formStyles.description}
+                >
+                  Мы отправим ссылку для создания
+                  <br />
+                  нового пароля.
+                </motion.p>
+              )}
 
-            {view !== 'forgot' && (
-              <motion.div
-                key="password-field-wrapper"
-                initial={{ opacity: 0, y: 30, height: 0 }}
-                animate={{ opacity: 1, y: 0, height: 'auto' }}
-                exit={{ opacity: 0, y: 30, height: 0 }}
-                transition={{ duration: 0.25, ease: 'easeInOut' }}
-                style={{ overflow: 'hidden' }}
-              >
-                <AuthField
-                  id="unified-password"
-                  type="password"
-                  label="Пароль"
-                  value={password}
-                  status={passwordStatus}
-                  hint={view === 'register' ? passwordHint : undefined}
-                  hintTone={
-                    view === 'register'
-                      ? passwordStatus === 'error'
-                        ? 'error'
-                        : passwordStatus === 'success'
-                          ? 'success'
-                          : 'default'
-                      : 'default'
-                  }
-                  showToggle
-                  isPasswordVisible={showPassword}
-                  onToggleVisibility={() => setShowPassword((p) => !p)}
-                  onChange={setPassword}
-                  onFocus={() => setPasswordFocused(true)}
-                  onBlur={() => setPasswordFocused(false)}
-                  isLast={view === 'login'}
-                />
+              {view === 'login' && (
+                <motion.div
+                  key="login-password"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0, position: 'absolute', left: 0, right: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.25, ease: 'easeInOut' }}
+                >
+                  <AuthField
+                    id="unified-password"
+                    type="password"
+                    label="Пароль"
+                    value={password}
+                    status={passwordStatus}
+                    showToggle
+                    isPasswordVisible={showPassword}
+                    onToggleVisibility={() => setShowPassword((p) => !p)}
+                    onChange={setPassword}
+                    onFocus={() => setPasswordFocused(true)}
+                    onBlur={() => setPasswordFocused(false)}
+                    isLast
+                  />
 
-                {view === 'login' && (
                   <button
                     type="button"
                     className={formStyles.linkButton}
@@ -242,45 +242,67 @@ export default function UnifiedAuthModal({
                   >
                     Забыли пароль?
                   </button>
-                )}
-              </motion.div>
-            )}
+                </motion.div>
+              )}
 
-            {view === 'register' && (
-              <motion.div
-                key="register-extras"
-                initial={{ opacity: 0, y: 30, height: 0 }}
-                animate={{ opacity: 1, y: 0, height: 'auto' }}
-                exit={{ opacity: 0, y: 30, height: 0 }}
-                transition={{ duration: 0.25, ease: 'easeInOut' }}
-                style={{ overflow: 'hidden' }}
-              >
-                <AuthField
-                  id="unified-confirm-password"
-                  type="password"
-                  label="Повторите пароль"
-                  value={confirmPassword}
-                  status={confirmStatus}
-                  showToggle
-                  isPasswordVisible={showConfirmPassword}
-                  onToggleVisibility={() => setShowConfirmPassword((p) => !p)}
-                  onChange={setConfirmPassword}
-                  onFocus={() => setConfirmFocused(true)}
-                  onBlur={() => setConfirmFocused(false)}
-                  isLast={false}
-                />
+              {view === 'register' && (
+                <motion.div
+                  key="register-fields"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0, position: 'absolute', left: 0, right: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.25, ease: 'easeInOut' }}
+                >
+                  <AuthField
+                    id="unified-password"
+                    type="password"
+                    label="Пароль"
+                    value={password}
+                    status={passwordStatus}
+                    hint={passwordHint}
+                    hintTone={
+                      passwordStatus === 'error'
+                        ? 'error'
+                        : passwordStatus === 'success'
+                          ? 'success'
+                          : 'default'
+                    }
+                    showToggle
+                    isPasswordVisible={showPassword}
+                    onToggleVisibility={() => setShowPassword((p) => !p)}
+                    onChange={setPassword}
+                    onFocus={() => setPasswordFocused(true)}
+                    onBlur={() => setPasswordFocused(false)}
+                    isLast={false}
+                  />
 
-                <AuthCheckbox checked={acceptedTerms} onChange={setAcceptedTerms}>
-                  <span>
-                    Я соглашаюсь с{' '}
-                    <button type="button" className={formStyles.linkButtonInline} onClick={() => console.log('terms')}>
-                      Условиями использования
-                    </button>
-                  </span>
-                </AuthCheckbox>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                  <AuthField
+                    id="unified-confirm-password"
+                    type="password"
+                    label="Повторите пароль"
+                    value={confirmPassword}
+                    status={confirmStatus}
+                    showToggle
+                    isPasswordVisible={showConfirmPassword}
+                    onToggleVisibility={() => setShowConfirmPassword((p) => !p)}
+                    onChange={setConfirmPassword}
+                    onFocus={() => setConfirmFocused(true)}
+                    onBlur={() => setConfirmFocused(false)}
+                    isLast={false}
+                  />
+
+                  <AuthCheckbox checked={acceptedTerms} onChange={setAcceptedTerms}>
+                    <span>
+                      Я соглашаюсь с{' '}
+                      <button type="button" className={formStyles.linkButtonInline} onClick={() => console.log('terms')}>
+                        Условиями использования
+                      </button>
+                    </span>
+                  </AuthCheckbox>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
 
           {serverError && <p className={formStyles.centerError}>{serverError}</p>}
 
@@ -288,6 +310,7 @@ export default function UnifiedAuthModal({
             type="submit"
             className={`${formStyles.submitButton} ${isSubmitEnabled ? formStyles.submitActive : ''}`}
             disabled={!isSubmitEnabled || isLoading}
+            style={{ position: 'relative', zIndex: 10 }}
           >
             <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '48px' }}>
               <AnimatePresence initial={false}>
