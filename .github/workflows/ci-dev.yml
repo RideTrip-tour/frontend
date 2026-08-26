@@ -141,6 +141,15 @@ jobs:
           SHORT_SHA="${GITHUB_SHA::7}"
           RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
 
+          PR_AUTHOR="$(
+            gh api \
+              "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls" \
+              --jq '.[0].user.login' \
+              2>/dev/null || true
+          )"
+
+          PR_AUTHOR="${PR_AUTHOR:-Direct push}"
+
           MESSAGE="✅ DEPLOY SUCCESS
 
           Service: ${SERVICE_NAME}
@@ -149,6 +158,7 @@ jobs:
           Commit: ${SHORT_SHA}
           Branch: ${GITHUB_REF_NAME}
 
+          👤 PR author: ${PR_AUTHOR}
           👤 Triggered by: ${GITHUB_ACTOR}
 
           🐳 Image:
@@ -178,6 +188,15 @@ jobs:
           SHORT_SHA="${GITHUB_SHA::7}"
           RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
 
+          PR_AUTHOR="$(
+            gh api \
+              "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls" \
+              --jq '.[0].user.login' \
+              2>/dev/null || true
+          )"
+
+          PR_AUTHOR="${PR_AUTHOR:-Direct push}"
+
           MESSAGE="❌ DEPLOY FAILED
 
           Service: ${SERVICE_NAME}
@@ -185,7 +204,8 @@ jobs:
           Version: dev-${SHORT_SHA}
           Commit: ${SHORT_SHA}
           Branch: ${GITHUB_REF_NAME}
-
+          
+          👤 PR author: ${PR_AUTHOR}
           👤 Triggered by: ${GITHUB_ACTOR}
 
           💥 Failed step:
