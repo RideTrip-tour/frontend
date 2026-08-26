@@ -144,7 +144,7 @@ jobs:
 
           PR_INFO="$(
             gh api \
-              "repos/${GITHUB_REPOSITORY}/pulls?state=closed&base=${GITHUB_REF_NAME}&per_page=100" \
+              "repos/${GITHUB_REPOSITORY}/pulls?state=closed&base=${GITHUB_REF_NAME}&per_page=100" |
               --jq --arg sha "$GITHUB_SHA" '
                 .[]
                 | select(.merged_at != null)
@@ -210,6 +210,8 @@ jobs:
         run: |
           FAILED_JOB="Unknown"
 
+          if [[ "${{ needs.check_build.result }}" == "failure" ]]; then
+            FAILED_JOB="Build/Push"
           if [[ "${{ needs.build_push.result }}" == "failure" ]]; then
             FAILED_JOB="Build/Push"
           elif [[ "${{ needs.deploy.result }}" == "failure" ]]; then
@@ -221,7 +223,7 @@ jobs:
 
           PR_INFO="$(
             gh api \
-              "repos/${GITHUB_REPOSITORY}/pulls?state=closed&base=${GITHUB_REF_NAME}&per_page=100" \
+              "repos/${GITHUB_REPOSITORY}/pulls?state=closed&base=${GITHUB_REF_NAME}&per_page=100" |
               --jq --arg sha "$GITHUB_SHA" '
                 .[]
                 | select(.merged_at != null)
