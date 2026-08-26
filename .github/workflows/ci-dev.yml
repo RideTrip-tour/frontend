@@ -145,8 +145,7 @@ jobs:
           PR_INFO="$(
             gh api \
               "repos/${GITHUB_REPOSITORY}/pulls?state=closed&base=${GITHUB_REF_NAME}&per_page=100" \
-              --jq --arg sha "$GITHUB_SHA" '.[] | "\(.number)|\(.title)|\(.user.login)"' |
-              head -n 1
+              --jq '.[] | select(.merged_at != null) | select(.merge_commit_sha == env.GITHUB_SHA) | "\(.number)|\(.title)|\(.user.login)"'
           )"
 
           if [[ -n "$PR_INFO" ]]; then
@@ -219,8 +218,7 @@ jobs:
           PR_INFO="$(
             gh api \
               "repos/${GITHUB_REPOSITORY}/pulls?state=closed&base=${GITHUB_REF_NAME}&per_page=100" \
-              --jq --arg sha "$GITHUB_SHA" '.[] | "\(.number)|\(.title)|\(.user.login)"' |
-              head -n 1
+              --jq '.[] | select(.merged_at != null) | select(.merge_commit_sha == env.GITHUB_SHA) | "\(.number)|\(.title)|\(.user.login)"'
           )"
 
           if [[ -n "$PR_INFO" ]]; then
