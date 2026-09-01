@@ -6,6 +6,10 @@ export { default as AuthDivider } from './AuthDivider';
 export { default as UnifiedAuthModal } from './UnifiedAuthModal';
 export { default as ResetPasswordModal } from './ResetPasswordModal';
 
+export { default as ChangePasswordModal } from './ChangePasswordModal';
+export { default as ChangeEmailModal } from './ChangeEmailModal';
+export { default as EmailChangeSentModal } from './EmailChangeSentModal';
+
 export { default as PasswordEmailSentModal } from './PasswordEmailSentModal';
 export { default as PasswordResetSuccessModal } from './PasswordResetSuccessModal';
 export { default as RegistrationEmailSentModal } from './RegistrationEmailSentModal';

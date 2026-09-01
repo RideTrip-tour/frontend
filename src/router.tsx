@@ -1,10 +1,12 @@
 import {lazy, Suspense} from 'react'
 import {Routes, Route} from 'react-router-dom'
-import ProfilePage from '@/pages/Profile'
-import ProfileSettingsPage from '@/pages/Profile/ProfileSettingsPage'
 import PaddedLayout from '@/components/layout/PaddedLayout'
 
-const HomePage = lazy(() => import('@/pages/Home'))
+const HomePage = lazy(() => import("@/pages/Home"));
+const ProfilePage = lazy(() => import("@/pages/Profile"));
+const ProfileSettingsPage = lazy(() =>
+  import("@/pages/Profile/ProfileSettingsPage")
+);
 const LoginPage = lazy(() =>
   import('@/pages/LoginPage').then((m) => ({default: m.LoginPage}))
 )
