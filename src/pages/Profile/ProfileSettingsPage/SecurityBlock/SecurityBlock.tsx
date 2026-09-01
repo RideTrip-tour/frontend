@@ -161,6 +161,7 @@ function SecurityBlock() {
       </div>
 
       <ChangePhoneModal
+        key={isPhoneModalOpen ? `open-${phone}` : 'closed'}
         isOpen={isPhoneModalOpen}
         currentPhone={phone}
         isLoading={phoneLoading}

@@ -7,7 +7,7 @@ import Checkbox from '@/shared/ui/base/Checkbox'
 import ToggleText from '@/shared/ui/base/ToggleText/ToggleText'
 import Divider from '@/shared/ui/base/Divider'
 import PersonalBlock from '@/shared/ui/page/Profile/PersonalBlock'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import type { Option } from '@/shared/ui/base/Select/Select.tsx'
 import SkillQuiz from '@/pages/Profile/ProfileSteps/SkillQuiz'
 import ModalChildren from '@/shared/ui/base/ModalChildren'
@@ -140,20 +140,22 @@ function ProfileSteps() {
   const [draftTrip, setDraftTrip] = useState<TripData>(savedTrip)
   const [isQuizOpen, setIsQuizOpen] = useState(false)
 
-  useEffect(() => {
-    if (editingStep !== null) return
+  const [prevPersonal, setPrevPersonal] = useState(savedPersonal)
+  const [prevPreferences, setPrevPreferences] = useState(savedPreferences)
+  const [prevTrip, setPrevTrip] = useState(savedTrip)
+
+  if (editingStep === null && prevPersonal !== savedPersonal) {
+    setPrevPersonal(savedPersonal)
     setDraftPersonal(savedPersonal)
-  }, [savedPersonal, editingStep])
-
-  useEffect(() => {
-    if (editingStep !== null) return
+  }
+  if (editingStep === null && prevPreferences !== savedPreferences) {
+    setPrevPreferences(savedPreferences)
     setDraftPreferences(savedPreferences)
-  }, [savedPreferences, editingStep])
-
-  useEffect(() => {
-    if (editingStep !== null) return
+  }
+  if (editingStep === null && prevTrip !== savedTrip) {
+    setPrevTrip(savedTrip)
     setDraftTrip(savedTrip)
-  }, [savedTrip, editingStep])
+  }
 
   const startEditing = (step: number) => {
     if (step === 1) {

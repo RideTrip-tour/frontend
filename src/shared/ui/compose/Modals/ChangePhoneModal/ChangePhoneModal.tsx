@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import ModalShell from '@/shared/ui/base/ModalShell'
 import ModalForm from '@/shared/ui/base/ModalForm'
 import ModalButton from '@/shared/ui/base/ModalButton'
@@ -29,10 +29,6 @@ const ChangePhoneModal = ({
   onSubmit
 }: ChangePhoneModalProps) => {
   const [phone, setPhone] = useState(currentPhone)
-
-  useEffect(() => {
-    if (isOpen) setPhone(currentPhone)
-  }, [isOpen, currentPhone])
 
   const valid = isPhoneValid(phone)
   const trimmed = phone.trim()
