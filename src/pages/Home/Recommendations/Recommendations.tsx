@@ -1,5 +1,5 @@
 import style from './recommendations.module.scss'
-import Toggle from '@/shared/ui/base/Toggle'
+import ToggleText from '@/shared/ui/base/ToggleText/ToggleText'
 import ResortSlider from '@/shared/ui/compose/ResortSlider'
 import type {BigResortCardProps} from '@/shared/ui/compose/BigResortCard/BigResortCard.tsx'
 import BigResortCard from '@/shared/ui/compose/BigResortCard/BigResortCard.tsx'
@@ -127,28 +127,17 @@ function Recommendations() {
     <>
       <div className={style.recommendations}>
         <div className={style.recommendations__title}>
-          <div className={style.recommendations__title_big}>
-            Туры для вас
-          </div>
-          <div className={style.recommendations__title_small}>
-            Найди свое идеальное путешествие
-          </div>
+          Итак, ваше путешествие
         </div>
         <div className={style.recommendations__text}>
-          Выберите направление, уровень и формат отдыха — и найдите подходящий тур за несколько минут.
+          Если вы уже знаете чего хотите, мы покажем где можно это сделать.
         </div>
         <div className={style.recommendations__filters}>
-          <Toggle name={'Все туры'}/>
-          <Toggle name={'Трассовое катание'}/>
-          <Toggle name={'Фрирайд'}/>
-          <Toggle name={'Карвинг'}/>
-          <Toggle name={'Фристайл'}/>
-          <Toggle name={'Джиббинг'}/>
-          <Toggle name={'Паудер'}/>
-          <Toggle name={'Бордеркросс'}/>
-          <Toggle name={'Могул'}/>
-          <Toggle name={'Ски-кросс'}/>
-          <Toggle name={'Экстрим-ски'}/>
+          <ToggleText name={'Все туры'} defaultOn width={230}/>
+          <ToggleText name={'Для первого раза'} width={230}/>
+          <ToggleText name={'Уверенно и быстро'} width={230}/>
+          <ToggleText name={'Экстрим и фрирайд'} width={230}/>
+          <ToggleText name={'Семейные курорты'} width={230}/>
         </div>
         <div className={style.recommendations__slider}>
           <ResortSlider
@@ -163,4 +152,3 @@ function Recommendations() {
 }
 
 export default Recommendations
-

@@ -2,11 +2,10 @@
   position: relative;
   display: inline-flex;
   flex-direction: column;
-  width: 264px;
+  width: 272px;
 
   &__trigger {
-    padding-right: 8px;
-    background: var(--icon-select-trigger-bg);
+    background: var(--icon-select-bg);
     border-radius: var(--radius-100);
 
     display: inline-flex;

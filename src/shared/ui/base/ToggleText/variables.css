@@ -1,0 +1,14 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --toggle-bg: rgba(14, 104, 212, 0.10);
+  --toggle-text-color: var(--color-black);
+  --toggle-bg-active: var(--color-blue);
+  --toggle-text-color-active: var(--color-white);
+}
+
+body[data-theme="dark"] {
+
+}

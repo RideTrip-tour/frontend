@@ -11,7 +11,7 @@ function Clients() {
       category: 'Трассовое катание',
       rating: 4.8,
       date: '15.03.2026',
-      text: 'Отличный курорт! Все было супер, рекомендуем для всей семьи.'
+      text: 'Мы искали активную поездку с трекингом и комфортным уровнем сервиса. Сайт предложил несколько вариантов с разной сложностью и бюджетом, и нам удалось найти идеальный баланс «нагрузка + комфорт».'
     },
     {
       photo: '/assets/images/imageBG.png',
@@ -19,7 +19,7 @@ function Clients() {
       category: 'Фрирайд',
       rating: 4.6,
       date: '12.03.2026',
-      text: 'Очень понравились трассы и гиды, планируем вернуться снова.'
+      text: 'Я никогда раньше не катался,но по моим параметрам удалось выбрать тот самый тур, где я смог и отдохнуть и насладиться первым опытом катания. Очень удобно, что всё выбрал в одном месте.'
     },
     {
       photo: '/assets/images/imageBG.png',
@@ -51,15 +51,12 @@ function Clients() {
     <>
       <div className={style.clients}>
         <div className={style.clients__title}>
-          <div className={style.clients__title_big}>
-            Ваше мнение
-          </div>
           <div className={style.clients__title_small}>
-            Что говорят наши клиенты
+            Опыт тех, кто уже катался с нами
           </div>
         </div>
         <div className={style.clients__text}>
-          Посмотрите, что говорят счастливые путешественники, которые доверили нам свой отдых.
+          Как это было на самом деле.
         </div>
         <div className={style.clients__slider}>
           <ReviewSlider
