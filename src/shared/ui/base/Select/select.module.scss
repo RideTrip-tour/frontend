@@ -1,21 +1,54 @@
+.selectWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.selectLabel {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--select-label-color, #AFB6BD);
+  padding-left: 16px;
+  margin-bottom: 6px;
+  width: 100%;
+}
+
 .select {
-  width: 248px;
+  width: 100%;
   position: relative;
   display: inline-flex;
   flex-direction: column;
 
   &--open {
     z-index: 10;
+    --select-shadow: var(--shadow-2);
+  }
+
+  &--primary {
+    --select-bg: var(--color-white-1);
+    --select-shadow: var(--shadow-2);
+    --select-border: transparent;
+  }
+
+  &--secondary {
+    --select-bg: var(--color-white);
+    //--select-shadow: none;
+    --select-border: var(--color-gray);
   }
 
   &__trigger {
     padding: 16px 20px;
     background: var(--select-bg);
+    border: 1px solid var(--select-border);
     border-radius: var(--radius-20);
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: var(--shadow-2);
+
+    box-shadow: var(--select-shadow);
+
     cursor: pointer;
     position: relative;
     z-index: 2;
@@ -30,8 +63,9 @@
   }
 
   &__icon {
-    transition: transform var(--animation-speed-200) ease;
+    transition: transform 200ms ease;
     flex-shrink: 0;
+    color: var(--select-arrow);
   }
 
   &--open &__icon {
@@ -40,19 +74,18 @@
 
   &__dropdown {
     position: absolute;
-    top: 80%;
+    top: calc(100% - 24px);
     left: 0;
     width: 100%;
     box-sizing: border-box;
-    padding: 30px 20px 20px 20px;
+    padding: 28px 20px 16px;
     background: var(--select-bg);
-    border-bottom-left-radius: var(--radius-20);
-    border-bottom-right-radius: var(--radius-20);
+    border-radius: var(--radius-20);
     display: flex;
     flex-direction: column;
     gap: 12px;
     z-index: 1;
-    box-shadow: var(--shadow-2);
+    box-shadow: var(--select-shadow);
   }
 
   &__option {
@@ -71,7 +104,7 @@
   }
 
   &__option:hover &__optionText {
-    color: var(--color-blue);
+    color: var(--select-hover-text);
   }
 
   &__divider {

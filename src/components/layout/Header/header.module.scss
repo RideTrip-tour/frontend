@@ -23,7 +23,7 @@
 
   &__logo {
     color: var(--White, #ffffff);
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--text-font-family), sans-serif;
     font-size: 32px;
     font-weight: 500;
     line-height: 48px;

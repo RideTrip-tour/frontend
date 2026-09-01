@@ -1,0 +1,13 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --menurow-bg: var(--color-white);
+  --menurow-text-color: var(--color-black);
+  --menurow-icon-color: var(--color-gray);
+}
+
+body[data-theme="dark"] {
+
+}

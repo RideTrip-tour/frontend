@@ -1,0 +1,41 @@
+.switch {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 51px;
+  height: 31px;
+  padding: 2px;
+
+  border-radius: var(--radius-100);
+  background: var(--switch-bg);
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: background-color var(--animation-speed-200) ease;
+
+  &__knob {
+    width: 27px;
+    height: 27px;
+    border-radius: var(--radius-100);
+    background: var(--switch-knob-bg);
+    box-shadow: var(--switch-knob-shadow);
+
+    transition: transform var(--animation-speed-200) ease;
+  }
+
+  &--active {
+    background: var(--switch-bg-active);
+
+    .switch__knob {
+      transform: translateX(20px);
+    }
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
