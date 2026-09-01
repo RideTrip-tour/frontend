@@ -1,89 +1,77 @@
 import style from './photoid.module.scss'
-import PageSection from '@/shared/ui/page/PageSection'
-import ProfilePhoto from '@/shared/ui/base/ProfilePhoto'
+import ProfilePhoto from '@/shared/ui/base/ProfilePhoto/ProfilePhoto'
 import Tooltip from '@/shared/ui/base/Tooltip'
 import {Icon} from '@iconify/react'
 import {useNavigate} from 'react-router-dom'
+import {useCopyToClipboard} from '@/hooks'
+import {useProfileStore} from '@/store'
 import './variables.css'
 
 function PhotoID() {
   const navigate = useNavigate()
-
-  const userId = '78565987'
-  const userName = ''
-
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(userId)
-    console.log('copied:', userId)
-  }
+  const { copied, copy } = useCopyToClipboard()
+  const userId = useProfileStore(s => s.userId) || '78565987'
 
   return (
-    <PageSection paddingVertical={16}
-                 paddingHorizontal={20}
-    >
-      <div className={style.photoid}>
+    <div className={style.photoid}>
+      <div className={style.photoid__wrapper}>
 
-        <div className={style.photoid__wrapper}>
+        <div className={style.photoid__info}>
+          <div className={style.photoid__avatar}>
+            <ProfilePhoto
+              size={160}
+              onUpload={async (file) => {
+                console.log('upload:', file)
+              }}
+            />
+          </div>
 
-          <ProfilePhoto
-            size={160}
-            onUpload={async (file) => {
-              console.log('upload:', file)
-            }}
-          />
-
-          <div className={style.photoid__info}>
-            {userName &&
-              <div className={style.photoid__info__name}>
-                {userName}
-              </div>
-            }
-            <div className={style.photoid__info__id}>
-              <div className={style.photoid__info__id_text}>
+          <div className={style.photoid__text}>
+            <div className={style.photoid__id}>
+              <div className={style.photoid__id_text}>
                 Участник {userId}
               </div>
 
-              <Tooltip text="Скопировать"
-                       position="top"
+              <Tooltip
+                text={copied ? 'Скопировано!' : 'Скопировать'}
+                position="top"
+                visible={copied || undefined}
               >
                 <button
-                  className={style.photoid__info__copy}
-                  onClick={handleCopy}
+                  className={style.photoid__copy}
+                  onClick={() => copy(userId)}
                   aria-label="copy id"
                 >
-                  <Icon icon="solar:copy-line-duotone"
-                        width={20}
-                        height={20}
-                  />
+                  <Icon icon="solar:copy-line-duotone" width={20} height={20} />
                 </button>
               </Tooltip>
             </div>
 
-            <div className={style.photoid__info__status}>
-              Профиль не заполнен
+            <div className={style.photoid__status}>
+              Профиль пока не заполнен, чем больше данных — тем точнее подбор
             </div>
           </div>
         </div>
+
         <div className={style.photoid__settings}>
           <button
             className={style.photoid__settings__btn}
             onClick={() => navigate('/profile/settings')}
             type="button"
           >
-              <span className={style.photoid__settings__text}>
-                Настройки
-              </span>
-
+            <span className={style.photoid__settings__text}>
+              Настройки
+            </span>
             <span className={style.photoid__settings__icon}>
-                <Icon
-                  icon="weui:setting-filled"
-                  className={style.photoid__settings__svg}
-                />
-              </span>
+              <Icon
+                icon="weui:setting-filled"
+                className={style.photoid__settings__svg}
+              />
+            </span>
           </button>
         </div>
       </div>
-    </PageSection>
+    </div>
   )
 }
 

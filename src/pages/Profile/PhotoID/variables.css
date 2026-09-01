@@ -16,6 +16,8 @@ body[data-theme="light"] {
   --photoid-id-color: var(--color-black);
   --photoid-status-color: var(--color-gray-dark);
 
+  --photoid-bg: var(--color-white);
+
   --photoid-settings-text: var(--color-black);
   --photoid-settings-icon: var(--color-black);
 

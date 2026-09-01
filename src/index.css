@@ -27,6 +27,8 @@ body {
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
+
+  font-family: var(--text-font-family), sans-serif;
 }
 .iconify {
   display: block;

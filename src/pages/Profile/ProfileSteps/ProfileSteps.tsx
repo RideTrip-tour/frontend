@@ -1,25 +1,23 @@
 import style from './profilesteps.module.scss'
-import PageSection from '@/shared/ui/page/PageSection'
 import Input from '@/shared/ui/base/Input'
 import Select from '@/shared/ui/base/Select'
-import Checkbox from '@/shared/ui/base/Checkbox'
 import { Button } from '@/shared/ui/base/Button'
-import { Icon } from '@iconify/react'
 import TextLink from '@/shared/ui/base/TextLink'
-import { type CSSProperties, useState } from 'react'
+import Checkbox from '@/shared/ui/base/Checkbox'
+import ToggleText from '@/shared/ui/base/ToggleText/ToggleText'
+import Divider from '@/shared/ui/base/Divider'
+import PersonalBlock from '@/shared/ui/page/Profile/PersonalBlock'
+import { Fragment, useEffect, useState } from 'react'
 import type { Option } from '@/shared/ui/base/Select/Select.tsx'
 import SkillQuiz from '@/pages/Profile/ProfileSteps/SkillQuiz'
 import ModalChildren from '@/shared/ui/base/ModalChildren'
+import { useProfileStore, type PersonalData as StorePersonalData } from '@/store'
+import { updateMyProfileRequest } from '@/services/profileService'
+import './variables.css'
 
 const GENDER_OPTIONS: Option[] = [
   { value: 'male', label: 'Мужской' },
   { value: 'female', label: 'Женский' },
-]
-
-const COUNTRY_OPTIONS: Option[] = [
-  { value: 'ru', label: 'Россия' },
-  { value: 'by', label: 'Беларусь' },
-  { value: 'kz', label: 'Казахстан' },
 ]
 
 const CITY_OPTIONS: Option[] = [
@@ -34,59 +32,61 @@ const RIDING_STYLES = [
   'Фрирайд',
   'Фристайл',
   'Гонки и экстрим',
-  'Ски-туры/Сплитбординг',
+  'Ски-туры/ Сплитбординг',
 ]
 
 const SKILL_LEVELS = [
   {
     title: 'Новичок',
     value: 'beginner',
-    description: ['Никогда не катался / пробовал 1–2 раза', 'Нужны простые трассы и инструктор'],
+    description: [
+      [
+        { text: 'Никогда', bold: true },
+        { text: ' не катался / пробовал 1–2 раза' },
+      ],
+      [
+        { text: 'Нужны ' },
+        { text: 'простые', bold: true },
+        { text: ' трассы и ' },
+        { text: 'инструктор', bold: true },
+      ],
+    ],
   },
   {
     title: 'Средний',
     value: 'intermediate',
-    description: ['Катаюсь уверенно', 'Хочу развивать технику и пробовать новые маршруты'],
+    description: [
+      [
+        { text: 'Катаюсь ' },
+        { text: 'уверенно', bold: true },
+      ],
+      [
+        { text: 'Хочу ' },
+        { text: 'развивать технику', bold: true },
+        { text: ' и пробовать новые маршруты' },
+      ],
+    ],
   },
   {
     title: 'Продвинутый',
     value: 'advanced',
-    description: ['Катаюсь регулярно', 'Ищу сложные маршруты и челленджи'],
+    description: [
+      [
+        { text: 'Катаюсь ' },
+        { text: 'регулярно', bold: true },
+      ],
+      [
+        { text: 'Ищу ' },
+        { text: 'сложные маршруты', bold: true },
+        { text: ' и новые челленджи' },
+      ],
+    ],
   },
 ]
 
 const REST_FORMATS = ['Спокойный', 'Активный', 'Экстремальный', 'Смешанный']
 const COMPANY_TYPES = ['Один', 'Пара', 'С друзьями', 'С семьёй']
 const TRIP_DURATIONS = ['Выходные', '3-5 дней', 'Неделя +']
-
-const EMPTY_PERSONAL = {
-  firstName: '',
-  lastName: '',
-  gender: '',
-  country: '',
-  city: '',
-  otherCities: '',
-}
-
-const EMPTY_PREFERENCES = {
-  ridingStyles: [] as string[],
-  skillLevel: '',
-}
-
-const EMPTY_TRIP = {
-  restFormats: [] as string[],
-  companyTypes: [] as string[],
-  tripDurations: [] as string[],
-}
-
-interface PersonalData {
-  firstName: string
-  lastName: string
-  gender: string
-  country: string
-  city: string
-  otherCities: string
-}
 
 interface PreferencesData {
   ridingStyles: string[]
@@ -99,125 +99,118 @@ interface TripData {
   tripDurations: string[]
 }
 
-interface StepHeaderProps {
-  title: string
-  onEdit: () => void
-}
+type PersonalData = StorePersonalData
 
-const StepHeader = ({ title, onEdit }: StepHeaderProps) => (
-  <div className={style.profilesteps__content__step__settings__title}>
-    <div className={style.profilesteps__content__step__settings__title_text}>
-      {title}
-    </div>
-    <div
-      className={style.profilesteps__content__step__settings__title__button}
-      onClick={onEdit}
-    >
-      <div className={style.profilesteps__content__step__settings__title__button_text}>
-        Редактировать
-      </div>
-      <Icon
-        icon="solar:pen-bold"
-        width="20"
-        height="20"
-        className={style.profilesteps__content__step__settings__title__button_icon}
-      />
-    </div>
-  </div>
-)
-
-interface StepActionsProps {
-  onCancel: () => void
-  onSave: () => void
-}
-
-const StepActions = ({ onCancel, onSave }: StepActionsProps) => (
-  <div className={style.profilesteps__content__step__settings__buttons}>
-    <Button onClick={onCancel} text="Отменить" variant="primary" />
-    <Button onClick={onSave} text="Сохранить" variant="secondary" />
-  </div>
-)
-
-interface CheckboxListProps {
+interface PillListProps {
   items: string[]
   selected: string[]
   onToggle: (item: string) => void
 }
 
-const CheckboxList = ({ items, selected, onToggle }: CheckboxListProps) => (
-  <div className={style.profilesteps__preferences__list}>
+const PillList = ({ items, selected, onToggle }: PillListProps) => (
+  <div className={style.profilesteps__pills}>
     {items.map(item => (
-      <div key={item} className={style.profilesteps__preferences__item}>
-        <Checkbox
-          checked={selected.includes(item)}
-          onChange={() => onToggle(item)}
-        />
-        <div className={style.profilesteps__preferences__item_text}>{item}</div>
-      </div>
+      <ToggleText
+        key={item}
+        name={item}
+        defaultOn={selected.includes(item)}
+        onEnable={() => onToggle(item)}
+        onDisable={() => onToggle(item)}
+      />
     ))}
   </div>
 )
 
 function ProfileSteps() {
+  const savedPersonal = useProfileStore(s => s.personal)
+  const savedConsent = useProfileStore(s => s.consent)
+  const savedPreferences = useProfileStore(s => s.preferences)
+  const savedTrip = useProfileStore(s => s.trip)
+  const setPersonal = useProfileStore(s => s.setPersonal)
+  const setConsent = useProfileStore(s => s.setConsent)
+  const setUserName = useProfileStore(s => s.setUserName)
+  const setPreferences = useProfileStore(s => s.setPreferences)
+  const setTrip = useProfileStore(s => s.setTrip)
+
   const [editingStep, setEditingStep] = useState<number | null>(null)
   const [openSelect, setOpenSelect] = useState<string | null>(null)
-
-  const [savedPersonal, setSavedPersonal] = useState<PersonalData>(EMPTY_PERSONAL)
-  const [draftPersonal, setDraftPersonal] = useState<PersonalData>(EMPTY_PERSONAL)
-
-  const [savedConsent, setSavedConsent] = useState(false)
-  const [draftConsent, setDraftConsent] = useState(false)
-
-  const [savedPreferences, setSavedPreferences] = useState<PreferencesData>(EMPTY_PREFERENCES)
-  const [draftPreferences, setDraftPreferences] = useState<PreferencesData>(EMPTY_PREFERENCES)
-
-  const [savedTrip, setSavedTrip] = useState<TripData>(EMPTY_TRIP)
-  const [draftTrip, setDraftTrip] = useState<TripData>(EMPTY_TRIP)
-
+  const [draftPersonal, setDraftPersonal] = useState<PersonalData>(savedPersonal)
+  const [draftConsent, setDraftConsent] = useState(savedConsent)
+  const [draftPreferences, setDraftPreferences] = useState<PreferencesData>(savedPreferences)
+  const [draftTrip, setDraftTrip] = useState<TripData>(savedTrip)
   const [isQuizOpen, setIsQuizOpen] = useState(false)
 
-  const handleEdit = (step: number) => {
+  useEffect(() => {
+    if (editingStep !== null) return
+    setDraftPersonal(savedPersonal)
+  }, [savedPersonal, editingStep])
+
+  useEffect(() => {
+    if (editingStep !== null) return
+    setDraftPreferences(savedPreferences)
+  }, [savedPreferences, editingStep])
+
+  useEffect(() => {
+    if (editingStep !== null) return
+    setDraftTrip(savedTrip)
+  }, [savedTrip, editingStep])
+
+  const startEditing = (step: number) => {
     if (step === 1) {
       setDraftPersonal(savedPersonal)
       setDraftConsent(savedConsent)
+    } else if (step === 2) {
+      setDraftPreferences(savedPreferences)
+    } else {
+      setDraftTrip(savedTrip)
     }
-    if (step === 2) setDraftPreferences(savedPreferences)
-    if (step === 3) setDraftTrip(savedTrip)
     setEditingStep(step)
     setOpenSelect(null)
   }
 
-  const handleCancel = (step: number) => {
-    if (step === 1) {
-      setDraftPersonal(savedPersonal)
-      setDraftConsent(savedConsent)
+  const savePersonal = async () => {
+    if (!draftConsent) return
+    setPersonal(draftPersonal)
+    setConsent(draftConsent)
+    setEditingStep(null)
+    const fullName = [draftPersonal.firstName, draftPersonal.lastName]
+      .filter(Boolean)
+      .join(' ')
+      .trim()
+    setUserName(fullName)
+    try {
+      await updateMyProfileRequest({
+        first_name: draftPersonal.firstName,
+        last_name: draftPersonal.lastName,
+        phone_number: '',
+        age: typeof draftPersonal.age === 'number' ? draftPersonal.age : 0,
+        about_me: draftPersonal.aboutMe,
+        activities: draftPersonal.activities,
+        country: draftPersonal.country,
+        city: draftPersonal.city,
+        citizenship: draftPersonal.citizenship,
+        currency: draftPersonal.currency,
+      })
+    } catch (e) {
+      console.error('Не удалось сохранить профиль', e)
     }
-    if (step === 2) setDraftPreferences(savedPreferences)
-    if (step === 3) setDraftTrip(savedTrip)
-    setEditingStep(null)
-    setOpenSelect(null)
   }
 
-  const handleSavePersonal = () => {
-    setSavedPersonal(draftPersonal)
-    setSavedConsent(draftConsent)
+  const savePreferences = () => {
+    setPreferences(draftPreferences)
     setEditingStep(null)
-    alert(`Данные сохранены:\n${JSON.stringify(draftPersonal, null, 2)}`)
   }
 
-  const handleSavePreferences = () => {
-    setSavedPreferences(draftPreferences)
+  const saveTrip = () => {
+    setTrip(draftTrip)
     setEditingStep(null)
-    alert(`Данные сохранены:\n${JSON.stringify(draftPreferences, null, 2)}`)
   }
 
-  const handleSaveTrip = () => {
-    setSavedTrip(draftTrip)
-    setEditingStep(null)
-    alert(`Данные сохранены:\n${JSON.stringify(draftTrip, null, 2)}`)
-  }
-
-  const makeSelectProps = (key: string, currentValue: string, onSelectChange: (value: string) => void) => ({
+  const makeSelectProps = (
+    key: string,
+    currentValue: string,
+    onSelectChange: (value: string) => void,
+  ) => ({
     value: currentValue,
     isOpen: openSelect === key,
     onToggle: () => setOpenSelect(prev => (prev === key ? null : key)),
@@ -227,216 +220,264 @@ function ProfileSteps() {
     },
   })
 
-  const toggleDraftRidingStyle = (item: string) => {
+  const toggleRidingStyle = (item: string) => {
     setDraftPreferences(prev => ({
       ...prev,
       ridingStyles: prev.ridingStyles.includes(item)
-        ? prev.ridingStyles.filter(style => style !== item)
+        ? prev.ridingStyles.filter(s => s !== item)
         : [...prev.ridingStyles, item],
     }))
   }
 
-  const toggleDraftList = (key: keyof TripData, item: string) => {
+  const toggleTripList = (key: keyof TripData, item: string) => {
     setDraftTrip(prev => ({
       ...prev,
       [key]: (prev[key] as string[]).includes(item)
-        ? (prev[key] as string[]).filter(existing => existing !== item)
+        ? (prev[key] as string[]).filter(s => s !== item)
         : [...(prev[key] as string[]), item],
     }))
   }
 
-  const lockedStyle: CSSProperties = { pointerEvents: 'none' }
-  const editableStyle: CSSProperties = { pointerEvents: 'auto' }
+  const isEditing = (step: number) => editingStep === step
+  const lockedClass = style.profilesteps__locked
+  const editableClass = style.profilesteps__editable
+
+  const step1Rows = (
+    <>
+      <div className={`${style.profilesteps__row} ${style['profilesteps__row--gap']} ${isEditing(1) ? editableClass : lockedClass}`}>
+        <div className={style.profilesteps__field}>
+          <Input
+            label="Имя"
+            value={draftPersonal.firstName}
+            onChange={firstName => setDraftPersonal(prev => ({ ...prev, firstName }))}
+            onSubmit={firstName => setDraftPersonal(prev => ({ ...prev, firstName }))}
+            placeholder="Введите ваше имя"
+          />
+        </div>
+        <div className={style.profilesteps__field}>
+          <Select
+            label="Пол"
+            options={GENDER_OPTIONS}
+            placeholder="Выберите"
+            icon="iconamoon:arrow-right-2"
+            variant="secondary"
+            {...makeSelectProps('gender', draftPersonal.gender, gender =>
+              setDraftPersonal(prev => ({ ...prev, gender })),
+            )}
+          />
+        </div>
+      </div>
+      <div className={`${style.profilesteps__row} ${style['profilesteps__row--cities']} ${isEditing(1) ? editableClass : lockedClass}`}>
+        <div className={style.profilesteps__field}>
+          <Select
+            label="Город отправления"
+            options={CITY_OPTIONS}
+            placeholder="Откуда чаще всего летите"
+            icon="iconamoon:arrow-right-2"
+            variant="secondary"
+            {...makeSelectProps('city', draftPersonal.city, city =>
+              setDraftPersonal(prev => ({ ...prev, city })),
+            )}
+          />
+        </div>
+        <div className={style.profilesteps__field}>
+          <Select
+            label="Дополнительные города"
+            options={CITY_OPTIONS}
+            placeholder="Если летите из разных мест"
+            icon="iconamoon:arrow-right-2"
+            variant="secondary"
+            {...makeSelectProps('otherCities', draftPersonal.otherCities, otherCities =>
+              setDraftPersonal(prev => ({ ...prev, otherCities })),
+            )}
+          />
+        </div>
+      </div>
+    </>
+  )
+
+  const step1Bottom = (
+    <>
+      <div className={style.profilesteps__consent}>
+        <Checkbox
+          checked={draftConsent}
+          disabled={!isEditing(1)}
+          onChange={value => setDraftConsent(value)}
+        />
+        <div className={style.profilesteps__consent__text}>
+          <span>Я согласен на&nbsp;</span>
+          <TextLink text="обработку персональных данных." to="/privacy" />
+          <span>&nbsp;Они не будут переданы третьим лицам.</span>
+        </div>
+      </div>
+      <div className={style.profilesteps__saveRow}>
+        <Button
+          onClick={savePersonal}
+          text="Сохранить"
+          variant="secondary"
+          disabled={!isEditing(1) || !draftConsent}
+        />
+      </div>
+    </>
+  )
+
+  const step2Body = (
+    <div className={isEditing(2) ? editableClass : lockedClass}>
+      <div className={`${style.profilesteps__group} ${style['profilesteps__group--step2-block']}`}>
+        <div className={style.profilesteps__groupTitle}>Вид активности</div>
+        <PillList
+          items={RIDING_STYLES}
+          selected={draftPreferences.ridingStyles}
+          onToggle={toggleRidingStyle}
+        />
+        <div className={style.profilesteps__hint}>
+          Трассовое катание: подготовленные трассы, подъёмки, освещение. Классика для любителей порядка и предсказуемости.
+        </div>
+      </div>
+      <div className={`${style.profilesteps__divider} ${style['profilesteps__divider--step2']}`}>
+        <Divider />
+      </div>
+      <div className={`${style.profilesteps__group} ${style.profilesteps__levelsGroup}`}>
+        <div className={style.profilesteps__groupTitle}>Ваш уровень</div>
+        <div className={style.profilesteps__levels}>
+          {SKILL_LEVELS.map(level => (
+            <Fragment key={level.value}>
+              <div
+                className={[
+                  style.profilesteps__levelCard,
+                  draftPreferences.skillLevel === level.value
+                    ? style['profilesteps__levelCard--active']
+                    : '',
+                ].filter(Boolean).join(' ')}
+                onClick={() =>
+                  setDraftPreferences(prev => ({ ...prev, skillLevel: level.value }))
+                }
+              >
+                <div className={style.profilesteps__levelCard__title}>{level.title}</div>
+                <div className={style.profilesteps__levelCard__text}>
+                  {level.description.map((line, lineIdx) => (
+                    <div key={lineIdx} className={style.profilesteps__levelCard__bullet}>
+                      <span className={style.profilesteps__levelCard__dot} />
+                      <span>
+                        {line.map((part, partIdx) => (
+                          <span
+                            key={partIdx}
+                            className={
+                              part.bold
+                                ? style['profilesteps__levelCard__part--bold']
+                                : style.profilesteps__levelCard__part
+                            }
+                          >
+                            {part.text}
+                          </span>
+                        ))}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Fragment>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+
+  const step2Bottom = (
+    <>
+      <div
+        className={style.profilesteps__quizlink}
+        onClick={() => setIsQuizOpen(true)}
+      >
+        Не уверены? Мы подскажем
+      </div>
+      <div className={style.profilesteps__saveRow}>
+        <Button
+          onClick={savePreferences}
+          text="Сохранить"
+          variant="secondary"
+          disabled={!isEditing(2)}
+        />
+      </div>
+    </>
+  )
+
+  const step3Groups = (
+    <>
+      <div className={`${style.profilesteps__group} ${style['profilesteps__group--gap24']}`}>
+        <div className={style.profilesteps__groupTitle}>Формат отдыха</div>
+        <PillList
+          items={REST_FORMATS}
+          selected={draftTrip.restFormats}
+          onToggle={item => toggleTripList('restFormats', item)}
+        />
+      </div>
+      <div className={style.profilesteps__divider} />
+      <div className={`${style.profilesteps__group} ${style['profilesteps__group--gap24']}`}>
+        <div className={style.profilesteps__groupTitle}>Компания</div>
+        <PillList
+          items={COMPANY_TYPES}
+          selected={draftTrip.companyTypes}
+          onToggle={item => toggleTripList('companyTypes', item)}
+        />
+      </div>
+      <div className={style.profilesteps__divider} />
+      <div className={style.profilesteps__group}>
+        <div className={style.profilesteps__groupTitle}>Длительность поездки</div>
+        <PillList
+          items={TRIP_DURATIONS}
+          selected={draftTrip.tripDurations}
+          onToggle={item => toggleTripList('tripDurations', item)}
+        />
+      </div>
+    </>
+  )
+
+  const step3Bottom = (
+    <div className={style.profilesteps__saveRow}>
+      <Button
+        onClick={saveTrip}
+        text="Сохранить"
+        variant="secondary"
+        disabled={!isEditing(3)}
+      />
+    </div>
+  )
 
   return (
     <div className={style.profilesteps}>
-      <div className={style.profilesteps__content}>
+      <PersonalBlock
+        title="Личные данные"
+        subtitle="Используются для оформления и сохранения бронирования"
+        onEdit={() => startEditing(1)}
+      >
+        {step1Rows}
+        {step1Bottom}
+      </PersonalBlock>
 
-        <div className={style.profilesteps__content__step}>
-          <div className={style.profilesteps__content__step_text}>
-            Шаг 1 из 3 — Будем знакомы
-          </div>
-          <PageSection paddingVertical={32} paddingHorizontal={40} isEditing={editingStep === 1}>
-            <div className={style.profilesteps__content__step__settings}>
-              <StepHeader title="Персональные данные" onEdit={() => handleEdit(1)} />
-              <div style={editingStep === 1 ? editableStyle : lockedStyle}>
-                <div className={style.profilesteps__content__step__settings__manual}>
-                  <Input
-                    placeholder="Имя"
-                    value={draftPersonal.firstName}
-                    onChange={firstName => setDraftPersonal(prev => ({ ...prev, firstName }))}
-                    onSubmit={firstName => setDraftPersonal(prev => ({ ...prev, firstName }))}
-                  />
-                  <Input
-                    placeholder="Фамилия"
-                    value={draftPersonal.lastName}
-                    onChange={lastName => setDraftPersonal(prev => ({ ...prev, lastName }))}
-                    onSubmit={lastName => setDraftPersonal(prev => ({ ...prev, lastName }))}
-                  />
-                  <Select
-                    options={GENDER_OPTIONS}
-                    placeholder="Пол"
-                    icon="iconamoon:arrow-right-2"
-                    variant="secondary"
-                    {...makeSelectProps('gender', draftPersonal.gender, gender =>
-                      setDraftPersonal(prev => ({ ...prev, gender }))
-                    )}
-                  />
-                  <Select
-                    options={COUNTRY_OPTIONS}
-                    placeholder="Страна"
-                    icon="iconamoon:arrow-right-2"
-                    variant="secondary"
-                    {...makeSelectProps('country', draftPersonal.country, country =>
-                      setDraftPersonal(prev => ({ ...prev, country }))
-                    )}
-                  />
-                  <Select
-                    options={CITY_OPTIONS}
-                    placeholder="Город"
-                    icon="iconamoon:arrow-right-2"
-                    variant="secondary"
-                    {...makeSelectProps('city', draftPersonal.city, city =>
-                      setDraftPersonal(prev => ({ ...prev, city }))
-                    )}
-                  />
-                  <div className={style.profilesteps__content__step__settings__manual__hint}>
-                    <Select
-                      options={CITY_OPTIONS}
-                      placeholder="Другие важные города"
-                      icon="iconamoon:arrow-right-2"
-                      variant="secondary"
-                      {...makeSelectProps('otherCities', draftPersonal.otherCities, otherCities =>
-                        setDraftPersonal(prev => ({ ...prev, otherCities }))
-                      )}
-                    />
-                    <div className={style.profilesteps__content__step__settings__manual__hint_text}>
-                      Например, место работы или город частого пребывания
-                    </div>
-                  </div>
-                </div>
-                <div className={style.profilesteps__content__step__settings__data}>
-                  <div className={style.profilesteps__content__step__settings__data__success}>
-                    <Checkbox
-                      checked={draftConsent}
-                      onChange={() => setDraftConsent(prev => !prev)}
-                    />
-                    <div className={style.profilesteps__content__step__settings__data__success__text}>
-                      Я даю согласие на{' '}
-                      <TextLink text="обработку персональных данных" to="/privacy" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {editingStep === 1 && (
-                <StepActions onCancel={() => handleCancel(1)} onSave={handleSavePersonal} />
-              )}
-            </div>
-          </PageSection>
-        </div>
+      <PersonalBlock
+        title="Стиль катания"
+        subtitle="Помогает подобрать трассы и инструктора под ваш уровень"
+        onEdit={() => startEditing(2)}
+      >
+        {step2Body}
+        {step2Bottom}
+      </PersonalBlock>
 
-        <div className={style.profilesteps__content__step}>
-          <div className={style.profilesteps__content__step_text}>
-            Шаг 2 из 3 — Ваши предпочтения
-          </div>
-          <PageSection paddingVertical={32} paddingHorizontal={40} isEditing={editingStep === 2}>
-            <div className={style.profilesteps__content__step__settings}>
-              <StepHeader title="Ваш стиль катания" onEdit={() => handleEdit(2)} />
-              <div style={editingStep === 2 ? editableStyle : lockedStyle}>
-                <div className={style.profilesteps__preferences}>
-                  <CheckboxList
-                    items={RIDING_STYLES}
-                    selected={draftPreferences.ridingStyles}
-                    onToggle={toggleDraftRidingStyle}
-                  />
-                  <div className={style.profilesteps__preferences__cards}>
-                    {SKILL_LEVELS.map((level, index) => (
-                      <>
-                        <div
-                          key={level.value}
-                          className={[
-                            style.profilesteps__preferences__cards__card,
-                            draftPreferences.skillLevel === level.value
-                              ? style['profilesteps__preferences__cards__card--active']
-                              : '',
-                          ].filter(Boolean).join(' ')}
-                          onClick={() =>
-                            setDraftPreferences(prev => ({ ...prev, skillLevel: level.value }))
-                          }
-                        >
-                          <div className={style.profilesteps__preferences__cards__card_title}>
-                            {level.title}
-                          </div>
-                          <div className={style.profilesteps__preferences__cards__card_text}>
-                            {level.description.map(line => (
-                              <div key={line}>● {line}</div>
-                            ))}
-                          </div>
-                        </div>
-                        {index !== SKILL_LEVELS.length - 1 && (
-                          <div className={style.profilesteps__preferences__divider} />
-                        )}
-                      </>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className={style.profilesteps__preferences_hint}
-                   onClick={() => setIsQuizOpen(true)}
-              >
-                Не уверены? Мы подскажем
-              </div>
-              {editingStep === 2 && (
-                <StepActions onCancel={() => handleCancel(2)} onSave={handleSavePreferences} />
-              )}
-            </div>
-          </PageSection>
+      <PersonalBlock
+        title="План поездки"
+        subtitle="Помогает находить туры под ваш формат отдыха"
+        onEdit={() => startEditing(3)}
+      >
+        <div className={isEditing(3) ? editableClass : lockedClass}>
+          {step3Groups}
         </div>
+        {step3Bottom}
+      </PersonalBlock>
 
-        <div className={style.profilesteps__content__step}>
-          <div className={style.profilesteps__content__step_text}>
-            Шаг 3 из 3 — План поездки
-          </div>
-          <PageSection paddingVertical={32} paddingHorizontal={40} isEditing={editingStep === 3}>
-            <div className={style.profilesteps__content__step__settings}>
-              <StepHeader title="Формат отдыха" onEdit={() => handleEdit(3)} />
-              <div style={editingStep === 3 ? editableStyle : lockedStyle}>
-                <CheckboxList
-                  items={REST_FORMATS}
-                  selected={draftTrip.restFormats}
-                  onToggle={item => toggleDraftList('restFormats', item)}
-                />
-                <div className={style.profilesteps__content__step__settings__title}>
-                  <div className={style.profilesteps__content__step__settings__title_text}>
-                    Компания
-                  </div>
-                </div>
-                <CheckboxList
-                  items={COMPANY_TYPES}
-                  selected={draftTrip.companyTypes}
-                  onToggle={item => toggleDraftList('companyTypes', item)}
-                />
-                <div className={style.profilesteps__content__step__settings__title}>
-                  <div className={style.profilesteps__content__step__settings__title_text}>
-                    Длительность поездки
-                  </div>
-                </div>
-                <CheckboxList
-                  items={TRIP_DURATIONS}
-                  selected={draftTrip.tripDurations}
-                  onToggle={item => toggleDraftList('tripDurations', item)}
-                />
-              </div>
-              {editingStep === 3 && (
-                <StepActions onCancel={() => handleCancel(3)} onSave={handleSaveTrip} />
-              )}
-            </div>
-          </PageSection>
-        </div>
-      </div>
       {isQuizOpen && (
         <ModalChildren onClose={() => setIsQuizOpen(false)}>
-          <SkillQuiz onClose={() => setIsQuizOpen(false)} />
+          <SkillQuiz />
         </ModalChildren>
       )}
     </div>
