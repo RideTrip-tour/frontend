@@ -8,7 +8,8 @@ body[data-theme="light"] {
   --select-divider: var(--color-blue-dark-1-10);
   --select-arrow: var(--color-black);
   --select-hover-text: var(--color-blue);
-  --select-secondary-border: var(--color-gray)
+  --select-secondary-border: var(--color-gray);
+  --select-label-color: #AFB6BD;
 }
 
 body[data-theme="dark"] {

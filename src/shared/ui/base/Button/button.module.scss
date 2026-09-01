@@ -35,7 +35,7 @@
   &__text{
     font-size: var(--text-button-size);
     line-height: var(--text-lh-button);
-    font-family: Poppins, sans-serif;
+    font-family: var(--text-font-family), sans-serif;
   }
 
   &:not(:disabled):hover {

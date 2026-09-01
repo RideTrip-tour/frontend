@@ -3,16 +3,23 @@ import './variables.css'
 
 interface CheckboxProps {
   checked: boolean
+  disabled?: boolean
   onChange?: (value: boolean) => void
 }
 
-const Checkbox = ({ checked, onChange }: CheckboxProps) => {
+const Checkbox = ({ checked, disabled = false, onChange }: CheckboxProps) => {
+  const handleClick = () => {
+    if (disabled) return
+    onChange?.(!checked)
+  }
+
   return (
     <div
       className={style.checkbox}
       role="checkbox"
       aria-checked={checked}
-      onClick={() => onChange?.(!checked)}
+      aria-disabled={disabled}
+      onClick={handleClick}
     >
       <div className={style.checkbox__box}>
         {checked && (

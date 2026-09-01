@@ -1,0 +1,13 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --sectionheader-title-color: var(--color-black);
+  --sectionheader-subtitle-color: var(--color-gray-dark);
+  --sectionheader-subtitle-color-muted: var(--color-gray);
+}
+
+body[data-theme="dark"] {
+
+}

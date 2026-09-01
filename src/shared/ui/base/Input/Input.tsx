@@ -12,6 +12,7 @@ interface InputProps {
   onSubmit: (value: string) => void
   validate?: (value: string) => boolean
   onChange?: (value: string) => void
+  onBlur?: () => void
   debounce?: number
   icon?: string
   autoSubmit?: boolean
@@ -33,6 +34,7 @@ const Input = ({
                  validate,
                  onSubmit,
                  onChange,
+                 onBlur,
                  debounce = 1500,
                  icon,
                  autoSubmit = false,
@@ -192,7 +194,10 @@ const Input = ({
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+            onBlur={() => {
+              setIsFocused(false)
+              onBlur?.()
+            }}
             aria-invalid={!isValid}
             aria-label={ariaLabel}
             aria-describedby={ariaDescribedBy}

@@ -24,3 +24,8 @@
   background-color: var(--checkbox-bg-active);
   border-color: var(--checkbox-bg-active);
 }
+
+.checkbox[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

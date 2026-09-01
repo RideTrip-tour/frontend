@@ -1,0 +1,14 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --switch-bg: rgba(14, 104, 212, 0.10);
+  --switch-bg-active: var(--color-blue);
+  --switch-knob-bg: var(--color-white);
+  --switch-knob-shadow: 0px 3px 10px rgba(26, 26, 26, 0.10);
+}
+
+body[data-theme="dark"] {
+
+}
