@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom'
 import { Icon } from '@iconify/react'
-import style from './ModalChildren.module.scss'
+import style from './modalchildren.module.scss'
 import './variables.css'
 import type { ReactNode } from 'react'
 
