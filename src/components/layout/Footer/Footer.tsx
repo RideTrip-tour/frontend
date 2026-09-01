@@ -11,7 +11,7 @@ export function Footer() {
             <div className={style.footer__logo}>Logo</div>
             <div className={style.footer__socials}>
               <a
-                href="https://t.me/"
+                href="/social/telegram"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={style.footer__socialLink}
@@ -20,7 +20,7 @@ export function Footer() {
                 <Icon icon="ic:baseline-telegram" />
               </a>
               <a
-                href="https://wa.me/"
+                href="/social/whatsapp"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={style.footer__socialLink}
