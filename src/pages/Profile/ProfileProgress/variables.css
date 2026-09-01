@@ -1,0 +1,18 @@
+:root {
+}
+
+body[data-theme="light"] {
+
+  --profileprogress-text-primary: var(--color-black);
+  --profileprogress-text-secondary: var(--color-gray-dark);
+
+  --profileprogress-primary: var(--color-blue);
+
+  --profileprogress-progress-bg: var(--color-blue-dark-1-10);
+
+  --profileprogress-white: var(--color-white);
+}
+
+body[data-theme="dark"] {
+
+}

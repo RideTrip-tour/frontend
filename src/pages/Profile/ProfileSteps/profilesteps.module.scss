@@ -1,0 +1,195 @@
+.profilesteps {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  font-family: var(--text-font-family), sans-serif;
+
+  &__row {
+    align-self: stretch;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__row--gap {
+    margin-bottom: -16px;
+  }
+
+  &__row--cities {
+    margin-bottom: -8px;
+  }
+
+  &__field {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__consent {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__consent__text {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--profilesteps-consent-text-color);
+  }
+
+  &__saveRow {
+    width: max-content;
+  }
+
+  &__group {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  &__group--step2-block {
+    margin-bottom: 32px;
+  }
+
+  &__group--gap24 {
+    margin-bottom: 24px;
+  }
+
+  &__groupTitle {
+    color: var(--profilesteps-group-title-color);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.24px;
+  }
+
+  &__pills {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  &__hint {
+    align-self: stretch;
+    color: var(--profilesteps-hint-color);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    
+  }
+
+  &__divider {
+    align-self: stretch;
+    height: 1px;
+    background: var(--profilesteps-divider-color);
+    margin-bottom: 23px;
+  }
+
+  &__divider--step2 {
+    margin-bottom: 31px;
+  }
+
+  &__levelsGroup {
+    gap: 15px;
+  }
+
+  &__levels {
+    align-self: stretch;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__levelCard {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--profilesteps-card-bg);
+    border-radius: 12px;
+    padding: 8px 8px 28px;
+    gap: 16px;
+    box-shadow: 0px 3px 10px #1A1A1A1A;
+    cursor: pointer;
+    width: 310px;
+    transition: outline 0.2s ease;
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+
+    &--active {
+      outline: 1px solid var(--profilesteps-card-active-border);
+    }
+
+    &__title {
+      color: var(--profilesteps-title-color);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20px;
+      letter-spacing: 0.24px;
+    }
+
+    &__text {
+      color: var(--profilesteps-level-text-color, var(--color-gray-dark));
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 20px;
+      white-space: pre-line;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    &__bullet {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    &__dot {
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--profilesteps-level-text-color, var(--color-gray-dark));
+      margin-top: 7px;
+    }
+
+    &__part {
+      font-weight: 400;
+    }
+
+    &__part--bold {
+      font-weight: 700;
+    }
+  }
+
+  &__quizlink {
+    color: var(--profilesteps-edit-color);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+
+  &__locked {
+    pointer-events: none;
+  }
+
+  &__editable {
+    pointer-events: auto;
+  }
+}

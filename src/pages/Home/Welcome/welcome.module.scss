@@ -1,0 +1,52 @@
+.welcome {
+  width: 100%;
+  height: 1080px;
+  background-image: url("/assets/images/pages/home/block-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 130px;
+
+  &__text {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+
+    &_medium {
+      text-align: center;
+      color: var(--Background-1, #F7F9FC);
+      font-family: 'Poppins', sans-serif;
+      font-size: 32px;
+      font-weight: var(--font-medium);
+      line-height: 48px;
+      text-shadow: var(--shadow-2);
+    }
+
+    &_large {
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 200px;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 252px;
+      color: transparent;
+      -webkit-text-stroke: 2px #F7F9FC;
+      margin-bottom: 252px;
+    }
+  }
+  &__search {
+    display: flex;
+    gap: 44px;
+    padding: 8px 11px;
+    height: 48px;
+    margin-bottom: 62px;
+    background-color: #fff;
+    border-radius: 50px;
+  }
+}

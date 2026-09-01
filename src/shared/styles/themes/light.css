@@ -1,0 +1,31 @@
+body[data-theme="light"] {
+  --color-blue: #0E68D4;
+  --color-blue-light: #4274c7;
+  --color-blue-dark-1: #1E4D8F;
+  --color-blue-dark-1-10: rgba(30, 77, 143, 0.1);
+  --color-blue-dark-2: #223A5E;
+
+  --color-gray: #AFB6BD;
+  --color-gray-dark: #5F6C7B;
+  --color-light-gray-25: rgba(223, 226, 229, 0.25);
+
+  --color-black: #1A1A1A;
+
+  --color-white: #FFFFFF;
+  --color-white-1: #F7F9FC;
+  --color-white-30: rgba(247, 249, 252, 0.3);
+
+  --color-green: #3CB371;
+  --color-orange: #FF8A00;
+  --color-yellow: #FFD900;
+  --color-red: #D92D20;
+
+
+  /* некоторые переменные */
+  --color-disabled-primary: #E0E0E0;
+  --color-disabled-secondary: #A0A0A0;
+}
+
+body {
+  background-color: #F7F9FC;
+}

@@ -1,0 +1,53 @@
+.profilePhoto {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--profile-photo-bg);
+
+  .state {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    color: var(--profile-photo-icon);
+
+    opacity: 1;
+    transition: opacity var(--animation-speed-200);
+
+    &.hidden {
+      opacity: 0;
+    }
+  }
+
+  .image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .text {
+    color: var(--profile-photo-text);
+    font-family: var(--text-font-family), sans-serif;
+    font-size: var(--font-small-size);
+    font-weight: var(--font-medium);
+    line-height: var(--text-line-height-16);
+  }
+
+  .input {
+    display: none;
+  }
+}

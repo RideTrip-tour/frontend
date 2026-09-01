@@ -1,0 +1,108 @@
+.daterangepickermodal {
+  background: var(--drpm-bg);
+  border-radius: 16px;
+  box-shadow: var(--drpm-shadow);
+  padding: 20px;
+  width: 330px;
+  border: 1px solid var(--drpm-border);
+
+  &__tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  &__tab {
+    flex: 1;
+    padding: 9px 10px;
+    border-radius: 10px;
+    border: 1.5px solid var(--drpm-tab-border);
+    background: var(--drpm-tab-bg);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+
+    &--active {
+      border-color: var(--drpm-primary);
+      background: var(--drpm-primary-soft);
+    }
+  }
+
+  &__tabLabel {
+    font-size: 10px;
+    color: var(--drpm-text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+  }
+
+  &__tabValue {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--drpm-text);
+
+    &--active {
+      color: var(--drpm-primary);
+    }
+
+    &--empty {
+      color: var(--drpm-text-disabled);
+    }
+  }
+
+  &__okButton {
+    padding: 0 16px;
+    border-radius: 10px;
+    border: none;
+    background: var(--drpm-primary);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(79,70,229,0.3);
+  }
+
+  &__drumHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  &__drumTitle {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--drpm-text-main);
+  }
+
+  &__doneButton {
+    border: none;
+    background: var(--drpm-primary-soft);
+    border-radius: 8px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--drpm-primary);
+  }
+
+  &__drums {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__drum {
+    &--month { flex: 3; }
+    &--year  { flex: 2; }
+  }
+
+  &__drumLabel {
+    text-align: center;
+    font-size: 10px;
+    color: var(--drpm-text-muted);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+}

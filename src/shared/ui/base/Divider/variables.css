@@ -1,0 +1,11 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --divider-bg: #C8CED6;
+}
+
+body[data-theme="dark"] {
+
+}

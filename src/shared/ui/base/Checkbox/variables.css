@@ -1,0 +1,14 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --checkbox-bg: var(--color-white);
+  --checkbox-border: var(--color-gray);
+
+  --checkbox-bg-active: var(--color-blue);
+}
+
+body[data-theme="dark"] {
+
+}

@@ -1,0 +1,35 @@
+.documentsblock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__support {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__supportText {
+    font-size: var(--text-size-16);
+    font-weight: bold;
+    color: var(--documentsblock-support-text-color);
+    cursor: default;
+  }
+
+  &__supportMail {
+    font-size: var(--text-size-16);
+    font-weight: bold;
+    color: var(--documentsblock-support-mail-color);
+    cursor: pointer;
+  }
+}

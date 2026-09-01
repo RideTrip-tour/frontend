@@ -1,0 +1,98 @@
+.button {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: var(--font-body-2-weight);
+  font-size: var(--font-body-2-size);
+  border: none;
+  box-shadow: var(--shadow-button);
+  color: var(--btn-text);
+  background: var(--btn-bg);
+  transition: background-color var(--animation-speed-button) ease, color var(--animation-speed-button) ease;
+  transform-origin: center;
+  -webkit-tap-highlight-color: transparent;
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    background-color: var(--btn-icon-bg);
+    width: 36px;
+    height: 36px;
+    transition: transform var(--animation-speed-button) ease;
+    &_img {
+      width: 100%;
+      height: 100%;
+      padding: 4px;
+      color: var(--btn-icon);
+    }
+  }
+
+  &__text{
+    font-size: var(--text-button-size);
+    line-height: var(--text-lh-button);
+    font-family: var(--text-font-family), sans-serif;
+  }
+
+  &:not(:disabled):hover {
+    .button__icon {
+      transform: rotate(-45deg);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    background-color: var(--color-gray-dark);
+    color: var(--color-white-75);
+    --btn-icon: var(--color-gray-dark)
+  }
+}
+
+.button--primary {
+  --btn-bg: var(--color-button-primary-static);
+  --btn-text: var(--color-button-text-primary-static);
+  --btn-icon-bg: var(--color-icon-bg-primary-static);
+  --btn-icon: var(--color-icon-primary-static);
+  &:not(:disabled):hover {
+    --btn-bg: var(--color-button-primary-hover);
+    --btn-text: var(--color-button-text-primary-hover);
+    --btn-icon-bg: var(--color-icon-bg-primary-static);
+    --btn-icon: var(--color-icon-primary-hover);
+  }
+  &:not(:disabled):active {
+    --btn-bg: var(--color-button-primary-active);
+    --btn-text: var(--color-button-text-primary-active);
+  }
+}
+
+.button--secondary {
+  --btn-bg: var(--color-button-secondary-static);
+  --btn-text: var(--color-button-text-secondary-static);
+  --btn-icon-bg: var(--color-icon-bg-secondary-static);
+  --btn-icon: var(--color-icon-secondary-static);
+  &:not(:disabled):hover {
+    --btn-bg: var(--color-button-secondary-hover);
+    --btn-text: var(--color-button-text-secondary-hover);
+    --btn-icon-bg: var(--color-icon-bg-secondary-hover);
+    --btn-icon: var(--color-icon-secondary-hover);
+  }
+  &:not(:disabled):active {
+    --btn-bg: var(--color-button-secondary-active);
+    --btn-text: var(--color-button-text-secondary-active);
+  }
+}
+
+.button--iconWithText {
+  gap: 12px;
+  padding: 4px 4px 4px 16px;
+}
+
+.button--iconRight {
+  flex-direction: row-reverse;
+}

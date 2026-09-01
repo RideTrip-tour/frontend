@@ -1,0 +1,53 @@
+.daycell {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+  user-select: none;
+
+  border-radius: 8px;
+  color: var(--daycell-text);
+
+  cursor: pointer;
+  transition: background 0.12s, opacity 0.15s;
+}
+
+.selected {
+  background: var(--daycell-selected-bg);
+  color: var(--daycell-text-selected);
+}
+
+.inRange {
+  background: var(--daycell-range-bg);
+  border-radius: 0;
+}
+
+.rangeStart {
+  border-radius: 8px 0 0 8px;
+}
+
+.rangeEnd {
+  border-radius: 0 8px 8px 0;
+}
+
+.today {
+  font-weight: 700;
+  outline: 2px solid var(--daycell-today-outline);
+  outline-offset: -2px;
+}
+
+.weekend {
+  color: var(--daycell-text-weekend);
+}
+
+.disabled {
+  color: var(--daycell-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.dimmed {
+  opacity: 0.6;
+}

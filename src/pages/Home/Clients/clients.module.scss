@@ -1,0 +1,36 @@
+.clients {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &__title {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 83px;
+    margin-bottom: 24px;
+
+    &_small {
+      z-index: 1;
+      color: var(--Dark, #1A1A1A);
+      font-family: 'Poppins', sans-serif;
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 60px;
+    }
+  }
+  &__text {
+    color: #5F6C7B;
+    font-size: 18px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.27px;
+    word-wrap: break-word;
+  }
+  &__slider{
+    margin-top: 132px;
+  }
+}

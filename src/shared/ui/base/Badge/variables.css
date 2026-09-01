@@ -1,0 +1,11 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --badge-text: var(--color-white);
+}
+
+body[data-theme="dark"] {
+
+}

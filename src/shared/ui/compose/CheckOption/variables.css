@@ -1,0 +1,12 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --checkoption-title-color: var(--color-black);
+  --checkoption-description-color: var(--color-gray-dark);
+}
+
+body[data-theme="dark"] {
+
+}

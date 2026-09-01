@@ -1,0 +1,47 @@
+.planning {
+  width: 100%;
+  background: var(--Background-1, #F7F9FC);
+
+  &__inner {
+    background: var(--Background-1, #F7F9FC);
+    overflow: hidden;
+  }
+
+  &__content {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 83px;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 132px;
+  }
+
+  &__title {
+    color: var(--Dark, #1A1A1A);
+    font-family: Poppins, sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 60px;
+    letter-spacing: -0.2px;
+    text-align: center;
+  }
+
+  &__text {
+    color: var(--Dark-gray, #5F6C7B);
+    font-family: Poppins, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.27px;
+    text-align: center;
+  }
+}

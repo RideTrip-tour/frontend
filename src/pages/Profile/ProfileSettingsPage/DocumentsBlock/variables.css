@@ -1,0 +1,12 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --documentsblock-support-text-color: var(--color-gray-dark);
+  --documentsblock-support-mail-color: var(--color-blue);
+}
+
+body[data-theme="dark"] {
+
+}

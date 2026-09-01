@@ -1,0 +1,25 @@
+:root {
+  --drpm-bg: #ffffff;
+  --drpm-border: #f3f4f6;
+
+  --drpm-shadow: 0 8px 40px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.06);
+
+  --drpm-primary: #4f46e5;
+  --drpm-primary-soft: #eef2ff;
+
+  --drpm-text-main: #111827;
+  --drpm-text: #374151;
+  --drpm-text-muted: #9ca3af;
+  --drpm-text-disabled: #d1d5db;
+
+  --drpm-tab-bg: #f9fafb;
+  --drpm-tab-border: #e5e7eb;
+}
+
+body[data-theme="light"] {
+
+}
+
+body[data-theme="dark"] {
+
+}
