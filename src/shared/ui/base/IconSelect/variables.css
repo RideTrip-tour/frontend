@@ -12,6 +12,8 @@ body[data-theme="light"] {
   --icon-select-option-hover-color: var(--color-black);
 
   --icon-select-divider: var(--color-gray);
+
+  --icon-select-bg: var(--color-light-gray-25);
 }
 
 body[data-theme="dark"] {

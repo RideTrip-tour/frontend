@@ -39,13 +39,10 @@ function Welcome() {
       <div className={style.welcome}>
         <div className={style.welcome__text}>
           <div className={style.welcome__text_medium}>
-            выбирать отдых стало
+            До поездки осталось
           </div>
           <div className={style.welcome__text_large}>
-            проще
-          </div>
-          <div className={style.welcome__text_small}>
-            Укажите несколько параметров — мы покажем подходящие варианты.
+            три шага
           </div>
         </div>
         <div className={style.welcome__search}>

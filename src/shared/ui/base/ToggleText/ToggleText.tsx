@@ -1,20 +1,22 @@
-import { useState } from 'react'
-import style from './toggle.module.scss'
+import { useState, type CSSProperties } from 'react'
+import style from './toggle-text.module.scss'
 import './variables.css'
 
-interface ToggleProps {
+interface ToggleTextProps {
   name: string
   onEnable?: () => void
   onDisable?: () => void
   defaultOn?: boolean
+  width?: number
 }
 
-const Toggle = ({
-                  name,
-                  onEnable,
-                  onDisable,
-                  defaultOn = false
-                }: ToggleProps) => {
+const ToggleText = ({
+                      name,
+                      onEnable,
+                      onDisable,
+                      defaultOn = false,
+                      width
+                    }: ToggleTextProps) => {
   const [isOn, setIsOn] = useState(defaultOn)
 
   const handleToggle = () => {
@@ -34,12 +36,17 @@ const Toggle = ({
     isOn ? style['toggle--active'] : ''
   ].filter(Boolean).join(' ')
 
+  const customStyles: CSSProperties = {
+    '--toggle-width': width !== undefined ? `${width}px` : 'fit-content'
+  } as CSSProperties
+
   return (
     <div
       className={classes}
       role="switch"
       aria-checked={isOn}
       onClick={handleToggle}
+      style={customStyles}
     >
       <div className={style.toggle__content}>
         <div className={style.toggle__content__title}>
@@ -52,4 +59,4 @@ const Toggle = ({
   )
 }
 
-export default Toggle
+export default ToggleText

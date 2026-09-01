@@ -1,0 +1,13 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --photoblock-bg: var(--color-black);
+  --photoblock-bg-image: url('/assets/images/pages/home/home-page-photo-block.png');
+  --photoblock-title: var(--color-white);
+}
+
+body[data-theme="dark"] {
+
+}
