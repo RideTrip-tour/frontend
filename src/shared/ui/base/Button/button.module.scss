@@ -11,7 +11,8 @@
   box-shadow: var(--shadow-button);
   color: var(--btn-text);
   background: var(--btn-bg);
-  transition: background-color var(--animation-speed-button) ease, color var(--animation-speed-button) ease;
+  transition: background-color var(--animation-speed-button) ease,
+    color var(--animation-speed-button) ease;
   transform-origin: center;
   -webkit-tap-highlight-color: transparent;
 
@@ -21,9 +22,17 @@
     align-items: center;
     border-radius: 50px;
     background-color: var(--btn-icon-bg);
-    width: 36px;
-    height: 36px;
+    color: var(--btn-icon);
+    // width: 36px;
+    // height: 36px;
     transition: transform var(--animation-speed-button) ease;
+
+    :global(svg) {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
     &_img {
       width: 100%;
       height: 100%;
@@ -32,7 +41,7 @@
     }
   }
 
-  &__text{
+  &__text {
     font-size: var(--text-button-size);
     line-height: var(--text-lh-button);
     font-family: Poppins, sans-serif;
@@ -50,7 +59,7 @@
     transform: none !important;
     background-color: var(--color-gray-dark);
     color: var(--color-white-75);
-    --btn-icon: var(--color-gray-dark)
+    --btn-icon: var(--color-gray-dark);
   }
 }
 
@@ -59,12 +68,14 @@
   --btn-text: var(--color-button-text-primary-static);
   --btn-icon-bg: var(--color-icon-bg-primary-static);
   --btn-icon: var(--color-icon-primary-static);
+
   &:not(:disabled):hover {
     --btn-bg: var(--color-button-primary-hover);
     --btn-text: var(--color-button-text-primary-hover);
     --btn-icon-bg: var(--color-icon-bg-primary-static);
     --btn-icon: var(--color-icon-primary-hover);
   }
+
   &:not(:disabled):active {
     --btn-bg: var(--color-button-primary-active);
     --btn-text: var(--color-button-text-primary-active);
@@ -76,12 +87,14 @@
   --btn-text: var(--color-button-text-secondary-static);
   --btn-icon-bg: var(--color-icon-bg-secondary-static);
   --btn-icon: var(--color-icon-secondary-static);
+
   &:not(:disabled):hover {
     --btn-bg: var(--color-button-secondary-hover);
     --btn-text: var(--color-button-text-secondary-hover);
     --btn-icon-bg: var(--color-icon-bg-secondary-hover);
     --btn-icon: var(--color-icon-secondary-hover);
   }
+
   &:not(:disabled):active {
     --btn-bg: var(--color-button-secondary-active);
     --btn-text: var(--color-button-text-secondary-active);
@@ -96,3 +109,18 @@
 .button--iconRight {
   flex-direction: row-reverse;
 }
+
+.button--iconPlain {
+  --btn-icon-bg: var(--color-icon-bg-plain);
+
+  .button__icon {
+    border-radius: 0;
+    background-color: var(--color-icon-bg-plain);
+    transition: none;
+  }
+
+  &:not(:disabled):hover .button__icon {
+    transform: none;
+  }
+}
+

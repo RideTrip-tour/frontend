@@ -8,6 +8,7 @@ const LoginPage = lazy(() =>
 const RegisterPage = lazy(() =>
   import("@/pages/RegisterPage").then((m) => ({ default: m.RegisterPage }))
 );
+const TripBuilderPage = lazy(() => import("@/pages/trip-builder"));
 
 
 export function AppRouter() {
@@ -26,6 +27,7 @@ export function AppRouter() {
         {/*/>*/}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/trip-builder" element={<TripBuilderPage />} />
       </Routes>
     </Suspense>
   );
