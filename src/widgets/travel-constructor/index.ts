@@ -10,7 +10,6 @@ export type {
   AdditionalOption,
   ConstructorSelectionId,
   ConstructorStore,
-  GuestRoom,
   GuestSelection,
   ParkingPreference,
   SkiLevel,

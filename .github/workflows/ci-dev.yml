@@ -206,7 +206,7 @@ jobs:
 
           if [[ "${{ needs.check_build.result }}" == "failure" ]]; then
             FAILED_JOB="Build/Push"
-          if [[ "${{ needs.build_push.result }}" == "failure" ]]; then
+          elif [[ "${{ needs.build_push.result }}" == "failure" ]]; then
             FAILED_JOB="Build/Push"
           elif [[ "${{ needs.deploy.result }}" == "failure" ]]; then
             FAILED_JOB="Deploy"
