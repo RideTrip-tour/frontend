@@ -1,0 +1,30 @@
+.scrollTopButton {
+  position: fixed;
+  right: 10%;
+  bottom: 10%;
+  z-index: 1000;
+
+  width: 52px;
+  height: 52px;
+  background: var(--White, #FFFFFF);
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.10);
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    color: var(--Blue, #0E68D4);
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 12px 18px rgba(0, 0, 0, 0.15);
+  }
+}

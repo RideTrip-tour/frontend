@@ -1,0 +1,12 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --backlink-icon-color: var(--color-blue);
+  --backlink-text-color: var(--color-blue);
+}
+
+body[data-theme="dark"] {
+
+}

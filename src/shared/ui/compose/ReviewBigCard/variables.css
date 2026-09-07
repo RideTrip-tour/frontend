@@ -4,10 +4,15 @@
 
 body[data-theme="light"] {
   --reviewcard-bg: var(--color-white);
-  --reviewcard-shadow: rgba(26, 26, 26, 0.15);
+  --reviewcard-shadow: 0px 3px 10px 2px rgba(26, 26, 26, 0.1);
 
   --reviewcard-text-color: var(--color-black);
   --reviewcard-text-secondary: var(--color-gray-dark);
+
+  --reviewcard-badge-bg: rgba(30, 77, 143, 0.1);
+  --reviewcard-badge-text: var(--color-blue-dark-1);
+
+  --reviewcard-star-color: var(--color-yellow);
 }
 
 body[data-theme="dark"] {

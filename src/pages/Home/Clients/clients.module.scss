@@ -9,23 +9,10 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-
-    &_big {
-
-      opacity: 0.65;
-      color: rgba(30, 77, 143, 10%);
-      font-family: 'Poppins', sans-serif;
-      font-size: 140px;
-      font-weight: 700;
-      line-height: 220px;
-      text-transform: uppercase;
-    }
+    margin-top: 83px;
+    margin-bottom: 24px;
 
     &_small {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
       z-index: 1;
       color: var(--Dark, #1A1A1A);
       font-family: 'Poppins', sans-serif;
@@ -44,6 +31,6 @@
     word-wrap: break-word;
   }
   &__slider{
-    margin-top: 48px;
+    margin-top: 132px;
   }
 }

@@ -5,28 +5,31 @@ import style from './tooltip.module.scss'
 interface TooltipProps {
   text: string
   position?: 'top' | 'bottom' | 'left' | 'right'
+  visible?: boolean
   children: ReactNode
 }
 
 const Tooltip = ({
                    text,
                    position = 'top',
+                   visible,
                    children
                  }: TooltipProps) => {
-  const [visible, setVisible] = useState(false)
+  const [hoverVisible, setHoverVisible] = useState(false)
+
+  const isVisible = visible === true || (visible === undefined && hoverVisible)
 
   return (
     <div
       className={style.tooltip}
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
+      onMouseEnter={() => setHoverVisible(true)}
+      onMouseLeave={() => setHoverVisible(false)}
     >
       {children}
 
-      {visible && (
+      {isVisible && (
         <div className={`${style.tooltip__content} ${style[`tooltip__content--${position}`]}`}>
           {text}
-          <span className={style.tooltip__arrow} />
         </div>
       )}
     </div>

@@ -1,101 +1,121 @@
 .card {
   width: 592px;
+  height: 280px;
   padding: 20px 24px;
   background: var(--reviewcard-bg);
-  box-shadow: 0px 3px 10px 2px var(--reviewcard-shadow);
-  border-radius: var(--radius-20);
+  box-shadow: var(--reviewcard-shadow);
+  border-radius: 20px;
+  flex-shrink: 0;
 
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  gap: 36px;
+  justify-content: space-between;
 
-  &__body {
+  &__author {
     align-self: stretch;
-    display: inline-flex;
-    justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
     align-items: flex-start;
     gap: 26px;
   }
 
-  &__author {
-    width: 194px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
   &__avatar {
-    width: 88px;
-    height: 88px;
-    border-radius: var(--radius-100);
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
     object-fit: cover;
     background: var(--color-gray);
+    flex-shrink: 0;
     display: block;
   }
 
   &__authorInfo {
-    align-self: stretch;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: flex-start;
-    gap: 4px;
   }
 
   &__name {
-    align-self: stretch;
     color: var(--reviewcard-text-color);
-    font-family: var(--text-font-family), sans-serif;
-    font-size: var(--font-body-1-size);
-    font-weight: var(--font-bold);
-    line-height: var(--text-line-height-24);
+    font-family: Poppins, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
     letter-spacing: 0.27px;
   }
 
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 4px;
+    border-radius: 100px;
+    background: var(--reviewcard-badge-bg);
+    color: var(--reviewcard-badge-text);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    align-self: flex-start;
+    margin-bottom: 12px;
+  }
+
+  &__ratingLabel {
+    color: var(--reviewcard-text-secondary);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.24px;
+  }
+
+  &__stars {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 96px;
+  }
+
+  &__star {
+    width: 16px;
+    height: 16px;
+    color: var(--reviewcard-star-color);
+    flex-shrink: 0;
+  }
+
   &__text {
+    align-self: stretch;
     margin: 0;
     color: var(--reviewcard-text-color);
-    font-family: var(--text-font-family), sans-serif;
-    font-size: var(--font-body-2-size);
-    font-weight: var(--font-body-2-weight);
-    line-height: var(--text-line-height-20);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
     letter-spacing: 0.24px;
     word-wrap: break-word;
   }
 
-  &__footer {
-    align-self: stretch;
-    display: inline-flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
   &__date {
+    align-self: flex-end;
     width: 74px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 4px;
   }
 
   &__dateLabel,
   &__dateValue {
     align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     text-align: right;
     color: var(--reviewcard-text-secondary);
-    font-family: var(--text-font-family), sans-serif;
-    font-size: var(--font-body-2-size);
-    font-weight: var(--font-body-2-weight);
-    line-height: var(--text-line-height-20);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
     letter-spacing: 0.24px;
   }
 }

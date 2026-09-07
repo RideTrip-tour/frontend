@@ -7,11 +7,11 @@ function PersonalSelection() {
       <div className={style.personalselection}>
         <div className={style.personalselection__title}>
           <div className={style.personalselection__title_small}>
-            Персональный подбор отдыха
+            Учитываем каждую мелочь
           </div>
         </div>
         <div className={style.personalselection__text}>
-          Персонализированные путешествия с учётом вашего уровня и интересов.
+          Даже если заполните не всё - покажем самое лучшее.
         </div>
         <div className={style.personalselection__selects}>
           <ToursFinder/>

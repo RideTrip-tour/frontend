@@ -7,6 +7,7 @@ body[data-theme="light"] {
 
   --color-gray: #AFB6BD;
   --color-gray-dark: #5F6C7B;
+  --color-light-gray-25: rgba(223, 226, 229, 0.25);
 
   --color-black: #1A1A1A;
 

@@ -2,39 +2,44 @@ import style from './planning.module.scss'
 import Steps from '@/shared/ui/base/Steps'
 
 function Planning() {
+  const handleCta = () => {
+    console.log('cta clicked')
+  }
+
   return (
-    <>
-      <div className={style.planning}>
-        <div className={style.planning__title}>
-          <div className={style.planning__title_small}>
-            Найди свое идеальное путешествие
+    <div className={style.planning}>
+      <div className={style.planning__inner}>
+        <div className={style.planning__content}>
+          <div className={style.planning__header}>
+            <div className={style.planning__title}>
+              Всего три шага отделяют вас от поездки
+            </div>
+            <div className={style.planning__text}>
+              Рассказываем, как это работает.
+            </div>
           </div>
-        </div>
-        <div className={style.planning__text}>
-          Выберите направление, уровень и формат отдыха — и найдите подходящий тур за несколько минут.
-        </div>
-        <div className={style.planning__steps}>
+
           <Steps
             steps={{
               1: {
-                title: 'Выбираете активность',
-                text: 'Укажите формат отдыха и направление, которое вам интересно в данный момент.'
+                title: 'Выберите активность и уровень подготовки',
+                text: 'Лыжи или сноуборд, новичок или профи'
               },
               2: {
-                title: 'Уточняете условия',
-                text: 'Отметьте уровень подготовки, даты и важные параметры поездки.'
+                title: 'Уточните детали',
+                text: 'Даты, бюджет, транспорт и трансфер'
               },
               3: {
-                title: 'Находите варианты',
-                text: 'Мы подбираем маршруты с понятными условиями и стоимостью.'
+                title: 'Получите варианты',
+                text: 'Цены, маршруты, отели и отзывы'
               }
             }}
+            onCtaClick={handleCta}
           />
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
 export default Planning
-

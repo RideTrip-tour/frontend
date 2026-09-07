@@ -1,0 +1,76 @@
+.accountblock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  &__logoutBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    width: 240px;
+    height: 40px;
+    padding: 0 16px;
+
+    background: var(--accountblock-logout-btn-bg);
+    border-radius: var(--radius-40);
+    box-shadow: var(--accountblock-logout-btn-shadow);
+    outline: var(--accountblock-logout-btn-border);
+    outline-offset: -1px;
+
+    cursor: pointer;
+
+    transition: background-color var(--animation-speed-200) ease;
+  }
+
+  &__logoutBtn:hover {
+    background: var(--accountblock-logout-btn-hover-bg);
+  }
+
+  &__logoutIcon {
+    width: var(--icons-size-24);
+    height: var(--icons-size-24);
+    color: var(--accountblock-logout-icon-color);
+  }
+
+  &__logoutText {
+    font-size: var(--text-size-16);
+    font-weight: var(--font-medium);
+    letter-spacing: 0.24px;
+    color: var(--accountblock-logout-text-color);
+    white-space: nowrap;
+  }
+
+  &__deleteInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  &__deleteText {
+    font-size: var(--text-size-16);
+    color: var(--accountblock-delete-text-color);
+    cursor: pointer;
+  }
+
+  &__warning {
+    font-size: var(--text-size-14);
+    color: var(--accountblock-warning-color);
+    line-height: var(--text-line-height-20);
+  }
+}

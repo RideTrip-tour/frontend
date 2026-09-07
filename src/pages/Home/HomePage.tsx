@@ -7,6 +7,8 @@ import Recommendations from '@/pages/Home/Recommendations'
 import Planning from '@/pages/Home/Planning'
 import PersonalSelection from '@/pages/Home/PersonalSelection'
 import Clients from '@/pages/Home/Clients'
+import PhotoBlock from '@/pages/Home/PhotoBlock'
+import ScrollTopButton from '@/components/layout/ScrollTopButton'
 import {
   PasswordEmailSentModal,
   PasswordResetSuccessModal,
@@ -85,6 +87,10 @@ function HomePage() {
     setIsLoading(false);
   };
 
+  const handlePhotoBlockCta = () => {
+    navigate('/constructor');
+  };
+
   const handleUnifiedSubmit = async (
     modalView: 'login' | 'register' | 'forgot',
     data: { email: string; password?: string }
@@ -124,6 +130,10 @@ function HomePage() {
       <Planning />
       <PersonalSelection />
       <Clients />
+
+      <PhotoBlock onClick={handlePhotoBlockCta} />
+
+      <ScrollTopButton />
 
       {showTestMenu && (
         <TestMenuModal

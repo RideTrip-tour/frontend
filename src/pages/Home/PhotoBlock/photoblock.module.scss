@@ -1,0 +1,52 @@
+.photoblock {
+  width: 100%;
+  margin-top: 203px;
+  margin-bottom: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+
+  &__banner {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    background: var(--photoblock-bg);
+    background-image: var(--photoblock-bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 40px;
+    padding: 192px 0;
+    text-align: left;
+    overflow: hidden;
+  }
+
+  &__title {
+    position: relative;
+    z-index: 1;
+    width: 726px;
+    max-width: 100%;
+    margin: 0;
+    color: var(--photoblock-title);
+    font-family: Poppins, sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 60px;
+    text-align: center;
+    letter-spacing: -0.2px;
+  }
+
+  &__cta {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

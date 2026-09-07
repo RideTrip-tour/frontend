@@ -1,5 +1,6 @@
 import style from './steps.module.scss'
 import './variables.css'
+import {Icon} from '@iconify/react'
 
 interface StepData {
   title: string
@@ -8,9 +9,11 @@ interface StepData {
 
 interface StepsProps {
   steps: Record<number, StepData>
+  onCtaClick?: () => void
+  ctaText?: string
 }
 
-const Steps = ({ steps }: StepsProps) => {
+const Steps = ({steps, onCtaClick, ctaText = 'Начнём подбор'}: StepsProps) => {
   const entries = Object.entries(steps).map(([key, val]) => ({
     number: Number(key),
     ...val
@@ -19,34 +22,51 @@ const Steps = ({ steps }: StepsProps) => {
   return (
     <div className={style.steps}>
 
-      <div className={style.steps__row}>
+      <div className={style.steps__header}>
+        <img
+          className={style.steps__connector}
+          src="/assets/images/pages/home/home-page-arrow.svg"
+          alt=""
+        />
 
-        <div className={style.steps__line} />
-        <div className={style.steps__arrow}>
-          <svg viewBox="0 0 24 24">
-            <path d="M4 12h16M16 6l6 6-6 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  fill="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-            />
-          </svg>
+        <div className={style.steps__row}>
+          {entries.map(({number}) => (
+            <div key={number}
+                 className={style.steps__col}
+            >
+              <div className={style.steps__dot}>
+                <span className={style.steps__dot_value}>{number}</span>
+              </div>
+            </div>
+          ))}
         </div>
-        {entries.map(({number, title, text}) => (
-          <div key={number}
-               className={style.steps__col}
-          >
 
-            <div className={style.steps__dot}>{number}</div>
-
-            <div className={style.steps__title}>{title}</div>
-            <div className={style.steps__text}>{text}</div>
-
-          </div>
-        ))}
-
+        <div className={style.steps__row}>
+          {entries.map(({number, title, text}) => (
+            <div key={number}
+                 className={style.steps__col}
+            >
+              <div className={style.steps__card}>
+                <div className={style.steps__title}>{title}</div>
+                <div className={style.steps__text}>{text}</div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+
+      {onCtaClick && (
+        <button
+          className={style.steps__cta}
+          onClick={onCtaClick}
+        >
+          <span className={style.steps__cta_text}>{ctaText}</span>
+          <Icon
+            className={style.steps__cta_icon}
+            icon="material-symbols:arrow-downward-rounded"
+          />
+        </button>
+      )}
 
     </div>
   )
