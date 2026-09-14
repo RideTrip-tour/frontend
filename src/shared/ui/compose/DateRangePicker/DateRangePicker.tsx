@@ -10,7 +10,7 @@ export default function DateRangePicker() {
   const [liveFrom,    setLiveFrom]    = useState<Date | null>(null);
   const [liveTo,      setLiveTo]      = useState<Date | null>(null);
 
-  const triggerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const modalRef   = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,10 +67,12 @@ export default function DateRangePicker() {
   return (
     <div className={style.daterangepicker}>
 
-      <div
+      <button
+        type="button"
         ref={triggerRef}
         onClick={() => setIsModalOpen((prev) => !prev)}
         className={triggerClass}
+        aria-expanded={isModalOpen}
       >
 
         <svg
@@ -92,7 +94,7 @@ export default function DateRangePicker() {
 
         {triggerDisplayLabel}
 
-      </div>
+      </button>
 
       {isModalOpen && (
         <div

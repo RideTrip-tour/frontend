@@ -56,9 +56,14 @@ export function CitySelector({
                   <li
                     key={city.id}
                     className={styles.listItem}
-                    onClick={() => onSelect(city)}
                   >
-                    {city.name}
+                    <button
+                      type="button"
+                      className={styles.cityButton}
+                      onClick={() => onSelect(city)}
+                    >
+                      {city.name}
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -77,9 +82,14 @@ export function CitySelector({
                   <li
                     key={city.id}
                     className={styles.listItem}
-                    onClick={() => onSelect(city)}
                   >
-                    {city.name}
+                    <button
+                      type="button"
+                      className={styles.cityButton}
+                      onClick={() => onSelect(city)}
+                    >
+                      {city.name}
+                    </button>
                   </li>
                 ))}
               </ul>

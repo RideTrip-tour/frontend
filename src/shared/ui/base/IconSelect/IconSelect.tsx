@@ -47,9 +47,11 @@ const IconSelect = ({
   return (
     <div className={classes}>
 
-      <div
+      <button
+        type="button"
         className={style.iconselect__trigger}
         onClick={() => setIsOpen(prev => !prev)}
+        aria-expanded={isOpen}
       >
 
         <div
@@ -80,13 +82,14 @@ const IconSelect = ({
           </span>
         </div>
 
-      </div>
+      </button>
 
       {isOpen && (
         <div className={style.iconselect__dropdown}>
           {options.map((opt, index) => (
-            <div
+            <button
               key={opt.value}
+              type="button"
               className={style.iconselect__option}
               onClick={() => handleSelect(opt.value)}
             >
@@ -97,7 +100,7 @@ const IconSelect = ({
               {index !== options.length - 1 && (
                 <div className={style.iconselect__divider} />
               )}
-            </div>
+            </button>
           ))}
         </div>
       )}

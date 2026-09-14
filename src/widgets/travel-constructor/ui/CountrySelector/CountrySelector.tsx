@@ -42,9 +42,14 @@ export function CountrySelector({
                 <li
                   key={country.id}
                   className={styles.listItem}
-                  onClick={() => onSelect(country)}
                 >
-                  {country.name}
+                  <button
+                      type="button"
+                      className={styles.countryButton}
+                      onClick={() => onSelect(country)}
+                    >
+                      {country.name}
+                    </button>
                 </li>
               ))}
             </ul>

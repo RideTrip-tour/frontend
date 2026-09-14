@@ -1,5 +1,9 @@
 .checkbox {
   display: inline-flex;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
   cursor: pointer;
   user-select: none;
 }

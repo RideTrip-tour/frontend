@@ -75,14 +75,16 @@ const SelectAutocomplete = ({
 
   return (
     <div className={style.selectautocomplete}>
-      <div
+      <button
+        type="button"
         className={style.selectautocomplete__control}
         onClick={() => setIsOpen(prev => !prev)}
+        aria-expanded={isOpen}
       >
         <span className={style.selectautocomplete__value}>
           {value ? value.label : placeholder}
         </span>
-      </div>
+      </button>
 
       {isOpen && (
         <div className={style.selectautocomplete__dropdown}>
@@ -102,13 +104,14 @@ const SelectAutocomplete = ({
             )}
 
             {filteredOptions.map(option => (
-              <div
+              <button
                 key={option.value}
+                type="button"
                 className={style.selectautocomplete__option}
                 onClick={() => handleSelect(option)}
               >
                 {option.label}
-              </div>
+              </button>
             ))}
           </div>
         </div>

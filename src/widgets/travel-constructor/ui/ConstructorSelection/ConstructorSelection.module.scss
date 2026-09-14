@@ -1,13 +1,17 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px 20px;
   width: 920px;
   box-sizing: border-box;
   border: 1px solid #1E4D8F1A;
   border-radius: 12px;
   background-color: #DFE2E540;
+}
+
+.cardToggle {
+  padding: 16px 20px 12px;
+  background: transparent;
+  border: transparent;
   cursor: pointer;
 }
 
@@ -22,7 +26,6 @@
   justify-content: space-between;
   gap: 24px;
   width: 100%;
-  // cursor: pointer;
 }
 
 .icon {
@@ -111,7 +114,7 @@
   display: flex;
   flex-direction: column;
   color: #1A1A1A;
-  padding: 20px 0px;
+  padding: 20px 20px 36px;
   gap: 24px;
   cursor: default;
 }

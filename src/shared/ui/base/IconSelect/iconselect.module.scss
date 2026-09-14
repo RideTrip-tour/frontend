@@ -5,6 +5,10 @@
   width: 272px;
 
   &__trigger {
+    padding: 0;
+    border: 0;
+    font: inherit;
+    color: inherit;
     background: var(--icon-select-bg);
     border-radius: var(--radius-100);
 
@@ -94,6 +98,10 @@
     flex-direction: column;
     gap: 8px;
     cursor: pointer;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    text-align: left;
 
     &:first-child {
       margin-top: 30px;

@@ -49,9 +49,11 @@ const Select = ({
     <div className={style.selectWrapper}>
       {label && <div className={style.selectLabel}>{label}</div>}
       <div className={classes}>
-        <div
+        <button
+          type="button"
           className={style.select__trigger}
           onClick={() => onToggle?.()}
+          aria-expanded={isOpen}
         >
           <div className={style.select__value}>
             {selected?.label || placeholder}
@@ -62,13 +64,14 @@ const Select = ({
             width="24"
             className={style.select__icon}
           />
-        </div>
+        </button>
 
         {isOpen && (
           <div className={style.select__dropdown}>
             {options.map((opt, index) => (
-              <div
+              <button
                 key={opt.value}
+                type="button"
                 className={style.select__option}
                 onClick={() => handleSelect(opt.value)}
               >
@@ -79,7 +82,7 @@ const Select = ({
                 {index !== options.length - 1 && (
                   <div className={style.select__divider}/>
                 )}
-              </div>
+              </button>
             ))}
           </div>
         )}

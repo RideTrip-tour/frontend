@@ -35,9 +35,9 @@ export function Footer() {
             <div className={style.footer__section}>
               <div className={style.footer__sectionTitle}>НАВИГАЦИЯ</div>
               <a href="/" className={style.footer__sectionLink}>Главная</a>
-              <a href="/constructor" className={style.footer__sectionLink}>Собрать поездку</a>
-              <a href="/my-tours" className={style.footer__sectionLink}>Мои туры</a>
-              <a href="/favorites" className={style.footer__sectionLink}>Избранные</a>
+              <a href="/trip-builder" className={style.footer__sectionLink}>Собрать поездку</a>
+              <a href="/tours" className={style.footer__sectionLink}>Мои туры</a>
+              <a href="/saved" className={style.footer__sectionLink}>Избранные</a>
             </div>
 
             <div className={style.footer__section}>

@@ -35,12 +35,15 @@ function DayCell({ date, flags, onClick }: DayCellProps) {
     .join(' ')
 
   return (
-    <div
+    <button
+      type="button"
       className={className}
-      onClick={() => !isDisabled && onClick(date)}
+      disabled={isDisabled}
+      aria-pressed={isSelected}
+      onClick={() => onClick(date)}
     >
       {date.getDate()}
-    </div>
+    </button>
   )
 }
 

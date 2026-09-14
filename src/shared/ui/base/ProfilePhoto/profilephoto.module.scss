@@ -1,5 +1,9 @@
 .profilePhoto {
   position: relative;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  appearance: none;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
@@ -46,8 +50,8 @@
     font-weight: var(--font-medium);
     line-height: var(--text-line-height-16);
   }
+}
 
-  .input {
+.input {
     display: none;
   }
-}

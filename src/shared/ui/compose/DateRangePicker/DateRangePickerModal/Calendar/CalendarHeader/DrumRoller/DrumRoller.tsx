@@ -178,17 +178,19 @@ function DrumRoller({
         ].filter(Boolean).join(' ');
 
         return (
-          <div
+          <button
             key={index}
+            type="button"
             className={itemClass}
             style={{ top: itemTopPx }}
+            disabled={isOutOfRange}
             onClick={(e) => {
               e.stopPropagation();
               if (!isOutOfRange && !didMoveBeyondThresholdRef.current) onChange(index);
             }}
           >
             {label}
-          </div>
+          </button>
         );
       })}
 

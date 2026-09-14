@@ -1,5 +1,6 @@
 import { logoutRequest } from '@/services/authService';
 import styles from './TestMenu.module.scss';
+import { useEffect, type MouseEvent as ReactMouseEvent } from 'react'
 
 const modalItems = [
   { view: 'login', label: 'Вход' },
@@ -20,6 +21,18 @@ type TestMenuModalProps = {
 };
 
 export default function TestMenuModal({ onOpenView, onClose }: TestMenuModalProps) {
+  const handleOverlayClick = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) onClose();
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [onClose])
+
   const handleLogout = async () => {
     await logoutRequest();
     localStorage.removeItem('auth-storage');
@@ -27,8 +40,11 @@ export default function TestMenuModal({ onOpenView, onClose }: TestMenuModalProp
   };
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.menu} onClick={(e) => e.stopPropagation()}>
+    <div
+      className={styles.overlay}
+      onClick={handleOverlayClick}
+    >
+      <div className={styles.menu}>
         <button className={styles.closeBtn} onClick={onClose}>&times;</button>
         <h2 className={styles.title}>Тестовое меню</h2>
         <p className={styles.subtitle}>Выберите модальное окно для просмотра:</p>
@@ -42,7 +58,7 @@ export default function TestMenuModal({ onOpenView, onClose }: TestMenuModalProp
               {item.label}
             </button>
           ))}
-          <button className={`${styles.item} ${styles.logout}`} onClick={handleLogout}>
+          <button type="button" className={`${styles.item} ${styles.logout}`} onClick={handleLogout}>
             ВЫХОД
           </button>
         </div>

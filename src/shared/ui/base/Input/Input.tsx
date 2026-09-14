@@ -63,12 +63,6 @@ const Input = ({
   const inputRef = useRef<HTMLInputElement | null>(null)
   const debounceTimeoutRef = useRef<number | null>(null)
 
-  const handleWrapperClick = () => {
-    if (!disabled && !readOnly) {
-      inputRef.current?.focus()
-    }
-  }
-
   const defaultValidate = (value: string) => {
     if (value === '') return true
     try {
@@ -171,7 +165,7 @@ const Input = ({
         </div>
       )}
 
-      <div className={classes} onClick={handleWrapperClick}>
+      <label className={classes}>
 
         <div className={style.input__content}>
 
@@ -206,7 +200,7 @@ const Input = ({
 
         </div>
 
-      </div>
+      </label>
 
     </div>
   )

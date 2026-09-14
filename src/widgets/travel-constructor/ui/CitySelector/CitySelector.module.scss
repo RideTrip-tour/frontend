@@ -51,8 +51,14 @@
   transition: background-color 0.15s ease;
 }
 
-.listitem:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+.cityButton {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
 .emptyState {

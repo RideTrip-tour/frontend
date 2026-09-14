@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from 'react';
+import { useMemo, useState, useEffect, type FormEvent, type MouseEvent as ReactMouseEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AuthDivider, AuthCheckbox } from './index';
 import AuthField from './AuthField';
@@ -127,6 +127,24 @@ export default function UnifiedAuthModal({
     });
   };
 
+  const handleOverlayClick = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) onClose?.();
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose?.()
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [onClose])
+
+  useEffect(() => {
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = prev }
+  }, [])
+
   const title = useMemo(() => {
     if (view === 'login') return 'Добро пожаловать!';
     if (view === 'register') return 'Регистрация';
@@ -145,7 +163,10 @@ export default function UnifiedAuthModal({
   }, [view]);
 
   return (
-    <div className={shellStyles.overlay} onClick={onClose}>
+    <div
+      className={shellStyles.overlay}
+      onClick={handleOverlayClick}
+    >
       <motion.div
         className={shellStyles.modal}
         style={{ height: '672px', overflow: 'hidden', padding: '0 130px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
@@ -153,7 +174,6 @@ export default function UnifiedAuthModal({
         animate={{ y: 0 }}
         exit={{ y: '100vh' }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        onClick={(e) => e.stopPropagation()}
       >
         <button type="button" className={shellStyles.closeButton} onClick={onClose}>
           <img src={CloseIcon} alt="Закрыть" />

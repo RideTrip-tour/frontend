@@ -8,19 +8,16 @@ interface TextLinkProps {
 }
 
 const TextLink = ({ text, to, fontSize = 14 }: TextLinkProps) => {
-  const handleClick = () => {
-    window.open(to, '_blank', 'noopener,noreferrer')
-  }
-
   return (
-    <span
+    <a
       className={style.textlink}
-      onClick={handleClick}
-      role="link"
+      href={to}
+      target="_blank"
+      rel="noopener noreferrer"
       style={{ fontSize }}
     >
       {text}
-    </span>
+    </a>
   )
 }
 

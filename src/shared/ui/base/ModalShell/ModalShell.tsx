@@ -1,6 +1,6 @@
 import style from './modalshell.module.scss'
 import { motion, AnimatePresence } from 'framer-motion'
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode, type MouseEvent as ReactMouseEvent } from 'react';
 import CloseIcon from '@/assets/icons/close.svg'
 
 interface ModalShellProps {
@@ -16,13 +16,38 @@ const ModalShell = ({
   onClose,
   children
 }: ModalShellProps) => {
+
+  const handleOverlayClick = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) onClose()
+  }
+
+  useEffect(() => {
+  if (!isOpen) return
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') onClose()
+  }
+  window.addEventListener('keydown', handleKeyDown)
+  return () => window.removeEventListener('keydown', handleKeyDown)
+}, [isOpen, onClose])
+
+useEffect(() => {
+  if (!isOpen) return
+
+  const prev = document.body.style.overflow
+  document.body.style.overflow = 'hidden'
+  return () => {
+    document.body.style.overflow = prev
+  }
+}, [isOpen])
+
   return (
     <AnimatePresence>
       {isOpen && (
         <div
           key="overlay"
           className={style.overlay}
-          onClick={onClose}
+          onClick={handleOverlayClick}
         >
           <motion.div
             key="modal"
@@ -31,7 +56,6 @@ const ModalShell = ({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100vh', opacity: 1 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            onClick={(e) => e.stopPropagation()}
           >
             <button type="button" className={style.closeButton} onClick={onClose}>
               <img src={CloseIcon} alt="Закрыть" />
@@ -48,3 +72,4 @@ const ModalShell = ({
 }
 
 export default ModalShell
+

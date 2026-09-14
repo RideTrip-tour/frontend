@@ -2,6 +2,7 @@ import style from './welcome.module.scss'
 import IconSelect from '@/shared/ui/base/IconSelect'
 import {Button} from '@/shared/ui/base/Button'
 import {useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const locations = [
   {value: 'turkey', label: 'Турция'},
@@ -25,13 +26,10 @@ function Welcome() {
   const [location, setLocation] = useState('')
   const [date, setDate] = useState('')
   const [activity, setActivity] = useState('')
+  const navigate = useNavigate();
 
   const handleSearch = () => {
-    console.log({
-      location,
-      date,
-      activity
-    })
+    navigate('/trip-builder');
   }
 
   return (
@@ -80,8 +78,9 @@ function Welcome() {
           />
 
           <Button
+            className={style.welcome__search_button}
             onClick={handleSearch}
-            text="Найти мой тур"
+            text="Поехали"
             variant={'secondary'}
             icon="material-symbols:arrow-forward-rounded"
           />

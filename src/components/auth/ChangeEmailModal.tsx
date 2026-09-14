@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from 'react';
+import { useMemo, useState, useEffect, type FormEvent, type MouseEvent as ReactMouseEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AuthField from './AuthField';
 import shellStyles from './AuthShell.module.scss';
@@ -68,8 +68,29 @@ export default function ChangeEmailModal({
     onSubmit({ email: cleanEmail, password });
   };
 
+  const handleOverlayClick = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) onClose?.();
+  };
+
+  useEffect(() => {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') onClose?.();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [onClose]);
+  
+    useEffect(() => {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = prev; };
+    }, []);
+
   return (
-    <div className={shellStyles.overlay} onClick={onClose}>
+    <div
+      className={shellStyles.overlay}
+      onClick={handleOverlayClick}
+    >
       <motion.div
         className={shellStyles.modal}
         style={{ height: '672px', overflow: 'hidden', padding: '0 130px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}

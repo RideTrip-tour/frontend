@@ -1,5 +1,7 @@
 .textlink {
+  display: inline;
   color: var(--textlink-color);
+  text-decoration: none;
   cursor: pointer;
   user-select: none;
   font-family: var(--text-font-family-2), sans-serif;

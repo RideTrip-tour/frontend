@@ -14,7 +14,8 @@ const Checkbox = ({ checked, disabled = false, onChange }: CheckboxProps) => {
   }
 
   return (
-    <div
+    <button
+      type="button"
       className={style.checkbox}
       role="checkbox"
       aria-checked={checked}
@@ -39,7 +40,7 @@ const Checkbox = ({ checked, disabled = false, onChange }: CheckboxProps) => {
           </svg>
         )}
       </div>
-    </div>
+    </button>
   )
 }
 

@@ -56,55 +56,61 @@ export function ConstructorSelection({
         [styles.cardOpen]: isOpen,
       })}
       style={status.color ? { borderColor: status.color } : undefined}
-      onClick={onToggle}
     >
-      <div className={styles.header}>
-        <div className={styles.main}>
-          <div
-            className={styles.iconWrapper}
-            style={
-              status.color
-                ? { backgroundColor: `${status.color}1A` }
-                : undefined
-            }
-          >
+      <button
+        type="button"
+        className={styles.cardToggle}
+        onClick={onToggle}
+        aria-expanded={isOpen}
+      >
+        <div className={styles.header}>
+          <div className={styles.main}>
             <div
-              className={styles.icon}
-              style={status.color ? { color: status.color } : undefined}
+              className={styles.iconWrapper}
+              style={
+                status.color
+                  ? { backgroundColor: `${status.color}1A` }
+                  : undefined
+              }
             >
-              {icon}
+              <div
+                className={styles.icon}
+                style={status.color ? { color: status.color } : undefined}
+              >
+                {icon}
+              </div>
+            </div>
+
+            <div className={styles.info}>
+              <h2
+                className={styles.title}
+                style={
+                  isOpen && status.color ? { color: status.color } : undefined
+                }
+              >
+                {title}
+              </h2>
+
+              <p className={styles.description}>
+                {value ?? description}
+              </p>
             </div>
           </div>
 
-          <div className={styles.info}>
-            <h2
-              className={styles.title}
-              style={
-                isOpen && status.color ? { color: status.color } : undefined
-              }
-            >
-              {title}
-            </h2>
-
-            <p className={styles.description}>
-              {value ?? description}
-            </p>
+          <div
+            className={styles.status}
+            style={status.color ? { color: status.color } : undefined}
+          >
+            <span>{status.text}</span>
+            <span className={styles.statusIcon} aria-hidden="true">
+              <StatusIcon />
+            </span>
           </div>
         </div>
-
-        <div
-          className={styles.status}
-          style={status.color ? { color: status.color } : undefined}
-        >
-          <span>{status.text}</span>
-          <span className={styles.statusIcon} aria-hidden="true">
-            <StatusIcon />
-          </span>
-        </div>
-      </div>
+      </button>
 
       {isOpen && (
-        <div className={styles.content} onClick={(e) => e.stopPropagation()}>
+        <div className={styles.content}>
           {children}
         </div>
       )}

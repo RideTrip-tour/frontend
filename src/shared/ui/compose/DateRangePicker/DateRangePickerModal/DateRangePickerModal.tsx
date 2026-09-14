@@ -188,10 +188,12 @@ function DateRangePickerModal({
           ].filter(Boolean).join(" ");
 
           return (
-            <div
+            <button
               key={tab}
+              type="button"
               onClick={() => setActiveTab(tab)}
               className={tabClass}
+              aria-pressed={isActive}
             >
               <div className={style.daterangepickermodal__tabLabel}>
                 {tabLabel}
@@ -200,11 +202,12 @@ function DateRangePickerModal({
               <div className={valueClass}>
                 {tabDateText ?? "—"}
               </div>
-            </div>
+            </button>
           );
         })}
 
         <button
+          type="button"
           onClick={onClose}
           className={style.daterangepickermodal__okButton}
         >
@@ -224,6 +227,7 @@ function DateRangePickerModal({
             </span>
 
             <button
+              type="button"
               onClick={() => setShowDrumPicker(false)}
               className={style.daterangepickermodal__doneButton}
             >

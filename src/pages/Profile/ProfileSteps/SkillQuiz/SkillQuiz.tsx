@@ -76,12 +76,17 @@ interface QuizOptionProps {
 }
 
 const QuizOption = ({ label, selected, onClick }: QuizOptionProps) => (
-  <div className={style.skillquiz__option} onClick={onClick}>
+  <button
+    type="button"
+    className={style.skillquiz__option}
+    onClick={onClick}
+    aria-pressed={selected}
+  >
     <div className={`${style.skillquiz__option__radio} ${selected ? style['skillquiz__option__radio--selected'] : ''}`}>
       {selected && <div className={style.skillquiz__option__radio__dot} />}
     </div>
     <span className={style.skillquiz__option__label}>{label}</span>
-  </div>
+  </button>
 )
 
 const LoadingBar = () => {
@@ -263,6 +268,7 @@ const SkillQuiz = () => {
       {typeof visibleStep === 'number' && (
         <div className={style.skillquiz__actions}>
           <button
+            type="button"
             className={`${style.skillquiz__button} ${selectedIndex === null ? style['skillquiz__button--disabled'] : ''}`}
             onClick={handleNext}
             disabled={selectedIndex === null}

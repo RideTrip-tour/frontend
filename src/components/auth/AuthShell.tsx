@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { useEffect, type ReactNode, type MouseEvent as ReactMouseEvent } from 'react';
 import { motion } from 'framer-motion';
 import styles from './AuthShell.module.scss';
 import CloseIcon from '@/assets/icons/close.svg';
@@ -11,8 +11,29 @@ type AuthShellProps = {
 };
 
 export default function AuthShell({ title, onClose, customStyle, children }: AuthShellProps) {
+  const handleOverlayClick = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) onClose?.();
+  };
+
+  useEffect(() => {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') onClose?.()
+      }
+      document.addEventListener('keydown', handleKeyDown)
+      return () => document.removeEventListener('keydown', handleKeyDown)
+    }, [onClose])
+  
+    useEffect(() => {
+      const prev = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => { document.body.style.overflow = prev }
+    }, [])
+
   return (
-    <div className={styles.overlay} onClick={onClose}>
+    <div
+      className={styles.overlay}
+      onClick={handleOverlayClick}
+    >
       <motion.div
         className={styles.modal}
         style={customStyle}
@@ -20,7 +41,6 @@ export default function AuthShell({ title, onClose, customStyle, children }: Aut
         animate={{ y: 0 }}
         exit={{ y: '100vh' }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        onClick={(e) => e.stopPropagation()}
       >
         <button type="button" className={styles.closeButton} onClick={onClose}>
           <img src={CloseIcon} alt="Закрыть" />

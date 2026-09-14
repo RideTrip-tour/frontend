@@ -42,6 +42,9 @@
 
   &__header__edit {
     flex-shrink: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
     display: flex;
     align-items: center;
     gap: 12px;

@@ -46,12 +46,14 @@ function CalendarHeader({
       </button>
 
       <div className={style.calendarheader__center}>
-        <span
+        <button
+          type="button"
           className={style.calendarheader__title}
           onClick={onOpenDrumPicker}
+          aria-label="Открыть выбор месяца и года"
         >
           {MONTH_LABELS_RU[displayMonth]} {displayYear}
-        </span>
+        </button>
 
         <div className={style.calendarheader__arrows}>
           {(["▲", "▼"] as const).map((arrow) => (
