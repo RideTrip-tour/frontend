@@ -99,7 +99,7 @@ function CalendarDay({
   normalizedMinDate,
   hasCompleteRange,
   onSelect,
-}: CalendarDayProps) {
+}: Readonly<CalendarDayProps>) {
   const normalizedDate = startOfDay(date);
 
   const isRangeStart =

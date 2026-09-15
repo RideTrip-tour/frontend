@@ -1,4 +1,5 @@
-import { useEffect, type ReactNode, type MouseEvent as ReactMouseEvent } from 'react';
+import ModalOverlay from '@/shared/ui/base/ModalOverlay'
+import { useId, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import styles from './AuthShell.module.scss';
 import CloseIcon from '@/assets/icons/close.svg';
@@ -11,28 +12,12 @@ type AuthShellProps = {
 };
 
 export default function AuthShell({ title, onClose, customStyle, children }: AuthShellProps) {
-  const handleOverlayClick = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) onClose?.();
-  };
-
-  useEffect(() => {
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') onClose?.()
-      }
-      document.addEventListener('keydown', handleKeyDown)
-      return () => document.removeEventListener('keydown', handleKeyDown)
-    }, [onClose])
-  
-    useEffect(() => {
-      const prev = document.body.style.overflow
-      document.body.style.overflow = 'hidden'
-      return () => { document.body.style.overflow = prev }
-    }, [])
-
+  const titleId = useId();
   return (
-    <div
+    <ModalOverlay
       className={styles.overlay}
-      onClick={handleOverlayClick}
+      onClose={onClose}
+      ariaLabelledBy={title ? titleId : undefined}
     >
       <motion.div
         className={styles.modal}
@@ -46,10 +31,10 @@ export default function AuthShell({ title, onClose, customStyle, children }: Aut
           <img src={CloseIcon} alt="Закрыть" />
         </button>
 
-        {title && <h2 className={styles.title}>{title}</h2>}
+        {title && <h2 id={titleId} className={styles.title}>{title}</h2>}
 
         {children}
       </motion.div>
-    </div>
+    </ModalOverlay>
   );
 }

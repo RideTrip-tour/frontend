@@ -13,6 +13,7 @@ const CheckOption = ({ checked, onChange, title, description }: CheckOptionProps
   return (
     <div className={style.checkoption}>
       <Checkbox
+        aria-label={title}
         checked={checked}
         onChange={onChange}
       />

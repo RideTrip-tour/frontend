@@ -302,6 +302,7 @@ function ProfileSteps() {
     <>
       <div className={style.profilesteps__consent}>
         <Checkbox
+          aria-label="Согласие на обработку персональных данных"
           checked={draftConsent}
           disabled={!isEditing(1)}
           onChange={value => setDraftConsent(value)}
@@ -480,7 +481,7 @@ function ProfileSteps() {
       </PersonalBlock>
 
       {isQuizOpen && (
-        <ModalChildren onClose={() => setIsQuizOpen(false)}>
+        <ModalChildren ariaLabel="Подбор уровня катания" onClose={() => setIsQuizOpen(false)}>
           <SkillQuiz />
         </ModalChildren>
       )}

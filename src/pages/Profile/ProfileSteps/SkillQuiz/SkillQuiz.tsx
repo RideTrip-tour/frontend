@@ -149,10 +149,21 @@ const SkillQuiz = () => {
   const level = getLevel(totalScore)
 
   useLayoutEffect(() => {
-    if (wrapperRef.current && bodyRef.current) {
-      wrapperRef.current.style.height = `${bodyRef.current.offsetHeight}px`
+    const wrapper = wrapperRef.current
+    const body = bodyRef.current
+    if (!wrapper || !body) return
+
+    const updateHeight = () => {
+      const height = body.offsetHeight
+      if (height > 0) wrapper.style.height = `${height}px`
     }
-  }, [visibleStep])
+
+    updateHeight()
+    const observer = new ResizeObserver(updateHeight)
+    observer.observe(body)
+
+    return () => observer.disconnect()
+  }, [])
 
   const transitionTo = (newStep: QuizStep) => {
     setIsExiting(true)

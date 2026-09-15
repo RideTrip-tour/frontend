@@ -41,7 +41,7 @@ const transportOptions = [
 ]
 
 export const ToursFinder = () => {
-  const [, setDestination] = useState('')
+  const [destination, setDestination] = useState('')
   const [activity, setActivity] = useState('')
   const [budget, setBudget] = useState('')
   const [level, setLevel] = useState('')
@@ -61,6 +61,8 @@ export const ToursFinder = () => {
         <div className={style.groupTitle}>Направление</div>
         <Input
           placeholder='Укажите место назначения, например “Сочи”'
+          value={destination}
+          onChange={setDestination}
           onSubmit={setDestination}
         />
       </div>

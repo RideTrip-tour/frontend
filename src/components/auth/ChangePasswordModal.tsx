@@ -1,4 +1,5 @@
-import { useMemo, useState, useEffect, type FormEvent, type MouseEvent as ReactMouseEvent } from 'react';
+import ModalOverlay from '@/shared/ui/base/ModalOverlay'
+import { useId, useMemo, useState, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AuthField from './AuthField';
 import shellStyles from './AuthShell.module.scss';
@@ -23,6 +24,7 @@ export default function ChangePasswordModal({
   onClose,
   onSubmit
 }: ChangePasswordModalProps) {
+  const titleId = useId();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -87,28 +89,11 @@ export default function ChangePasswordModal({
     });
   };
 
-  const handleOverlayClick = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) onClose?.();
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose?.();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
-
-  useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
-  }, []);
-
   return (
-    <div
+    <ModalOverlay
       className={shellStyles.overlay}
-      onClick={handleOverlayClick}
+      onClose={onClose}
+      ariaLabelledBy={titleId}
     >
       <motion.div
         className={shellStyles.modal}
@@ -122,7 +107,7 @@ export default function ChangePasswordModal({
           <img src={CloseIcon} alt="Закрыть" />
         </button>
 
-        <h2 className={shellStyles.title}>
+        <h2 id={titleId} className={shellStyles.title}>
           <div style={{ position: 'relative', minHeight: '1.2em' }}>
             <AnimatePresence initial={false}>
               <motion.span
@@ -235,6 +220,6 @@ export default function ChangePasswordModal({
           </button>
         </form>
       </motion.div>
-    </div>
+    </ModalOverlay>
   );
 }

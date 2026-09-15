@@ -1,4 +1,5 @@
-import { useMemo, useState, useEffect, type FormEvent, type MouseEvent as ReactMouseEvent } from 'react';
+import ModalOverlay from '@/shared/ui/base/ModalOverlay'
+import { useId, useMemo, useState, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AuthDivider, AuthCheckbox } from './index';
 import AuthField from './AuthField';
@@ -36,6 +37,7 @@ export default function UnifiedAuthModal({
                                            onClearError,
                                            onSubmit
                                          }: UnifiedAuthModalProps) {
+  const titleId = useId();
   const [view, setView] = useState<'login' | 'register' | 'forgot'>(initialView);
 
   const [email, setEmail] = useState('');
@@ -127,24 +129,6 @@ export default function UnifiedAuthModal({
     });
   };
 
-  const handleOverlayClick = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) onClose?.();
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose?.()
-    }
-    document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [onClose])
-
-  useEffect(() => {
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = prev }
-  }, [])
-
   const title = useMemo(() => {
     if (view === 'login') return 'Добро пожаловать!';
     if (view === 'register') return 'Регистрация';
@@ -163,9 +147,10 @@ export default function UnifiedAuthModal({
   }, [view]);
 
   return (
-    <div
+    <ModalOverlay
       className={shellStyles.overlay}
-      onClick={handleOverlayClick}
+      onClose={onClose}
+      ariaLabelledBy={titleId}
     >
       <motion.div
         className={shellStyles.modal}
@@ -179,7 +164,7 @@ export default function UnifiedAuthModal({
           <img src={CloseIcon} alt="Закрыть" />
         </button>
 
-        <h2 className={shellStyles.title}>
+        <h2 id={titleId} className={shellStyles.title}>
           <div style={{ position: 'relative', minHeight: '1.2em' }}>
             <AnimatePresence initial={false}>
               <motion.span
@@ -429,6 +414,6 @@ export default function UnifiedAuthModal({
           </div>
         </form>
       </motion.div>
-    </div>
+    </ModalOverlay>
   );
 }

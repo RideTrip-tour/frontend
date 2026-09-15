@@ -1,4 +1,5 @@
-import { useMemo, useState, useEffect, type FormEvent, type MouseEvent as ReactMouseEvent } from 'react';
+import ModalOverlay from '@/shared/ui/base/ModalOverlay'
+import { useId, useMemo, useState, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AuthField from './AuthField';
 import shellStyles from './AuthShell.module.scss';
@@ -21,6 +22,7 @@ export default function ChangeEmailModal({
   onClose,
   onSubmit
 }: ChangeEmailModalProps) {
+  const titleId = useId();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -68,28 +70,11 @@ export default function ChangeEmailModal({
     onSubmit({ email: cleanEmail, password });
   };
 
-  const handleOverlayClick = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) onClose?.();
-  };
-
-  useEffect(() => {
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') onClose?.();
-      };
-      window.addEventListener('keydown', handleKeyDown);
-      return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [onClose]);
-  
-    useEffect(() => {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      return () => { document.body.style.overflow = prev; };
-    }, []);
-
   return (
-    <div
+    <ModalOverlay
       className={shellStyles.overlay}
-      onClick={handleOverlayClick}
+      onClose={onClose}
+      ariaLabelledBy={titleId}
     >
       <motion.div
         className={shellStyles.modal}
@@ -98,13 +83,12 @@ export default function ChangeEmailModal({
         animate={{ y: 0 }}
         exit={{ y: '100vh' }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        onClick={(e) => e.stopPropagation()}
       >
         <button type="button" className={shellStyles.closeButton} onClick={onClose}>
           <img src={CloseIcon} alt="Закрыть" />
         </button>
 
-        <h2 className={shellStyles.title}>
+        <h2 id={titleId} className={shellStyles.title}>
           <div style={{ position: 'relative', minHeight: '1.2em' }}>
             <AnimatePresence initial={false}>
               <motion.span
@@ -191,6 +175,6 @@ export default function ChangeEmailModal({
           </button>
         </form>
       </motion.div>
-    </div>
+    </ModalOverlay>
   );
 }

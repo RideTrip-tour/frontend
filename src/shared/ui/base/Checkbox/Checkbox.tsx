@@ -5,26 +5,30 @@ interface CheckboxProps {
   checked: boolean
   disabled?: boolean
   onChange?: (value: boolean) => void
+  'aria-label'?: string
 }
 
-const Checkbox = ({ checked, disabled = false, onChange }: CheckboxProps) => {
-  const handleClick = () => {
-    if (disabled) return
-    onChange?.(!checked)
-  }
-
+const Checkbox = ({
+  checked,
+  disabled = false,
+  onChange,
+  'aria-label': ariaLabel = 'Выбрать',
+}: Readonly<CheckboxProps>) => {
   return (
-    <button
-      type="button"
-      className={style.checkbox}
-      role="checkbox"
-      aria-checked={checked}
-      aria-disabled={disabled}
-      onClick={handleClick}
-    >
-      <div className={style.checkbox__box}>
+    <label className={style.checkbox} data-disabled={disabled}>
+      <input
+        type="checkbox"
+        className={style.checkbox__input}
+        checked={checked}
+        disabled={disabled}
+        aria-label={ariaLabel}
+        onChange={event => onChange?.(event.currentTarget.checked)}
+      />
+      <span className={style.checkbox__box} aria-hidden="true">
         {checked && (
           <svg
+            aria-hidden="true"
+            focusable="false"
             width="22"
             height="20"
             viewBox="0 0 24 24"
@@ -39,8 +43,8 @@ const Checkbox = ({ checked, disabled = false, onChange }: CheckboxProps) => {
             />
           </svg>
         )}
-      </div>
-    </button>
+      </span>
+    </label>
   )
 }
 

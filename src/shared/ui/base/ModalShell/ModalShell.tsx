@@ -1,7 +1,8 @@
 import style from './modalshell.module.scss'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect, type ReactNode, type MouseEvent as ReactMouseEvent } from 'react';
+import { useId, type ReactNode } from 'react';
 import CloseIcon from '@/assets/icons/close.svg'
+import ModalOverlay from '@/shared/ui/base/ModalOverlay'
 
 interface ModalShellProps {
   isOpen: boolean
@@ -16,38 +17,16 @@ const ModalShell = ({
   onClose,
   children
 }: ModalShellProps) => {
-
-  const handleOverlayClick = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) onClose()
-  }
-
-  useEffect(() => {
-  if (!isOpen) return
-
-  const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') onClose()
-  }
-  window.addEventListener('keydown', handleKeyDown)
-  return () => window.removeEventListener('keydown', handleKeyDown)
-}, [isOpen, onClose])
-
-useEffect(() => {
-  if (!isOpen) return
-
-  const prev = document.body.style.overflow
-  document.body.style.overflow = 'hidden'
-  return () => {
-    document.body.style.overflow = prev
-  }
-}, [isOpen])
+  const titleId = useId()
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div
+        <ModalOverlay
           key="overlay"
           className={style.overlay}
-          onClick={handleOverlayClick}
+          onClose={onClose}
+          ariaLabelledBy={title ? titleId : undefined}
         >
           <motion.div
             key="modal"
@@ -61,15 +40,14 @@ useEffect(() => {
               <img src={CloseIcon} alt="Закрыть" />
             </button>
 
-            {title && <h2 className={style.title}>{title}</h2>}
+            {title && <h2 id={titleId} className={style.title}>{title}</h2>}
 
             {children}
           </motion.div>
-        </div>
+        </ModalOverlay>
       )}
     </AnimatePresence>
   )
 }
 
 export default ModalShell
-
