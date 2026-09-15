@@ -48,8 +48,9 @@ export function trapTabKey(dialog: HTMLDialogElement, shiftKey: boolean) {
     dialog.focus({ preventScroll: true })
     return true
   }
-  if (!stops.some(element => element === active)) {
-    ;(shiftKey ? last : first).focus({ preventScroll: true })
+  if (!(active instanceof HTMLElement) || !stops.includes(active)) {
+    const target = shiftKey ? last : first
+    target.focus({ preventScroll: true })
     return true
   }
   if (shiftKey && active === first) {
