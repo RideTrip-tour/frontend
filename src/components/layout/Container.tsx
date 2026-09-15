@@ -9,7 +9,7 @@ export function Container({ children, className }: ContainerProps) {
     <div
       className={className}
       style={{
-        maxWidth: 1100,
+        maxWidth: 1435,
         margin: "0 auto",
         padding: "0 16px",
         width: "100%"

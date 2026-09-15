@@ -1,0 +1,19 @@
+:root {
+  --animation-speed-70: 70ms;
+  --animation-speed-100: 100ms;
+  --animation-speed-200: 200ms;
+  --animation-speed-300: 300ms;
+  --animation-speed-400: 400ms;
+  --animation-speed-500: 500ms;
+  --animation-speed-600: 600ms;
+  --animation-speed-800: 800ms;
+  --animation-speed-1000: 1000ms;
+
+  --animation-delay-100: 100ms;
+  --animation-delay-200: 200ms;
+  --animation-delay-300: 300ms;
+  --animation-delay-400: 400ms;
+  --animation-delay-500: 500ms;
+
+  --active-scale: 0.88;
+}

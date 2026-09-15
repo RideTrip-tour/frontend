@@ -1,0 +1,11 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --notificationsblock-group-title-color: var(--color-black);
+}
+
+body[data-theme="dark"] {
+
+}

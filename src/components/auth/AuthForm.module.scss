@@ -1,0 +1,378 @@
+.form {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+}
+
+.fieldGroup {
+  margin-bottom: 32px;
+
+  .inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 54px;
+    border: 1px solid #b7c0ca;
+    border-radius: 20px;
+    background: #ffffff;
+    box-sizing: border-box;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+  }
+
+  .input {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    padding: 0 16px 0 16px;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    background: transparent;
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #6b7788;
+    font-family: inherit;
+    animation-duration: 0.01s;
+
+    &:-webkit-autofill {
+      animation-name: autofill;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    &::placeholder {
+      color: #9ea8b5;
+    }
+  }
+
+  @keyframes autofill {
+    from {}
+    to {}
+  }
+
+  .floatingLabel {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #bcc3cc;
+    pointer-events: none;
+    transition: all 0.2s ease;
+  }
+
+  .floatingLabel.floating {
+    top: -10px;
+    font-size: 12px;
+    color: #9ea8b5;
+  }
+
+  // .labelSuccess.floating {
+  //   color: #52c878;
+  // }
+
+  // .labelError.floating {
+  //   color: #ff4d3f;
+  // }
+}
+
+.lastFieldGroup {
+  margin-bottom: 4px;
+}
+
+.label,
+.topError {
+  display: block;
+  margin: 0 0 6px 14px;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+.label {
+  color: #bcc3cc;
+}
+
+.labelError {
+  color: #ff4d3f;
+}
+
+.labelSuccess {
+  color: #52c878;
+}
+
+.topError {
+  color: #ff4d3f;
+}
+
+.default {
+  border-color: #b7c0ca;
+}
+
+.inputWrapper.focus {
+  border-color: #0e68d4;
+}
+
+.success {
+  border-color: #52c878 !important;
+}
+
+.error {
+  border-color: #ff5a4f;
+}
+
+.eyeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin-right: 4px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #6b7788;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.hint {
+  margin: 6px 0 0 14px;
+  font-size: 14px;
+  line-height: 1.25;
+  color: #c4c9cf;
+
+  opacity: 0;
+  transform: translateY(-4px);
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    max-height 0.25s ease;
+}
+
+.hint.visible {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 40px;
+}
+
+// .hintError {
+//   color: #ff4d3f;
+// }
+
+// .hintSuccess {
+//   color: #52c878;
+// }
+
+.statusBlock {
+  min-height: 26px;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notifyPassword {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.centerError {
+  color: #d92d20;
+  text-align: center;
+}
+
+.centerSuccess {
+  color: #52c878;
+  text-align: center;
+}
+
+.required {
+  color: red;
+  margin-left: 2px;
+}
+
+.description {
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #2f2f2f;
+}
+
+.linkButton {
+  display: inline-block;
+  margin-bottom: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #0e68d4;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.linkButtonInline {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #0e68d4;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 20px;
+  cursor: pointer;
+}
+
+.checkboxInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkboxBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #b7c0ca;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #ffffff;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.checkboxInput:checked + .checkboxBox {
+  background: #0e68d4;
+  border-color: #0e68d4;
+}
+
+.checkboxText {
+  font-size: 14px;
+  line-height: 1.35;
+  color: #2f2f2f;
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 24px;
+  background: #6b7788;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: not-allowed;
+  transition: background 0.2s ease;
+}
+
+.submitButton.updatePassword {
+  margin-top: 32px;
+}
+
+.submitButton.submitActive {
+  background: #0e68d4;
+  cursor: pointer;
+}
+
+.inputWrapper.error {
+  border-color: #d92d20;
+}
+
+.loader {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.45);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.85s linear infinite;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 32px 0 20px;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background: #c8ced6;
+}
+
+.dividerText {
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 400;
+  color: #2f2f2f;
+}
+
+.footerText {
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 400;
+  color: #2f2f2f;
+}
+
+.footerLink {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #0e68d4;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.registerLink {
+  background: none;
+  border: none;
+  color: #1a73e8;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

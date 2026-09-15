@@ -45,5 +45,11 @@ export default defineConfig([
         }
       ]
     }
+  },
+  {
+    files: ['src/services/**/*.{ts,tsx}', 'src/api/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': 'off'
+    }
   }
 ]);

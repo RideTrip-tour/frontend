@@ -1,0 +1,1 @@
+export { AccommodationMapModal } from './AccommodationMapModal';

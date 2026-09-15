@@ -1,0 +1,42 @@
+.recommendations {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 120px;
+  margin-top: 83px;
+
+  &__title {
+    color: var(--Dark, #1A1A1A);
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 60px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  &__text {
+    color: var(--Dark-gray, #5F6C7B);
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.27px;
+    text-align: center;
+    max-width: 648px;
+  }
+
+  &__filters {
+    margin-top: 132px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  &__slider {
+    width: 98vw;
+    margin: -10px;
+    margin-top: 78px;
+  }
+}

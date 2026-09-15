@@ -1,0 +1,220 @@
+.footer {
+  width: 100%;
+  background: var(--Background-1, #F7F9FC);
+  overflow: hidden;
+  position: relative;
+
+  &__inner {
+    position: relative;
+    width: 100%;
+    max-width: 1420px;
+    margin: 0 auto;
+    padding: 40px 0 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 80px;
+  }
+
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  &__logo {
+    color: var(--Dark, #1A1A1A);
+    font-family: Poppins, sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 48px;
+  }
+
+  &__socials {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__socialLink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: var(--Dark, #1A1A1A);
+    text-decoration: none;
+    transition: color 200ms ease, transform 200ms ease;
+
+    svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    &:hover {
+      color: var(--Blue, #0E68D4);
+      transform: translateY(-2px);
+    }
+  }
+
+  &__sections {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 180px;
+    flex: 1;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  &__sectionTitle {
+    color: var(--Dark, #1A1A1A);
+    font-family: Poppins, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.27px;
+  }
+
+  &__sectionLink {
+    width: 196px;
+    color: var(--Dark-gray, #5F6C7B);
+    font-family: Poppins, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.24px;
+    text-decoration: none;
+    transition: color 200ms ease;
+
+    &:hover {
+      color: var(--Blue, #0E68D4);
+    }
+  }
+
+  &__support {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  &__supportLabel {
+    color: var(--Dark-gray, #5F6C7B);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.24px;
+  }
+
+  &__supportEmail {
+    color: var(--Blue, #0E68D4);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.24px;
+    text-decoration: none;
+    transition: opacity 200ms ease;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  &__travel {
+    position: relative;
+    margin-top: 24px;
+    align-self: center;
+    width: 100%;
+    max-width: 1440px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  &__travelBack,
+  &__travelFront {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 1440px;
+    max-width: none;
+    text-align: center;
+    font-family: Poppins, sans-serif;
+    font-size: 200px;
+    font-weight: 600;
+    line-height: 300px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  &__travelBack {
+    color: var(--Background-1, #F7F9FC);
+    text-shadow: 0 1px 0 rgba(14, 104, 212, 0.15);
+  }
+
+  &__travelFront {
+    color: rgba(14, 104, 212, 0.10);
+    opacity: 0.4;
+  }
+
+  &__divider {
+    margin-top: 24px;
+    height: 1px;
+    background: transparent;
+    outline: 1px solid var(--Gray, #AFB6BD);
+    outline-offset: -0.5px;
+    align-self: center;
+    width: 100%;
+    max-width: 1420px;
+  }
+
+  &__bottom {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__bottomItem {
+    color: var(--Dark, #1A1A1A);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    text-decoration: none;
+    transition: opacity 200ms ease;
+
+    &:hover {
+      opacity: 0.65;
+    }
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+}

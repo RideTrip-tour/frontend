@@ -1,4 +1,4 @@
-import type { AxiosError } from 'axios';
+import { AxiosError, isAxiosError } from 'axios';
 import { ApiError, type ApiErrorCode } from './ApiError';
 
 function codeFromStatus(status?: number): ApiErrorCode {
@@ -14,32 +14,42 @@ function codeFromStatus(status?: number): ApiErrorCode {
 export function normalizeAxiosError(err: unknown): ApiError {
   if (err instanceof ApiError) return err;
 
-  const e = err as AxiosError<any>;
+  if (isAxiosError(err)) {
+    const e = err as AxiosError<{ message?: string; error?: string }>;
 
-  // timeout
-  if ((e as any)?.code === 'ECONNABORTED') {
-    return new ApiError('Request timeout. Please try again.', {
-      code: 'TIMEOUT',
-      details: { originalMessage: e?.message }
-    });
-  }
+    // timeout
+    if (e.code === 'ECONNABORTED' || e.code === 'ETIMEDOUT') {
+      return new ApiError('Request timeout. Please try again.', {
+        code: 'TIMEOUT',
+        details: { originalMessage: e.message }
+      });
+    }
 
   // network
   if (e?.message === 'Network Error' || !e?.response) {
-    return new ApiError('Network error. Check your connection.', {
+    console.log('Network error');
+    // return new ApiError('Network error. Check your connection.', {
+    //   code: 'NETWORK',
+    //   details: { originalMessage: e?.message }
+    // });
+    return new ApiError('', {
       code: 'NETWORK',
       details: { originalMessage: e?.message }
     });
   }
 
-  const status = e.response.status;
-  const data = e.response.data;
+    const status = e.response.status;
+    const data = e.response.data;
 
-  const message = data?.message || data?.error || e.message || 'Request failed';
+    const message = data?.message || data?.error || e.message || 'Request failed';
 
-  return new ApiError(String(message), {
-    code: codeFromStatus(status),
-    status,
-    details: data
-  });
+    return new ApiError(String(message), {
+      code: codeFromStatus(status),
+      status,
+      details: data
+    });
+  }
+
+  const unknownMessage = err instanceof Error ? err.message : 'An unknown error occurred';
+  return new ApiError(unknownMessage, { code: 'UNKNOWN' });
 }

@@ -1,0 +1,10 @@
+.togglerow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__label {
+    font-size: var(--text-size-16);
+    color: var(--togglerow-label-color);
+  }
+}

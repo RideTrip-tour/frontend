@@ -1,0 +1,14 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --tours-finder-bg: var(--color-white);
+  --tours-finder-button-bg: var(--color-blue);
+  --tours-finder-button-text: var(--color-white);
+  --tours-finder-title-color: var(--color-black);
+}
+
+body[data-theme="dark"] {
+
+}
