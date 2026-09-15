@@ -1,4 +1,5 @@
-import { type ReactNode } from 'react';
+import ModalOverlay from '@/shared/ui/base/ModalOverlay'
+import { useId, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import styles from './AuthShell.module.scss';
 import CloseIcon from '@/assets/icons/close.svg';
@@ -11,8 +12,13 @@ type AuthShellProps = {
 };
 
 export default function AuthShell({ title, onClose, customStyle, children }: AuthShellProps) {
+  const titleId = useId();
   return (
-    <div className={styles.overlay} onClick={onClose}>
+    <ModalOverlay
+      className={styles.overlay}
+      onClose={onClose}
+      ariaLabelledBy={title ? titleId : undefined}
+    >
       <motion.div
         className={styles.modal}
         style={customStyle}
@@ -20,16 +26,15 @@ export default function AuthShell({ title, onClose, customStyle, children }: Aut
         animate={{ y: 0 }}
         exit={{ y: '100vh' }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        onClick={(e) => e.stopPropagation()}
       >
         <button type="button" className={styles.closeButton} onClick={onClose}>
           <img src={CloseIcon} alt="Закрыть" />
         </button>
 
-        {title && <h2 className={styles.title}>{title}</h2>}
+        {title && <h2 id={titleId} className={styles.title}>{title}</h2>}
 
         {children}
       </motion.div>
-    </div>
+    </ModalOverlay>
   );
 }

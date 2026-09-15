@@ -76,17 +76,16 @@ function AccountBlock() {
               </span>
             </button>
             <div className={style.accountblock__deleteInfo}>
-              <span
+              <button
+                type="button"
                 className={style.accountblock__deleteText}
                 onClick={() => {
                   setError('')
                   setIsDeleteOpen(true)
                 }}
-                role="button"
-                tabIndex={0}
               >
                 Удалить аккаунт
-              </span>
+              </button>
               <span className={style.accountblock__warning}>
                 После удаления вся информация об учётной записи будет стёрта.
                 Восстановить её будет невозможно.

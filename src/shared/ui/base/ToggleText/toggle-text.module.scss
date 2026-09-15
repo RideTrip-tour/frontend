@@ -1,5 +1,8 @@
 .toggle {
   padding: 8px 16px;
+  border: 0;
+  font: inherit;
+  text-align: left;
   background: var(--toggle-bg);
   overflow: hidden;
   border-radius: var(--radius-100);

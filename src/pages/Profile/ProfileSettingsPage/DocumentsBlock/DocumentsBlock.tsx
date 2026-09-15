@@ -47,12 +47,13 @@ function DocumentsBlock() {
             Нужна помощь? Напишите нам
           </div>
           <Tooltip text="Скопировано" position="top" visible={copied}>
-            <div
+            <button
+              type="button"
               className={style.documentsblock__supportMail}
               onClick={handleCopyEmail}
             >
               {SUPPORT_EMAIL}
-            </div>
+            </button>
           </Tooltip>
         </div>
       </div>

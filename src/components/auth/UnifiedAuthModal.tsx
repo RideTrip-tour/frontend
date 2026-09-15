@@ -1,4 +1,5 @@
-import { useMemo, useState, type FormEvent } from 'react';
+import ModalOverlay from '@/shared/ui/base/ModalOverlay'
+import { useId, useMemo, useState, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AuthDivider, AuthCheckbox } from './index';
 import AuthField from './AuthField';
@@ -36,6 +37,7 @@ export default function UnifiedAuthModal({
                                            onClearError,
                                            onSubmit
                                          }: UnifiedAuthModalProps) {
+  const titleId = useId();
   const [view, setView] = useState<'login' | 'register' | 'forgot'>(initialView);
 
   const [email, setEmail] = useState('');
@@ -145,7 +147,11 @@ export default function UnifiedAuthModal({
   }, [view]);
 
   return (
-    <div className={shellStyles.overlay} onClick={onClose}>
+    <ModalOverlay
+      className={shellStyles.overlay}
+      onClose={onClose}
+      ariaLabelledBy={titleId}
+    >
       <motion.div
         className={shellStyles.modal}
         style={{ height: '672px', overflow: 'hidden', padding: '0 130px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
@@ -153,13 +159,12 @@ export default function UnifiedAuthModal({
         animate={{ y: 0 }}
         exit={{ y: '100vh' }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        onClick={(e) => e.stopPropagation()}
       >
         <button type="button" className={shellStyles.closeButton} onClick={onClose}>
           <img src={CloseIcon} alt="Закрыть" />
         </button>
 
-        <h2 className={shellStyles.title}>
+        <h2 id={titleId} className={shellStyles.title}>
           <div style={{ position: 'relative', minHeight: '1.2em' }}>
             <AnimatePresence initial={false}>
               <motion.span
@@ -409,6 +414,6 @@ export default function UnifiedAuthModal({
           </div>
         </form>
       </motion.div>
-    </div>
+    </ModalOverlay>
   );
 }

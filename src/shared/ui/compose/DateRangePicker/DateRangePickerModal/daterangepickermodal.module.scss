@@ -18,6 +18,9 @@
     border-radius: 10px;
     border: 1.5px solid var(--drpm-tab-border);
     background: var(--drpm-tab-bg);
+    font: inherit;
+    text-align: left;
+    color: inherit;
     cursor: pointer;
     transition: border-color 0.2s, background 0.2s;
 

@@ -121,6 +121,9 @@
     background: var(--profilesteps-card-bg);
     border-radius: 12px;
     padding: 8px 8px 28px;
+    border: 0;
+    font: inherit;
+    text-align: left;
     gap: 16px;
     box-shadow: 0px 3px 10px #1A1A1A1A;
     cursor: pointer;
@@ -177,6 +180,10 @@
   }
 
   &__quizlink {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font: inherit;
     color: var(--profilesteps-edit-color);
     font-size: 16px;
     font-weight: 400;

@@ -8,6 +8,33 @@ interface CitySelectorProps {
   onSelect: (city: City) => void;
 }
 
+interface CityColumnsProps {
+  readonly columns: City[][];
+  readonly onSelect: (city: City) => void;
+}
+
+const COLUMN_KEYS = ['left', 'center', 'right'] as const;
+
+function CityColumns({ columns, onSelect }: CityColumnsProps) {
+  return columns.map((columnCities, colIndex) => (
+    <div key={COLUMN_KEYS[colIndex]} className={styles.column}>
+      <ul className={styles.list}>
+        {columnCities.map(city => (
+          <li key={city.id} className={styles.listItem}>
+            <button
+              type="button"
+              className={styles.cityButton}
+              onClick={() => onSelect(city)}
+            >
+              {city.name}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ));
+}
+
 export function CitySelector({
   cities,
   onSelect,
@@ -49,42 +76,14 @@ export function CitySelector({
       {/* Секция 2: Часто нажимаемые в 3 колонки */}
       {frequentCities.length > 0 && (
         <div className={clsx(styles.columnsWrapper, styles.frequentColumns)}>
-          {frequentColumns.map((columnCities, colIndex) => (
-            <div key={colIndex} className={styles.column}>
-              <ul className={styles.list}>
-                {columnCities.map((city) => (
-                  <li
-                    key={city.id}
-                    className={styles.listItem}
-                    onClick={() => onSelect(city)}
-                  >
-                    {city.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <CityColumns columns={frequentColumns} onSelect={onSelect} />
         </div>
       )}
 
       {/* Секция 3: Остальные города в 3 колонки */}
       {restCities.length > 0 && (
         <div className={styles.columnsWrapper}>
-          {columns.map((columnCities, colIndex) => (
-            <div key={colIndex} className={styles.column}>
-              <ul className={styles.list}>
-                {columnCities.map((city) => (
-                  <li
-                    key={city.id}
-                    className={styles.listItem}
-                    onClick={() => onSelect(city)}
-                  >
-                    {city.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <CityColumns columns={columns} onSelect={onSelect} />
         </div>
       )}
     </div>

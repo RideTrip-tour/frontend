@@ -19,14 +19,16 @@ const Switch = ({ checked, onChange, disabled = false }: SwitchProps) => {
   }
 
   return (
-    <div
+    <button
+      type="button"
       className={classes}
       role="switch"
       aria-checked={checked}
+      aria-disabled={disabled}
       onClick={handleClick}
     >
       <div className={style.switch__knob} />
-    </div>
+    </button>
   )
 }
 

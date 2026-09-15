@@ -88,7 +88,7 @@ function HomePage() {
   };
 
   const handlePhotoBlockCta = () => {
-    navigate('/constructor');
+    navigate('/trip-builder');
   };
 
   const handleUnifiedSubmit = async (

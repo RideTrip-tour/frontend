@@ -76,12 +76,17 @@ interface QuizOptionProps {
 }
 
 const QuizOption = ({ label, selected, onClick }: QuizOptionProps) => (
-  <div className={style.skillquiz__option} onClick={onClick}>
+  <button
+    type="button"
+    className={style.skillquiz__option}
+    onClick={onClick}
+    aria-pressed={selected}
+  >
     <div className={`${style.skillquiz__option__radio} ${selected ? style['skillquiz__option__radio--selected'] : ''}`}>
       {selected && <div className={style.skillquiz__option__radio__dot} />}
     </div>
     <span className={style.skillquiz__option__label}>{label}</span>
-  </div>
+  </button>
 )
 
 const LoadingBar = () => {
@@ -144,10 +149,21 @@ const SkillQuiz = () => {
   const level = getLevel(totalScore)
 
   useLayoutEffect(() => {
-    if (wrapperRef.current && bodyRef.current) {
-      wrapperRef.current.style.height = `${bodyRef.current.offsetHeight}px`
+    const wrapper = wrapperRef.current
+    const body = bodyRef.current
+    if (!wrapper || !body) return
+
+    const updateHeight = () => {
+      const height = body.offsetHeight
+      if (height > 0) wrapper.style.height = `${height}px`
     }
-  }, [visibleStep])
+
+    updateHeight()
+    const observer = new ResizeObserver(updateHeight)
+    observer.observe(body)
+
+    return () => observer.disconnect()
+  }, [])
 
   const transitionTo = (newStep: QuizStep) => {
     setIsExiting(true)
@@ -263,6 +279,7 @@ const SkillQuiz = () => {
       {typeof visibleStep === 'number' && (
         <div className={style.skillquiz__actions}>
           <button
+            type="button"
             className={`${style.skillquiz__button} ${selectedIndex === null ? style['skillquiz__button--disabled'] : ''}`}
             onClick={handleNext}
             disabled={selectedIndex === null}

@@ -46,10 +46,10 @@ const TriPoseToggle = ({
         : null
 
   return (
-    <div
+    <button
+      type="button"
       className={`${style.triposetoggle} ${style[`triposetoggle--${state}`]}`}
       onClick={handleClick}
-      role="button"
       aria-pressed={state !== 'default'}
     >
       <div className={style.triposetoggle__content}>
@@ -65,7 +65,7 @@ const TriPoseToggle = ({
           />
         )}
       </div>
-    </div>
+    </button>
   )
 }
 

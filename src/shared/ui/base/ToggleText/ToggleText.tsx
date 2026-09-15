@@ -41,10 +41,12 @@ const ToggleText = ({
   } as CSSProperties
 
   return (
-    <div
+    <button
+      type="button"
       className={classes}
       role="switch"
       aria-checked={isOn}
+      aria-label={name}
       onClick={handleToggle}
       style={customStyles}
     >
@@ -55,7 +57,7 @@ const ToggleText = ({
           </div>
         </div>
       </div>
-    </div>
+    </button>
   )
 }
 

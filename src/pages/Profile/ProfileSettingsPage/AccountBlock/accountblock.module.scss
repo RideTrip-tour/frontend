@@ -63,6 +63,10 @@
   }
 
   &__deleteText {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font: inherit;
     font-size: var(--text-size-16);
     color: var(--accountblock-delete-text-color);
     cursor: pointer;

@@ -1,3 +1,5 @@
+import { useId } from 'react'
+import ModalOverlay from '@/shared/ui/base/ModalOverlay'
 import { logoutRequest } from '@/services/authService';
 import styles from './TestMenu.module.scss';
 
@@ -20,6 +22,7 @@ type TestMenuModalProps = {
 };
 
 export default function TestMenuModal({ onOpenView, onClose }: TestMenuModalProps) {
+  const titleId = useId()
   const handleLogout = async () => {
     await logoutRequest();
     localStorage.removeItem('auth-storage');
@@ -27,10 +30,15 @@ export default function TestMenuModal({ onOpenView, onClose }: TestMenuModalProp
   };
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.menu} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeBtn} onClick={onClose}>&times;</button>
-        <h2 className={styles.title}>Тестовое меню</h2>
+    <ModalOverlay
+      className={styles.overlay}
+      onClose={onClose}
+      ariaLabelledBy={titleId}
+      lockScroll={false}
+    >
+      <div className={styles.menu}>
+        <button type="button" aria-label="Закрыть модальное окно" className={styles.closeBtn} onClick={onClose}>&times;</button>
+        <h2 id={titleId} className={styles.title}>Тестовое меню</h2>
         <p className={styles.subtitle}>Выберите модальное окно для просмотра:</p>
         <div className={styles.grid}>
           {modalItems.map((item) => (
@@ -42,11 +50,11 @@ export default function TestMenuModal({ onOpenView, onClose }: TestMenuModalProp
               {item.label}
             </button>
           ))}
-          <button className={`${styles.item} ${styles.logout}`} onClick={handleLogout}>
+          <button type="button" className={`${styles.item} ${styles.logout}`} onClick={handleLogout}>
             ВЫХОД
           </button>
         </div>
       </div>
-    </div>
+    </ModalOverlay>
   );
 }

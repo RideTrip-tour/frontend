@@ -58,10 +58,11 @@ export const ToursFinder = () => {
   return (
     <div className={style.toursFinder}>
       <div className={style.input}>
-        <div className={style.groupTitle}
-        onClick={()=>{console.log('Направление:', destination)}}>Направление</div>
+        <div className={style.groupTitle}>Направление</div>
         <Input
           placeholder='Укажите место назначения, например “Сочи”'
+          value={destination}
+          onChange={setDestination}
           onSubmit={setDestination}
         />
       </div>
@@ -153,14 +154,16 @@ export const ToursFinder = () => {
       </div>
 
       <div className={style.toursFinder__button}>
-        <div className={style.toursFinder__button__btn}
-             onClick={handleSearch}
+        <button
+          type="button"
+          className={style.toursFinder__button__btn}
+          onClick={handleSearch}
         >
           <span>Найти мой идеальный тур</span>
           <Icon icon="material-symbols:arrow-forward-rounded"
                 width={28}
           />
-        </div>
+        </button>
       </div>
     </div>
   )

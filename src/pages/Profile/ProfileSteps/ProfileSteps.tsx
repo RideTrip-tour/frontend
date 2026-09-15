@@ -302,6 +302,7 @@ function ProfileSteps() {
     <>
       <div className={style.profilesteps__consent}>
         <Checkbox
+          aria-label="Согласие на обработку персональных данных"
           checked={draftConsent}
           disabled={!isEditing(1)}
           onChange={value => setDraftConsent(value)}
@@ -344,7 +345,8 @@ function ProfileSteps() {
         <div className={style.profilesteps__levels}>
           {SKILL_LEVELS.map(level => (
             <Fragment key={level.value}>
-              <div
+              <button
+                type="button"
                 className={[
                   style.profilesteps__levelCard,
                   draftPreferences.skillLevel === level.value
@@ -377,7 +379,7 @@ function ProfileSteps() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </button>
             </Fragment>
           ))}
         </div>
@@ -387,12 +389,13 @@ function ProfileSteps() {
 
   const step2Bottom = (
     <>
-      <div
+      <button
+        type="button"
         className={style.profilesteps__quizlink}
         onClick={() => setIsQuizOpen(true)}
       >
         Не уверены? Мы подскажем
-      </div>
+      </button>
       <div className={style.profilesteps__saveRow}>
         <Button
           onClick={savePreferences}
@@ -478,7 +481,7 @@ function ProfileSteps() {
       </PersonalBlock>
 
       {isQuizOpen && (
-        <ModalChildren onClose={() => setIsQuizOpen(false)}>
+        <ModalChildren ariaLabel="Подбор уровня катания" onClose={() => setIsQuizOpen(false)}>
           <SkillQuiz />
         </ModalChildren>
       )}

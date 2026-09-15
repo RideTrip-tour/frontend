@@ -9,12 +9,8 @@ interface CardProps {
 }
 
 const Card = ({imageSrc, title, description, onClick}: CardProps) => {
-  return (
-    <div
-      className={style.card}
-      onClick={onClick}
-      role={onClick ? 'button' : undefined}
-    >
+  const content = (
+    <>
       <div className={style.card__image}>
         <img src={imageSrc}
              alt={title}
@@ -35,8 +31,18 @@ const Card = ({imageSrc, title, description, onClick}: CardProps) => {
           </div>
         )}
       </div>
-    </div>
+    </>
   )
+
+  if (onClick) {
+    return (
+      <button type="button" className={style.card} onClick={onClick}>
+        {content}
+      </button>
+    )
+  }
+
+  return <div className={style.card}>{content}</div>
 }
 
 export default Card

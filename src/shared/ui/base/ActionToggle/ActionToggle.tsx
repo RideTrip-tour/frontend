@@ -31,7 +31,7 @@ const ActionToggle = ({
   ].filter(Boolean).join(' ')
 
   return (
-    <div className={classes} onClick={handleClick}>
+    <button type="button" className={classes} onClick={handleClick} aria-pressed={isActive} aria-label={tooltip}>
 
       <div className={style.actiontoggle__iconWrapper}>
 
@@ -53,7 +53,7 @@ const ActionToggle = ({
         {tooltip}
       </div>
 
-    </div>
+    </button>
   )
 }
 

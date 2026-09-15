@@ -56,7 +56,7 @@ export function Header() {
           icon="material-symbols:arrow-forward-rounded"
           onClick={() => isAuth ? navigate('/?menu=1') : navigate('/?auth=login')}
           variant="primary"
-          className={clsx({
+          className={clsx(style.profileButton, {
             [style.button_home]: isHomePage,
             [style.button_default]: !isHomePage
           })}

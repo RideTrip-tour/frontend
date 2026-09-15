@@ -54,54 +54,58 @@ const ProfilePhoto = ({
   const iconSize = size * 0.42
 
   return (
-    <div
-      className={style.profilePhoto}
-      style={{
-        width: size,
-        height: size,
-      }}
-      onClick={handleClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* IMAGE STATE */}
-      <div
-        className={[
-          style.state,
-          style.stateImage,
-          isHovered ? style.hidden : '',
-        ].join(' ')}
+    <>
+      <button
+        type="button"
+        className={style.profilePhoto}
+        aria-label="Добавить или изменить фото профиля"
+        style={{
+          width: size,
+          height: size,
+        }}
+        onClick={handleClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        {preview ? (
-          <img
-            src={preview}
-            className={style.image}
-            alt="profile"
-          />
-        ) : (
+        {/* IMAGE STATE */}
+        <div
+          className={[
+            style.state,
+            style.stateImage,
+            isHovered ? style.hidden : '',
+          ].join(' ')}
+        >
+          {preview ? (
+            <img
+              src={preview}
+              className={style.image}
+              alt="profile"
+            />
+          ) : (
+            <Icon
+              icon="ic:sharp-face-2"
+              style={{ fontSize: iconSize }}
+            />
+          )}
+        </div>
+
+        <div
+          className={[
+            style.state,
+            style.stateHover,
+            isHovered ? '' : style.hidden,
+          ].join(' ')}
+        >
           <Icon
-            icon="ic:sharp-face-2"
+            icon="ic:round-photo-camera"
             style={{ fontSize: iconSize }}
           />
-        )}
-      </div>
+          <span className={style.text}>
+            Добавить фото
+          </span>
+        </div>
 
-      <div
-        className={[
-          style.state,
-          style.stateHover,
-          isHovered ? '' : style.hidden,
-        ].join(' ')}
-      >
-        <Icon
-          icon="ic:round-photo-camera"
-          style={{ fontSize: iconSize }}
-        />
-        <span className={style.text}>
-          Добавить фото
-        </span>
-      </div>
-
+      </button>
       <input
         ref={inputRef}
         type="file"
@@ -109,7 +113,7 @@ const ProfilePhoto = ({
         className={style.input}
         onChange={handleChange}
       />
-    </div>
+    </>
   )
 }
 

@@ -1,7 +1,8 @@
 import style from './modalshell.module.scss'
 import { motion, AnimatePresence } from 'framer-motion'
-import type { ReactNode } from 'react'
+import { useId, type ReactNode } from 'react';
 import CloseIcon from '@/assets/icons/close.svg'
+import ModalOverlay from '@/shared/ui/base/ModalOverlay'
 
 interface ModalShellProps {
   isOpen: boolean
@@ -16,13 +17,16 @@ const ModalShell = ({
   onClose,
   children
 }: ModalShellProps) => {
+  const titleId = useId()
+
   return (
     <AnimatePresence>
       {isOpen && (
-        <div
+        <ModalOverlay
           key="overlay"
           className={style.overlay}
-          onClick={onClose}
+          onClose={onClose}
+          ariaLabelledBy={title ? titleId : undefined}
         >
           <motion.div
             key="modal"
@@ -31,17 +35,16 @@ const ModalShell = ({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100vh', opacity: 1 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            onClick={(e) => e.stopPropagation()}
           >
             <button type="button" className={style.closeButton} onClick={onClose}>
               <img src={CloseIcon} alt="Закрыть" />
             </button>
 
-            {title && <h2 className={style.title}>{title}</h2>}
+            {title && <h2 id={titleId} className={style.title}>{title}</h2>}
 
             {children}
           </motion.div>
-        </div>
+        </ModalOverlay>
       )}
     </AnimatePresence>
   )
