@@ -1,5 +1,5 @@
-import { useEffect, useId, type ReactNode } from 'react';
-import { createPortal } from 'react-dom';
+import { useId, type ReactNode } from 'react';
+import ModalOverlay from '@/shared/ui/base/ModalOverlay';
 import './variables.css';
 import style from './modal.module.scss';
 
@@ -9,7 +9,10 @@ interface ModalProps {
   children: ReactNode;
   onClose: () => void;
   size?: 'default' | 'wide';
+  variant?: 'default' | 'message' | 'confirmation';
   closeLabel?: string;
+  ariaLabel?: string;
+  className?: string;
 }
 
 const Modal = ({
@@ -18,58 +21,28 @@ const Modal = ({
   children,
   onClose,
   size = 'default',
+  variant = 'default',
   closeLabel = 'Закрыть модальное окно',
-}: ModalProps) => {
+  ariaLabel = 'Модальное окно',
+  className,
+}: Readonly<ModalProps>) => {
   const titleId = useId();
+  if (!isOpen) return null;
 
-  useEffect(() => {
-    if (!isOpen) return undefined;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
-
-  if (!isOpen || typeof document === 'undefined') return null;
-
-  const contentClassName = [
-    style.modal__content,
-    size === 'wide' ? style['modal__content--wide'] : '',
-  ].filter(Boolean).join(' ');
-
-  return createPortal(
-    <div
-      className={style.modal__overlay}
-      onMouseDown={(event) => {
-        if (event.target === event.currentTarget) {
-          onClose();
-        }
-      }}
+  return (
+    <ModalOverlay
+      variant="dimmed"
+      onClose={onClose}
+      ariaLabel={ariaLabel}
+      ariaLabelledBy={title ? titleId : undefined}
     >
-      <div
-        aria-labelledby={title ? titleId : undefined}
-        aria-modal="true"
-        className={contentClassName}
-        role="dialog"
-      >
-        {title && (
-          <h2 className={style.modal__title} id={titleId}>
-            {title}
-          </h2>
-        )}
-
+      <div className={[
+        style.modal__content,
+        size === 'wide' ? style['modal__content--wide'] : '',
+        variant === 'default' ? '' : style[variant],
+        className,
+      ].filter(Boolean).join(' ')}>
+        {title && <h2 className={style.modal__title} id={titleId}>{title}</h2>}
         <button
           aria-label={closeLabel}
           className={style.modal__close}
@@ -78,13 +51,9 @@ const Modal = ({
         >
           <span aria-hidden="true">×</span>
         </button>
-
-        <div className={style.modal__body}>
-          {children}
-        </div>
+        <div className={style.modal__body}>{children}</div>
       </div>
-    </div>,
-    document.body,
+    </ModalOverlay>
   );
 };
 

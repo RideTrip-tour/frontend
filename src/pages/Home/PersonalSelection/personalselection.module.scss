@@ -1,5 +1,6 @@
 .personalselection {
-  width: 100%;
+  width: 1440px;
+  margin-inline: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,6 +51,8 @@
   }
 
   &__selects {
+    width: 640px;
+    flex-shrink: 0;
     z-index: 2;
   }
 }

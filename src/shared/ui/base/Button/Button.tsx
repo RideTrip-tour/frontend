@@ -6,8 +6,9 @@ import type { MouseEventHandler, ReactNode } from 'react'
 export interface ButtonProps {
   onClick: MouseEventHandler<HTMLButtonElement>
   text: string
+  type?: 'button' | 'submit' | 'reset'
   icon?: ReactNode
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'light' | 'solid'
   iconVariant?: 'default' | 'plain'
   iconPosition?: 'left' | 'right'
   disabled?: boolean
@@ -16,6 +17,7 @@ export interface ButtonProps {
 
 export const Button = ({
   text,
+  type = 'button',
   icon,
   variant = 'primary',
   iconVariant = 'default',
@@ -75,6 +77,7 @@ export const Button = ({
 
   return (
     <button
+      type={type}
       className={classes}
       onClick={onClick}
       disabled={disabled}

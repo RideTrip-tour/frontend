@@ -1,7 +1,7 @@
 .reviewsliderWrapper {
   width: 100%;
   overflow-x: hidden;
-  padding: 14px;
+  padding: 14px 0;
 }
 
 .reviewslider {
@@ -26,8 +26,9 @@
 
   &__controls {
     margin-top: 15px;
+    margin-inline: auto;
     position: relative;
-    width: 100%;
+    width: 1440px;
     display: flex;
     justify-content: center;
     align-items: center;

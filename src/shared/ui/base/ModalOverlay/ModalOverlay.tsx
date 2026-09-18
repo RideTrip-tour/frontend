@@ -7,6 +7,7 @@ import styles from './modaloverlay.module.scss'
 interface ModalOverlayProps {
   readonly children: ReactNode
   readonly className?: string
+  readonly variant?: 'default' | 'dimmed'
   readonly onClose?: () => void
   readonly lockScroll?: boolean
   readonly ariaLabel?: string
@@ -20,6 +21,7 @@ interface ModalOverlayProps {
 export default function ModalOverlay({
   children,
   className,
+  variant = 'default',
   onClose,
   lockScroll = true,
   ariaLabel = 'Модальное окно',
@@ -61,7 +63,7 @@ export default function ModalOverlay({
   return createPortal(
     <dialog
       ref={dialogRef}
-      className={[styles.overlay, className].filter(Boolean).join(' ')}
+      className={[styles.overlay, variant === 'dimmed' ? styles.dimmed : '', className].filter(Boolean).join(' ')}
       aria-modal="true"
       aria-label={ariaLabelledBy ? undefined : ariaLabel}
       aria-labelledby={ariaLabelledBy}

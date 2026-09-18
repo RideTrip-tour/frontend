@@ -1,15 +1,4 @@
 .modal {
-  &__overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    background: rgba(26, 26, 26, 0.5);
-  }
-
   &__content {
     position: relative;
     width: min(520px, 100%);
@@ -20,6 +9,9 @@
     border-radius: 20px;
     background: var(--modal-bg, #ffffff);
     box-shadow: 0 16px 48px rgba(30, 77, 143, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__content--wide {
@@ -71,27 +63,25 @@
   }
 }
 
-@media (max-width: 720px) {
-  .modal {
-    &__overlay {
-      padding: 12px;
-    }
 
-    &__content,
-    &__content--wide {
-      max-height: calc(100vh - 24px);
-      padding: 24px 18px;
-      border-radius: 18px;
-    }
+.message,
+.confirmation {
+  width: min(614px, 100%);
+  min-height: 324px;
+  padding: 78px;
+  border: 1px solid #0e68d4;
+  border-radius: 40px;
+  box-shadow: 0 4px 16px rgba(14, 104, 212, 0.2);
 
-    &__title {
-      margin-bottom: 20px;
-      font-size: 22px;
-    }
-
-    &__close {
-      top: 14px;
-      right: 14px;
-    }
+  .modal__close {
+    top: 38px;
+    right: 38px;
+    width: 32px;
+    height: 32px;
+    border-radius: 0;
   }
+}
+
+.confirmation {
+  min-height: 344px;
 }

@@ -1,4 +1,5 @@
 .toursFinder {
+  width: 100%;
   background: var(--tours-finder-bg);
   padding: 32px 20px;
   border-radius: var(--radius-40);
@@ -9,12 +10,13 @@
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 44px;
     row-gap: 16px;
   }
 
   .group {
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 8px;
