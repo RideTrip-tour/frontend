@@ -1,3 +1,8 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '@/store/authStore';
+import  type { CartModalState } from '@/widgets/travel-constructor/model/cartModalTypes';
+import { ConstructorCartModal } from '@/widgets/travel-constructor/ui/ConstructorCartModal';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
 import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
 import {
@@ -18,10 +23,10 @@ import {
   SadfaceIcon,
   ResetIcon,
   SaveIcon,
-  ShareIcon,
 } from '@/assets/icons/constructor';
 import style from './ConstructorCart.module.scss';
 import { CartActions } from './CartActions';
+import { CartShareMenu } from './CartShareMenu';
 import { CartItemHeader } from './CartItemHeader';
 import { CartSummary } from './CartSummary';
 
@@ -41,6 +46,14 @@ function PriceLine({ price, note }: PriceLineProps) {
 }
 
 export function ConstructorCart() {
+  const navigate = useNavigate();
+  const isAuth = useAuthStore((state) => state.isAuth);
+  const [modal, setModal] = useState<CartModalState>(null);
+  const closeModal = () => setModal(null);
+  const openAuth = (view: 'login' | 'register') => {
+    closeModal();
+    navigate(`/?auth=${view}`);
+  };
   const {
     fromCity,
     fromCountry,
@@ -66,9 +79,10 @@ export function ConstructorCart() {
     resetConstructor: resetCart,
   } = useConstructor();
 
-  const isSelectingTickets = activeSelectorId === 'from'
-    || activeSelectorId === 'to'
-    || activeSelectorId === 'when';
+  const isSelectingFrom = activeSelectorId === 'from';
+  const isSelectingTo = activeSelectorId === 'to';
+  const isSelectingDates = activeSelectorId === 'when';
+  const isSelectingTickets = isSelectingFrom || isSelectingTo || isSelectingDates;
   const isSelectingActivity = activeSelectorId === 'activity';
   const isSelectingAccommodation = activeSelectorId === 'hotel';
   const isSelectingTransfer = activeSelectorId === 'transfer';
@@ -106,7 +120,8 @@ export function ConstructorCart() {
       ? ` (парковка ${transfer.parking === 'needed' ? 'нужна' : 'не нужна'})`
       : '';
 
-  const ticketPrice = hasTicketDetails ? MOCK_TICKET_PRICE : 0;
+  const hasCompleteRoute = Boolean(fromCity && toCity);
+  const ticketPrice = hasCompleteRoute ? MOCK_TICKET_PRICE : 0;
   const activityPrice = calculateActivityPrice(activities, liftTypes);
   const accommodationPrice = accommodation?.pricePerNight ?? 0;
   const transferPrice = transfer?.priceFrom ?? 0;
@@ -130,6 +145,14 @@ export function ConstructorCart() {
   const hasVisibleItems = hasSelectedItems || activeSelectorId !== null;
 
   const saveCart = () => {
+    if (!hasSelectedItems) {
+      setModal({ type: 'save-empty' });
+      return;
+    }
+    if (!isAuth) {
+      setModal({ type: 'save-unauthorized' });
+      return;
+    }
     const snapshot = {
       fromCity,
       fromCountry,
@@ -147,50 +170,28 @@ export function ConstructorCart() {
       totalPrice,
     };
 
-    window.localStorage.setItem(
-      'ride-trip-constructor-cart',
-      JSON.stringify(snapshot),
-    );
-    window.alert('Путешествие сохранено');
+    try {
+      // Заменить localStorage на API сохранения в «Избранные».
+      window.localStorage.setItem(
+        'ride-trip-constructor-cart',
+        JSON.stringify(snapshot),
+      );
+      setModal({ type: 'save-success' });
+    } catch {
+      setModal({ type: 'save-error' });
+    }
   };
 
-  const shareCart = async () => {
-    const shareText = [
-      route,
-      dates,
-      hasActivityDetails ? `${activityLabel}${liftTypesLabel}` : null,
-      accommodation?.name ?? null,
-      transfer?.label ?? null,
-      people ? formatGuestSummary(people) : null,
-      level,
-      additional.length > 0 ? additional.join(', ') : null,
-      `Итого: от ${formatPrice(totalPrice)} за человека`,
-    ].filter(Boolean).join('\n');
-
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Моё путешествие RideTrip',
-          text: shareText,
-          url: window.location.href,
-        });
-      } catch (error) {
-        if (error instanceof DOMException && error.name === 'AbortError') {
-          return;
-        }
-
-        window.alert('Не удалось поделиться путешествием');
-      }
+  const downloadPdf = () => {
+    if (!hasSelectedItems) {
+      setModal({ type: 'pdf-empty' });
       return;
     }
-
     try {
-      await navigator.clipboard.writeText(
-        `${shareText}\n${window.location.href}`,
-      );
-      window.alert('Описание путешествия скопировано');
+      // Подключить API генерации PDF; сейчас сохраняется существующая печать.
+      window.print();
     } catch {
-      window.alert('Не удалось скопировать описание путешествия');
+      setModal({ type: 'pdf-service-error' });
     }
   };
 
@@ -218,19 +219,29 @@ export function ConstructorCart() {
                   title="Билеты:"
                 />
 
-                {isSelectingTickets ? (
-                  <p aria-live="polite" className={style.selectingStatus}>
-                    Выбирается сейчас...
-                  </p>
-                ) : (
-                  <>
-                    <p className={style.primaryValue}>
-                      <span>{route}</span>
-                      <span className={style.secondaryValue}> ({dates})</span>
-                    </p>
-                    <PriceLine price={ticketPrice} />
-                  </>
-                )}
+                <p aria-live="polite" className={style.primaryValue}>
+                  {(route || isSelectingFrom || isSelectingTo) && (
+                    <>
+                      <span className={isSelectingFrom ? style.selectingStatus : undefined}>
+                        {isSelectingFrom ? 'Выбирается сейчас...' : origin ?? 'Откуда'}
+                      </span>
+                      {' - '}
+                      <span className={isSelectingTo ? style.selectingStatus : undefined}>
+                        {isSelectingTo ? 'Выбирается сейчас...' : destination ?? 'Куда'}
+                      </span>
+                    </>
+                  )}
+                  {(dates || isSelectingDates) && (
+                    <span className={style.secondaryValue}>
+                      {' ('}
+                      <span className={isSelectingDates ? style.selectingStatus : undefined}>
+                        {isSelectingDates ? 'Выбирается сейчас...' : dates}
+                      </span>
+                      {')'}
+                    </span>
+                  )}
+                </p>
+                {hasCompleteRoute && <PriceLine price={ticketPrice} />}
               </section>
             )}
 
@@ -403,13 +414,26 @@ export function ConstructorCart() {
 
         <CartActions
           actions={[
-            { icon: <ResetIcon />, label: 'Сбросить', onClick: resetCart },
+            { icon: <ResetIcon />, label: 'Сбросить', onClick: () => setModal({ type: 'reset-confirm' }) },
             { icon: <SaveIcon />, label: 'Сохранить', onClick: saveCart },
-            { icon: <DownloadIcon />, label: 'Скачать PDF', onClick: () => window.print() },
-            { icon: <ShareIcon />, label: 'Поделиться', onClick: () => void shareCart() },
+            { icon: <DownloadIcon />, label: 'Скачать PDF', onClick: downloadPdf },
           ]}
-        />
+        >
+          <CartShareMenu
+            hasSelectedItems={hasSelectedItems}
+          />
+        </CartActions>
       </div>
+      <ConstructorCartModal
+        state={modal}
+        onClose={closeModal}
+        onResetConfirm={() => {
+          resetCart();
+          closeModal();
+        }}
+        onLogin={() => openAuth('login')}
+        onRegister={() => openAuth('register')}
+      />
     </aside>
   );
 }

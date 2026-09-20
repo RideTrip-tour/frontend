@@ -20,7 +20,7 @@ interface ResortSliderProps {
 }
 
 const ResortSlider: React.FC<ResortSliderProps> = ({
-                                                     windowWidth = 1400,
+                                                     windowWidth = 1440,
                                                      className,
                                                      items = [],
                                                    }) => {

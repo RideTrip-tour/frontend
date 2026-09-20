@@ -1,6 +1,7 @@
 .card {
   width: 592px;
-  height: 280px;
+  min-height: 280px;
+  gap: 16px;
   padding: 20px 24px;
   background: var(--reviewcard-bg);
   box-shadow: var(--reviewcard-shadow);

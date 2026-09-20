@@ -21,7 +21,7 @@ interface ReviewSliderProps {
 }
 
 const ReviewSlider: React.FC<ReviewSliderProps> = ({
-                                                     windowWidth = 1400,
+                                                     windowWidth = 1440,
                                                      className,
                                                      items = []
                                                    }) => {

@@ -9,9 +9,10 @@ export interface CartAction {
 
 interface CartActionsProps {
   actions: CartAction[];
+  children?: ReactNode;
 }
 
-export function CartActions({ actions }: CartActionsProps) {
+export function CartActions({ actions, children }: Readonly<CartActionsProps>) {
   return (
     <div className={styles.actions}>
       {actions.map((action) => (
@@ -25,6 +26,7 @@ export function CartActions({ actions }: CartActionsProps) {
           <span>{action.label}</span>
         </button>
       ))}
+      {children}
     </div>
   );
 }

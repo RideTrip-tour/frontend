@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
   &__title {
     position: relative;
     display: flex;
@@ -21,6 +22,7 @@
       line-height: 60px;
     }
   }
+
   &__text {
     color: #5F6C7B;
     font-size: 18px;
@@ -30,7 +32,10 @@
     letter-spacing: 0.27px;
     word-wrap: break-word;
   }
+  
   &__slider{
+    width: 100%;
+    min-width: 0;
     margin-top: 132px;
   }
 }

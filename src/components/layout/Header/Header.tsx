@@ -54,7 +54,7 @@ export function Header() {
         <Button
           text={isAuth ? 'Профиль' : 'Авторизация'}
           icon="material-symbols:arrow-forward-rounded"
-          onClick={() => isAuth ? navigate('/?menu=1') : navigate('/?auth=login')}
+          onClick={() => isAuth ? navigate('/profile') : navigate('/?auth=login')}
           variant="primary"
           className={clsx(style.profileButton, {
             [style.button_home]: isHomePage,

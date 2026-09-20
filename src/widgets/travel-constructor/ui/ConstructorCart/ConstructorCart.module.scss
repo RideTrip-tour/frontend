@@ -1,5 +1,7 @@
 .card {
-  width: 476px;
+  width: 100%;
+  min-width: 0;
+  align-self: start;
   padding: 24px 20px 20px;
   color: #1a1a1a;
   border-radius: 16px;
@@ -113,6 +115,7 @@
 }
 
 .primaryValue {
+  overflow-wrap: anywhere;
   color: #0e68d4;
   font-family: var(--text-font-family-3);
   font-size: 16px;
@@ -247,7 +250,8 @@
 }
 
 .actionButton {
-  width: 100%;
+  width: 100px;
+  height: 72px;
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;

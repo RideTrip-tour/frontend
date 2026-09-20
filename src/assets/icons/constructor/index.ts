@@ -24,3 +24,6 @@ export { default as PlussIcon } from './PlussIcon.svg?react';
 export { default as MinusIcon } from './MinusIcon.svg?react';
 export { default as LikeIcon } from './LikeIcon.svg?react';
 export { default as LikeFilledIcon } from './LikeFilledIcon.svg?react';
+export { default as CopyIcon } from './CopyIcon.svg?react';
+export { default as TelegramIcon } from './TelegramIcon.svg?react';
+export { default as WhatsappIcon } from './WhatsappIcon.svg?react';

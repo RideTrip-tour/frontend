@@ -1,12 +1,14 @@
 .travelConstructor {
-  width: 1420px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 920px 476px;
+  align-items: start;
   gap: 24px;
 }
 
 .selectionList {
+  width: 100%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
