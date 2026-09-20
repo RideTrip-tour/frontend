@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
-import  type{ CartModalState } from '@/widgets/travel-constructor/model/cartModalTypes';
+import  type { CartModalState } from '@/widgets/travel-constructor/model/cartModalTypes';
 import { ConstructorCartModal } from '@/widgets/travel-constructor/ui/ConstructorCartModal';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
 import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
@@ -23,10 +23,10 @@ import {
   SadfaceIcon,
   ResetIcon,
   SaveIcon,
-  ShareIcon,
 } from '@/assets/icons/constructor';
 import style from './ConstructorCart.module.scss';
 import { CartActions } from './CartActions';
+import { CartShareMenu } from './CartShareMenu';
 import { CartItemHeader } from './CartItemHeader';
 import { CartSummary } from './CartSummary';
 
@@ -191,49 +191,21 @@ export function ConstructorCart() {
       // Подключить API генерации PDF; сейчас сохраняется существующая печать.
       window.print();
     } catch {
-      setModal({ type: 'pdf-service-error' })
+      setModal({ type: 'pdf-service-error' });
     }
   };
 
-  const shareCart = async () => {
-    const shareText = [
-      route,
-      dates,
-      hasActivityDetails ? `${activityLabel}${liftTypesLabel}` : null,
-      accommodation?.name ?? null,
-      transfer?.label ?? null,
-      people ? formatGuestSummary(people) : null,
-      level,
-      additional.length > 0 ? additional.join(', ') : null,
-      `Итого: от ${formatPrice(totalPrice)} за человека`,
-    ].filter(Boolean).join('\n');
-
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Моё путешествие в Три шага',
-          text: shareText,
-          url: window.location.href,
-        });
-      } catch (error) {
-        if (error instanceof DOMException && error.name === 'AbortError') {
-          return;
-        }
-
-        window.alert('Не удалось поделиться путешествием');
-      }
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(
-        `${shareText}\n${window.location.href}`,
-      );
-      window.alert('Описание путешествия скопировано');
-    } catch {
-      window.alert('Не удалось скопировать описание путешествия');
-    }
-  };
+  const shareText = [
+    route,
+    dates,
+    hasActivityDetails ? `${activityLabel}${liftTypesLabel}` : null,
+    accommodation?.name ?? null,
+    transfer?.label ?? null,
+    people ? formatGuestSummary(people) : null,
+    level,
+    additional.length > 0 ? additional.join(', ') : null,
+    `Итого: от ${formatPrice(totalPrice)} за человека`,
+  ].filter(Boolean).join('\n');
 
   return (
     <aside className={style.card} aria-label="Корзина конструктора путешествия">
@@ -457,9 +429,13 @@ export function ConstructorCart() {
             { icon: <ResetIcon />, label: 'Сбросить', onClick: () => setModal({ type: 'reset-confirm' }) },
             { icon: <SaveIcon />, label: 'Сохранить', onClick: saveCart },
             { icon: <DownloadIcon />, label: 'Скачать PDF', onClick: downloadPdf },
-            { icon: <ShareIcon />, label: 'Поделиться', onClick: () => void shareCart() },
           ]}
-        />
+        >
+          <CartShareMenu
+            shareText={shareText}
+            hasSelectedItems={hasSelectedItems}
+          />
+        </CartActions>
       </div>
       <ConstructorCartModal
         state={modal}
