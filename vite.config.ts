@@ -17,9 +17,7 @@ export default defineConfig({
       '/api': {
         target: 'https://trip.elmobil.ru',
         changeOrigin: true,
-        cookieDomainRewrite: '',
       }
     }
   }
 });
-

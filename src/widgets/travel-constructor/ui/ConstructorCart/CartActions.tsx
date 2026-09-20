@@ -12,7 +12,7 @@ interface CartActionsProps {
   children?: ReactNode;
 }
 
-export function CartActions({ actions, children }: CartActionsProps) {
+export function CartActions({ actions, children }: Readonly<CartActionsProps>) {
   return (
     <div className={styles.actions}>
       {actions.map((action) => (

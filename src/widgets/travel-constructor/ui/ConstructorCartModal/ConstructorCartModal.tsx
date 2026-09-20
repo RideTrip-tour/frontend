@@ -21,7 +21,7 @@ export function ConstructorCartModal({
   onResetConfirm,
   onLogin,
   onRegister,
-}: ConstructorCartModalProps) {
+}: Readonly<ConstructorCartModalProps>) {
   if (!state) return null;
 
   if (state.type === 'reset-confirm' || state.type === 'save-unauthorized') {

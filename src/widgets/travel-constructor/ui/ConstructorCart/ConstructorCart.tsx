@@ -195,18 +195,6 @@ export function ConstructorCart() {
     }
   };
 
-  const shareText = [
-    route,
-    dates,
-    hasActivityDetails ? `${activityLabel}${liftTypesLabel}` : null,
-    accommodation?.name ?? null,
-    transfer?.label ?? null,
-    people ? formatGuestSummary(people) : null,
-    level,
-    additional.length > 0 ? additional.join(', ') : null,
-    `Итого: от ${formatPrice(totalPrice)} за человека`,
-  ].filter(Boolean).join('\n');
-
   return (
     <aside className={style.card} aria-label="Корзина конструктора путешествия">
       <h2 className={style.title}>Ваше путешествие</h2>
@@ -432,7 +420,6 @@ export function ConstructorCart() {
           ]}
         >
           <CartShareMenu
-            shareText={shareText}
             hasSelectedItems={hasSelectedItems}
           />
         </CartActions>

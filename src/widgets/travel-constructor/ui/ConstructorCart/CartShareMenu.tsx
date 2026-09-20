@@ -15,7 +15,6 @@ import cartStyles from './ConstructorCart.module.scss';
 import styles from './CartShareMenu.module.scss';
 
 interface CartShareMenuProps {
-  shareText: string;
   hasSelectedItems: boolean;
 }
 
@@ -29,23 +28,7 @@ const MESSAGES = {
 
 type FeedbackType = keyof typeof MESSAGES;
 
-function openShareWindow(url: string): boolean {
-  let popup: Window | null = null;
-
-  try {
-    popup = window.open('', '_blank');
-    if (!popup) return false;
-
-    popup.opener = null;
-    popup.location.replace(url);
-    return true;
-  } catch {
-    popup?.close();
-    return false;
-  }
-}
-
-export function CartShareMenu({ shareText, hasSelectedItems }: CartShareMenuProps) {
+export function CartShareMenu({ hasSelectedItems }: Readonly<CartShareMenuProps>) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [feedback, setFeedback] = useState<{ type: FeedbackType } | null>(null);
@@ -104,40 +87,14 @@ export function CartShareMenu({ shareText, hasSelectedItems }: CartShareMenuProp
     }
   };
 
-  const shareTo = async (messenger: 'telegram' | 'whatsapp') => {
+  const shareTo = () => {
     if (!hasSelectedItems) {
       setFeedback({ type: 'empty' });
       return;
     }
 
     setFeedback(null);
-    const pageUrl = window.location.href;
-    const url = messenger === 'telegram'
-      ? new URL('https://t.me/share/url')
-      : new URL('https://wa.me/');
-
-    if (messenger === 'telegram') {
-      url.searchParams.set('url', pageUrl);
-      url.searchParams.set('text', shareText);
-    } else {
-      url.searchParams.set('text', `${shareText}\n${pageUrl}`);
-    }
-
-    if (openShareWindow(url.href)) {
-      setIsOpen(false);
-      buttonRef.current?.focus();
-      return;
-    }
-
-    setIsPending(true);
-    try {
-      await navigator.clipboard.writeText(pageUrl);
-      setFeedback({ type: 'app-error-copied' });
-    } catch {
-      setFeedback({ type: 'app-error' });
-    } finally {
-      setIsPending(false);
-    }
+    window.alert('В разработке');
   };
 
   return (
@@ -169,32 +126,46 @@ export function CartShareMenu({ shareText, hasSelectedItems }: CartShareMenuProp
       <div id={menuId} className={styles.dropdown} hidden={!isOpen}>
         <ul aria-labelledby={buttonId} className={styles.menu}>
           <li>
-            <button type="button" className={styles.item} disabled={isPending} onClick={() => void copyLink()}>
+            <button
+              type="button"
+              className={styles.item}
+              disabled={isPending}
+              onClick={() => void copyLink()}
+            >
               <CopyIcon aria-hidden="true" />
               <span>Скопировать ссылку</span>
             </button>
           </li>
           <li>
-            <button type="button" className={styles.item} disabled={isPending} onClick={() => void shareTo('telegram')}>
+            <button
+              type="button"
+              className={styles.item}
+              disabled={isPending}
+              onClick={shareTo}
+            >
               <TelegramIcon aria-hidden="true" />
               <span>Telegram</span>
             </button>
           </li>
           <li>
-            <button type="button" className={styles.item} disabled={isPending} onClick={() => void shareTo('whatsapp')}>
+            <button
+              type="button"
+              className={styles.item}
+              disabled={isPending}
+              onClick={shareTo}
+            >
               <WhatsappIcon aria-hidden="true" />
               <span>WhatsApp</span>
             </button>
           </li>
         </ul>
-        <p
+        <output
           className={styles.feedback}
           data-type={feedback?.type}
-          role="status"
           aria-atomic="true"
         >
           {feedback ? MESSAGES[feedback.type] : ''}
-        </p>
+        </output>
       </div>
     </div>
   );
