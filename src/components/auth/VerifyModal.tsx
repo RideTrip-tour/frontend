@@ -1,32 +1,18 @@
-import { useEffect } from 'react';
-import { AuthShell } from './index';
+import AuthShell from './AuthShell';
 import styles from './AuthState.module.scss';
-import { verifyRequest } from '@/services/authService';
 
 type VerifyModalProps = {
-  token: string;
   onClose: () => void;
-  onComplete: (success: boolean) => void;
 };
 
-export default function VerifyModal({ token, onClose, onComplete }: VerifyModalProps) {
-  useEffect(() => {
-    (async () => {
-      try {
-        await verifyRequest(token);
-        onComplete(true);
-      } catch {
-        onComplete(false);
-      }
-    })();
-  }, [token, onComplete]);
-
+export default function VerifyModal({ onClose }: VerifyModalProps) {
   return (
     <AuthShell onClose={onClose}>
       <div className={styles.centerContent}>
-        <div className={styles.loader} />
-        <p className={styles.text}>Проверяем верификацию</p>
+        <div className={styles.loader} aria-hidden="true" />
+        <p className={styles.text} role="status">Проверяем верификацию</p>
       </div>
     </AuthShell>
   );
 }
+

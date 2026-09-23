@@ -12,6 +12,7 @@ const modalItems = [
   { view: 'registration-success', label: 'Регистрация успешна' },
   { view: 'registration-error', label: 'Ошибка регистрации' },
   { view: 'verify', label: 'Верификация email' },
+  { view: 'verification-error', label: 'Ошибка подтверждения почты' },
   { view: 'reset-password', label: 'Сброс пароля (форма)' },
   { view: 'password-reset-success', label: 'Пароль изменён' },
 ] as const;
