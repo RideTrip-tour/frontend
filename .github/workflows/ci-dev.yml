@@ -199,7 +199,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_DEPLOY_THREAD_ID: ${{ secrets.TELEGRAM_DEPLOY_THREAD_ID }}
+          TELEGRAM_DEPLOY_THREAD_ID: ${{ secrets.TELEGRAM_FRONTEND_THREAD_ID }}
           GH_TOKEN: ${{ github.token }}
         run: |
           FAILED_JOB="Unknown"
