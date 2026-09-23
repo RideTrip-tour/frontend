@@ -1,5 +1,5 @@
 import {lazy, Suspense} from 'react'
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route} from 'react-router'
 import PaddedLayout from '@/components/layout/PaddedLayout'
 
 const HomePage = lazy(() => import("@/pages/Home"));

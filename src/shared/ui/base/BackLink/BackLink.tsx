@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import './variables.css'
 import style from './backlink.module.scss'
 

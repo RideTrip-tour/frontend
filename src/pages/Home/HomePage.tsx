@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router';
 import { AnimatePresence, motion } from 'framer-motion';
 import Welcome from '@/pages/Home/Welcome'
 import Choice from '@/pages/Home/Choice'

@@ -2,7 +2,7 @@ import style from './welcome.module.scss'
 import IconSelect from '@/shared/ui/base/IconSelect'
 import {Button} from '@/shared/ui/base/Button'
 import {useState} from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const locations = [
   {value: 'turkey', label: 'Турция'},
