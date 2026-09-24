@@ -7,7 +7,7 @@ import LogoutConfirmModal from '@/shared/ui/compose/Modals/LogoutConfirmModal'
 import { logoutRequest } from '@/services/authService'
 import { deleteMyProfileRequest } from '@/services/profileService'
 import { useProfileStore } from '@/store'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { useState } from 'react'
 import './variables.css'
 

@@ -1,6 +1,6 @@
 import { Button } from '@/shared/ui/base/Button'
 import style from './header.module.scss'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router'
 import NavItem from '@/shared/ui/base/NavItem'
 import { useAuthStore } from '@/store'
 import { useEffect } from 'react'

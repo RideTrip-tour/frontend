@@ -1,5 +1,5 @@
-import { NavLink, useLocation } from 'react-router-dom'
-import type { NavLinkRenderProps } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router'
+import type { NavLinkRenderProps } from 'react-router'
 import style from './navitem.module.scss'
 import './variables.css'
 import clsx from 'clsx'

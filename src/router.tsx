@@ -1,5 +1,5 @@
 import {lazy, Suspense} from 'react'
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route} from 'react-router'
 import PaddedLayout from '@/components/layout/PaddedLayout'
 
 const HomePage = lazy(() => import("@/pages/Home"));
@@ -14,6 +14,7 @@ const RegisterPage = lazy(() =>
   import('@/pages/RegisterPage').then((m) => ({default: m.RegisterPage}))
 );
 const TripBuilderPage = lazy(() => import("@/pages/trip-builder"));
+const RegistrationVerifyPage = lazy(() => import('@/pages/RegistrationVerifyPage'));
 
 
 export function AppRouter() {
@@ -32,6 +33,7 @@ export function AppRouter() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/auth/verify" element={<RegistrationVerifyPage />} />
 
         <Route element={<PaddedLayout />}>
           <Route path="/profile">

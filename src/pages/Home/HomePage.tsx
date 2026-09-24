@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router';
 import { AnimatePresence, motion } from 'framer-motion';
 import Welcome from '@/pages/Home/Welcome'
 import Choice from '@/pages/Home/Choice'
@@ -9,6 +9,7 @@ import PersonalSelection from '@/pages/Home/PersonalSelection'
 import Clients from '@/pages/Home/Clients'
 import PhotoBlock from '@/pages/Home/PhotoBlock'
 import ScrollTopButton from '@/components/layout/ScrollTopButton'
+import VerificationErrorModal from '@/components/auth/VerificationErrorModal';
 import {
   PasswordEmailSentModal,
   PasswordResetSuccessModal,
@@ -26,7 +27,7 @@ import {
   forgotPasswordRequest
 } from '@/services/authService';
 
-type View = 'login' | 'register' | 'forgot' | 'password-email-sent' | 'registration-email-sent' | 'registration-success' | 'registration-error' | 'verify' | 'reset-password' | 'password-reset-success' | 'none';
+type View = 'login' | 'register' | 'forgot' | 'password-email-sent' | 'registration-email-sent' | 'registration-success' | 'registration-error' | 'verify' | 'verification-error' | 'reset-password' | 'password-reset-success' | 'none';
 
 const t = { duration: 0.25, ease: 'easeInOut' } as const;
 const fade = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: t };
@@ -38,20 +39,25 @@ function viewFromParam(param: string | null): View | null {
 
 function HomePage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
 
   const [view, setView] = useState<View>('none');
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState('');
   const [email, setEmail] = useState('');
-  const [verifyToken, setVerifyToken] = useState('');
   const [showTestMenu, setShowTestMenu] = useState(false);
 
   useEffect(() => {
-    const token = searchParams.get('verify_token');
-    if (token) {
-      setVerifyToken(token);
-      setView('verify');
+    if (searchParams.has('verify_token')) {
+      const params = new URLSearchParams({ token: searchParams.get('verify_token') ?? '' });
+      navigate(`/auth/verify?${params}`, { replace: true });
+      return;
+    }
+
+    if (location.state?.registrationVerified === true) {
+      setView('registration-success');
+      navigate('/', { replace: true, state: null });
       return;
     }
 
@@ -66,7 +72,7 @@ function HomePage() {
     if (searchParams.get('menu') === '1') {
       setShowTestMenu(true);
     }
-  }, [searchParams]);
+  }, [searchParams, location.state, navigate]);
 
   const closeAuth = () => {
     setView('none');
@@ -79,9 +85,6 @@ function HomePage() {
   };
 
   const handleTestOpenView = (v: string) => {
-    if (v === 'verify') {
-      setVerifyToken('test-mock-token');
-    }
     setView(v as View);
     setServerError('');
     setIsLoading(false);
@@ -181,8 +184,8 @@ function HomePage() {
 
         {view === 'registration-success' && (
           <RegistrationSuccessModal
-            onClose={() => { setView('none'); navigate('/', { replace: true }); }}
-            onHomeClick={() => { setView('none'); navigate('/', { replace: true }); }}
+            onClose={closeAuth}
+            onHomeClick={closeAuth}
           />
         )}
 
@@ -193,13 +196,16 @@ function HomePage() {
           />
         )}
 
-        {view === 'verify' && verifyToken && (
+        {view === 'verification-error' && (
+          <VerificationErrorModal
+            message="Ссылка недействительна, срок её действия истёк или почта уже подтверждена."
+            onClose={closeAuth}
+          />
+        )}
+
+        {view === 'verify' && (
           <motion.div key="verify" {...fade}>
-            <VerifyModal
-              token={verifyToken}
-              onClose={closeAuth}
-              onComplete={(success) => { setView(success ? 'registration-success' : 'registration-error'); }}
-            />
+            <VerifyModal onClose={closeAuth} />
           </motion.div>
         )}
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useAuthStore } from '@/store/authStore';
 import  type { CartModalState } from '@/widgets/travel-constructor/model/cartModalTypes';
 import { ConstructorCartModal } from '@/widgets/travel-constructor/ui/ConstructorCartModal';

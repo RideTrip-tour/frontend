@@ -5,6 +5,14 @@ import { handleApiError } from "@/api/errors";
 
 type User = { id: string; email: string; name: string };
 
+export interface VerifiedUser {
+  id: number;
+  email: string;
+  is_active: boolean;
+  is_superuser: boolean;
+  is_verified: boolean;
+}
+
 export async function loginRequest(email: string, password: string) {
   try {
     await apiClient.post(
@@ -47,13 +55,39 @@ export async function resetPasswordRequest(data: { token: string; password: stri
   }
 }
 
-export async function verifyRequest(token: string) {
+export async function verifyRequest(token: string): Promise<VerifiedUser> {
   try {
-    const res = await apiClient.post("/auth/verify", { token });
+    const res = await apiClient.post<VerifiedUser>("/auth/verify", { token });
+    if (res.data?.is_verified !== true) {
+      throw new Error('Подтверждение почты не получено');
+    }
     return res.data;
   } catch (e) {
     throw handleApiError(e);
   }
+}
+
+export function getVerificationError(error: unknown) {
+  const { status } = handleApiError(error);
+
+  if (status === 400) {
+    return {
+      message: 'Ссылка недействительна, срок её действия истёк или почта уже подтверждена.',
+      canRetry: false,
+    };
+  }
+
+  if (status === 422) {
+    return {
+      message: 'Ссылка подтверждения некорректна. Откройте полную ссылку из письма.',
+      canRetry: false,
+    };
+  }
+
+  return {
+    message: 'Не удалось подтвердить почту. Попробуйте ещё раз позже.',
+    canRetry: !status || status >= 500,
+  };
 }
 
 export async function changePasswordRequest(data: { current_password: string; new_password: string }) {
