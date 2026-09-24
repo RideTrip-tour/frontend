@@ -1,0 +1,25 @@
+:root {
+  --animation-speed-button: var(--animation-speed-100);
+}
+
+body[data-theme="light"] {
+  --iconbtn-bg-primary-static: var(--color-blue);
+  --iconbtn-bg-primary-hover: var(--color-blue-light);
+  --iconbtn-bg-primary-active: var(--color-blue-dark-1);
+  --iconbtn-icon-primary: var(--color-white);
+
+  --iconbtn-bg-secondary-static: var(--color-white);
+  --iconbtn-bg-secondary-hover: var(--color-white-30);
+  --iconbtn-bg-secondary-active: var(--color-white);
+  --iconbtn-icon-secondary: var(--color-blue);
+
+
+  --iconbtn-bg-pagination-static: var(--color-blue);
+  --iconbtn-bg-pagination-hover: var(--color-blue-light);
+  --iconbtn-bg-pagination-active: var(--color-blue-dark-1);
+  --iconbtn-icon-pagination: var(--color-white);
+}
+
+body[data-theme="dark"] {
+
+}

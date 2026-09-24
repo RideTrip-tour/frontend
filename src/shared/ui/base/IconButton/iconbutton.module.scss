@@ -1,0 +1,87 @@
+.iconbutton {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-50);
+  padding: 14px;
+  cursor: pointer;
+  border: none;
+  background: var(--btn-bg);
+  transition: background var(--animation-speed-button) ease;
+  transform-origin: center;
+  -webkit-tap-highlight-color: transparent;
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &_img {
+      width: var(--icons-size-24);
+      height: var(--icons-size-24);
+      color: var(--btn-icon);
+    }
+  }
+
+  &:not(:disabled):hover {
+    .button__icon {
+      transform: rotate(-45deg);
+    }
+  }
+
+
+}
+
+.iconbutton--primary {
+  --btn-bg: var(--iconbtn-bg-primary-static);
+  --btn-icon: var(--iconbtn-icon-primary);
+  &:not(:disabled):hover {
+    --btn-bg: var(--iconbtn-bg-primary-hover);
+  }
+  &:not(:disabled):active {
+    --btn-bg: var(--iconbtn-bg-primary-active);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    background-color: var(--color-gray-dark);
+    --btn-icon: var(--color-disabled-primary)
+  }
+}
+
+.iconbutton--secondary {
+  --btn-bg: var(--iconbtn-bg-secondary-static);
+  --btn-icon: var(--color-icon-secondary-static);
+  &:not(:disabled):hover {
+    --btn-bg: var(--iconbtn-bg-secondary-hover);
+  }
+  &:not(:disabled):active {
+    --btn-bg: var(--iconbtn-bg-secondary-active);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    background-color: var(--color-gray-dark);
+    --btn-icon: var(--color-disabled-primary)
+  }
+}
+
+.iconbutton--pagination {
+  --btn-bg: var(--iconbtn-bg-pagination-static);
+  --btn-icon: var(--iconbtn-icon-pagination);
+  &:not(:disabled):hover {
+    --btn-bg: var(--iconbtn-bg-pagination-hover);
+  }
+  &:not(:disabled):active {
+    --btn-bg: var(--iconbtn-bg-pagination-active);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    background: transparent;
+    --btn-icon: var(--color-gray-dark)
+  }
+}

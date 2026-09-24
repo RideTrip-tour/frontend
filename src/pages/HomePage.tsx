@@ -1,33 +1,21 @@
-import { useAuthStore } from "@/store";
+import Welcome from '@/pages/Home/Welcome'
+import Choice from '@/pages/Home/Choice'
+import Recommendations from '@/pages/Home/Recommendations'
+import Planning from '@/pages/Home/Planning'
+import PersonalSelection from '@/pages/Home/PersonalSelection'
+import Clients from '@/pages/Home/Clients'
 
-export function HomePage() {
-  const { isAuth, user, login, logout } = useAuthStore();
-
+function HomePage() {
   return (
-    <div>
-      <h1>Home</h1>
-
-      {isAuth ? (
-        <>
-          <p>Welcome, {user?.name}</p>
-          <button onClick={logout}>Logout</button>
-        </>
-      ) : (
-        <button
-          onClick={() =>
-            login({
-              token: "fake-jwt-token",
-              user: {
-                id: "1",
-                email: "test@mail.com",
-                name: "Test User"
-              }
-            })
-          }
-        >
-          Login
-        </button>
-      )}
-    </div>
-  );
+    <>
+      <Welcome />
+      <Choice />
+      <Recommendations />
+      <Planning />
+      <PersonalSelection />
+      <Clients />
+    </>
+  )
 }
+
+export default HomePage

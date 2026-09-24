@@ -1,0 +1,12 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --resortslider-progress-bg: rgba(95, 103, 123, 0.3);
+  --resortslider-progress-fill: var(--color-blue);
+}
+
+body[data-theme="dark"] {
+
+}

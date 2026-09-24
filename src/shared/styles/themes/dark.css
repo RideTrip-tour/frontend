@@ -1,0 +1,10 @@
+body[data-theme="dark"] {
+  /* тут прописываем основные цвета темной темы */
+  --color-main: #999999;
+
+  --color-blue-primary: #0050a9;
+  --color-blue-secondary: #007091;
+
+  --color-disabled-primary: #555555;
+  --color-disabled-secondary: #888888;
+}

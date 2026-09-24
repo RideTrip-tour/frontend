@@ -1,0 +1,12 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --small-category-bg: rgba(14, 104, 212, 0.10);
+  --small-category-text: var(--color-black);
+}
+
+body[data-theme="dark"] {
+
+}

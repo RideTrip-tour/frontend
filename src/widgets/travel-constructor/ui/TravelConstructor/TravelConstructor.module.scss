@@ -1,0 +1,35 @@
+.travelConstructor {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 920px 476px;
+  align-items: start;
+  gap: 24px;
+}
+
+.selectionList {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.showMoreButton {
+  padding: 12px 16px;
+  background: #FFFFFF;
+  border: 2px solid #AFB6BD;
+  border-radius: 16px;
+  color: #5F6C7B;
+  font-family: var(--text-font-family-2);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(14, 104, 212, 0.05);
+    border-color: #5F6C7B;
+  }
+}

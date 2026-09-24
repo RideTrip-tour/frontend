@@ -1,0 +1,14 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+
+  --skills-level-text: var(--color-gray-dark);
+
+  --skills-level-inactive: rgba(30, 77, 143, 0.1);
+
+}
+body[data-theme="dark"] {
+
+}

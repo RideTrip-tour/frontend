@@ -1,0 +1,22 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --card-bg: var(--color-white);
+  --card-shadow: rgba(14, 104, 212, 0.25);
+
+  --card-outline-active: var(--color-blue);
+
+  --card-title-color: var(--color-black);
+  --card-subtitle-color: var(--color-black);
+  --card-text-color: var(--color-gray-dark);
+  --card-divider-color: var(--color-blue-dark-1-10);
+  --card-divider-vertical-color: rgba(46, 57, 81, 0.5);
+
+  --card-condition-icon-color: var(--color-blue);
+}
+
+body[data-theme="dark"] {
+
+}

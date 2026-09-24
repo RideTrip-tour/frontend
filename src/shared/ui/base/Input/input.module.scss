@@ -1,0 +1,89 @@
+.inputWrapper {
+  width: 100%;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.inputLabel {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--input-label-color, #AFB6BD);
+  padding-left: 16px;
+  margin-bottom: 6px;
+  width: 100%;
+}
+
+.inputError {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--input-error-text);
+  font-family: var(--text-font-family), sans-serif;
+  padding-left: 16px;
+  margin-top: 6px;
+  position: static;
+  top: auto;
+  left: auto;
+}
+
+.input {
+  padding: 16px;
+  width: 100%;
+
+  background: var(--input-bg);
+  border-radius: 20px;
+  border: 1px solid var(--input-border-default);
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+
+  &--focus {
+    border-color: var(--input-border-focus);
+  }
+
+  &--invalid {
+    border-color: var(--input-border-error);
+  }
+
+  &--disabled {
+    background: var(--input-bg-disabled);
+    border: none;
+    cursor: not-allowed;
+  }
+
+  &__content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    margin-right: 6px;
+    display: flex;
+  }
+
+  &__icon_img {
+    width: 16px;
+    height: 16px;
+  }
+
+  &__field {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+
+    font-size: 16px;
+    font-family: var(--text-font-family), sans-serif;
+    line-height: 20px;
+    letter-spacing: 0.24px;
+
+    color: var(--input-text);
+
+    &::placeholder {
+      color: var(--input-placeholder);
+    }
+  }
+}

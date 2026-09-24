@@ -1,0 +1,12 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --tooltip-bg: var(--color-gray-dark);
+  --tooltip-text: var(--color-white);
+}
+
+body[data-theme="dark"] {
+
+}

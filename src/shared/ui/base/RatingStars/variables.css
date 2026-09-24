@@ -1,0 +1,11 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --rating-stars-text-color: var(--color-gray-dark)
+}
+
+body[data-theme="dark"] {
+
+}

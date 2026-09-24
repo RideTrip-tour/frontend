@@ -1,0 +1,29 @@
+:root {
+
+}
+
+body[data-theme="light"] {
+  --color-blue: #0E68D4;
+  --color-black: #1A1A1A;
+
+  --color-gray-dark: #5F6C7B;
+
+  --color-white: #FFFFFF;
+
+  --color-blue-soft-bg: rgba(14, 104, 212, 0.10);
+
+  --photoid-name-color: var(--color-black);
+  --photoid-id-color: var(--color-black);
+  --photoid-status-color: var(--color-gray-dark);
+
+  --photoid-bg: var(--color-white);
+
+  --photoid-settings-text: var(--color-black);
+  --photoid-settings-icon: var(--color-black);
+
+  --photoid-copy-icon: var(--color-black);
+}
+
+body[data-theme="dark"] {
+
+}

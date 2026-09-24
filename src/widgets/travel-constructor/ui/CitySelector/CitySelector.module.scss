@@ -1,0 +1,69 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.title {
+  font-family: var(--text-font-family-2);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-text-primary);
+}
+
+.frequentWrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.frequentColumns .listItem {
+  font-weight: 600;
+}
+
+.columnsWrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.listItem {
+  font-family: var(--text-font-family-3);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #1A1A1A;
+  transition: background-color 0.15s ease;
+}
+
+.cityButton {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.emptyState {
+  padding: 20px;
+  text-align: center;
+  color: #5F6C7B;
+  font-size: 16px;
+}
