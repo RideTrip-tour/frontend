@@ -4,9 +4,9 @@ import { handleApiError } from "@/api/errors";
 export type CurrentUser = {
   id: number;
   email: string;
-  is_active: boolean;
-  is_superuser: boolean;
-  is_verified: boolean;
+  is_active?: boolean;
+  is_superuser?: boolean;
+  is_verified?: boolean;
 };
 
 export async function meRequest() {

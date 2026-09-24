@@ -1,17 +1,11 @@
-import { http } from "./http";
-import { useAuthStore } from "@/store";
+import { useAuthStore } from "@/store/authStore";
 import { apiClient } from "@/api/client";
 import { handleApiError } from "@/api/errors";
 
-type User = { id: string; email: string; name: string };
+import { meRequest } from './usersService';
+import type { CurrentUser } from './usersService';
 
-export interface VerifiedUser {
-  id: number;
-  email: string;
-  is_active: boolean;
-  is_superuser: boolean;
-  is_verified: boolean;
-}
+export type VerifiedUser = CurrentUser & { is_verified: true };
 
 export async function loginRequest(email: string, password: string) {
   try {
@@ -44,7 +38,7 @@ export async function forgotPasswordRequest(email: string) {
 }
 
 export async function resendForgotPasswordEmail(email: string) {
-  await apiClient.post("/auth/forgot-password", { email });
+  await forgotPasswordRequest(email);
 }
 
 export async function resetPasswordRequest(data: { token: string; password: string }) {
@@ -90,55 +84,10 @@ export function getVerificationError(error: unknown) {
   };
 }
 
-export async function changePasswordRequest(data: { current_password: string; new_password: string }) {
-  try {
-    await apiClient.post("/users/me/change-password", data);
-  } catch (e) {
-    throw handleApiError(e);
-  }
-}
-
-export async function meRequest() {
-  const res = await http.get<User>("/users/me");
-  return res.data;
-}
-
 export async function logoutRequest() {
   try {
-    await http.post("/auth/logout");
+    await apiClient.post("/auth/logout");
   } finally {
     useAuthStore.getState().logout();
-  }
-}
-
-export type ProfileData = {
-  first_name: string;
-  last_name: string;
-  phone_number: string;
-  age: number;
-  about_me: string;
-  activities: string[];
-  country: string;
-  city: string;
-  citizenship: string;
-  currency: string;
-  avatar_url: string;
-};
-
-export async function createProfileRequest(data: ProfileData) {
-  try {
-    const res = await apiClient.post("/profile/", data);
-    return res.data;
-  } catch (e) {
-    throw handleApiError(e);
-  }
-}
-
-export async function getMyProfileRequest() {
-  try {
-    const res = await apiClient.get("/profile/me");
-    return res.data;
-  } catch (e) {
-    throw handleApiError(e);
   }
 }

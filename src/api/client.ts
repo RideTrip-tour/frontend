@@ -1,101 +1,85 @@
 import axios from 'axios';
 import type { InternalAxiosRequestConfig } from 'axios';
-import type { AxiosError } from 'axios'
-import { getApiBaseUrl } from './baseUrl';
-import { useAuthStore } from '@/store';
-import { normalizeAxiosError, ApiError } from './errors';
+import { notifySessionExpired } from '@/shared/lib/sessionEvents';
 import { notifyGlobal } from '@/shared/notifications/notifyBus';
+import { getApiBaseUrl } from './baseUrl';
+import { normalizeAxiosError } from './errors';
 
-const baseURL = getApiBaseUrl();
+type RetryConfig = InternalAxiosRequestConfig & { _retry?: boolean };
 
-export const apiClient = axios.create({
-  baseURL,
+const clientConfig = {
+  baseURL: getApiBaseUrl(),
   timeout: 10_000,
   withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json'
+  headers: { Accept: 'application/json' }
+};
+
+export const apiClient = axios.create(clientConfig);
+
+// Refresh не проходит через interceptor основного клиента.
+const refreshClient = axios.create(clientConfig);
+let refreshPromise: Promise<void> | null = null;
+
+const withoutRefresh = new Set([
+  '/auth/login',
+  '/auth/register',
+  '/auth/forgot-password',
+  '/auth/reset-password',
+  '/auth/request-verify-token',
+  '/auth/verify',
+  '/auth/logout',
+  '/auth/refresh'
+]);
+
+function canRefresh(url: string | undefined): boolean {
+  const path = (url ?? '').split('?')[0].replace(/\/+$/, '').replace(/^\/api(?=\/|$)/, '');
+  return !withoutRefresh.has(path);
+}
+
+function refreshSession(): Promise<void> {
+  if (!refreshPromise) {
+    refreshPromise = refreshClient.post('/auth/refresh', {})
+      .then(() => undefined)
+      .catch((error: unknown) => {
+        notifySessionExpired();
+        const apiError = normalizeAxiosError(error);
+        notifyGlobal(apiError.message);
+        throw apiError;
+      })
+      .finally(() => {
+        refreshPromise = null;
+      });
   }
-});
 
-const refreshClient = axios.create({
-  baseURL,
-  timeout: 10_000,
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json'
-  }
-});
-
-let isRefreshing = false;
-let waiters: Array<() => void> = [];
-
-function resolveWaiters() {
-  waiters.forEach((cb) => cb());
-  waiters = [];
+  return refreshPromise;
 }
 
 apiClient.interceptors.response.use(
-  (res) => res,
+  (response) => response,
+  async (error: unknown) => {
+    // Отменённый запрос не является сетевой ошибкой для пользователя.
+    if (axios.isCancel(error)) throw error;
 
-  async (err: unknown) => {
-    const axiosErr = err as AxiosError
+    const original = axios.isAxiosError(error)
+      ? error.config as RetryConfig | undefined
+      : undefined;
+    const apiError = normalizeAxiosError(error);
 
-    const status: number | undefined = axiosErr?.response?.status;
-    const original = axiosErr?.config as
-      | (InternalAxiosRequestConfig & { _retry?: boolean })
-      | undefined;
-
-    if (!original) {
-      const apiErr = normalizeAxiosError(err);
-      notifyGlobal(apiErr.message);
-      throw apiErr;
-    }
-
-    const url = String(original.url || '');
-
-    if (status !== 401 || original._retry || url.includes('/auth/refresh')) {
-      const apiErr = normalizeAxiosError(err);
-
-      if (apiErr.status && apiErr.status >= 500) {
-        notifyGlobal(apiErr.message);
-      }
-
-      if (apiErr.code === 'NETWORK' || apiErr.code === 'TIMEOUT') {
-        notifyGlobal(apiErr.message);
-      }
-
-      throw apiErr;
-    }
-
-    original._retry = true;
-
-    if (isRefreshing) {
-      const ok = await new Promise<boolean>((resolve) => waiters.push(() => resolve(true)));
-      if (!ok) {
-        useAuthStore.getState().logout();
-        const apiErr = new ApiError('Session expired', { status: 401 });
-        notifyGlobal(apiErr.message);
-        throw apiErr;
-      }
+    if (original && apiError.status === 401 && !original._retry && canRefresh(original.url)) {
+      original._retry = true;
+      // При ошибке общего refresh все ожидающие запросы отклоняются без повтора.
+      await refreshSession();
       return apiClient(original);
     }
 
-    isRefreshing = true;
-
-    try {
-      await refreshClient.post('/auth/refresh', {});
-      resolveWaiters();
-      return apiClient(original);
-    } catch (e) {
-      resolveWaiters();
-      useAuthStore.getState().logout();
-      const apiErr = normalizeAxiosError(e);
-      notifyGlobal(apiErr.message);
-      throw apiErr;
-    } finally {
-      isRefreshing = false;
+    if (apiError.status === 401 && original?._retry) {
+      notifySessionExpired();
     }
+
+    if (apiError.code === 'NETWORK' || apiError.code === 'TIMEOUT' || (apiError.status ?? 0) >= 500) {
+      notifyGlobal(apiError.message);
+    }
+
+    throw apiError;
   }
 );

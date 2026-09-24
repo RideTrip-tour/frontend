@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/store/authStore";
 import { useNavigate } from "react-router";
-import { meRequest } from "@/services/authService";
+import { meRequest } from "@/services/usersService";
 
 export function LoginPage() {
   const setUser = useAuthStore((s) => s.setUser);

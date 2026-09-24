@@ -58,40 +58,36 @@ export function normalizeAxiosError(err: unknown): ApiError {
   if (err instanceof ApiError) return err;
 
   if (isAxiosError(err)) {
-    const e = err as AxiosError<{ detail?: unknown; message?: string; error?: string }>;
+    const error = err as AxiosError<{ detail?: unknown; message?: string; error?: string }>;
 
-  // network
-  if (e?.message === 'Network Error' || !e?.response) {
-    return new ApiError('Network error', {
-      code: 'NETWORK',
-      url: e?.config?.url
-    });
-  }
-
-    // timeout
-    if (e.code === 'ECONNABORTED' || e.code === 'ETIMEDOUT') {
+    // У timeout обычно тоже нет response, поэтому проверяем его первым.
+    if (error.code === 'ECONNABORTED' || error.code === 'ETIMEDOUT') {
       return new ApiError('Request timeout', {
         code: 'TIMEOUT',
-        url: e.config?.url
+        url: error.config?.url
       });
     }
 
-  const status = e?.response?.status;
-  const data = e?.response?.data;
-  const url = e?.config?.url;
+    if (!error.response) {
+      return new ApiError('Network error', {
+        code: 'NETWORK',
+        url: error.config?.url
+      });
+    }
 
-  const detail = data?.detail ?? data?.message ?? data?.error;
-  const translated = getErrorMessage(detail);
-  const message = translated ?? String(detail ?? e?.message ?? 'Request failed');
+    const { status, data } = error.response;
+    const detail = data?.detail ?? data?.message ?? data?.error;
+    const translated = getErrorMessage(detail);
+    const message = translated ?? String(detail ?? error.message ?? 'Request failed');
 
-    return new ApiError(String(message), {
+    return new ApiError(message, {
       status,
       data,
-      url,
+      url: error.config?.url,
       code: mapStatusToCode(status)
     });
   }
 
-  const unknownMessage = err instanceof Error ? err.message : 'An unknown error occurred';
-  return new ApiError(unknownMessage, { code: 'UNKNOWN' });
+  const message = err instanceof Error ? err.message : 'An unknown error occurred';
+  return new ApiError(message, { code: 'UNKNOWN' });
 }
