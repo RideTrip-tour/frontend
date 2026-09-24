@@ -18,5 +18,21 @@ export default defineConfig({
       target: './src/api/auth/auth.ts',
       client: 'axios'
     }
+  },
+
+  locations: {
+    input: `${API}/api/locations/openapi.json`,
+    output: {
+      target: './src/api/locations/locations.ts',
+      client: 'axios'
+    }
+  },
+
+  profile: {
+    input: `${API}/api/profile/openapi.json`,
+    output: {
+      target: './src/api/profile/profile.ts',
+      client: 'axios'
+    }
   }
 });
