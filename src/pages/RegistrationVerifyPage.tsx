@@ -4,7 +4,7 @@ import VerifyModal from '@/components/auth/VerifyModal';
 import VerificationErrorModal from '@/components/auth/VerificationErrorModal';
 import { useRegistrationVerification } from '@/hooks/useRegistrationVerification';
 
-function RegistrationVerification({ token }: { token: Readonly<string> }) {
+function RegistrationVerification({ token }: Readonly<{ token: string }>) {
   const navigate = useNavigate();
 
   const close = useCallback(() => {
