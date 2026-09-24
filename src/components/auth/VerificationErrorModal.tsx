@@ -7,7 +7,7 @@ type VerificationErrorModalProps = {
   onRetry?: () => void;
 };
 
-export default function VerificationErrorModal({ message, onClose, onRetry }: VerificationErrorModalProps) {
+export default function VerificationErrorModal({ message, onClose, onRetry }: Readonly<VerificationErrorModalProps>) {
   return (
     <AuthShell onClose={onClose}>
       <div className={styles.centerContent}>

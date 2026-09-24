@@ -5,12 +5,12 @@ type VerifyModalProps = {
   onClose: () => void;
 };
 
-export default function VerifyModal({ onClose }: VerifyModalProps) {
+export default function VerifyModal({ onClose }: Readonly<VerifyModalProps>) {
   return (
     <AuthShell onClose={onClose}>
       <div className={styles.centerContent}>
         <div className={styles.loader} aria-hidden="true" />
-        <p className={styles.text} role="status">Проверяем верификацию</p>
+        <output className={styles.text} >Проверяем верификацию</output>
       </div>
     </AuthShell>
   );
