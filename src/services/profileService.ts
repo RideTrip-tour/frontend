@@ -1,5 +1,5 @@
-import { apiClient } from "@/api/client";
-import { handleApiError } from "@/api/errors";
+import { apiClient } from "@/shared/api/client";
+import { handleApiError } from "@/shared/api/errors";
 
 // TODO(api-profile): сверить DTO и формы с birth_date перед переходом на новый контракт.
 export type ProfileData = {

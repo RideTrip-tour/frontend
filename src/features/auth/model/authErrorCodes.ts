@@ -7,7 +7,7 @@ export const AUTH_ERROR_MESSAGES: Record<string, string> = {
   UPDATE_USER_EMAIL_ALREADY_EXISTS: 'Email уже зарегистрирован'
 };
 
-export function getErrorMessage(detail: unknown): string | null {
+export function getAuthErrorMessage(detail: unknown): string | null {
   if (!detail) return null;
 
   if (typeof detail === 'string') {
@@ -16,6 +16,7 @@ export function getErrorMessage(detail: unknown): string | null {
 
   if (typeof detail === 'object' && detail !== null) {
     const code = (detail as Record<string, unknown>).code;
+    
     if (typeof code === 'string') {
       return AUTH_ERROR_MESSAGES[code] ?? null;
     }

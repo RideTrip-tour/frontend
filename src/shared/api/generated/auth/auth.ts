@@ -85,6 +85,14 @@ export interface UserRead {
   is_verified?: boolean;
 }
 
+export interface UserUpdate {
+  password?: string | null;
+  email?: string | null;
+  is_active?: boolean | null;
+  is_superuser?: boolean | null;
+  is_verified?: boolean | null;
+}
+
 export interface UserUpdateEmail {
   current_email: string;
   new_email: string;
@@ -95,6 +103,11 @@ export interface UserUpdatePassword {
   current_password: string;
   new_password: string;
 }
+
+export type GetUserApiAdminUsersGetParams = {
+id?: number | null;
+email?: string | null;
+};
 
 export const getFastAPI = (axiosInstance: AxiosInstance = axios.default) => {
 /**
@@ -330,6 +343,107 @@ const getUsersPatchEmailCurrentUserApiUsersMeRequestChangeEmailPostUrl = () => {
 }
 
 /**
+ * Удалить пользователя по id
+ * @summary Удалить пользователя по id
+ */
+const userDeleteApiAdminUsersIdDelete = (
+    id: number, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<void>> => {
+    return axiosInstance.delete(
+      `/api/admin/users/${id}`,options
+    );
+  }
+const getUserDeleteApiAdminUsersIdDeleteUrl = (id: number,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/admin/users/${id}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * Изменяет данные пользователя по id
+ * @summary Изменить пользователя по id
+ */
+const userUpdateApiAdminUsersIdPatch = (
+    id: number,
+    userUpdate: UserUpdate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<UserRead>> => {
+    return axiosInstance.patch(
+      `/api/admin/users/${id}`,
+      userUpdate,options
+    );
+  }
+const getUserUpdateApiAdminUsersIdPatchUrl = (id: number,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/admin/users/${id}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * Создает пользователя с заданными параметрами. Доступно только суперпользователям.
+ * @summary Создать нового пользователя
+ */
+const userCreateApiAdminUsersPost = (
+    userCreate: UserCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<UserRead>> => {
+    return axiosInstance.post(
+      `/api/admin/users/`,
+      userCreate,options
+    );
+  }
+const getUserCreateApiAdminUsersPostUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/admin/users/`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * Получает список пользователь по критериям id,email
+ * @summary Получить список пользователей по параметрам(id,email)
+ */
+const getUserApiAdminUsersGet = (
+    params?: GetUserApiAdminUsersGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<UserRead[]>> => {
+    return axiosInstance.get(
+      `/api/admin/users/`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getGetUserApiAdminUsersGetUrl = (params?: GetUserApiAdminUsersGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/admin/users/`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
  * @summary Token:Refresh Token
  */
 const tokenRefreshTokenApiAuthRefreshPost = (
@@ -376,7 +490,7 @@ const getHealthCheckAuthHealthGetUrl = () => {
   });
 }
 
-return {authCookieLoginApiAuthLoginPost,authCookieLogoutApiAuthLogoutPost,registerRegisterApiAuthRegisterPost,resetForgotPasswordApiAuthForgotPasswordPost,resetResetPasswordApiAuthResetPasswordPost,verifyVerifyApiAuthVerifyPost,usersCurrentUserApiUsersMeGet,usersPatchPassCurrentUserApiUsersMeChangePasswordPost,usersPatchEmailCurrentUserApiUsersMeRequestChangeEmailPost,tokenRefreshTokenApiAuthRefreshPost,healthCheckAuthHealthGet,getAuthCookieLoginApiAuthLoginPostUrl,getAuthCookieLogoutApiAuthLogoutPostUrl,getRegisterRegisterApiAuthRegisterPostUrl,getResetForgotPasswordApiAuthForgotPasswordPostUrl,getResetResetPasswordApiAuthResetPasswordPostUrl,getVerifyVerifyApiAuthVerifyPostUrl,getUsersCurrentUserApiUsersMeGetUrl,getUsersPatchPassCurrentUserApiUsersMeChangePasswordPostUrl,getUsersPatchEmailCurrentUserApiUsersMeRequestChangeEmailPostUrl,getTokenRefreshTokenApiAuthRefreshPostUrl,getHealthCheckAuthHealthGetUrl}};
+return {authCookieLoginApiAuthLoginPost,authCookieLogoutApiAuthLogoutPost,registerRegisterApiAuthRegisterPost,resetForgotPasswordApiAuthForgotPasswordPost,resetResetPasswordApiAuthResetPasswordPost,verifyVerifyApiAuthVerifyPost,usersCurrentUserApiUsersMeGet,usersPatchPassCurrentUserApiUsersMeChangePasswordPost,usersPatchEmailCurrentUserApiUsersMeRequestChangeEmailPost,userDeleteApiAdminUsersIdDelete,userUpdateApiAdminUsersIdPatch,userCreateApiAdminUsersPost,getUserApiAdminUsersGet,tokenRefreshTokenApiAuthRefreshPost,healthCheckAuthHealthGet,getAuthCookieLoginApiAuthLoginPostUrl,getAuthCookieLogoutApiAuthLogoutPostUrl,getRegisterRegisterApiAuthRegisterPostUrl,getResetForgotPasswordApiAuthForgotPasswordPostUrl,getResetResetPasswordApiAuthResetPasswordPostUrl,getVerifyVerifyApiAuthVerifyPostUrl,getUsersCurrentUserApiUsersMeGetUrl,getUsersPatchPassCurrentUserApiUsersMeChangePasswordPostUrl,getUsersPatchEmailCurrentUserApiUsersMeRequestChangeEmailPostUrl,getUserDeleteApiAdminUsersIdDeleteUrl,getUserUpdateApiAdminUsersIdPatchUrl,getUserCreateApiAdminUsersPostUrl,getGetUserApiAdminUsersGetUrl,getTokenRefreshTokenApiAuthRefreshPostUrl,getHealthCheckAuthHealthGetUrl}};
 export type AuthCookieLoginApiAuthLoginPostResult = AxiosResponse<unknown | void>
 export type AuthCookieLogoutApiAuthLogoutPostResult = AxiosResponse<unknown | void>
 export type RegisterRegisterApiAuthRegisterPostResult = AxiosResponse<void>
@@ -386,5 +500,9 @@ export type VerifyVerifyApiAuthVerifyPostResult = AxiosResponse<UserBeforeVerify
 export type UsersCurrentUserApiUsersMeGetResult = AxiosResponse<UserRead>
 export type UsersPatchPassCurrentUserApiUsersMeChangePasswordPostResult = AxiosResponse<StatusResponse>
 export type UsersPatchEmailCurrentUserApiUsersMeRequestChangeEmailPostResult = AxiosResponse<StatusResponse>
+export type UserDeleteApiAdminUsersIdDeleteResult = AxiosResponse<void>
+export type UserUpdateApiAdminUsersIdPatchResult = AxiosResponse<UserRead>
+export type UserCreateApiAdminUsersPostResult = AxiosResponse<UserRead>
+export type GetUserApiAdminUsersGetResult = AxiosResponse<UserRead[]>
 export type TokenRefreshTokenApiAuthRefreshPostResult = AxiosResponse<void>
 export type HealthCheckAuthHealthGetResult = AxiosResponse<unknown>

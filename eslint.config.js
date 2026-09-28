@@ -25,7 +25,7 @@ export default defineConfig([
 
     rules: {
       /**
-       * UI не должен импортировать axios
+       * HTTP-запросы выполняются в services и shared/api.
        */
       'no-restricted-imports': [
         'error',
@@ -33,13 +33,19 @@ export default defineConfig([
           paths: [
             {
               name: 'axios',
-              message: 'Do not import axios directly. Use services instead.'
+              message: 'axios import is restricted from being used. Do not import axios directly. Use services instead.'
             }
           ],
           patterns: [
             {
               group: ['@/api/*', 'src/api/*'],
               message: 'Do not import API layer directly. Use services.'
+            },
+            {
+              // Покрывает alias, src/ и относительные пути к shared/api.
+              regex: '(?:^|/)shared/api/(?:client(?:\\.[^/]+)?$|auth(?:/|$)|generated(?:/|$))',
+              allowTypeImports: true,
+              message: 'Do not import HTTP clients directly. Use services; import type is allowed.'
             }
           ]
         }
@@ -47,7 +53,7 @@ export default defineConfig([
     }
   },
   {
-    files: ['src/services/**/*.{ts,tsx}', 'src/api/**/*.{ts,tsx}'],
+    files: ['src/services/**/*.{ts,tsx}', 'src/shared/api/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-imports': 'off'
     }

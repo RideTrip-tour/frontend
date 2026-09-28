@@ -13,9 +13,10 @@
     "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.node.json --noEmit",
     "check:no-direct-urls": "node scripts/check-no-direct-urls.mjs",
     "check": "npm run lint && npm run typecheck && npm run check:no-direct-urls",
-    "generate-api": "openapi --input https://trip.elmobil.ru/api/auth/openapi.json --output src/api",
-    "generate-api-orfal": "NODE_ENV=development orval",
-    "generate-api-orfal:prod": "NODE_ENV=production orval"
+    "api:generate": "orval",
+    "api:auth": "orval --project auth",
+    "api:locations": "orval --project locations",
+    "api:profile": "orval --project profile"
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
@@ -42,7 +43,6 @@
     "globals": "^16.5.0",
     "install": "^0.13.0",
     "jsdom": "^28.0.0",
-    "openapi-typescript-codegen": "^0.30.0",
     "orval": "8.37.0",
     "sass-embedded": "^1.97.3",
     "typescript": "~5.9.3",

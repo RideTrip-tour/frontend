@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { InternalAxiosRequestConfig } from 'axios';
-import { notifySessionExpired } from '@/shared/lib/sessionEvents';
+import { notifySessionExpired } from '@/shared/api/sessionEvents';
 import { notifyGlobal } from '@/shared/notifications/notifyBus';
 import { getApiBaseUrl } from './baseUrl';
 import { normalizeAxiosError } from './errors';
