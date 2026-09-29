@@ -26,14 +26,17 @@ jobs:
           cache: "npm"
           cache-dependency-path: package-lock.json
 
-      - name: Install deps
+      - name: Install dependencies
         run: npm ci
 
-      - name: Check
-        run: npm run check
+      - name: Lint
+        run: npm run lint
 
-      - name: Build
-        run: npm run build:prod
+      - name: Check direct URLs
+        run: npm run check:no-direct-urls
+
+      - name: Typecheck and build
+        run: npm run build
 
   build_push:
     runs-on: ubuntu-latest
