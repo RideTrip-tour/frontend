@@ -5,6 +5,7 @@ import SectionHeader from '@/shared/ui/base/SectionHeader'
 import DeleteAccountModal from '@/shared/ui/compose/Modals/DeleteAccountModal'
 import LogoutConfirmModal from '@/shared/ui/compose/Modals/LogoutConfirmModal'
 import { logoutRequest } from '@/services/authService'
+import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage'
 import { deleteMyProfileRequest } from '@/services/profileService'
 import { useProfileStore } from '@/store'
 import { useNavigate } from 'react-router'
@@ -27,7 +28,7 @@ function AccountBlock() {
     try {
       await logoutRequest()
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Ошибка сервера')
+      setError(getAuthApiErrorMessage(e))
       setIsLoading(false)
       return
     }

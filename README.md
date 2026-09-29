@@ -1,94 +1,106 @@
 # RideTrip Frontend
 
-Frontend-приложение для RideTrip на базе React + TypeScript + Vite с готовой архитектурой: роутинг, Zustand, JWT-авторизация, axios-клиент с интерсепторами, refresh-токены, уведомления, глобальный loader и error boundary.
+Frontend-приложение RideTrip для планирования путешествий.
 
 ## Стек технологий
 
-- React 18
-- TypeScript
-- Vite
-- React Router
-- Zustand (state management)
-- Axios (API client)
-- JWT auth + refresh flow
-- Context API (toast-уведомления)
+- React 19 + TypeScript + Vite.
+- React Router — маршрутизация и lazy loading страниц.
+- Zustand — состояние приложения и persist.
+- Axios — HTTP-клиент.
+- Orval — генерация типизированных API-клиентов из OpenAPI.
+- Cookie-авторизация: access token (JWT) и refresh flow.
+- Context API — toast-уведомления.
+- CSS Modules / SCSS — стили компонентов.
+- Framer Motion — анимации.
+- ESLint — проверка кода и правил импортов.
 
 ## Возможности проекта
 
-- Инициализирован React + TS через Vite
-- Абсолютные импорты (@/...)
-- Грамотная структура проекта
-- Роутинг с protected routes
-- Lazy loading страниц
-- Zustand store (auth) + persist
-- Axios client с:
-- baseURL из .env
-- timeout и дефолтными headers
-- JWT interceptor
-- refresh token flow
-- единая обработка ошибок
-- API services (auth, user)
-- Toast-уведомления
-- Глобальный loader
-- Error Boundary
+- React + TypeScript на базе Vite.
+- Абсолютные импорты через alias `@/`.
+- Структура с разделением страниц, виджетов, features, entities и shared-кода.
+- Маршрутизация с отложенной загрузкой страниц через `React.lazy` и `Suspense`.
+- Хранилище авторизации Zustand с persist.
+- Общий Axios-клиент с таймаутом, заголовками и настройкой адреса API.
+- Автоматическое обновление сессии и повтор запросов после refresh.
+- Единая нормализация ошибок API и перевод известных ошибок авторизации.
+- Сервисный слой для запросов авторизации, пользователя и профиля.
+- Регистрация и подтверждение почты по ссылке из письма.
+- Toast-уведомления через Context API.
+- Error Boundary на уровне приложения.
 
-## Getting started
+## Быстрый запуск
 
-### Install dependencies
+Нужны **Node.js 24** (как в CI и Docker) и npm. Минимальная версия Node.js в `package.json` — `22.18.0`.
 
-1. Установка зависимостей:
+Склонируйте репозиторий и перейдите в каталог проекта:
 
 ```bash
-npm install
+git clone https://github.com/RideTrip-tour/frontend.git
+cd frontend
+git switch develop
 ```
 
-2. Запуск в dev-режиме:
+### 1. Установка зависимостей
+
+```bash
+npm ci
+```
+
+Для первого запуска после клонирования используйте `npm ci`: зависимости устанавливаются по `package-lock.json`. Для добавления или обновления зависимостей используется `npm install`; изменения `package.json` и lock-файла коммитятся вместе.
+
+### 2. Запуск в dev-режиме
 
 ```bash
 npm run dev
 ```
 
-3. Сборка:
+Откройте адрес из терминала Vite. Локальный бэкенд не требуется: запросы `/api` перенаправляются через Vite proxy на тестовый стенд `https://trip.elmobil.ru`. Для работы сетевых сценариев нужен доступ к стенду.
+
+### 3. Сборка
 
 ```bash
 npm run build
 ```
 
-4. Preview сборки:
+Команда проверяет TypeScript и создаёт production-сборку в `dist`.
+
+### 4. Preview сборки
 
 ```bash
 npm run preview
 ```
 
+Запускайте после сборки. Команда предназначена для локального просмотра `dist`; на сервере приложение обслуживает Nginx.
+
 ## Авторизация
 
-Реализовано:
+- Access token (JWT) и refresh передаются через cookie.
+- HTTP-клиент использует `withCredentials: true`.
+- При подходящем ответе `401` interceptor запускает обновление сессии.
+- Параллельные запросы ожидают один refresh; после успеха запросы повторяются.
+- При ошибке refresh сбрасывается локальное состояние авторизации.
+- Zustand persist сохраняет данные пользователя и `isAuth` в `localStorage`. Токены туда не записываются; сессия проверяется запросом текущего пользователя.
 
-- access token (JWT)
-- автоматическая подстановка Authorization header
-- refresh token через interceptor
-- повтор запроса после обновления токена
-- авто-logout при ошибке refresh
-- сохранение сессии в localStorage (Zustand persist)
+Подробности — в [описании API и авторизации](docs/api.md#http-клиент-и-авторизация).
 
 ## Уведомления
 
-Toast-система через Context API.
+Toast-система работает через Context API. `NotificationProvider` подключён на уровне приложения, а сообщения из HTTP-клиента передаются через `notifyGlobal`.
+
+Подробности — в [разделе уведомлений](docs/development.md#уведомления).
 
 ## Error Boundary
 
-Глобальный перехват ошибок React
+Error Boundary оборачивает приложение и показывает резервный интерфейс при ошибке рендеринга дочерних React-компонентов. Ошибки API обрабатываются отдельно в HTTP-клиенте, сервисах и формах.
 
-## Environment (Gateway only)
+Подробности — в [разделе Error Boundary](docs/development.md#error-boundary).
 
-Интерфейс **должен вызывать только шлюз**. URL-адрес шлюза настраивается с помощью переменных Vite env.
+## Документация
 
-Создайте env-файлы в корневом каталоге проекта:
-
-### `.env.development`
-
-```env
-VITE_API_URL=https://api.example.com
-VITE_API_PREFIX=/api
-
-```
+| Документ | Содержание |
+| --- | --- |
+| [Разработка](docs/development.md) | Все команды, структура проекта, маршрутизация, уведомления, Error Boundary и проверки перед PR. |
+| [API и авторизация](docs/api.md) | Окружение, Orval, статус интеграций, HTTP-клиент, refresh и обработка ошибок. |
+| [Сборка и деплой](docs/deployment.md) | CI/CD, Docker, Nginx и маршрутизация API на сервере. |

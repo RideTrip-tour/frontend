@@ -1,36 +1,45 @@
-import { apiClient } from "@/api/client";
-import { handleApiError } from "@/api/errors";
+import { authApi, authRequestOptions } from '@/shared/api/auth/authApi';
+import { handleApiError } from '@/shared/api/errors';
+import type {
+  UserRead,
+  UserUpdatePassword,
+  UserUpdateEmail
+} from '@/shared/api/generated/auth/auth';
 
-export type CurrentUser = {
-  id: number;
-  email: string;
-  is_active: boolean;
-  is_superuser: boolean;
-  is_verified: boolean;
-};
+export type CurrentUser = UserRead;
 
-export async function meRequest() {
+export async function meRequest(): Promise<CurrentUser> {
   try {
-    const res = await apiClient.get<CurrentUser>("/users/me");
-    return res.data;
+    const response = await authApi.usersCurrentUserApiUsersMeGet(
+      authRequestOptions
+    );
+    return response.data;
   } catch (error) {
     throw handleApiError(error);
   }
 }
 
-export async function changePasswordRequest(data: { current_password: string; new_password: string }) {
+export async function changePasswordRequest(data: UserUpdatePassword) {
   try {
-    const res = await apiClient.post<{ status: string }>("/users/me/change-password", data);
-    return res.data;
+    const response =
+      await authApi.usersPatchPassCurrentUserApiUsersMeChangePasswordPost(
+        data,
+        authRequestOptions
+      );
+    return response.data;
   } catch (error) {
     throw handleApiError(error);
   }
 }
 
-export async function requestChangeEmailRequest(data: { current_email: string; new_email: string; password: string }) {
+export async function requestChangeEmailRequest(data: UserUpdateEmail) {
   try {
-    const res = await apiClient.post<{ status: string }>("/users/me/request-change-email", data);
-    return res.data;
+    const response =
+      await authApi.usersPatchEmailCurrentUserApiUsersMeRequestChangeEmailPost(
+        data,
+        authRequestOptions
+      );
+    return response.data;
   } catch (error) {
     throw handleApiError(error);
   }

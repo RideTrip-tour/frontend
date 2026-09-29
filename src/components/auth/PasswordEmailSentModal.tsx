@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
+import ErrorMessage from '@/shared/ui/base/ErrorMessage';
 import { AuthShell } from './index';
 import styles from './AuthState.module.scss';
 import EmailIcon from '@/assets/icons/email.svg';
@@ -7,6 +9,7 @@ import { resendForgotPasswordEmail } from '@/services/authService';
 type PasswordEmailSentModalProps = {
   email: string;
   isLoading: boolean;
+  serverError: string;
   onClose?: () => void;
   setIsLoading: (loading: boolean) => void;
   setServerError: (error: string) => void;
@@ -15,6 +18,7 @@ type PasswordEmailSentModalProps = {
 export default function PasswordEmailSentModal({
   email,
   isLoading,
+  serverError,
   onClose,
   setIsLoading,
   setServerError
@@ -39,7 +43,7 @@ export default function PasswordEmailSentModal({
       await resendForgotPasswordEmail(email);
       setCooldown(60);
     } catch (err) {
-      setServerError(err instanceof Error ? err.message : 'Ошибка сервера');
+      setServerError(getAuthApiErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -61,6 +65,12 @@ export default function PasswordEmailSentModal({
         </h2>
 
         <p className={styles.text}>Письмо не пришло? Проверьте папку «Спам»</p>
+
+        {serverError && (
+          <div role="alert">
+            <ErrorMessage message={serverError} />
+          </div>
+        )}
 
         <button type="button" className={styles.linkButton} onClick={handleResend} disabled={disabled}>
           {isLoading ? 'Отправка...' : cooldown > 0 ? `Отправить ещё раз (${cooldown}с)` : 'Отправить ещё раз'}

@@ -1,6 +1,5 @@
 import { isAxiosError } from 'axios';
 import type { AxiosError } from 'axios';
-import { getErrorMessage } from './authErrorCodes';
 
 export type ApiErrorCode =
   | 'NETWORK'
@@ -29,6 +28,7 @@ export class ApiError extends Error {
     }
   ) {
     super(message);
+
     this.name = 'ApiError';
     this.status = opts?.status;
     this.data = opts?.data;
@@ -47,6 +47,7 @@ function mapStatusToCode(status?: number): ApiErrorCode {
   if (status === 404) return 'NOT_FOUND';
   if (status === 422) return 'VALIDATION';
   if (status >= 500) return 'SERVER';
+
   return 'UNKNOWN';
 }
 
@@ -55,43 +56,60 @@ export function handleApiError(err: unknown): ApiError {
 }
 
 export function normalizeAxiosError(err: unknown): ApiError {
-  if (err instanceof ApiError) return err;
-
-  if (isAxiosError(err)) {
-    const e = err as AxiosError<{ detail?: unknown; message?: string; error?: string }>;
-
-  // network
-  if (e?.message === 'Network Error' || !e?.response) {
-    return new ApiError('Network error', {
-      code: 'NETWORK',
-      url: e?.config?.url
-    });
+  if (err instanceof ApiError) {
+    return err;
   }
 
-    // timeout
-    if (e.code === 'ECONNABORTED' || e.code === 'ETIMEDOUT') {
+  if (isAxiosError(err)) {
+    const error = err as AxiosError<{
+      detail?: unknown;
+      message?: string;
+      error?: string;
+    }>;
+
+    if (
+      error.code === 'ECONNABORTED' ||
+      error.code === 'ETIMEDOUT'
+    ) {
       return new ApiError('Request timeout', {
         code: 'TIMEOUT',
-        url: e.config?.url
+        url: error.config?.url,
       });
     }
 
-  const status = e?.response?.status;
-  const data = e?.response?.data;
-  const url = e?.config?.url;
+    if (!error.response) {
+      return new ApiError('Network error', {
+        code: 'NETWORK',
+        url: error.config?.url,
+      });
+    }
 
-  const detail = data?.detail ?? data?.message ?? data?.error;
-  const translated = getErrorMessage(detail);
-  const message = translated ?? String(detail ?? e?.message ?? 'Request failed');
+    const { status, data } = error.response;
 
-    return new ApiError(String(message), {
+    const detail =
+      data?.detail ??
+      data?.message ??
+      data?.error;
+
+    const message =
+      typeof detail === 'string'
+        ? detail
+        : error.message || 'Request failed';
+
+    return new ApiError(message, {
       status,
       data,
-      url,
-      code: mapStatusToCode(status)
+      url: error.config?.url,
+      code: mapStatusToCode(status),
     });
   }
 
-  const unknownMessage = err instanceof Error ? err.message : 'An unknown error occurred';
-  return new ApiError(unknownMessage, { code: 'UNKNOWN' });
+  const message =
+    err instanceof Error
+      ? err.message
+      : 'An unknown error occurred';
+
+  return new ApiError(message, {
+    code: 'UNKNOWN',
+  });
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createProfileRequest, getMyProfileRequest } from '../../services/authService';
+import { createProfileRequest, getMyProfileRequest } from '@/services/profileService';
 
 export function ProfileTestForm() {
   const [data, setData] = useState({
@@ -12,8 +12,7 @@ export function ProfileTestForm() {
     country: 'Russia',
     city: 'Moscow',
     citizenship: 'Russian',
-    currency: 'RUB',
-    avatar_url: ''
+    currency: 'RUB'
   });
   const [response, setResponse] = useState<unknown>(null);
   const [error, setError] = useState<unknown>(null);

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage'
 import { AnimatePresence } from 'framer-motion'
 import style from './securityblock.module.scss'
 import PageSection from '@/shared/ui/page/PageSection'
@@ -70,7 +71,7 @@ function SecurityBlock() {
       await changePasswordRequest(data)
       setIsPasswordModalOpen(false)
     } catch (err) {
-      setPasswordError(err instanceof Error ? err.message : 'Ошибка сервера')
+      setPasswordError(getAuthApiErrorMessage(err))
     } finally {
       setPasswordLoading(false)
     }
@@ -91,7 +92,7 @@ function SecurityBlock() {
       setPendingEmailChange({ email: data.email, password: data.password })
       setIsEmailChangeSentModalOpen(true)
     } catch (err) {
-      setEmailChangeError(err instanceof Error ? err.message : 'Ошибка сервера')
+      setEmailChangeError(getAuthApiErrorMessage(err))
     } finally {
       setEmailChangeLoading(false)
     }
@@ -108,7 +109,7 @@ function SecurityBlock() {
         password: pendingEmailChange.password
       })
     } catch (err) {
-      setEmailChangeError(err instanceof Error ? err.message : 'Ошибка сервера')
+      setEmailChangeError(getAuthApiErrorMessage(err))
     } finally {
       setEmailChangeLoading(false)
     }

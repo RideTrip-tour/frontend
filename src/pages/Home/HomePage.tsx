@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
 import { useLocation, useNavigate, useSearchParams } from 'react-router';
 import { AnimatePresence, motion } from 'framer-motion';
 import Welcome from '@/pages/Home/Welcome'
@@ -113,7 +114,7 @@ function HomePage() {
         setView('password-email-sent');
       }
     } catch (err) {
-      setServerError(err instanceof Error ? err.message : 'Ошибка сервера');
+      setServerError(getAuthApiErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -175,6 +176,7 @@ function HomePage() {
             <PasswordEmailSentModal
               email={email}
               isLoading={isLoading}
+              serverError={serverError}
               onClose={closeAuth}
               setIsLoading={setIsLoading}
               setServerError={setServerError}

@@ -1,6 +1,5 @@
-import { http } from "./http";
-import { apiClient } from "@/api/client";
-import { handleApiError } from "@/api/errors";
+import { apiClient } from "@/shared/api/client";
+import { handleApiError } from "@/shared/api/errors";
 
 export type ProfileData = {
   first_name: string;
@@ -25,7 +24,7 @@ export type Profile = ProfileData & {
 
 export async function healthCheck() {
   try {
-    const res = await http.get<string>("/profile/health");
+    const res = await apiClient.get<string>("/profile/health");
     return res.data;
   } catch (e) {
     throw handleApiError(e);

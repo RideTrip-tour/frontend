@@ -1,19 +1,15 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { meRequest } from "@/services/authService";
-
-type User = {
-  id: string;
-  email: string;
-  name: string;
-};
+import { meRequest } from "@/services/usersService";
+import type { CurrentUser } from "@/services/usersService";
+import { setSessionExpiredHandler } from "@/shared/api/sessionEvents";
 
 type AuthState = {
-  user: User | null;
+  user: CurrentUser | null;
   isAuth: boolean;
   isLoading: boolean;
 
-  setUser: (user: User) => void;
+  setUser: (user: CurrentUser) => void;
   logout: () => void;
   checkAuth: () => Promise<void>;
 };
@@ -57,3 +53,5 @@ export const useAuthStore = create<AuthState>()(
     }
   )
 );
+
+setSessionExpiredHandler(() => useAuthStore.getState().logout());
