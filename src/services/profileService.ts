@@ -1,7 +1,6 @@
 import { apiClient } from "@/shared/api/client";
 import { handleApiError } from "@/shared/api/errors";
 
-// TODO(api-profile): сверить DTO и формы с birth_date перед переходом на новый контракт.
 export type ProfileData = {
   first_name: string;
   last_name: string;

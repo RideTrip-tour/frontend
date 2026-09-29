@@ -6,11 +6,13 @@ import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores([
+    'dist',
+    'src/shared/api/generated/**'
+  ]),
 
   {
     files: ['**/*.{ts,tsx}'],
-
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
@@ -33,7 +35,8 @@ export default defineConfig([
           paths: [
             {
               name: 'axios',
-              message: 'axios import is restricted from being used. Do not import axios directly. Use services instead.'
+              message:
+                'axios import is restricted from being used. Do not import axios directly. Use services instead.'
             }
           ],
           patterns: [
@@ -43,17 +46,22 @@ export default defineConfig([
             },
             {
               // Покрывает alias, src/ и относительные пути к shared/api.
-              regex: '(?:^|/)shared/api/(?:client(?:\\.[^/]+)?$|auth(?:/|$)|generated(?:/|$))',
+              regex: String.raw`(?:^|/)shared/api/(?:client(?:\.[^/]+)?$|auth(?:/|$)|generated(?:/|$))`,
               allowTypeImports: true,
-              message: 'Do not import HTTP clients directly. Use services; import type is allowed.'
+              message:
+                'Do not import HTTP clients directly. Use services; import type is allowed.'
             }
           ]
         }
       ]
     }
   },
+
   {
-    files: ['src/services/**/*.{ts,tsx}', 'src/shared/api/**/*.{ts,tsx}'],
+    files: [
+      'src/services/**/*.{ts,tsx}',
+      'src/shared/api/**/*.{ts,tsx}'
+    ],
     rules: {
       'no-restricted-imports': 'off'
     }
