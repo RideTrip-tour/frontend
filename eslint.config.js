@@ -2,6 +2,8 @@ import js from '@eslint/js';
 import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
+import perfectionist from 'eslint-plugin-perfectionist';
+import eslintConfigPrettier from 'eslint-config-prettier';
 import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
@@ -10,6 +12,9 @@ export default defineConfig([
 
   {
     files: ['**/*.{ts,tsx}'],
+    plugins: {
+      perfectionist
+    },
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
@@ -23,6 +28,46 @@ export default defineConfig([
     },
 
     rules: {
+      'perfectionist/sort-imports': [
+        'error',
+        {
+          type: 'alphabetical',
+          order: 'asc',
+          newlinesBetween: 1,
+
+          sortSideEffects: false,
+
+          internalPattern: ['^@/.+'],
+
+          groups: [
+            [
+              'value-builtin',
+              'value-external',
+              'type-builtin',
+              'type-external'
+            ],
+
+            ['value-internal', 'type-internal'],
+
+            [
+              'type-parent',
+              'type-sibling',
+              'type-index',
+              'value-parent',
+              'value-sibling',
+              'value-index'
+            ],
+
+            'side-effect',
+
+            'style',
+
+            'side-effect-style',
+
+            'unknown'
+          ]
+        }
+      ],
       /**
        * HTTP-запросы выполняются в services и shared/api.
        */
