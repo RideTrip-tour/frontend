@@ -7,12 +7,18 @@ type VerificationErrorModalProps = {
   onRetry?: () => void;
 };
 
-export default function VerificationErrorModal({ message, onClose, onRetry }: Readonly<VerificationErrorModalProps>) {
+export default function VerificationErrorModal({
+  message,
+  onClose,
+  onRetry,
+}: Readonly<VerificationErrorModalProps>) {
   return (
     <AuthShell onClose={onClose}>
       <div className={styles.centerContent}>
         <h2 className={styles.bigTitle}>Не удалось подтвердить почту</h2>
-        <p className={styles.text} role="alert">{message}</p>
+        <p className={styles.text} role="alert">
+          {message}
+        </p>
         <div className={styles.verificationActions}>
           {onRetry && (
             <button type="button" className={styles.linkButton} onClick={onRetry}>

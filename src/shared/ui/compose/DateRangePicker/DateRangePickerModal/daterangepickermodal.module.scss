@@ -22,7 +22,9 @@
     text-align: left;
     color: inherit;
     cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
+    transition:
+      border-color 0.2s,
+      background 0.2s;
 
     &--active {
       border-color: var(--drpm-primary);
@@ -63,7 +65,7 @@
     font-size: 13px;
     cursor: pointer;
     flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(79,70,229,0.3);
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
   }
 
   &__drumHeader {
@@ -96,8 +98,12 @@
   }
 
   &__drum {
-    &--month { flex: 3; }
-    &--year  { flex: 2; }
+    &--month {
+      flex: 3;
+    }
+    &--year {
+      flex: 2;
+    }
   }
 
   &__drumLabel {

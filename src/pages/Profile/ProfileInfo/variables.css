@@ -1,11 +1,11 @@
 :root {
 }
 
-body[data-theme="light"] {
-  --profileinfo-bg: rgba(14, 104, 212, 0.10);
-  --profileinfo-icon-color: var(--color-blue, #0E68D4);
-  --profileinfo-text-color: var(--color-gray-dark, #5F6C7B);
+body[data-theme='light'] {
+  --profileinfo-bg: rgba(14, 104, 212, 0.1);
+  --profileinfo-icon-color: var(--color-blue, #0e68d4);
+  --profileinfo-text-color: var(--color-gray-dark, #5f6c7b);
 }
 
-body[data-theme="dark"] {
+body[data-theme='dark'] {
 }

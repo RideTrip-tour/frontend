@@ -1,19 +1,14 @@
-import type { Country } from "@/entities/country/model/types";
-import styles from "./CountrySelector.module.scss";
+import type { Country } from '@/entities/country/model/types';
+import styles from './CountrySelector.module.scss';
 
 interface CountrySelectorProps {
   countries: Country[];
   onSelect: (country: Country) => void;
 }
 
-export function CountrySelector({
-  countries,
-  onSelect,
-}: CountrySelectorProps) {
+export function CountrySelector({ countries, onSelect }: CountrySelectorProps) {
   // Сортируем страны по алфавиту
-  const sortedCountries = [...countries].sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
+  const sortedCountries = [...countries].sort((a, b) => a.name.localeCompare(b.name));
 
   // Разбиваем страны по 3 колонкам
   const columns: Country[][] = [[], [], []];
@@ -39,17 +34,14 @@ export function CountrySelector({
           <div key={colIndex} className={styles.column}>
             <ul className={styles.list}>
               {columnCountries.map((country) => (
-                <li
-                  key={country.id}
-                  className={styles.listItem}
-                >
+                <li key={country.id} className={styles.listItem}>
                   <button
-                      type="button"
-                      className={styles.countryButton}
-                      onClick={() => onSelect(country)}
-                    >
-                      {country.name}
-                    </button>
+                    type="button"
+                    className={styles.countryButton}
+                    onClick={() => onSelect(country)}
+                  >
+                    {country.name}
+                  </button>
                 </li>
               ))}
             </ul>

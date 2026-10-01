@@ -14,8 +14,8 @@ const clientConfig = {
   timeout: 10_000,
   withCredentials: true,
   headers: {
-    Accept: 'application/json'
-  }
+    Accept: 'application/json',
+  },
 };
 
 export const apiClient = axios.create(clientConfig);
@@ -33,7 +33,7 @@ const withoutRefresh = new Set([
   '/auth/request-verify-token',
   '/auth/verify',
   '/auth/logout',
-  '/auth/refresh'
+  '/auth/refresh',
 ]);
 
 function trimTrailingSlashes(value: string): string {
@@ -51,9 +51,7 @@ function removeApiPrefix(path: string): string {
     return '';
   }
 
-  return path.startsWith('/api/')
-    ? path.slice('/api'.length)
-    : path;
+  return path.startsWith('/api/') ? path.slice('/api'.length) : path;
 }
 
 function canRefresh(url: string | undefined): boolean {
@@ -64,7 +62,8 @@ function canRefresh(url: string | undefined): boolean {
 }
 
 function refreshSession(): Promise<void> {
-  refreshPromise ??= refreshClient.post('/auth/refresh', {})
+  refreshPromise ??= refreshClient
+    .post('/auth/refresh', {})
     .then(() => undefined)
     .catch((error: unknown) => {
       notifySessionExpired();
@@ -90,17 +89,12 @@ apiClient.interceptors.response.use(
     }
 
     const original = axios.isAxiosError(error)
-      ? error.config as RetryConfig | undefined
+      ? (error.config as RetryConfig | undefined)
       : undefined;
 
     const apiError = normalizeAxiosError(error);
 
-    if (
-      original
-      && apiError.status === 401
-      && !original._retry
-      && canRefresh(original.url)
-    ) {
+    if (original && apiError.status === 401 && !original._retry && canRefresh(original.url)) {
       original._retry = true;
 
       // При ошибке общего refresh все ожидающие запросы отклоняются без повтора.
@@ -114,13 +108,13 @@ apiClient.interceptors.response.use(
     }
 
     if (
-      apiError.code === 'NETWORK'
-      || apiError.code === 'TIMEOUT'
-      || (apiError.status ?? 0) >= 500
+      apiError.code === 'NETWORK' ||
+      apiError.code === 'TIMEOUT' ||
+      (apiError.status ?? 0) >= 500
     ) {
       notifyGlobal(apiError.message);
     }
 
     throw apiError;
-  }
+  },
 );

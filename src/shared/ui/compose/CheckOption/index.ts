@@ -1,1 +1,1 @@
-export { default } from './CheckOption.tsx'
+export { default } from './CheckOption.tsx';

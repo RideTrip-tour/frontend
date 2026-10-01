@@ -1,1 +1,1 @@
-export { default } from './InfoRow.tsx'
+export { default } from './InfoRow.tsx';

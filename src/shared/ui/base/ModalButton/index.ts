@@ -1,1 +1,1 @@
-export { default } from './ModalButton.tsx'
+export { default } from './ModalButton.tsx';

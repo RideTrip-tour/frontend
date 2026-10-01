@@ -1,4 +1,4 @@
-import style from './ReadyTours.module.scss'
+import style from './ReadyTours.module.scss';
 
 export function ReadyTours() {
   return (

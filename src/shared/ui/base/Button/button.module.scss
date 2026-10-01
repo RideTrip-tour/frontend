@@ -11,7 +11,8 @@
   box-shadow: var(--shadow-button);
   color: var(--btn-text);
   background: var(--btn-bg);
-  transition: background-color var(--animation-speed-button) ease,
+  transition:
+    background-color var(--animation-speed-button) ease,
     color var(--animation-speed-button) ease;
   transform-origin: center;
   -webkit-tap-highlight-color: transparent;
@@ -123,7 +124,6 @@
     transform: none;
   }
 }
-
 
 // Текстовые кнопки для подтверждений и информационных сообщений.
 .button--light,

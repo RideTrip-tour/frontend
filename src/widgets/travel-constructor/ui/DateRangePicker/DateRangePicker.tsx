@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import {
-  Calendar,
-  type CalendarDateRange,
-} from '@/shared/ui/base/Calendar';
+import { Calendar, type CalendarDateRange } from '@/shared/ui/base/Calendar';
 import styles from './DateRangePicker.module.scss';
 
 interface DateRangePickerProps {
@@ -32,9 +29,7 @@ export function DateRangePicker({
 }: DateRangePickerProps) {
   const today = startOfDay(new Date());
   const currentMonthStart = startOfMonth(today);
-  const [currentMonth, setCurrentMonth] = useState(() =>
-    startOfMonth(departureDate ?? today),
-  );
+  const [currentMonth, setCurrentMonth] = useState(() => startOfMonth(departureDate ?? today));
 
   const nextMonth = addMonths(currentMonth, 1);
   const previousMonth = addMonths(currentMonth, -1);

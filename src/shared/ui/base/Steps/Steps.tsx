@@ -1,27 +1,26 @@
-import style from './steps.module.scss'
-import './variables.css'
-import {Icon} from '@iconify/react'
+import style from './steps.module.scss';
+import './variables.css';
+import { Icon } from '@iconify/react';
 
 interface StepData {
-  title: string
-  text: string
+  title: string;
+  text: string;
 }
 
 interface StepsProps {
-  steps: Record<number, StepData>
-  onCtaClick?: () => void
-  ctaText?: string
+  steps: Record<number, StepData>;
+  onCtaClick?: () => void;
+  ctaText?: string;
 }
 
-const Steps = ({steps, onCtaClick, ctaText = 'Начнём подбор'}: StepsProps) => {
+const Steps = ({ steps, onCtaClick, ctaText = 'Начнём подбор' }: StepsProps) => {
   const entries = Object.entries(steps).map(([key, val]) => ({
     number: Number(key),
-    ...val
-  }))
+    ...val,
+  }));
 
   return (
     <div className={style.steps}>
-
       <div className={style.steps__header}>
         <img
           className={style.steps__connector}
@@ -30,10 +29,8 @@ const Steps = ({steps, onCtaClick, ctaText = 'Начнём подбор'}: Steps
         />
 
         <div className={style.steps__row}>
-          {entries.map(({number}) => (
-            <div key={number}
-                 className={style.steps__col}
-            >
+          {entries.map(({ number }) => (
+            <div key={number} className={style.steps__col}>
               <div className={style.steps__dot}>
                 <span className={style.steps__dot_value}>{number}</span>
               </div>
@@ -42,10 +39,8 @@ const Steps = ({steps, onCtaClick, ctaText = 'Начнём подбор'}: Steps
         </div>
 
         <div className={style.steps__row}>
-          {entries.map(({number, title, text}) => (
-            <div key={number}
-                 className={style.steps__col}
-            >
+          {entries.map(({ number, title, text }) => (
+            <div key={number} className={style.steps__col}>
               <div className={style.steps__card}>
                 <div className={style.steps__title}>{title}</div>
                 <div className={style.steps__text}>{text}</div>
@@ -56,20 +51,13 @@ const Steps = ({steps, onCtaClick, ctaText = 'Начнём подбор'}: Steps
       </div>
 
       {onCtaClick && (
-        <button
-          className={style.steps__cta}
-          onClick={onCtaClick}
-        >
+        <button className={style.steps__cta} onClick={onCtaClick}>
           <span className={style.steps__cta_text}>{ctaText}</span>
-          <Icon
-            className={style.steps__cta_icon}
-            icon="material-symbols:arrow-downward-rounded"
-          />
+          <Icon className={style.steps__cta_icon} icon="material-symbols:arrow-downward-rounded" />
         </button>
       )}
-
     </div>
-  )
-}
+  );
+};
 
-export default Steps
+export default Steps;

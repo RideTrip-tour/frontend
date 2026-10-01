@@ -9,7 +9,7 @@ type PasswordResetSuccessModalProps = {
 
 export default function PasswordResetSuccessModal({
   onClose,
-  onGoToCabinet
+  onGoToCabinet,
 }: PasswordResetSuccessModalProps) {
   return (
     <AuthShell onClose={onClose} customStyle={{ padding: '122px 114px' }}>

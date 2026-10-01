@@ -11,7 +11,9 @@
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  transition: opacity 0.2s ease, background 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    background 0.2s ease;
 
   &--active {
     background: var(--toggle-bg-active);

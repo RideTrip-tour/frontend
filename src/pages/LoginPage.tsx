@@ -1,6 +1,6 @@
-import { useAuthStore } from "@/store/authStore";
-import { useNavigate } from "react-router";
-import { meRequest } from "@/services/usersService";
+import { useAuthStore } from '@/store/authStore';
+import { useNavigate } from 'react-router';
+import { meRequest } from '@/services/usersService';
 
 export function LoginPage() {
   const setUser = useAuthStore((s) => s.setUser);
@@ -10,18 +10,23 @@ export function LoginPage() {
     try {
       const user = await meRequest();
       setUser(user);
-      navigate("/");
+      navigate('/');
     } catch {
-      alert("Не удалось получить данные пользователя");
+      alert('Не удалось получить данные пользователя');
     }
   };
 
   return (
     <div>
       <h1>Login</h1>
-      <button onClick={handleLogin}           style={{
-        marginTop: '100px'
-      }}>Login</button>
+      <button
+        onClick={handleLogin}
+        style={{
+          marginTop: '100px',
+        }}
+      >
+        Login
+      </button>
     </div>
   );
 }

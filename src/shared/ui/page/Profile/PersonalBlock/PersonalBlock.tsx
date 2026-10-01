@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
-import { Icon } from '@iconify/react'
-import style from './personalblock.module.scss'
-import './variables.css'
+import type { ReactNode } from 'react';
+import { Icon } from '@iconify/react';
+import style from './personalblock.module.scss';
+import './variables.css';
 
 interface PersonalBlockProps {
-  title: string
-  subtitle: string
-  onEdit: () => void
-  children?: ReactNode
+  title: string;
+  subtitle: string;
+  onEdit: () => void;
+  children?: ReactNode;
 }
 
 const PersonalBlock = ({ title, subtitle, onEdit, children }: PersonalBlockProps) => (
@@ -26,6 +26,6 @@ const PersonalBlock = ({ title, subtitle, onEdit, children }: PersonalBlockProps
     </div>
     {children}
   </div>
-)
+);
 
-export default PersonalBlock
+export default PersonalBlock;

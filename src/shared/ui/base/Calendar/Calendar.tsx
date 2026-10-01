@@ -45,11 +45,7 @@ function isSameDay(first: Date, second: Date): boolean {
   return startOfDay(first).getTime() === startOfDay(second).getTime();
 }
 
-function isDateInRange(
-  date: Date,
-  rangeStart: Date | null,
-  rangeEnd: Date | null,
-): boolean {
+function isDateInRange(date: Date, rangeStart: Date | null, rangeEnd: Date | null): boolean {
   if (!rangeStart || !rangeEnd) {
     return false;
   }
@@ -64,11 +60,7 @@ function isDateDisabled(date: Date, minDate: Date | null): boolean {
 }
 
 function isLastDayOfMonth(date: Date): boolean {
-  const lastDay = new Date(
-    date.getFullYear(),
-    date.getMonth() + 1,
-    0,
-  ).getDate();
+  const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
   return date.getDate() === lastDay;
 }
@@ -102,11 +94,9 @@ function CalendarDay({
 }: Readonly<CalendarDayProps>) {
   const normalizedDate = startOfDay(date);
 
-  const isRangeStart =
-    rangeStart !== null && isSameDay(normalizedDate, rangeStart);
+  const isRangeStart = rangeStart !== null && isSameDay(normalizedDate, rangeStart);
 
-  const isRangeEnd =
-    rangeEnd !== null && isSameDay(normalizedDate, rangeEnd);
+  const isRangeEnd = rangeEnd !== null && isSameDay(normalizedDate, rangeEnd);
 
   const isSelectedDay = isRangeStart || isRangeEnd;
   const isInRange = isDateInRange(normalizedDate, rangeStart, rangeEnd);
@@ -167,13 +157,9 @@ export function Calendar({
   const days = getMonthDays(month);
   const normalizedMinDate = minDate ? startOfDay(minDate) : null;
 
-  const rangeStart = selectedRange.from
-    ? startOfDay(selectedRange.from)
-    : null;
+  const rangeStart = selectedRange.from ? startOfDay(selectedRange.from) : null;
 
-  const rangeEnd = selectedRange.to
-    ? startOfDay(selectedRange.to)
-    : null;
+  const rangeEnd = selectedRange.to ? startOfDay(selectedRange.to) : null;
 
   const hasCompleteRange = Boolean(rangeStart && rangeEnd);
   const monthLabel = monthFormatter.format(month);

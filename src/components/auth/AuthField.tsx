@@ -41,7 +41,7 @@ export default function AuthField({
   onChange,
   onFocus,
   onBlur,
-  isLast
+  isLast,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [autofillActive, setAutofillActive] = useState(false);

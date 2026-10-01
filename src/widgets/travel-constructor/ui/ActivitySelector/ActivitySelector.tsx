@@ -24,12 +24,7 @@ interface OptionListProps {
   onChange: (options: string[]) => void;
 }
 
-function OptionList({
-  name,
-  options,
-  selectedOptions,
-  onChange,
-}: OptionListProps) {
+function OptionList({ name, options, selectedOptions, onChange }: OptionListProps) {
   const toggleOption = (option: string) => {
     const nextOptions = selectedOptions.includes(option)
       ? selectedOptions.filter((selectedOption) => selectedOption !== option)
@@ -41,9 +36,7 @@ function OptionList({
   return (
     <div className={styles.optionList}>
       {options.map((option) => {
-        const inputId = `${name}-${option}`
-          .toLowerCase()
-          .replace(/[^a-zа-яё0-9]+/gi, '-');
+        const inputId = `${name}-${option}`.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-');
 
         return (
           <label className={styles.option} htmlFor={inputId} key={option}>
@@ -74,9 +67,8 @@ export function ActivitySelector({
 
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase('ru-RU');
   const allActivities = [...PRIMARY_ACTIVITIES, ...ADDITIONAL_ACTIVITIES];
-  const visibleActivities = normalizedQuery || showAllActivities
-    ? allActivities
-    : PRIMARY_ACTIVITIES;
+  const visibleActivities =
+    normalizedQuery || showAllActivities ? allActivities : PRIMARY_ACTIVITIES;
 
   const filteredActivities = visibleActivities.filter((activity) =>
     activity.toLocaleLowerCase('ru-RU').includes(normalizedQuery),

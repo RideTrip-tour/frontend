@@ -1,47 +1,43 @@
-import { useState } from 'react'
-import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage'
-import { AnimatePresence } from 'framer-motion'
-import style from './securityblock.module.scss'
-import PageSection from '@/shared/ui/page/PageSection'
-import SectionHeader from '@/shared/ui/base/SectionHeader'
-import Divider from '@/shared/ui/base/Divider'
-import InfoRow from '@/shared/ui/base/InfoRow'
-import {
-  ChangePasswordModal,
-  ChangeEmailModal,
-  EmailChangeSentModal
-} from '@/components/auth'
-import ChangePhoneModal from '@/shared/ui/compose/Modals/ChangePhoneModal'
-import { changePasswordRequest, requestChangeEmailRequest } from '@/services/usersService'
-import { updateMyProfileRequest } from '@/services/profileService'
-import { useProfileStore } from '@/store'
-import './variables.css'
+import { useState } from 'react';
+import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
+import { AnimatePresence } from 'framer-motion';
+import style from './securityblock.module.scss';
+import PageSection from '@/shared/ui/page/PageSection';
+import SectionHeader from '@/shared/ui/base/SectionHeader';
+import Divider from '@/shared/ui/base/Divider';
+import InfoRow from '@/shared/ui/base/InfoRow';
+import { ChangePasswordModal, ChangeEmailModal, EmailChangeSentModal } from '@/components/auth';
+import ChangePhoneModal from '@/shared/ui/compose/Modals/ChangePhoneModal';
+import { changePasswordRequest, requestChangeEmailRequest } from '@/services/usersService';
+import { updateMyProfileRequest } from '@/services/profileService';
+import { useProfileStore } from '@/store';
+import './variables.css';
 
 function SecurityBlock() {
-  const email = useProfileStore(s => s.userEmail)
-  const phone = useProfileStore(s => s.userPhone)
-  const setEmail = useProfileStore(s => s.setUserEmail)
-  const setPhone = useProfileStore(s => s.setUserPhone)
-  const [password] = useState('********')
-  const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false)
-  const [phoneLoading, setPhoneLoading] = useState(false)
-  const [phoneError, setPhoneError] = useState('')
-  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
-  const [passwordLoading, setPasswordLoading] = useState(false)
-  const [passwordError, setPasswordError] = useState('')
-  const [isEmailChangeModalOpen, setIsEmailChangeModalOpen] = useState(false)
-  const [isEmailChangeSentModalOpen, setIsEmailChangeSentModalOpen] = useState(false)
-  const [emailChangeLoading, setEmailChangeLoading] = useState(false)
-  const [emailChangeError, setEmailChangeError] = useState('')
-  const [newEmail, setNewEmail] = useState('')
+  const email = useProfileStore((s) => s.userEmail);
+  const phone = useProfileStore((s) => s.userPhone);
+  const setEmail = useProfileStore((s) => s.setUserEmail);
+  const setPhone = useProfileStore((s) => s.setUserPhone);
+  const [password] = useState('********');
+  const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
+  const [phoneLoading, setPhoneLoading] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
+  const [isEmailChangeModalOpen, setIsEmailChangeModalOpen] = useState(false);
+  const [isEmailChangeSentModalOpen, setIsEmailChangeSentModalOpen] = useState(false);
+  const [emailChangeLoading, setEmailChangeLoading] = useState(false);
+  const [emailChangeError, setEmailChangeError] = useState('');
+  const [newEmail, setNewEmail] = useState('');
   const [pendingEmailChange, setPendingEmailChange] = useState<{
-    email: string
-    password: string
-  } | null>(null)
+    email: string;
+    password: string;
+  } | null>(null);
 
   const handleChangePhone = async (nextPhone: string) => {
-    setPhoneError('')
-    setPhoneLoading(true)
+    setPhoneError('');
+    setPhoneLoading(true);
     try {
       await updateMyProfileRequest({
         first_name: '',
@@ -54,74 +50,71 @@ function SecurityBlock() {
         city: '',
         citizenship: '',
         currency: '',
-      })
-      setPhone(nextPhone)
-      setIsPhoneModalOpen(false)
+      });
+      setPhone(nextPhone);
+      setIsPhoneModalOpen(false);
     } catch (err) {
-      setPhoneError(err instanceof Error ? err.message : 'Ошибка сервера')
+      setPhoneError(err instanceof Error ? err.message : 'Ошибка сервера');
     } finally {
-      setPhoneLoading(false)
+      setPhoneLoading(false);
     }
-  }
+  };
 
   const handleChangePassword = async (data: { current_password: string; new_password: string }) => {
-    setPasswordError('')
-    setPasswordLoading(true)
+    setPasswordError('');
+    setPasswordLoading(true);
     try {
-      await changePasswordRequest(data)
-      setIsPasswordModalOpen(false)
+      await changePasswordRequest(data);
+      setIsPasswordModalOpen(false);
     } catch (err) {
-      setPasswordError(getAuthApiErrorMessage(err))
+      setPasswordError(getAuthApiErrorMessage(err));
     } finally {
-      setPasswordLoading(false)
+      setPasswordLoading(false);
     }
-  }
+  };
 
   const handleChangeEmail = async (data: { email: string; password: string }) => {
-    setEmailChangeError('')
-    setEmailChangeLoading(true)
+    setEmailChangeError('');
+    setEmailChangeLoading(true);
     try {
       await requestChangeEmailRequest({
         current_email: email,
         new_email: data.email,
-        password: data.password
-      })
-      setEmail(data.email)
-      setIsEmailChangeModalOpen(false)
-      setNewEmail(data.email)
-      setPendingEmailChange({ email: data.email, password: data.password })
-      setIsEmailChangeSentModalOpen(true)
+        password: data.password,
+      });
+      setEmail(data.email);
+      setIsEmailChangeModalOpen(false);
+      setNewEmail(data.email);
+      setPendingEmailChange({ email: data.email, password: data.password });
+      setIsEmailChangeSentModalOpen(true);
     } catch (err) {
-      setEmailChangeError(getAuthApiErrorMessage(err))
+      setEmailChangeError(getAuthApiErrorMessage(err));
     } finally {
-      setEmailChangeLoading(false)
+      setEmailChangeLoading(false);
     }
-  }
+  };
 
   const handleResendEmailChange = async () => {
-    if (!pendingEmailChange) return
-    setEmailChangeError('')
-    setEmailChangeLoading(true)
+    if (!pendingEmailChange) return;
+    setEmailChangeError('');
+    setEmailChangeLoading(true);
     try {
       await requestChangeEmailRequest({
         current_email: email,
         new_email: pendingEmailChange.email,
-        password: pendingEmailChange.password
-      })
+        password: pendingEmailChange.password,
+      });
     } catch (err) {
-      setEmailChangeError(getAuthApiErrorMessage(err))
+      setEmailChangeError(getAuthApiErrorMessage(err));
     } finally {
-      setEmailChangeLoading(false)
+      setEmailChangeLoading(false);
     }
-  }
+  };
 
   return (
     <PageSection paddingVertical={32} paddingHorizontal={40}>
       <div className={style.securityblock}>
-        <SectionHeader
-          title="Безопасность"
-          subtitle="Управление доступом к аккаунту"
-        />
+        <SectionHeader title="Безопасность" subtitle="Управление доступом к аккаунту" />
         <Divider />
         <div className={style.securityblock__rows}>
           <div className={style.securityblock__row}>
@@ -168,9 +161,9 @@ function SecurityBlock() {
         isLoading={phoneLoading}
         serverError={phoneError}
         onClose={() => {
-          setPhoneError('')
-          setPhoneLoading(false)
-          setIsPhoneModalOpen(false)
+          setPhoneError('');
+          setPhoneLoading(false);
+          setIsPhoneModalOpen(false);
         }}
         onSubmit={handleChangePhone}
       />
@@ -209,7 +202,7 @@ function SecurityBlock() {
         )}
       </AnimatePresence>
     </PageSection>
-  )
+  );
 }
 
-export default SecurityBlock
+export default SecurityBlock;

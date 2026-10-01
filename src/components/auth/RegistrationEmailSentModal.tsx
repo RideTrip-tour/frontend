@@ -16,7 +16,7 @@ export default function RegistrationEmailSentModal({
   isLoading,
   serverError,
   onClose,
-  onResend
+  onResend,
 }: RegistrationEmailSentModalProps) {
   const [cooldown, setCooldown] = useState(60);
 
@@ -55,8 +55,17 @@ export default function RegistrationEmailSentModal({
 
         {serverError && <p className={styles.centerError}>{serverError}</p>}
 
-        <button type="button" className={styles.linkButton} onClick={handleResend} disabled={disabled}>
-          {isLoading ? 'Отправка...' : cooldown > 0 ? `Отправить ещё раз (${cooldown}с)` : 'Отправить ещё раз'}
+        <button
+          type="button"
+          className={styles.linkButton}
+          onClick={handleResend}
+          disabled={disabled}
+        >
+          {isLoading
+            ? 'Отправка...'
+            : cooldown > 0
+              ? `Отправить ещё раз (${cooldown}с)`
+              : 'Отправить ещё раз'}
         </button>
       </div>
     </AuthShell>

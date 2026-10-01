@@ -1,46 +1,42 @@
-import style from './welcome.module.scss'
-import IconSelect from '@/shared/ui/base/IconSelect'
-import {Button} from '@/shared/ui/base/Button'
-import {useState} from 'react'
+import style from './welcome.module.scss';
+import IconSelect from '@/shared/ui/base/IconSelect';
+import { Button } from '@/shared/ui/base/Button';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 const locations = [
-  {value: 'turkey', label: 'Турция'},
-  {value: 'egypt', label: 'Египет'},
-  {value: 'italy', label: 'Италия'}
-]
+  { value: 'turkey', label: 'Турция' },
+  { value: 'egypt', label: 'Египет' },
+  { value: 'italy', label: 'Италия' },
+];
 
 const dates = [
-  {value: 'may', label: 'Май 2026'},
-  {value: 'june', label: 'Июнь 2026'},
-  {value: 'july', label: 'Июль 2026'}
-]
+  { value: 'may', label: 'Май 2026' },
+  { value: 'june', label: 'Июнь 2026' },
+  { value: 'july', label: 'Июль 2026' },
+];
 
 const activities = [
-  {value: 'snowboard', label: 'Сноуборд'},
-  {value: 'diving', label: 'Дайвинг'},
-  {value: 'hiking', label: 'Хайкинг'}
-]
+  { value: 'snowboard', label: 'Сноуборд' },
+  { value: 'diving', label: 'Дайвинг' },
+  { value: 'hiking', label: 'Хайкинг' },
+];
 
 function Welcome() {
-  const [location, setLocation] = useState('')
-  const [date, setDate] = useState('')
-  const [activity, setActivity] = useState('')
+  const [location, setLocation] = useState('');
+  const [date, setDate] = useState('');
+  const [activity, setActivity] = useState('');
   const navigate = useNavigate();
 
   const handleSearch = () => {
     navigate('/trip-builder');
-  }
+  };
 
   return (
     <div className={style.welcome}>
       <div className={style.welcome__text}>
-        <div className={style.welcome__text_medium}>
-          До поездки осталось
-        </div>
-        <div className={style.welcome__text_large}>
-          три шага
-        </div>
+        <div className={style.welcome__text_medium}>До поездки осталось</div>
+        <div className={style.welcome__text_large}>три шага</div>
       </div>
       <div className={style.welcome__search}>
         <IconSelect
@@ -85,8 +81,7 @@ function Welcome() {
         />
       </div>
     </div>
-  )
+  );
 }
 
-export default Welcome
-
+export default Welcome;

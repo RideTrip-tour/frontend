@@ -1,2 +1,2 @@
-export { default } from './ModalField.tsx'
-export type { ModalFieldStatus } from './ModalField.tsx'
+export { default } from './ModalField.tsx';
+export type { ModalFieldStatus } from './ModalField.tsx';

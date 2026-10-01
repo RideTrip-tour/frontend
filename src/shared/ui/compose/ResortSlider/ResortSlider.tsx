@@ -1,11 +1,6 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-} from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import style from './resortslider.module.scss';
-import './variables.css'
+import './variables.css';
 import IconButton from '@/shared/ui/base/IconButton';
 
 interface CardMeasurement {
@@ -20,10 +15,10 @@ interface ResortSliderProps {
 }
 
 const ResortSlider: React.FC<ResortSliderProps> = ({
-                                                     windowWidth = 1440,
-                                                     className,
-                                                     items = [],
-                                                   }) => {
+  windowWidth = 1440,
+  className,
+  items = [],
+}) => {
   const trackRef = useRef<HTMLDivElement>(null);
   const [measurements, setMeasurements] = useState<CardMeasurement[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -78,7 +73,7 @@ const ResortSlider: React.FC<ResortSliderProps> = ({
       const centered = left + width / 2 - windowWidth / 2;
       return Math.min(Math.max(0, centered), maxOffset);
     },
-    [measurements, windowWidth, maxOffset]
+    [measurements, windowWidth, maxOffset],
   );
 
   const currentOffset = getOffset(activeIndex);
@@ -138,10 +133,7 @@ const ResortSlider: React.FC<ResortSliderProps> = ({
             disabled={isAtStart}
           />
           <div className={style.resortslider__progressWrap}>
-            <div
-              className={style.resortslider__progressFill}
-              style={{ width: `${progress}%` }}
-            />
+            <div className={style.resortslider__progressFill} style={{ width: `${progress}%` }} />
           </div>
           <IconButton
             icon="material-symbols:arrow-forward-rounded"

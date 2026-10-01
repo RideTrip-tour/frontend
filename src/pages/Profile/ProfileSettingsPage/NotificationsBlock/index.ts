@@ -1,1 +1,1 @@
-export { default } from './NotificationsBlock.tsx'
+export { default } from './NotificationsBlock.tsx';

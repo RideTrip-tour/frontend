@@ -1,8 +1,7 @@
 :root {
-
 }
 
-body[data-theme="light"] {
+body[data-theme='light'] {
   --modalchildren-overlay-bg: rgba(0, 0, 0, 0.5);
 
   --modalchildren-bg: var(--color-white);
@@ -12,6 +11,5 @@ body[data-theme="light"] {
   --modalchildren-close-color: var(--color-black);
 }
 
-body[data-theme="dark"] {
-
+body[data-theme='dark'] {
 }

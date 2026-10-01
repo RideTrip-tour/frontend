@@ -62,9 +62,13 @@ export function ConstructorCartModal({
     <Modal isOpen onClose={onClose} ariaLabel={content.title} variant="message">
       <EmptyState
         variant="message"
-        icon={state.type === 'save-success'
-          ? <SuccessIcon className={styles.statusIcon} aria-hidden="true" />
-          : <AlertIcon className={styles.statusIcon} viewBox="0 0 80 80" aria-hidden="true" />}
+        icon={
+          state.type === 'save-success' ? (
+            <SuccessIcon className={styles.statusIcon} aria-hidden="true" />
+          ) : (
+            <AlertIcon className={styles.statusIcon} viewBox="0 0 80 80" aria-hidden="true" />
+          )
+        }
         title={content.title}
         description={state.description ?? content.description}
       />

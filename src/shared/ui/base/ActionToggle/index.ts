@@ -1,1 +1,1 @@
-export {default} from './ActionToggle.tsx'
+export { default } from './ActionToggle.tsx';

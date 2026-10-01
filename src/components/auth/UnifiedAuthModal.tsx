@@ -1,4 +1,4 @@
-import ModalOverlay from '@/shared/ui/base/ModalOverlay'
+import ModalOverlay from '@/shared/ui/base/ModalOverlay';
 import { useId, useMemo, useState, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AuthDivider, AuthCheckbox } from './index';
@@ -21,7 +21,7 @@ type UnifiedAuthModalProps = {
       password?: string;
       confirmPassword?: string;
       acceptedTerms?: boolean;
-    }
+    },
   ) => void | Promise<void>;
 };
 
@@ -30,13 +30,13 @@ type FieldStatus = 'default' | 'focus' | 'success' | 'error';
 const passwordHint = 'Минимум 8 символов, латиница, буквы и цифры';
 
 export default function UnifiedAuthModal({
-                                           initialView = 'login',
-                                           isLoading,
-                                           serverError,
-                                           onClose,
-                                           onClearError,
-                                           onSubmit
-                                         }: UnifiedAuthModalProps) {
+  initialView = 'login',
+  isLoading,
+  serverError,
+  onClose,
+  onClearError,
+  onSubmit,
+}: UnifiedAuthModalProps) {
   const titleId = useId();
   const [view, setView] = useState<'login' | 'register' | 'forgot'>(initialView);
 
@@ -112,10 +112,20 @@ export default function UnifiedAuthModal({
   const isSubmitEnabled = useMemo(() => {
     if (isLoading) return false;
     if (view === 'login') return email.length > 0 && password.length > 0;
-    if (view === 'register') return isEmailValid && isPasswordValid && passwordsMatch && acceptedTerms;
+    if (view === 'register')
+      return isEmailValid && isPasswordValid && passwordsMatch && acceptedTerms;
     if (view === 'forgot') return isEmailValid;
     return false;
-  }, [view, email, password, isEmailValid, isPasswordValid, passwordsMatch, acceptedTerms, isLoading]);
+  }, [
+    view,
+    email,
+    password,
+    isEmailValid,
+    isPasswordValid,
+    passwordsMatch,
+    acceptedTerms,
+    isLoading,
+  ]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -125,7 +135,7 @@ export default function UnifiedAuthModal({
       email: cleanEmail,
       password: view !== 'forgot' ? password : undefined,
       confirmPassword: view === 'register' ? confirmPassword : undefined,
-      acceptedTerms: view === 'register' ? acceptedTerms : undefined
+      acceptedTerms: view === 'register' ? acceptedTerms : undefined,
     });
   };
 
@@ -147,14 +157,17 @@ export default function UnifiedAuthModal({
   }, [view]);
 
   return (
-    <ModalOverlay
-      className={shellStyles.overlay}
-      onClose={onClose}
-      ariaLabelledBy={titleId}
-    >
+    <ModalOverlay className={shellStyles.overlay} onClose={onClose} ariaLabelledBy={titleId}>
       <motion.div
         className={shellStyles.modal}
-        style={{ height: '672px', overflow: 'hidden', padding: '0 130px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+        style={{
+          height: '672px',
+          overflow: 'hidden',
+          padding: '0 130px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
         initial={{ y: '100vh' }}
         animate={{ y: 0 }}
         exit={{ y: '100vh' }}
@@ -299,7 +312,11 @@ export default function UnifiedAuthModal({
                   <AuthCheckbox checked={acceptedTerms} onChange={setAcceptedTerms}>
                     <span>
                       Я соглашаюсь с{' '}
-                      <button type="button" className={formStyles.linkButtonInline} onClick={() => console.log('terms')}>
+                      <button
+                        type="button"
+                        className={formStyles.linkButtonInline}
+                        onClick={() => console.log('terms')}
+                      >
                         Условиями использования
                       </button>
                     </span>
@@ -317,7 +334,16 @@ export default function UnifiedAuthModal({
             disabled={!isSubmitEnabled || isLoading}
             style={{ position: 'relative', zIndex: 10 }}
           >
-            <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '48px' }}>
+            <div
+              style={{
+                position: 'relative',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '48px',
+              }}
+            >
               <AnimatePresence initial={false}>
                 {isLoading ? (
                   <motion.img
@@ -340,7 +366,11 @@ export default function UnifiedAuthModal({
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.15 }}
                   >
-                    {view === 'login' ? 'Войти' : view === 'register' ? 'Создать аккаунт' : 'Сбросить пароль'}
+                    {view === 'login'
+                      ? 'Войти'
+                      : view === 'register'
+                        ? 'Создать аккаунт'
+                        : 'Сбросить пароль'}
                   </motion.span>
                 )}
               </AnimatePresence>

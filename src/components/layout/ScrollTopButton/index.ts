@@ -1,1 +1,1 @@
-export {default} from './ScrollTopButton.tsx'
+export { default } from './ScrollTopButton.tsx';

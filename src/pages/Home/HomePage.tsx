@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
 import { useLocation, useNavigate, useSearchParams } from 'react-router';
 import { AnimatePresence, motion } from 'framer-motion';
-import Welcome from '@/pages/Home/Welcome'
-import Choice from '@/pages/Home/Choice'
-import Recommendations from '@/pages/Home/Recommendations'
-import Planning from '@/pages/Home/Planning'
-import PersonalSelection from '@/pages/Home/PersonalSelection'
-import Clients from '@/pages/Home/Clients'
-import PhotoBlock from '@/pages/Home/PhotoBlock'
-import ScrollTopButton from '@/components/layout/ScrollTopButton'
+import Welcome from '@/pages/Home/Welcome';
+import Choice from '@/pages/Home/Choice';
+import Recommendations from '@/pages/Home/Recommendations';
+import Planning from '@/pages/Home/Planning';
+import PersonalSelection from '@/pages/Home/PersonalSelection';
+import Clients from '@/pages/Home/Clients';
+import PhotoBlock from '@/pages/Home/PhotoBlock';
+import ScrollTopButton from '@/components/layout/ScrollTopButton';
 import VerificationErrorModal from '@/components/auth/VerificationErrorModal';
 import {
   PasswordEmailSentModal,
@@ -20,18 +20,31 @@ import {
   ResetPasswordModal,
   TestMenuModal,
   UnifiedAuthModal,
-  VerifyModal
+  VerifyModal,
 } from '@/components/auth';
-import {
-  loginRequest,
-  registerRequest,
-  forgotPasswordRequest
-} from '@/services/authService';
+import { loginRequest, registerRequest, forgotPasswordRequest } from '@/services/authService';
 
-type View = 'login' | 'register' | 'forgot' | 'password-email-sent' | 'registration-email-sent' | 'registration-success' | 'registration-error' | 'verify' | 'verification-error' | 'reset-password' | 'password-reset-success' | 'none';
+type View =
+  | 'login'
+  | 'register'
+  | 'forgot'
+  | 'password-email-sent'
+  | 'registration-email-sent'
+  | 'registration-success'
+  | 'registration-error'
+  | 'verify'
+  | 'verification-error'
+  | 'reset-password'
+  | 'password-reset-success'
+  | 'none';
 
 const t = { duration: 0.25, ease: 'easeInOut' } as const;
-const fade = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: t };
+const fade = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: t,
+};
 
 function viewFromParam(param: string | null): View | null {
   if (param === 'login' || param === 'register' || param === 'forgot') return param;
@@ -97,7 +110,7 @@ function HomePage() {
 
   const handleUnifiedSubmit = async (
     modalView: 'login' | 'register' | 'forgot',
-    data: { email: string; password?: string }
+    data: { email: string; password?: string },
   ) => {
     setServerError('');
     setIsLoading(true);
@@ -139,12 +152,7 @@ function HomePage() {
 
       <ScrollTopButton />
 
-      {showTestMenu && (
-        <TestMenuModal
-          onOpenView={handleTestOpenView}
-          onClose={closeTestMenu}
-        />
-      )}
+      {showTestMenu && <TestMenuModal onOpenView={handleTestOpenView} onClose={closeTestMenu} />}
 
       <AnimatePresence mode="wait">
         {showUnified && (
@@ -185,16 +193,19 @@ function HomePage() {
         )}
 
         {view === 'registration-success' && (
-          <RegistrationSuccessModal
-            onClose={closeAuth}
-            onHomeClick={closeAuth}
-          />
+          <RegistrationSuccessModal onClose={closeAuth} onHomeClick={closeAuth} />
         )}
 
         {view === 'registration-error' && (
           <RegistrationErrorModal
-            onClose={() => { setView('none'); navigate('/', { replace: true }); }}
-            onRetry={() => { setView('register'); navigate('/', { replace: true }); }}
+            onClose={() => {
+              setView('none');
+              navigate('/', { replace: true });
+            }}
+            onRetry={() => {
+              setView('register');
+              navigate('/', { replace: true });
+            }}
           />
         )}
 
@@ -224,15 +235,12 @@ function HomePage() {
 
         {view === 'password-reset-success' && (
           <motion.div key="password-reset-success" {...fade}>
-            <PasswordResetSuccessModal
-              onClose={closeAuth}
-              onGoToCabinet={closeAuth}
-            />
+            <PasswordResetSuccessModal onClose={closeAuth} onGoToCabinet={closeAuth} />
           </motion.div>
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }
 
-export default HomePage
+export default HomePage;

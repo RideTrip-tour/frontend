@@ -4,20 +4,14 @@ import { getAuthErrorMessage } from '../model/authErrorCodes';
 export function getAuthApiErrorMessage(error: unknown): string {
   const apiError = handleApiError(error);
 
-  if (
-    typeof apiError.data === 'object' &&
-    apiError.data !== null
-  ) {
+  if (typeof apiError.data === 'object' && apiError.data !== null) {
     const data = apiError.data as {
       detail?: unknown;
       message?: unknown;
       error?: unknown;
     };
 
-    const detail =
-      data.detail ??
-      data.message ??
-      data.error;
+    const detail = data.detail ?? data.message ?? data.error;
 
     const authMessage = getAuthErrorMessage(detail);
 

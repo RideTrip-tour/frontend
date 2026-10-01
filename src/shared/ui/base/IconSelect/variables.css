@@ -1,8 +1,7 @@
 :root {
-
 }
 
-body[data-theme="light"] {
+body[data-theme='light'] {
   --icon-select-trigger-bg: var(--color-white-30);
   --icon-select-label-color: var(--color-black);
   --icon-select-value-color: var(--color-gray-dark);
@@ -16,6 +15,5 @@ body[data-theme="light"] {
   --icon-select-bg: var(--color-light-gray-25);
 }
 
-body[data-theme="dark"] {
-
+body[data-theme='dark'] {
 }

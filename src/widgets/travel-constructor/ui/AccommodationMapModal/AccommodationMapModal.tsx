@@ -2,14 +2,10 @@ import { useState } from 'react';
 import Modal from '@/shared/ui/base/Modal';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
 import { SearchInput } from '@/shared/ui/base/SearchInput';
-import {
-  AlertIcon,
-  PlusIcon,
-  MinusIcon,
-} from '@/assets/icons/constructor';
+import { AlertIcon, PlusIcon, MinusIcon } from '@/assets/icons/constructor';
 import { MOCK_MAP_MARKERS } from '@/widgets/travel-constructor/mocks/mapMarkers';
 import styles from './AccommodationMapModal.module.scss';
-import { Button } from '@/shared/ui/base/Button'
+import { Button } from '@/shared/ui/base/Button';
 
 interface AccommodationMapModalProps {
   isOpen: boolean;
@@ -60,16 +56,17 @@ export function AccommodationMapModal({
             src="/assets/images/constructor/hotels-map-placeholder.jpg"
           />
 
-          {isMapAvailable && MOCK_MAP_MARKERS.map((marker, index) => (
-            <span
-              aria-hidden="true"
-              className={styles.marker}
-              key={`${marker.left}-${marker.top}`}
-              style={marker}
-            >
-              {index + 1}
-            </span>
-          ))}
+          {isMapAvailable &&
+            MOCK_MAP_MARKERS.map((marker, index) => (
+              <span
+                aria-hidden="true"
+                className={styles.marker}
+                key={`${marker.left}-${marker.top}`}
+                style={marker}
+              >
+                {index + 1}
+              </span>
+            ))}
 
           <div className={styles.zoomControls}>
             {/*TODO: Доработать компонент IconButton и использовать его для кнопок зума */}

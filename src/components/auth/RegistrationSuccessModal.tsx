@@ -9,7 +9,7 @@ type RegistrationSuccessModalProps = {
 
 export default function RegistrationSuccessModal({
   onClose,
-  onHomeClick
+  onHomeClick,
 }: RegistrationSuccessModalProps) {
   return (
     <AuthShell onClose={onClose} customStyle={{ padding: '122px 114px' }}>

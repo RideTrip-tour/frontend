@@ -1,6 +1,6 @@
 .footer {
   width: 100%;
-  background: var(--Background-1, #F7F9FC);
+  background: var(--Background-1, #f7f9fc);
   overflow: hidden;
   position: relative;
 
@@ -30,7 +30,7 @@
   }
 
   &__logo {
-    color: var(--Dark, #1A1A1A);
+    color: var(--Dark, #1a1a1a);
     font-family: Poppins, sans-serif;
     font-size: 32px;
     font-weight: 700;
@@ -50,9 +50,11 @@
     justify-content: center;
     width: 36px;
     height: 36px;
-    color: var(--Dark, #1A1A1A);
+    color: var(--Dark, #1a1a1a);
     text-decoration: none;
-    transition: color 200ms ease, transform 200ms ease;
+    transition:
+      color 200ms ease,
+      transform 200ms ease;
 
     svg {
       width: 36px;
@@ -60,7 +62,7 @@
     }
 
     &:hover {
-      color: var(--Blue, #0E68D4);
+      color: var(--Blue, #0e68d4);
       transform: translateY(-2px);
     }
   }
@@ -82,7 +84,7 @@
   }
 
   &__sectionTitle {
-    color: var(--Dark, #1A1A1A);
+    color: var(--Dark, #1a1a1a);
     font-family: Poppins, sans-serif;
     font-size: 18px;
     font-weight: 500;
@@ -92,7 +94,7 @@
 
   &__sectionLink {
     width: 196px;
-    color: var(--Dark-gray, #5F6C7B);
+    color: var(--Dark-gray, #5f6c7b);
     font-family: Poppins, sans-serif;
     font-size: 16px;
     font-weight: 500;
@@ -102,7 +104,7 @@
     transition: color 200ms ease;
 
     &:hover {
-      color: var(--Blue, #0E68D4);
+      color: var(--Blue, #0e68d4);
     }
   }
 
@@ -115,7 +117,7 @@
   }
 
   &__supportLabel {
-    color: var(--Dark-gray, #5F6C7B);
+    color: var(--Dark-gray, #5f6c7b);
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 16px;
     font-weight: 600;
@@ -124,7 +126,7 @@
   }
 
   &__supportEmail {
-    color: var(--Blue, #0E68D4);
+    color: var(--Blue, #0e68d4);
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 16px;
     font-weight: 600;
@@ -170,12 +172,12 @@
   }
 
   &__travelBack {
-    color: var(--Background-1, #F7F9FC);
+    color: var(--Background-1, #f7f9fc);
     text-shadow: 0 1px 0 rgba(14, 104, 212, 0.15);
   }
 
   &__travelFront {
-    color: rgba(14, 104, 212, 0.10);
+    color: rgba(14, 104, 212, 0.1);
     opacity: 0.4;
   }
 
@@ -183,7 +185,7 @@
     margin-top: 24px;
     height: 1px;
     background: transparent;
-    outline: 1px solid var(--Gray, #AFB6BD);
+    outline: 1px solid var(--Gray, #afb6bd);
     outline-offset: -0.5px;
     align-self: center;
     width: 1420px;
@@ -199,7 +201,7 @@
   }
 
   &__bottomItem {
-    color: var(--Dark, #1A1A1A);
+    color: var(--Dark, #1a1a1a);
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 14px;
     font-weight: 400;

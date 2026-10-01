@@ -1,9 +1,5 @@
 export type CartMessageType =
-  | 'save-success'
-  | 'save-empty'
-  | 'save-error'
-  | 'pdf-empty'
-  | 'pdf-service-error';
+  'save-success' | 'save-empty' | 'save-error' | 'pdf-empty' | 'pdf-service-error';
 
 export type CartModalType = 'reset-confirm' | 'save-unauthorized' | CartMessageType;
 

@@ -1,1 +1,1 @@
-export {default} from './AdvantageCard.tsx'
+export { default } from './AdvantageCard.tsx';

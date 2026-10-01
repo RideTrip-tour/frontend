@@ -1,11 +1,10 @@
-import style from './recommendations.module.scss'
-import ToggleText from '@/shared/ui/base/ToggleText/ToggleText'
-import ResortSlider from '@/shared/ui/compose/ResortSlider'
-import type {BigResortCardProps} from '@/shared/ui/compose/BigResortCard/BigResortCard.tsx'
-import BigResortCard from '@/shared/ui/compose/BigResortCard/BigResortCard.tsx'
+import style from './recommendations.module.scss';
+import ToggleText from '@/shared/ui/base/ToggleText/ToggleText';
+import ResortSlider from '@/shared/ui/compose/ResortSlider';
+import type { BigResortCardProps } from '@/shared/ui/compose/BigResortCard/BigResortCard.tsx';
+import BigResortCard from '@/shared/ui/compose/BigResortCard/BigResortCard.tsx';
 
 function Recommendations() {
-
   const cards: BigResortCardProps[] = [
     {
       image: '/assets/images/imageBG.png',
@@ -17,7 +16,7 @@ function Recommendations() {
       category: 'Трассовое катание',
       price: 45600,
       info: ['Аренда оборудования', 'Wi-Fi на территории', 'Детская зона'],
-      conditions: ['tracks', 'lift', 'snow', 'transfer']
+      conditions: ['tracks', 'lift', 'snow', 'transfer'],
     },
     {
       image: '/assets/images/imageBG.png',
@@ -28,7 +27,7 @@ function Recommendations() {
       category: 'Фрирайд',
       price: 52000,
       info: ['Прокат лыж', 'Spa-зона', 'Трансфер включён'],
-      conditions: ['lift', 'snow', 'transfer']
+      conditions: ['lift', 'snow', 'transfer'],
     },
     {
       image: '/assets/images/imageBG.png',
@@ -40,7 +39,7 @@ function Recommendations() {
       category: 'Экстремальное',
       price: 68000,
       info: ['Гид включён', 'Страховка', 'Питание'],
-      conditions: ['tracks', 'snow']
+      conditions: ['tracks', 'snow'],
     },
     {
       image: '/assets/images/imageBG.png',
@@ -51,7 +50,7 @@ function Recommendations() {
       category: 'Трассовое катание',
       price: 38000,
       info: ['Аренда оборудования', 'Детская зона'],
-      conditions: ['tracks', 'lift', 'transfer']
+      conditions: ['tracks', 'lift', 'transfer'],
     },
     {
       image: '/assets/images/imageBG.png',
@@ -62,7 +61,7 @@ function Recommendations() {
       category: 'Горные лыжи',
       price: 41500,
       info: ['Wi-Fi на территории', 'Прокат лыж', 'Ресторан'],
-      conditions: ['lift', 'snow', 'tracks']
+      conditions: ['lift', 'snow', 'tracks'],
     },
     {
       image: '/assets/images/imageBG.png',
@@ -74,7 +73,7 @@ function Recommendations() {
       category: 'Трассовое катание',
       price: 59900,
       info: ['Аренда оборудования', 'Spa-зона', 'Wi-Fi'],
-      conditions: ['tracks', 'lift', 'snow', 'transfer']
+      conditions: ['tracks', 'lift', 'snow', 'transfer'],
     },
     {
       image: '/assets/images/imageBG.png',
@@ -85,7 +84,7 @@ function Recommendations() {
       category: 'Семейное катание',
       price: 29000,
       info: ['Детская зона', 'Трансфер включён'],
-      conditions: ['tracks', 'transfer']
+      conditions: ['tracks', 'transfer'],
     },
     {
       image: '/assets/images/imageBG.png',
@@ -96,7 +95,7 @@ function Recommendations() {
       category: 'Горные лыжи',
       price: 31000,
       info: ['Аренда оборудования', 'Питание'],
-      conditions: ['lift', 'tracks']
+      conditions: ['lift', 'tracks'],
     },
     {
       image: '/assets/images/imageBG.png',
@@ -108,7 +107,7 @@ function Recommendations() {
       category: 'Фрирайд',
       price: 73000,
       info: ['Гид включён', 'Страховка', 'Wi-Fi'],
-      conditions: ['snow', 'tracks', 'transfer']
+      conditions: ['snow', 'tracks', 'transfer'],
     },
     {
       image: '/assets/images/imageBG.png',
@@ -119,25 +118,23 @@ function Recommendations() {
       category: 'Начинающим',
       price: 22000,
       info: ['Инструктор', 'Аренда оборудования'],
-      conditions: ['lift', 'tracks']
-    }
-  ]
+      conditions: ['lift', 'tracks'],
+    },
+  ];
 
   return (
     <>
       <div className={style.recommendations}>
-        <div className={style.recommendations__title}>
-          Итак, ваше путешествие
-        </div>
+        <div className={style.recommendations__title}>Итак, ваше путешествие</div>
         <div className={style.recommendations__text}>
           Если вы уже знаете чего хотите, мы покажем где можно это сделать.
         </div>
         <div className={style.recommendations__filters}>
-          <ToggleText name={'Все туры'} defaultOn width={230}/>
-          <ToggleText name={'Для первого раза'} width={230}/>
-          <ToggleText name={'Уверенно и быстро'} width={230}/>
-          <ToggleText name={'Экстрим и фрирайд'} width={230}/>
-          <ToggleText name={'Семейные курорты'} width={230}/>
+          <ToggleText name={'Все туры'} defaultOn width={230} />
+          <ToggleText name={'Для первого раза'} width={230} />
+          <ToggleText name={'Уверенно и быстро'} width={230} />
+          <ToggleText name={'Экстрим и фрирайд'} width={230} />
+          <ToggleText name={'Семейные курорты'} width={230} />
         </div>
         <div className={style.recommendations__slider}>
           <ResortSlider
@@ -148,8 +145,7 @@ function Recommendations() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Recommendations
-
+export default Recommendations;

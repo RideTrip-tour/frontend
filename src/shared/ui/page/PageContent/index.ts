@@ -1,1 +1,1 @@
-export {default} from './PageContent.tsx'
+export { default } from './PageContent.tsx';

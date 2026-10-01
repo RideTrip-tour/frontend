@@ -1,10 +1,10 @@
-import style from './textlink.module.scss'
-import './variables.css'
+import style from './textlink.module.scss';
+import './variables.css';
 
 interface TextLinkProps {
-  text: string
-  to: string
-  fontSize?: number
+  text: string;
+  to: string;
+  fontSize?: number;
 }
 
 const TextLink = ({ text, to, fontSize = 14 }: TextLinkProps) => {
@@ -18,7 +18,7 @@ const TextLink = ({ text, to, fontSize = 14 }: TextLinkProps) => {
     >
       {text}
     </a>
-  )
-}
+  );
+};
 
-export default TextLink
+export default TextLink;

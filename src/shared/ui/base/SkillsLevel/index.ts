@@ -1,1 +1,1 @@
-export {default} from './SkillsLevel.tsx'
+export { default } from './SkillsLevel.tsx';

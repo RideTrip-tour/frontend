@@ -1,1 +1,1 @@
-export {default} from './CalendarGrid.tsx'
+export { default } from './CalendarGrid.tsx';

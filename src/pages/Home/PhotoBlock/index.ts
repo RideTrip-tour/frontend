@@ -1,1 +1,1 @@
-export {default} from './PhotoBlock.tsx'
+export { default } from './PhotoBlock.tsx';

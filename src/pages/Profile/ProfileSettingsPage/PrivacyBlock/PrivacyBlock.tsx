@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import style from './privacyblock.module.scss'
-import PageSection from '@/shared/ui/page/PageSection'
-import SectionHeader from '@/shared/ui/base/SectionHeader'
-import Divider from '@/shared/ui/base/Divider'
-import CheckOption from '@/shared/ui/compose/CheckOption'
-import './variables.css'
+import { useState } from 'react';
+import style from './privacyblock.module.scss';
+import PageSection from '@/shared/ui/page/PageSection';
+import SectionHeader from '@/shared/ui/base/SectionHeader';
+import Divider from '@/shared/ui/base/Divider';
+import CheckOption from '@/shared/ui/compose/CheckOption';
+import './variables.css';
 
 const PROFILE_OPTIONS = [
   {
@@ -17,7 +17,7 @@ const PROFILE_OPTIONS = [
     title: 'Показывать имя в отзывах',
     description: 'Ваше имя будет видно рядом с отзывами которые вы оставляете',
   },
-]
+];
 
 const DATA_OPTIONS = [
   {
@@ -30,7 +30,7 @@ const DATA_OPTIONS = [
     title: 'Персональные рекомендации на основе профиля',
     description: 'Используем ваши предпочтения из профиля для подбора',
   },
-]
+];
 
 const GEO_OPTIONS = [
   {
@@ -38,17 +38,20 @@ const GEO_OPTIONS = [
     title: 'Использовать мой город для подбора туров',
     description: 'Автоматически подставляем ваш город отправления',
   },
-]
+];
 
 function PrivacyBlock() {
-  const [profileState, setProfileState] = useState<Record<string, boolean>>({})
-  const [dataState, setDataState] = useState<Record<string, boolean>>({})
-  const [geoState, setGeoState] = useState<Record<string, boolean>>({})
+  const [profileState, setProfileState] = useState<Record<string, boolean>>({});
+  const [dataState, setDataState] = useState<Record<string, boolean>>({});
+  const [geoState, setGeoState] = useState<Record<string, boolean>>({});
 
-  const handleChange = (
-    setter: (fn: (prev: Record<string, boolean>) => Record<string, boolean>) => void,
-    key: string,
-  ) => (value: boolean) => setter(prev => ({ ...prev, [key]: value }))
+  const handleChange =
+    (
+      setter: (fn: (prev: Record<string, boolean>) => Record<string, boolean>) => void,
+      key: string,
+    ) =>
+    (value: boolean) =>
+      setter((prev) => ({ ...prev, [key]: value }));
 
   return (
     <PageSection paddingVertical={32} paddingHorizontal={40}>
@@ -60,11 +63,9 @@ function PrivacyBlock() {
         />
         <Divider />
         <div className={style.privacyblock__group}>
-          <div className={style.privacyblock__groupTitle}>
-            Профиль
-          </div>
+          <div className={style.privacyblock__groupTitle}>Профиль</div>
           <div className={style.privacyblock__checks}>
-            {PROFILE_OPTIONS.map(option => (
+            {PROFILE_OPTIONS.map((option) => (
               <CheckOption
                 key={option.key}
                 checked={Boolean(profileState[option.key])}
@@ -77,11 +78,9 @@ function PrivacyBlock() {
         </div>
         <Divider />
         <div className={style.privacyblock__group}>
-          <div className={style.privacyblock__groupTitle}>
-            Данные и рекомендации
-          </div>
+          <div className={style.privacyblock__groupTitle}>Данные и рекомендации</div>
           <div className={`${style.privacyblock__checks} ${style['privacyblock__checks--medium']}`}>
-            {DATA_OPTIONS.map(option => (
+            {DATA_OPTIONS.map((option) => (
               <CheckOption
                 key={option.key}
                 checked={Boolean(dataState[option.key])}
@@ -94,11 +93,9 @@ function PrivacyBlock() {
         </div>
         <Divider />
         <div className={style.privacyblock__group}>
-          <div className={style.privacyblock__groupTitle}>
-            Геоданные
-          </div>
+          <div className={style.privacyblock__groupTitle}>Геоданные</div>
           <div className={style.privacyblock__checks}>
-            {GEO_OPTIONS.map(option => (
+            {GEO_OPTIONS.map((option) => (
               <CheckOption
                 key={option.key}
                 checked={Boolean(geoState[option.key])}
@@ -111,7 +108,7 @@ function PrivacyBlock() {
         </div>
       </div>
     </PageSection>
-  )
+  );
 }
 
-export default PrivacyBlock
+export default PrivacyBlock;

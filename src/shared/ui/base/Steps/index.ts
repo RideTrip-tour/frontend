@@ -1,1 +1,1 @@
-export {default} from './Steps.tsx'
+export { default } from './Steps.tsx';

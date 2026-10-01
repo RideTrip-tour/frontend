@@ -9,11 +9,7 @@ interface CartSummaryProps {
   onCheckout: () => void;
 }
 
-export function CartSummary({
-  totalPrice,
-  hasSelectedItems,
-  onCheckout,
-}: CartSummaryProps) {
+export function CartSummary({ totalPrice, hasSelectedItems, onCheckout }: CartSummaryProps) {
   return (
     <>
       <div className={styles.totalRow}>

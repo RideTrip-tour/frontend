@@ -1,49 +1,40 @@
-import { useState } from 'react'
-import './variables.css'
-import style from './triposetoggle.module.scss'
+import { useState } from 'react';
+import './variables.css';
+import style from './triposetoggle.module.scss';
 
-type TriState = 'default' | 'included' | 'excluded'
+type TriState = 'default' | 'included' | 'excluded';
 
 interface TriPoseToggleProps {
-  text: string
-  includedIcon: string
-  excludedIcon: string
-  onDefault?: () => void
-  onIncluded?: () => void
-  onExcluded?: () => void
+  text: string;
+  includedIcon: string;
+  excludedIcon: string;
+  onDefault?: () => void;
+  onIncluded?: () => void;
+  onExcluded?: () => void;
 }
 
 const TriPoseToggle = ({
-                         text,
-                         includedIcon,
-                         excludedIcon,
-                         onDefault,
-                         onIncluded,
-                         onExcluded
-                       }: TriPoseToggleProps) => {
-  const [state, setState] = useState<TriState>('default')
+  text,
+  includedIcon,
+  excludedIcon,
+  onDefault,
+  onIncluded,
+  onExcluded,
+}: TriPoseToggleProps) => {
+  const [state, setState] = useState<TriState>('default');
 
   const handleClick = () => {
     const nextState =
-      state === 'default'
-        ? 'included'
-        : state === 'included'
-          ? 'excluded'
-          : 'default'
+      state === 'default' ? 'included' : state === 'included' ? 'excluded' : 'default';
 
-    setState(nextState)
+    setState(nextState);
 
-    if (nextState === 'default') onDefault?.()
-    else if (nextState === 'included') onIncluded?.()
-    else onExcluded?.()
-  }
+    if (nextState === 'default') onDefault?.();
+    else if (nextState === 'included') onIncluded?.();
+    else onExcluded?.();
+  };
 
-  const iconSrc =
-    state === 'included'
-      ? includedIcon
-      : state === 'excluded'
-        ? excludedIcon
-        : null
+  const iconSrc = state === 'included' ? includedIcon : state === 'excluded' ? excludedIcon : null;
 
   return (
     <button
@@ -53,20 +44,12 @@ const TriPoseToggle = ({
       aria-pressed={state !== 'default'}
     >
       <div className={style.triposetoggle__content}>
-        <div className={style.triposetoggle__text}>
-          {text}
-        </div>
+        <div className={style.triposetoggle__text}>{text}</div>
 
-        {iconSrc && (
-          <img
-            src={iconSrc}
-            className={style.triposetoggle__icon}
-            alt=""
-          />
-        )}
+        {iconSrc && <img src={iconSrc} className={style.triposetoggle__icon} alt="" />}
       </div>
     </button>
-  )
-}
+  );
+};
 
-export default TriPoseToggle
+export default TriPoseToggle;

@@ -1,1 +1,1 @@
-export { default } from './BackLink.tsx'
+export { default } from './BackLink.tsx';

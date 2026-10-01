@@ -169,7 +169,8 @@
     line-height: var(--text-line-height-20);
     letter-spacing: 0.24px;
 
-    svg, img {
+    svg,
+    img {
       flex-shrink: 0;
       color: var(--card-condition-icon-color);
     }

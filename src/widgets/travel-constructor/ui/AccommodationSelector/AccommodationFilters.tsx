@@ -48,11 +48,14 @@ export function AccommodationFilters({
   return (
     <>
       <section className={styles.priceSection} aria-labelledby="price-title">
-        <h3 className={styles.filterTitle} id="price-title">Цена за ночь</h3>
+        <h3 className={styles.filterTitle} id="price-title">
+          Цена за ночь
+        </h3>
         <div className={styles.priceValues}>
           <span>{priceFormatter.format(minPrice)} ₽</span>
           <span>
-            {priceFormatter.format(maxPrice)}{maxPrice === MAX_PRICE ? '+' : ''} ₽
+            {priceFormatter.format(maxPrice)}
+            {maxPrice === MAX_PRICE ? '+' : ''} ₽
           </span>
         </div>
         <div className={styles.range}>

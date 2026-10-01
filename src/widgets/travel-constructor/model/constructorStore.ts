@@ -104,60 +104,55 @@ export const useConstructor = create<ConstructorStore>((set) => ({
   setAdditional: (additional) => set({ additional }),
   setActiveSelectorId: (activeSelectorId) => set({ activeSelectorId }),
 
-  clearTickets: () => set((state) => ({
-    fromCity: null,
-    fromCountry: null,
-    toCity: null,
-    toCountry: null,
-    departureDate: null,
-    returnDate: null,
-    activeSelectorId: isActiveSelector(state.activeSelectorId, ['from', 'to', 'when'])
-      ? null
-      : state.activeSelectorId,
-  })),
+  clearTickets: () =>
+    set((state) => ({
+      fromCity: null,
+      fromCountry: null,
+      toCity: null,
+      toCountry: null,
+      departureDate: null,
+      returnDate: null,
+      activeSelectorId: isActiveSelector(state.activeSelectorId, ['from', 'to', 'when'])
+        ? null
+        : state.activeSelectorId,
+    })),
 
-  clearActivities: () => set((state) => ({
-    activities: [],
-    liftTypes: [],
-    activeSelectorId: state.activeSelectorId === 'activity'
-      ? null
-      : state.activeSelectorId,
-  })),
+  clearActivities: () =>
+    set((state) => ({
+      activities: [],
+      liftTypes: [],
+      activeSelectorId: state.activeSelectorId === 'activity' ? null : state.activeSelectorId,
+    })),
 
-  clearAccommodation: () => set((state) => ({
-    accommodation: null,
-    activeSelectorId: state.activeSelectorId === 'hotel'
-      ? null
-      : state.activeSelectorId,
-  })),
+  clearAccommodation: () =>
+    set((state) => ({
+      accommodation: null,
+      activeSelectorId: state.activeSelectorId === 'hotel' ? null : state.activeSelectorId,
+    })),
 
-  clearTransfer: () => set((state) => ({
-    transfer: null,
-    activeSelectorId: state.activeSelectorId === 'transfer'
-      ? null
-      : state.activeSelectorId,
-  })),
+  clearTransfer: () =>
+    set((state) => ({
+      transfer: null,
+      activeSelectorId: state.activeSelectorId === 'transfer' ? null : state.activeSelectorId,
+    })),
 
-  clearPeople: () => set((state) => ({
-    people: null,
-    activeSelectorId: state.activeSelectorId === 'people'
-      ? null
-      : state.activeSelectorId,
-  })),
+  clearPeople: () =>
+    set((state) => ({
+      people: null,
+      activeSelectorId: state.activeSelectorId === 'people' ? null : state.activeSelectorId,
+    })),
 
-  clearLevel: () => set((state) => ({
-    level: null,
-    activeSelectorId: state.activeSelectorId === 'level'
-      ? null
-      : state.activeSelectorId,
-  })),
+  clearLevel: () =>
+    set((state) => ({
+      level: null,
+      activeSelectorId: state.activeSelectorId === 'level' ? null : state.activeSelectorId,
+    })),
 
-  clearAdditional: () => set((state) => ({
-    additional: [],
-    activeSelectorId: state.activeSelectorId === 'additional'
-      ? null
-      : state.activeSelectorId,
-  })),
+  clearAdditional: () =>
+    set((state) => ({
+      additional: [],
+      activeSelectorId: state.activeSelectorId === 'additional' ? null : state.activeSelectorId,
+    })),
 
   resetConstructor: () => set(createInitialState()),
 }));

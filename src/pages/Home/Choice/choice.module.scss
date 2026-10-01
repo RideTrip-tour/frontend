@@ -17,7 +17,7 @@
 
   &__title {
     text-align: center;
-    color: var(--Dark, #1A1A1A);
+    color: var(--Dark, #1a1a1a);
     font-family: 'Poppins', sans-serif;
     font-size: 40px;
     font-weight: 500;
@@ -27,7 +27,7 @@
   &__subtitle {
     max-width: 648px;
     text-align: center;
-    color: var(--Dark-gray, #5F6C7B);
+    color: var(--Dark-gray, #5f6c7b);
     font-family: 'Poppins', sans-serif;
     font-size: 18px;
     font-weight: 500;
@@ -58,7 +58,9 @@
     height: 696px;
     object-fit: cover;
     border-radius: 40px;
-    box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.30);
+    box-shadow:
+      0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+      0px 1px 2px rgba(0, 0, 0, 0.3);
     flex-shrink: 0;
   }
 }

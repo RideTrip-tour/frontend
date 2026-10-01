@@ -28,8 +28,6 @@
       transform: rotate(-45deg);
     }
   }
-
-
 }
 
 .iconbutton--primary {
@@ -46,7 +44,7 @@
     cursor: not-allowed;
     transform: none !important;
     background-color: var(--color-gray-dark);
-    --btn-icon: var(--color-disabled-primary)
+    --btn-icon: var(--color-disabled-primary);
   }
 }
 
@@ -64,7 +62,7 @@
     cursor: not-allowed;
     transform: none !important;
     background-color: var(--color-gray-dark);
-    --btn-icon: var(--color-disabled-primary)
+    --btn-icon: var(--color-disabled-primary);
   }
 }
 
@@ -82,6 +80,6 @@
     cursor: not-allowed;
     transform: none !important;
     background: transparent;
-    --btn-icon: var(--color-gray-dark)
+    --btn-icon: var(--color-gray-dark);
   }
 }

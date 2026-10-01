@@ -4,7 +4,7 @@ export const AUTH_ERROR_MESSAGES: Record<string, string> = {
   RESET_PASSWORD_BAD_TOKEN: 'Ошибка сброса пароля',
   VERIFY_USER_BAD_TOKEN: 'Неверный токен верификации',
   UPDATE_USER_INVALID_PASSWORD: 'Неправильно задан пароль',
-  UPDATE_USER_EMAIL_ALREADY_EXISTS: 'Email уже зарегистрирован'
+  UPDATE_USER_EMAIL_ALREADY_EXISTS: 'Email уже зарегистрирован',
 };
 
 export function getAuthErrorMessage(detail: unknown): string | null {
@@ -16,7 +16,7 @@ export function getAuthErrorMessage(detail: unknown): string | null {
 
   if (typeof detail === 'object' && detail !== null) {
     const code = (detail as Record<string, unknown>).code;
-    
+
     if (typeof code === 'string') {
       return AUTH_ERROR_MESSAGES[code] ?? null;
     }

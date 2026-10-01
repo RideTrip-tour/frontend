@@ -17,19 +17,19 @@
 
 .showMoreButton {
   padding: 12px 16px;
-  background: #FFFFFF;
-  border: 2px solid #AFB6BD;
+  background: #ffffff;
+  border: 2px solid #afb6bd;
   border-radius: 16px;
-  color: #5F6C7B;
+  color: #5f6c7b;
   font-family: var(--text-font-family-2);
   font-size: 16px;
   font-weight: 500;
   line-height: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
-  
+
   &:hover {
     background: rgba(14, 104, 212, 0.05);
-    border-color: #5F6C7B;
+    border-color: #5f6c7b;
   }
 }

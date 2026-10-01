@@ -1,11 +1,11 @@
-import style from './daycell.module.scss'
-import './variables.css'
-import type { DayCellFlags } from '@/shared/ui/compose/DateRangePicker/types.ts'
+import style from './daycell.module.scss';
+import './variables.css';
+import type { DayCellFlags } from '@/shared/ui/compose/DateRangePicker/types.ts';
 
 interface DayCellProps {
-  date: Date
-  flags: DayCellFlags
-  onClick: (date: Date) => void
+  date: Date;
+  flags: DayCellFlags;
+  onClick: (date: Date) => void;
 }
 
 function DayCell({ date, flags, onClick }: DayCellProps) {
@@ -18,7 +18,7 @@ function DayCell({ date, flags, onClick }: DayCellProps) {
     isRangeEnd,
     isInRange,
     isDimmed,
-  } = flags
+  } = flags;
 
   const className = [
     style.daycell,
@@ -32,7 +32,7 @@ function DayCell({ date, flags, onClick }: DayCellProps) {
     isDimmed && style.dimmed,
   ]
     .filter(Boolean)
-    .join(' ')
+    .join(' ');
 
   return (
     <button
@@ -44,7 +44,7 @@ function DayCell({ date, flags, onClick }: DayCellProps) {
     >
       {date.getDate()}
     </button>
-  )
+  );
 }
 
-export default DayCell
+export default DayCell;

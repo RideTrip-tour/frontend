@@ -1,1 +1,1 @@
-export {default} from './ScrollSlider.tsx'
+export { default } from './ScrollSlider.tsx';

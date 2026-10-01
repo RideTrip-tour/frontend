@@ -22,8 +22,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "24"
-          cache: "npm"
+          node-version: '24'
+          cache: 'npm'
           cache-dependency-path: package-lock.json
 
       - name: Install dependencies
@@ -31,7 +31,7 @@ jobs:
 
       - name: Lint
         run: npm run lint
-      
+
       - name: Check formatting
         run: npm run format:check
 
@@ -109,7 +109,7 @@ jobs:
             --detach=false \
             --image "$IMAGE_REF" \
             "$SWARM_SERVICE"
-      
+
       - name: Healthcheck ${{ env.SERVICE_NAME }}
         run: |
           set -euo pipefail

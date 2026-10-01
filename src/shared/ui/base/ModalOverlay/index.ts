@@ -1,1 +1,1 @@
-export { default } from './ModalOverlay'
+export { default } from './ModalOverlay';

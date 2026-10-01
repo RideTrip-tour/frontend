@@ -1,11 +1,11 @@
-import style from './checkbox.module.scss'
-import './variables.css'
+import style from './checkbox.module.scss';
+import './variables.css';
 
 interface CheckboxProps {
-  checked: boolean
-  disabled?: boolean
-  onChange?: (value: boolean) => void
-  'aria-label'?: string
+  checked: boolean;
+  disabled?: boolean;
+  onChange?: (value: boolean) => void;
+  'aria-label'?: string;
 }
 
 const Checkbox = ({
@@ -22,7 +22,7 @@ const Checkbox = ({
         checked={checked}
         disabled={disabled}
         aria-label={ariaLabel}
-        onChange={event => onChange?.(event.currentTarget.checked)}
+        onChange={(event) => onChange?.(event.currentTarget.checked)}
       />
       <span className={style.checkbox__box} aria-hidden="true">
         {checked && (
@@ -45,7 +45,7 @@ const Checkbox = ({
         )}
       </span>
     </label>
-  )
-}
+  );
+};
 
-export default Checkbox
+export default Checkbox;

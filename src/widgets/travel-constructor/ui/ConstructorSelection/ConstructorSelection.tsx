@@ -1,11 +1,7 @@
-import type { ReactNode } from "react";
-import clsx from "clsx";
+import type { ReactNode } from 'react';
+import clsx from 'clsx';
 import styles from './ConstructorSelection.module.scss';
-import {
-  PlusIcon,
-  CheckmarkIcon,
-  ArrowUpIcon,
-} from '@/assets/icons/constructor';
+import { PlusIcon, CheckmarkIcon, ArrowUpIcon } from '@/assets/icons/constructor';
 
 interface ConstructorSelectionProps {
   icon: ReactNode;
@@ -32,18 +28,18 @@ export function ConstructorSelection({
 
   const status = isOpen
     ? {
-        text: "Свернуть",
-        color: "#0E68D4",
+        text: 'Свернуть',
+        color: '#0E68D4',
         Icon: ArrowUpIcon,
       }
     : completed
       ? {
-          text: "Готово",
-          color: "#3CB371",
+          text: 'Готово',
+          color: '#3CB371',
           Icon: CheckmarkIcon,
         }
       : {
-          text: "Добавить",
+          text: 'Добавить',
           color: undefined,
           Icon: PlusIcon,
         };
@@ -57,21 +53,12 @@ export function ConstructorSelection({
       })}
       style={status.color ? { borderColor: status.color } : undefined}
     >
-      <button
-        type="button"
-        className={styles.cardToggle}
-        onClick={onToggle}
-        aria-expanded={isOpen}
-      >
+      <button type="button" className={styles.cardToggle} onClick={onToggle} aria-expanded={isOpen}>
         <div className={styles.header}>
           <div className={styles.main}>
             <div
               className={styles.iconWrapper}
-              style={
-                status.color
-                  ? { backgroundColor: `${status.color}1A` }
-                  : undefined
-              }
+              style={status.color ? { backgroundColor: `${status.color}1A` } : undefined}
             >
               <div
                 className={styles.icon}
@@ -84,23 +71,16 @@ export function ConstructorSelection({
             <div className={styles.info}>
               <h2
                 className={styles.title}
-                style={
-                  isOpen && status.color ? { color: status.color } : undefined
-                }
+                style={isOpen && status.color ? { color: status.color } : undefined}
               >
                 {title}
               </h2>
 
-              <p className={styles.description}>
-                {value ?? description}
-              </p>
+              <p className={styles.description}>{value ?? description}</p>
             </div>
           </div>
 
-          <div
-            className={styles.status}
-            style={status.color ? { color: status.color } : undefined}
-          >
+          <div className={styles.status} style={status.color ? { color: status.color } : undefined}>
             <span>{status.text}</span>
             <span className={styles.statusIcon} aria-hidden="true">
               <StatusIcon />
@@ -109,11 +89,7 @@ export function ConstructorSelection({
         </div>
       </button>
 
-      {isOpen && (
-        <div className={styles.content}>
-          {children}
-        </div>
-      )}
+      {isOpen && <div className={styles.content}>{children}</div>}
     </div>
   );
 }

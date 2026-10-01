@@ -1,21 +1,16 @@
-import {lazy, Suspense} from 'react'
-import {Routes, Route} from 'react-router'
-import PaddedLayout from '@/components/layout/PaddedLayout'
+import { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router';
+import PaddedLayout from '@/components/layout/PaddedLayout';
 
-const HomePage = lazy(() => import("@/pages/Home"));
-const ProfilePage = lazy(() => import("@/pages/Profile"));
-const ProfileSettingsPage = lazy(() =>
-  import("@/pages/Profile/ProfileSettingsPage")
-);
-const LoginPage = lazy(() =>
-  import('@/pages/LoginPage').then((m) => ({default: m.LoginPage}))
-)
+const HomePage = lazy(() => import('@/pages/Home'));
+const ProfilePage = lazy(() => import('@/pages/Profile'));
+const ProfileSettingsPage = lazy(() => import('@/pages/Profile/ProfileSettingsPage'));
+const LoginPage = lazy(() => import('@/pages/LoginPage').then((m) => ({ default: m.LoginPage })));
 const RegisterPage = lazy(() =>
-  import('@/pages/RegisterPage').then((m) => ({default: m.RegisterPage}))
+  import('@/pages/RegisterPage').then((m) => ({ default: m.RegisterPage })),
 );
-const TripBuilderPage = lazy(() => import("@/pages/trip-builder"));
+const TripBuilderPage = lazy(() => import('@/pages/trip-builder'));
 const RegistrationVerifyPage = lazy(() => import('@/pages/RegistrationVerifyPage'));
-
 
 export function AppRouter() {
   return (

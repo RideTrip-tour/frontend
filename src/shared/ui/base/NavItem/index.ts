@@ -1,1 +1,1 @@
-export {default} from './NavItem.tsx'
+export { default } from './NavItem.tsx';

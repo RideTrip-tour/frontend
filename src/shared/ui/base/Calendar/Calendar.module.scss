@@ -112,11 +112,7 @@
 
 .rangeStart {
   border-radius: 20px 0 0 20px;
-  background: linear-gradient(
-    to right,
-    transparent 50%,
-    rgba(14, 104, 212, 0.12) 50%
-  );
+  background: linear-gradient(to right, transparent 50%, rgba(14, 104, 212, 0.12) 50%);
 
   &::after {
     content: '';
@@ -132,11 +128,7 @@
 
 .rangeEnd {
   border-radius: 0 20px 20px 0;
-  background: linear-gradient(
-    to left,
-    transparent 50%,
-    rgba(14, 104, 212, 0.12) 50%
-  );
+  background: linear-gradient(to left, transparent 50%, rgba(14, 104, 212, 0.12) 50%);
 
   &::before {
     content: '';

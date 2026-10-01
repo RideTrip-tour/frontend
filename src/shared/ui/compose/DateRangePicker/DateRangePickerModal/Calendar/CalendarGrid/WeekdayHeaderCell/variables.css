@@ -3,10 +3,8 @@
   --weekday-weekend-text: #ef4444;
 }
 
-body[data-theme="light"] {
-
+body[data-theme='light'] {
 }
 
-body[data-theme="dark"] {
-
+body[data-theme='dark'] {
 }

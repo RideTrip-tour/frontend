@@ -28,10 +28,7 @@ import {
   ShieldIcon,
 } from '@/assets/icons/constructor';
 import { LocationSelector } from './LocationSelector';
-import {
-  TravelConstructorSections,
-  type ConstructorItem,
-} from './TravelConstructorSections';
+import { TravelConstructorSections, type ConstructorItem } from './TravelConstructorSections';
 
 export function TravelConstructor() {
   const {
@@ -110,9 +107,9 @@ export function TravelConstructor() {
       }));
 
       if (
-        activeSelectorId === 'people'
-        || activeSelectorId === 'level'
-        || activeSelectorId === 'additional'
+        activeSelectorId === 'people' ||
+        activeSelectorId === 'level' ||
+        activeSelectorId === 'additional'
       ) {
         setActiveSelectorId(null);
       }
@@ -238,12 +235,7 @@ export function TravelConstructor() {
       title: 'Кто едет?',
       description: 'Состав поездки',
       value: displayPeople,
-      children: (
-        <GuestSelector
-          onChange={setPeople}
-          value={people}
-        />
-      ),
+      children: <GuestSelector onChange={setPeople} value={people} />,
     },
     {
       id: 'level',
@@ -251,12 +243,7 @@ export function TravelConstructor() {
       title: 'Уровень катания',
       description: 'Например "Новичок"',
       value: displayLevel,
-      children: (
-        <SkiLevelSelector
-          onChange={setLevel}
-          value={level}
-        />
-      ),
+      children: <SkiLevelSelector onChange={setLevel} value={level} />,
     },
     {
       id: 'additional',
@@ -264,29 +251,16 @@ export function TravelConstructor() {
       title: 'Дополнительные возможности',
       description: 'Особые условия',
       value: displayAdditional,
-      children: (
-        <AdditionalOptionsSelector
-          onChange={setAdditional}
-          selectedOptions={additional}
-        />
-      ),
+      children: <AdditionalOptionsSelector onChange={setAdditional} selectedOptions={additional} />,
     },
   ];
 
   return (
     <section className={style.travelConstructor}>
       <div className={style.selectionList}>
-        <TravelConstructorSections
-          items={mainItems}
-          onToggle={toggleItem}
-          openItems={openItems}
-        />
+        <TravelConstructorSections items={mainItems} onToggle={toggleItem} openItems={openItems} />
 
-        <button
-          className={style.showMoreButton}
-          onClick={toggleAdditionalItems}
-          type="button"
-        >
+        <button className={style.showMoreButton} onClick={toggleAdditionalItems} type="button">
           {showAdditional ? 'Скрыть дополнительные услуги' : 'Дополнительные услуги +'}
         </button>
 

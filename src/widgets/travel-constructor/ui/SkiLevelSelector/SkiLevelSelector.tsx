@@ -1,8 +1,5 @@
 import type { SkiLevel } from '@/widgets/travel-constructor/model/types';
-import {
-  SKI_LEVELS,
-  SKI_LEVEL_HINTS,
-} from '@/widgets/travel-constructor/config/skiLevels';
+import { SKI_LEVELS, SKI_LEVEL_HINTS } from '@/widgets/travel-constructor/config/skiLevels';
 import styles from './SkiLevelSelector.module.scss';
 
 interface SkiLevelSelectorProps {
@@ -10,10 +7,7 @@ interface SkiLevelSelectorProps {
   onChange: (level: SkiLevel) => void;
 }
 
-export function SkiLevelSelector({
-  value,
-  onChange,
-}: SkiLevelSelectorProps) {
+export function SkiLevelSelector({ value, onChange }: SkiLevelSelectorProps) {
   return (
     <div className={styles.selector}>
       <fieldset className={styles.levels}>
@@ -41,11 +35,9 @@ export function SkiLevelSelector({
               <ul>
                 {SKI_LEVEL_HINTS[levelOption].bullets.map((line, lineIndex) => (
                   <li key={`${levelOption}-${lineIndex}`}>
-                    {line.map((part) => (
-                      part.emphasis
-                        ? <strong key={part.text}>{part.text}</strong>
-                        : part.text
-                    ))}
+                    {line.map((part) =>
+                      part.emphasis ? <strong key={part.text}>{part.text}</strong> : part.text,
+                    )}
                   </li>
                 ))}
               </ul>

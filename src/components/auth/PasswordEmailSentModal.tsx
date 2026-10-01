@@ -21,7 +21,7 @@ export default function PasswordEmailSentModal({
   serverError,
   onClose,
   setIsLoading,
-  setServerError
+  setServerError,
 }: PasswordEmailSentModalProps) {
   const [cooldown, setCooldown] = useState(60);
 
@@ -72,8 +72,17 @@ export default function PasswordEmailSentModal({
           </div>
         )}
 
-        <button type="button" className={styles.linkButton} onClick={handleResend} disabled={disabled}>
-          {isLoading ? 'Отправка...' : cooldown > 0 ? `Отправить ещё раз (${cooldown}с)` : 'Отправить ещё раз'}
+        <button
+          type="button"
+          className={styles.linkButton}
+          onClick={handleResend}
+          disabled={disabled}
+        >
+          {isLoading
+            ? 'Отправка...'
+            : cooldown > 0
+              ? `Отправить ещё раз (${cooldown}с)`
+              : 'Отправить ещё раз'}
         </button>
       </div>
     </AuthShell>

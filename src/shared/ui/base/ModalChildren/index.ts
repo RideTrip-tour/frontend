@@ -1,1 +1,1 @@
-export {default} from './ModalChildren.tsx'
+export { default } from './ModalChildren.tsx';

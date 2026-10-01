@@ -8,8 +8,8 @@ export default defineConfig({
   optimizeDeps: { include: ['@iconify/react'] },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src')
-    }
+      '@': path.resolve(__dirname, 'src'),
+    },
   },
   server: {
     host: '127.0.0.1',
@@ -17,7 +17,7 @@ export default defineConfig({
       '/api': {
         target: 'https://trip.elmobil.ru',
         changeOrigin: true,
-      }
-    }
-  }
+      },
+    },
+  },
 });

@@ -39,11 +39,11 @@ Vite proxy используется при локальной разработк
 
 Конфигурация находится в `orval.config.js`.
 
-| Проект Orval | Путь схемы относительно `SWAGGER_API_URL` | Результат генерации |
-| --- | --- | --- |
-| `auth` | `/api/auth/openapi.json` | `src/shared/api/generated/auth/auth.ts` |
-| `locations` | `/api/locations/openapi.json` | `src/shared/api/generated/locations/locations.ts` |
-| `profile` | `/api/profile/openapi.json` | `src/shared/api/generated/profile/profile.ts` |
+| Проект Orval | Путь схемы относительно `SWAGGER_API_URL` | Результат генерации                               |
+| ------------ | ----------------------------------------- | ------------------------------------------------- |
+| `auth`       | `/api/auth/openapi.json`                  | `src/shared/api/generated/auth/auth.ts`           |
+| `locations`  | `/api/locations/openapi.json`             | `src/shared/api/generated/locations/locations.ts` |
+| `profile`    | `/api/profile/openapi.json`               | `src/shared/api/generated/profile/profile.ts`     |
 
 По умолчанию конфигурация загружает `.env.development`. Если задан `NODE_ENV`, она выбирает `.env.<NODE_ENV>`. `SWAGGER_API_URL` также можно передать через окружение процесса.
 

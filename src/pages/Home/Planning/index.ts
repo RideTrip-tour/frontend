@@ -1,1 +1,1 @@
-export {default} from './Planning.tsx'
+export { default } from './Planning.tsx';

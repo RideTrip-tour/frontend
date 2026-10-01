@@ -1,5 +1,5 @@
-import { apiClient } from "@/shared/api/client";
-import { handleApiError } from "@/shared/api/errors";
+import { apiClient } from '@/shared/api/client';
+import { handleApiError } from '@/shared/api/errors';
 
 export type ProfileData = {
   first_name: string;
@@ -24,7 +24,7 @@ export type Profile = ProfileData & {
 
 export async function healthCheck() {
   try {
-    const res = await apiClient.get<string>("/profile/health");
+    const res = await apiClient.get<string>('/profile/health');
     return res.data;
   } catch (e) {
     throw handleApiError(e);
@@ -33,7 +33,7 @@ export async function healthCheck() {
 
 export async function createProfileRequest(data: ProfileData) {
   try {
-    const res = await apiClient.post<Profile>("/profile/", data);
+    const res = await apiClient.post<Profile>('/profile/', data);
     return res.data;
   } catch (e) {
     throw handleApiError(e);
@@ -42,7 +42,7 @@ export async function createProfileRequest(data: ProfileData) {
 
 export async function getMyProfileRequest() {
   try {
-    const res = await apiClient.get<Profile>("/profile/me");
+    const res = await apiClient.get<Profile>('/profile/me');
     return res.data;
   } catch (e) {
     throw handleApiError(e);
@@ -51,7 +51,7 @@ export async function getMyProfileRequest() {
 
 export async function updateMyProfileRequest(data: ProfileData) {
   try {
-    const res = await apiClient.patch<Profile>("/profile/me", data);
+    const res = await apiClient.patch<Profile>('/profile/me', data);
     return res.data;
   } catch (e) {
     throw handleApiError(e);
@@ -60,7 +60,7 @@ export async function updateMyProfileRequest(data: ProfileData) {
 
 export async function deleteMyProfileRequest() {
   try {
-    await apiClient.delete("/profile/me");
+    await apiClient.delete('/profile/me');
   } catch (e) {
     throw handleApiError(e);
   }

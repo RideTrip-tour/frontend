@@ -1,7 +1,4 @@
-import type {
-  AdditionalOption,
-  SkiLevel,
-} from '@/widgets/travel-constructor/model/types';
+import type { AdditionalOption, SkiLevel } from '@/widgets/travel-constructor/model/types';
 
 export const MOCK_TICKET_PRICE = 12_200;
 

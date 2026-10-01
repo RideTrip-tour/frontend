@@ -6,20 +6,20 @@
 
 ## Команды
 
-| Команда | Назначение |
-| --- | --- |
-| `npm run dev` | Запуск сервера разработки Vite. |
-| `npm run build` | Проверка TypeScript и production-сборка в `dist`. |
-| `npm run preview` | Локальный просмотр уже собранного `dist`. |
-| `npm run lint` | Проверка ESLint. |
-| `npm run lint:fix` | Запуск ESLint с автоматическим исправлением поддерживаемых замечаний. |
-| `npm run typecheck` | Проверка TypeScript командой `tsc -b`. |
-| `npm run check:no-direct-urls` | Проверка прямых URL в исходниках согласно правилам проекта. |
-| `npm run check` | Последовательный запуск ESLint, TypeScript и проверки URL. |
-| `npm run api:generate` | Генерация всех API-клиентов Orval. |
-| `npm run api:auth` | Генерация auth-клиента. |
-| `npm run api:locations` | Генерация locations-клиента. |
-| `npm run api:profile` | Генерация profile-клиента. |
+| Команда                        | Назначение                                                            |
+| ------------------------------ | --------------------------------------------------------------------- |
+| `npm run dev`                  | Запуск сервера разработки Vite.                                       |
+| `npm run build`                | Проверка TypeScript и production-сборка в `dist`.                     |
+| `npm run preview`              | Локальный просмотр уже собранного `dist`.                             |
+| `npm run lint`                 | Проверка ESLint.                                                      |
+| `npm run lint:fix`             | Запуск ESLint с автоматическим исправлением поддерживаемых замечаний. |
+| `npm run typecheck`            | Проверка TypeScript командой `tsc -b`.                                |
+| `npm run check:no-direct-urls` | Проверка прямых URL в исходниках согласно правилам проекта.           |
+| `npm run check`                | Последовательный запуск ESLint, TypeScript и проверки URL.            |
+| `npm run api:generate`         | Генерация всех API-клиентов Orval.                                    |
+| `npm run api:auth`             | Генерация auth-клиента.                                               |
+| `npm run api:locations`        | Генерация locations-клиента.                                          |
+| `npm run api:profile`          | Генерация profile-клиента.                                            |
 
 `preview` требует предварительной сборки и предназначен для локальной проверки. На сервере статические файлы приложения обслуживает Nginx.
 
@@ -27,24 +27,24 @@
 
 Проект использует слои Feature-Sliced Design и существующие каталоги компонентов, сервисов и хранилищ.
 
-| Путь | Назначение |
-| --- | --- |
-| `src/pages` | Страницы приложения. |
-| `src/widgets` | Крупные блоки интерфейса, включая конструктор путешествия. |
-| `src/features` | Логика отдельных возможностей, включая перевод ошибок авторизации. |
-| `src/entities` | Модели и компоненты предметных сущностей. |
-| `src/components` | Существующие компоненты интерфейса и модальные окна. |
-| `src/services` | Функции работы с API для компонентов и хранилищ. |
-| `src/store` | Zustand-хранилища. |
-| `src/hooks` | Общие существующие хуки приложения. |
-| `src/shared/api` | HTTP-клиент, нормализация ошибок, события сессии и API-адаптеры. |
-| `src/shared/api/generated` | Сгенерированные Orval-клиенты и типы. |
-| `src/shared/ui` | Переиспользуемые UI-компоненты. |
-| `src/shared/notifications` | Контекст уведомлений и шина глобальных сообщений. |
-| `src/shared/errors` | Error Boundary для ошибок React. |
-| `public` | Статические ресурсы. |
-| `scripts` | Вспомогательные проверки проекта. |
-| `.github/workflows` | Настройки CI/CD. |
+| Путь                       | Назначение                                                         |
+| -------------------------- | ------------------------------------------------------------------ |
+| `src/pages`                | Страницы приложения.                                               |
+| `src/widgets`              | Крупные блоки интерфейса, включая конструктор путешествия.         |
+| `src/features`             | Логика отдельных возможностей, включая перевод ошибок авторизации. |
+| `src/entities`             | Модели и компоненты предметных сущностей.                          |
+| `src/components`           | Существующие компоненты интерфейса и модальные окна.               |
+| `src/services`             | Функции работы с API для компонентов и хранилищ.                   |
+| `src/store`                | Zustand-хранилища.                                                 |
+| `src/hooks`                | Общие существующие хуки приложения.                                |
+| `src/shared/api`           | HTTP-клиент, нормализация ошибок, события сессии и API-адаптеры.   |
+| `src/shared/api/generated` | Сгенерированные Orval-клиенты и типы.                              |
+| `src/shared/ui`            | Переиспользуемые UI-компоненты.                                    |
+| `src/shared/notifications` | Контекст уведомлений и шина глобальных сообщений.                  |
+| `src/shared/errors`        | Error Boundary для ошибок React.                                   |
+| `public`                   | Статические ресурсы.                                               |
+| `scripts`                  | Вспомогательные проверки проекта.                                  |
+| `.github/workflows`        | Настройки CI/CD.                                                   |
 
 Alias `@/` указывает на `src/`. В TypeScript он задан через `paths`, в Vite — через `resolve.alias`.
 
@@ -56,11 +56,11 @@ Alias `@/` указывает на `src/`. В TypeScript он задан чер�
 
 Toast-система использует Context API. `NotificationProvider` подключён в `src/main.tsx`, хранит список уведомлений и передаёт их в `ToastContainer`.
 
-| Файл | Назначение |
-| --- | --- |
-| `src/shared/notifications/NotificationContext.tsx` | Контекст и провайдер уведомлений. |
-| `src/shared/notifications/ToastContainer.tsx` | Отображение списка toast-сообщений. |
-| `src/shared/notifications/notifyBus.ts` | Связь провайдера с кодом вне React через `notifyGlobal`. |
+| Файл                                               | Назначение                                               |
+| -------------------------------------------------- | -------------------------------------------------------- |
+| `src/shared/notifications/NotificationContext.tsx` | Контекст и провайдер уведомлений.                        |
+| `src/shared/notifications/ToastContainer.tsx`      | Отображение списка toast-сообщений.                      |
+| `src/shared/notifications/notifyBus.ts`            | Связь провайдера с кодом вне React через `notifyGlobal`. |
 
 Поддерживаются уведомления типов `success`, `error` и `info`.
 

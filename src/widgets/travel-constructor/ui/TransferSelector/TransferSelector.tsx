@@ -28,9 +28,7 @@ export function TransferSelector({
   onComplete,
   isTransferAvailable = true,
 }: TransferSelectorProps) {
-  const [attemptedType, setAttemptedType] = useState<TransferType | null>(
-    value?.type ?? null,
-  );
+  const [attemptedType, setAttemptedType] = useState<TransferType | null>(value?.type ?? null);
   const [showUnavailableError, setShowUnavailableError] = useState(false);
 
   const completeSelection = (selection: TransferSelection) => {

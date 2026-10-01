@@ -1,13 +1,11 @@
-import style from './choice.module.scss'
-import AdvantageCard from '@/shared/ui/base/AdvantageCard'
+import style from './choice.module.scss';
+import AdvantageCard from '@/shared/ui/base/AdvantageCard';
 
 function Choice() {
   return (
     <div className={style.choice}>
       <div className={style.choice__header}>
-        <div className={style.choice__title}>
-          Собраться легко
-        </div>
+        <div className={style.choice__title}>Собраться легко</div>
         <div className={style.choice__subtitle}>
           Проверим цены, покажем отели, расскажем что делать с трансфером
         </div>
@@ -32,11 +30,7 @@ function Choice() {
           />
         </div>
 
-        <img
-          src="/assets/images/imageBG.png"
-          className={style.choice__photo}
-          alt=""
-        />
+        <img src="/assets/images/imageBG.png" className={style.choice__photo} alt="" />
 
         <div className={style.choice__col}>
           <AdvantageCard
@@ -57,7 +51,7 @@ function Choice() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Choice
+export default Choice;

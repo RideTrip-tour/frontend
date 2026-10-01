@@ -1,1 +1,1 @@
-export {default} from './BigResortCard.tsx'
+export { default } from './BigResortCard.tsx';

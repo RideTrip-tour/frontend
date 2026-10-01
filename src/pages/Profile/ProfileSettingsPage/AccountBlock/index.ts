@@ -1,1 +1,1 @@
-export { default } from './AccountBlock.tsx'
+export { default } from './AccountBlock.tsx';

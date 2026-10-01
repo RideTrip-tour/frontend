@@ -1,1 +1,1 @@
-export {default} from './PaginationSlider.tsx'
+export { default } from './PaginationSlider.tsx';

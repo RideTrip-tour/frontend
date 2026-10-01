@@ -1,1 +1,1 @@
-export {default} from './DayCell.tsx'
+export { default } from './DayCell.tsx';

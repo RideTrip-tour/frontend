@@ -1,66 +1,66 @@
-import { useState } from 'react'
-import style from './toursfinder.module.scss'
-import './variables.css'
-import Select from '@/shared/ui/base/Select'
-import Input from '@/shared/ui/base/Input'
-import {Icon} from '@iconify/react'
+import { useState } from 'react';
+import style from './toursfinder.module.scss';
+import './variables.css';
+import Select from '@/shared/ui/base/Select';
+import Input from '@/shared/ui/base/Input';
+import { Icon } from '@iconify/react';
 
 const activityOptions = [
   { value: 'snowboard', label: 'Сноуборд' },
   { value: 'ski', label: 'Лыжи' },
-  { value: 'hiking', label: 'Походы' }
-]
+  { value: 'hiking', label: 'Походы' },
+];
 
 const budgetOptions = [
   { value: '10000', label: '10.000 ₽' },
   { value: '20000', label: '20.000 ₽' },
-  { value: '50000', label: '50.000 ₽' }
-]
+  { value: '50000', label: '50.000 ₽' },
+];
 
 const levelOptions = [
   { value: 'novice', label: 'Новичок' },
   { value: 'intermediate', label: 'Средний' },
-  { value: 'advanced', label: 'Продвинутый' }
-]
+  { value: 'advanced', label: 'Продвинутый' },
+];
 
 const styleOptions = [
   { value: 'relax', label: 'Отдых' },
-  { value: 'adventure', label: 'Приключения' }
-]
+  { value: 'adventure', label: 'Приключения' },
+];
 
 const durationOptions = [
   { value: '3-5', label: '3-5 дней' },
-  { value: '6-10', label: '6-10 дней' }
-]
+  { value: '6-10', label: '6-10 дней' },
+];
 
 const transportOptions = [
   { value: 'plane', label: 'Самолет' },
   { value: 'train', label: 'Поезд' },
   { value: 'bus', label: 'Автобус' },
-  { value: 'car', label: 'Личный транспорт' }
-]
+  { value: 'car', label: 'Личный транспорт' },
+];
 
 export const ToursFinder = () => {
-  const [destination, setDestination] = useState('')
-  const [activity, setActivity] = useState('')
-  const [budget, setBudget] = useState('')
-  const [level, setLevel] = useState('')
-  const [styleTour, setStyleTour] = useState('')
-  const [duration, setDuration] = useState('')
-  const [transport, setTransport] = useState('')
+  const [destination, setDestination] = useState('');
+  const [activity, setActivity] = useState('');
+  const [budget, setBudget] = useState('');
+  const [level, setLevel] = useState('');
+  const [styleTour, setStyleTour] = useState('');
+  const [duration, setDuration] = useState('');
+  const [transport, setTransport] = useState('');
 
-  const [openSelect, setOpenSelect] = useState<string | null>(null)
+  const [openSelect, setOpenSelect] = useState<string | null>(null);
 
   const handleSearch = () => {
-    alert('Ищем тур...')
-  }
+    alert('Ищем тур...');
+  };
 
   return (
     <div className={style.toursFinder}>
       <div className={style.input}>
         <div className={style.groupTitle}>Направление</div>
         <Input
-          placeholder='Укажите место назначения, например “Сочи”'
+          placeholder="Укажите место назначения, например “Сочи”"
           value={destination}
           onChange={setDestination}
           onSubmit={setDestination}
@@ -74,11 +74,9 @@ export const ToursFinder = () => {
             options={styleOptions}
             value={styleTour}
             onChange={setStyleTour}
-            placeholder='Выберите стиль'
+            placeholder="Выберите стиль"
             isOpen={openSelect === 'style'}
-            onToggle={() =>
-              setOpenSelect(openSelect === 'style' ? null : 'style')
-            }
+            onToggle={() => setOpenSelect(openSelect === 'style' ? null : 'style')}
           />
         </div>
 
@@ -88,11 +86,9 @@ export const ToursFinder = () => {
             options={durationOptions}
             value={duration}
             onChange={setDuration}
-            placeholder='Длительность поездки'
+            placeholder="Длительность поездки"
             isOpen={openSelect === 'duration'}
-            onToggle={() =>
-              setOpenSelect(openSelect === 'duration' ? null : 'duration')
-            }
+            onToggle={() => setOpenSelect(openSelect === 'duration' ? null : 'duration')}
           />
         </div>
 
@@ -102,11 +98,9 @@ export const ToursFinder = () => {
             options={activityOptions}
             value={activity}
             onChange={setActivity}
-            placeholder='Выберите активность'
+            placeholder="Выберите активность"
             isOpen={openSelect === 'activity'}
-            onToggle={() =>
-              setOpenSelect(openSelect === 'activity' ? null : 'activity')
-            }
+            onToggle={() => setOpenSelect(openSelect === 'activity' ? null : 'activity')}
           />
         </div>
 
@@ -116,11 +110,9 @@ export const ToursFinder = () => {
             options={budgetOptions}
             value={budget}
             onChange={setBudget}
-            placeholder='Запланируйте бюджет'
+            placeholder="Запланируйте бюджет"
             isOpen={openSelect === 'budget'}
-            onToggle={() =>
-              setOpenSelect(openSelect === 'budget' ? null : 'budget')
-            }
+            onToggle={() => setOpenSelect(openSelect === 'budget' ? null : 'budget')}
           />
         </div>
 
@@ -130,11 +122,9 @@ export const ToursFinder = () => {
             options={levelOptions}
             value={level}
             onChange={setLevel}
-            placeholder='Ваш уровень'
+            placeholder="Ваш уровень"
             isOpen={openSelect === 'level'}
-            onToggle={() =>
-              setOpenSelect(openSelect === 'level' ? null : 'level')
-            }
+            onToggle={() => setOpenSelect(openSelect === 'level' ? null : 'level')}
           />
         </div>
 
@@ -144,29 +134,21 @@ export const ToursFinder = () => {
             options={transportOptions}
             value={transport}
             onChange={setTransport}
-            placeholder='Например, “Самолет”'
+            placeholder="Например, “Самолет”"
             isOpen={openSelect === 'transport'}
-            onToggle={() =>
-              setOpenSelect(openSelect === 'transport' ? null : 'transport')
-            }
+            onToggle={() => setOpenSelect(openSelect === 'transport' ? null : 'transport')}
           />
         </div>
       </div>
 
       <div className={style.toursFinder__button}>
-        <button
-          type="button"
-          className={style.toursFinder__button__btn}
-          onClick={handleSearch}
-        >
+        <button type="button" className={style.toursFinder__button__btn} onClick={handleSearch}>
           <span>Найти мой идеальный тур</span>
-          <Icon icon="material-symbols:arrow-forward-rounded"
-                width={28}
-          />
+          <Icon icon="material-symbols:arrow-forward-rounded" width={28} />
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ToursFinder
+export default ToursFinder;

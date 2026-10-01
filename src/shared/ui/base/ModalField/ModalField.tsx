@@ -1,27 +1,27 @@
-import style from './modalfield.module.scss'
-import { useEffect, useId, useRef, useState } from 'react'
-import { Icon } from '@iconify/react'
+import style from './modalfield.module.scss';
+import { useEffect, useId, useRef, useState } from 'react';
+import { Icon } from '@iconify/react';
 
-export type ModalFieldStatus = 'default' | 'focus' | 'success' | 'error'
+export type ModalFieldStatus = 'default' | 'focus' | 'success' | 'error';
 
 interface ModalFieldProps {
-  id?: string
-  name?: string
-  type?: 'text' | 'email' | 'password' | 'tel'
-  label: string
-  value: string
-  placeholder?: string
-  status?: ModalFieldStatus
-  hint?: string
-  hintTone?: 'default' | 'success' | 'error'
-  showToggle?: boolean
-  isPasswordVisible?: boolean
-  autoComplete?: string
-  onToggleVisibility?: () => void
-  onChange: (value: string) => void
-  onFocus?: () => void
-  onBlur?: () => void
-  isLast: boolean
+  id?: string;
+  name?: string;
+  type?: 'text' | 'email' | 'password' | 'tel';
+  label: string;
+  value: string;
+  placeholder?: string;
+  status?: ModalFieldStatus;
+  hint?: string;
+  hintTone?: 'default' | 'success' | 'error';
+  showToggle?: boolean;
+  isPasswordVisible?: boolean;
+  autoComplete?: string;
+  onToggleVisibility?: () => void;
+  onChange: (value: string) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  isLast: boolean;
 }
 
 const ModalField = ({
@@ -41,30 +41,30 @@ const ModalField = ({
   onChange,
   onFocus,
   onBlur,
-  isLast
+  isLast,
 }: ModalFieldProps) => {
-  const inputRef = useRef<HTMLInputElement>(null)
-  const [autofillActive, setAutofillActive] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [autofillActive, setAutofillActive] = useState(false);
 
-  const generatedId = useId()
-  const inputId = id ?? generatedId
-  const inputType = type === 'password' ? (isPasswordVisible ? 'text' : 'password') : type
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
+  const inputType = type === 'password' ? (isPasswordVisible ? 'text' : 'password') : type;
 
-  const isFloating = value.length > 0 || status === 'focus' || autofillActive
+  const isFloating = value.length > 0 || status === 'focus' || autofillActive;
 
   useEffect(() => {
-    const input = inputRef.current
-    if (!input) return
+    const input = inputRef.current;
+    if (!input) return;
 
     const handleInput = () => {
-      const nv = input.value
-      if (nv) setAutofillActive(false)
-      if (nv !== value) onChange(nv)
-    }
+      const nv = input.value;
+      if (nv) setAutofillActive(false);
+      if (nv !== value) onChange(nv);
+    };
 
-    input.addEventListener('input', handleInput)
-    return () => input.removeEventListener('input', handleInput)
-  }, [value, onChange])
+    input.addEventListener('input', handleInput);
+    return () => input.removeEventListener('input', handleInput);
+  }, [value, onChange]);
 
   return (
     <div className={`${style.fieldGroup} ${isLast ? style.lastFieldGroup : ''}`}>
@@ -89,12 +89,12 @@ const ModalField = ({
           placeholder={isFloating ? '' : placeholder}
           onAnimationStart={(e) => {
             if (e.animationName.includes('autofill')) {
-              setAutofillActive(true)
+              setAutofillActive(true);
             }
           }}
           onChange={(e) => {
-            setAutofillActive(false)
-            onChange(e.target.value)
+            setAutofillActive(false);
+            onChange(e.target.value);
           }}
           onFocus={onFocus}
           onBlur={onBlur}
@@ -128,18 +128,14 @@ const ModalField = ({
       {hint && (
         <p
           className={`${style.hint} ${style.visible} ${
-            hintTone === 'error'
-              ? style.hintError
-              : hintTone === 'success'
-                ? style.hintSuccess
-                : ''
+            hintTone === 'error' ? style.hintError : hintTone === 'success' ? style.hintSuccess : ''
           }`}
         >
           {hint}
         </p>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ModalField
+export default ModalField;

@@ -1,1 +1,1 @@
-export { default } from './DeleteAccountModal.tsx'
+export { default } from './DeleteAccountModal.tsx';

@@ -22,7 +22,9 @@ export function CartActions({ actions, children }: Readonly<CartActionsProps>) {
           onClick={action.onClick}
           type="button"
         >
-          <span aria-hidden="true" className={styles.actionIcon}>{action.icon}</span>
+          <span aria-hidden="true" className={styles.actionIcon}>
+            {action.icon}
+          </span>
           <span>{action.label}</span>
         </button>
       ))}

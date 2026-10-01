@@ -12,7 +12,7 @@ export function ProfileTestForm() {
     country: 'Russia',
     city: 'Moscow',
     citizenship: 'Russian',
-    currency: 'RUB'
+    currency: 'RUB',
   });
   const [response, setResponse] = useState<unknown>(null);
   const [error, setError] = useState<unknown>(null);
@@ -38,25 +38,50 @@ export function ProfileTestForm() {
   };
 
   return (
-    <div style={{ background: '#fff', padding: '10px', borderRadius: '8px', border: '1px solid #ccc', color: '#000' }}>
-        <h3 style={{ margin: '0 0 10px 0' }}>Profile Test</h3>
-        <textarea 
-            value={JSON.stringify(data, null, 2)} 
-            onChange={(e) => {
-                try {
-                    setData(JSON.parse(e.target.value));
-                } catch {
-                    console.error('Invalid JSON');
-                }
-            }}
-            style={{ width: '100%', height: '150px', fontSize: '12px' }}
-        />
-        <div style={{ display: 'flex', gap: '5px', marginTop: '10px' }}>
-            <button onClick={handlePost}>POST</button>
-            <button onClick={handleGet}>GET me</button>
-        </div>
-        {response !== null && response !== undefined && <pre style={{ fontSize: '10px', background: '#eee', marginTop: '10px', padding: '5px', maxHeight: '100px', overflow: 'auto' }}>{JSON.stringify(response, null, 2)}</pre>}
-        {error !== null && error !== undefined && <pre style={{ fontSize: '10px', color: 'red', marginTop: '10px', padding: '5px' }}>{JSON.stringify(error, null, 2)}</pre>}
+    <div
+      style={{
+        background: '#fff',
+        padding: '10px',
+        borderRadius: '8px',
+        border: '1px solid #ccc',
+        color: '#000',
+      }}
+    >
+      <h3 style={{ margin: '0 0 10px 0' }}>Profile Test</h3>
+      <textarea
+        value={JSON.stringify(data, null, 2)}
+        onChange={(e) => {
+          try {
+            setData(JSON.parse(e.target.value));
+          } catch {
+            console.error('Invalid JSON');
+          }
+        }}
+        style={{ width: '100%', height: '150px', fontSize: '12px' }}
+      />
+      <div style={{ display: 'flex', gap: '5px', marginTop: '10px' }}>
+        <button onClick={handlePost}>POST</button>
+        <button onClick={handleGet}>GET me</button>
+      </div>
+      {response !== null && response !== undefined && (
+        <pre
+          style={{
+            fontSize: '10px',
+            background: '#eee',
+            marginTop: '10px',
+            padding: '5px',
+            maxHeight: '100px',
+            overflow: 'auto',
+          }}
+        >
+          {JSON.stringify(response, null, 2)}
+        </pre>
+      )}
+      {error !== null && error !== undefined && (
+        <pre style={{ fontSize: '10px', color: 'red', marginTop: '10px', padding: '5px' }}>
+          {JSON.stringify(error, null, 2)}
+        </pre>
+      )}
     </div>
   );
 }

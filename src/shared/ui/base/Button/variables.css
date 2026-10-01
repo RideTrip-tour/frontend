@@ -6,7 +6,7 @@
   --color-icon-bg-plain: transparent;
 }
 
-body[data-theme="light"] {
+body[data-theme='light'] {
   --color-button-primary-static: var(--color-white);
   --color-button-primary-hover: var(--color-blue);
   --color-button-primary-active: var(--color-blue-dark-2);
@@ -17,7 +17,6 @@ body[data-theme="light"] {
   --color-icon-bg-primary-hover: var(--color-blue);
   --color-icon-primary-static: var(--color-white);
   --color-icon-primary-hover: var(--color-white);
-
 
   --color-button-secondary-static: var(--color-blue);
   --color-button-secondary-hover: var(--color-blue);
@@ -31,6 +30,5 @@ body[data-theme="light"] {
   --color-icon-secondary-hover: var(--color-white);
 }
 
-body[data-theme="dark"] {
-
+body[data-theme='dark'] {
 }

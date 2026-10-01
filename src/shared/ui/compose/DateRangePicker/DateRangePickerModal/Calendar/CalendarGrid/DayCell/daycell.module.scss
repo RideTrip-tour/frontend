@@ -16,7 +16,9 @@
   color: var(--daycell-text);
 
   cursor: pointer;
-  transition: background 0.12s, opacity 0.15s;
+  transition:
+    background 0.12s,
+    opacity 0.15s;
 }
 
 .selected {

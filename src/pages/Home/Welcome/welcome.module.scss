@@ -1,7 +1,7 @@
 .welcome {
   width: 100%;
   height: 1080px;
-  background-image: url("/assets/images/pages/home/block-background.png");
+  background-image: url('/assets/images/pages/home/block-background.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -20,7 +20,7 @@
 
     &_medium {
       text-align: center;
-      color: var(--Background-1, #F7F9FC);
+      color: var(--Background-1, #f7f9fc);
       font-family: 'Poppins', sans-serif;
       font-size: 32px;
       font-weight: var(--font-medium);
@@ -36,7 +36,7 @@
       text-transform: uppercase;
       line-height: 252px;
       color: transparent;
-      -webkit-text-stroke: 2px #F7F9FC;
+      -webkit-text-stroke: 2px #f7f9fc;
       margin-bottom: 252px;
     }
   }

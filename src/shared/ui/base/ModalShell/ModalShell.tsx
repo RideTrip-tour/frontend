@@ -1,23 +1,18 @@
-import style from './modalshell.module.scss'
-import { motion, AnimatePresence } from 'framer-motion'
+import style from './modalshell.module.scss';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useId, type ReactNode } from 'react';
-import CloseIcon from '@/assets/icons/close.svg'
-import ModalOverlay from '@/shared/ui/base/ModalOverlay'
+import CloseIcon from '@/assets/icons/close.svg';
+import ModalOverlay from '@/shared/ui/base/ModalOverlay';
 
 interface ModalShellProps {
-  isOpen: boolean
-  title?: string
-  onClose: () => void
-  children: ReactNode
+  isOpen: boolean;
+  title?: string;
+  onClose: () => void;
+  children: ReactNode;
 }
 
-const ModalShell = ({
-  isOpen,
-  title,
-  onClose,
-  children
-}: ModalShellProps) => {
-  const titleId = useId()
+const ModalShell = ({ isOpen, title, onClose, children }: ModalShellProps) => {
+  const titleId = useId();
 
   return (
     <AnimatePresence>
@@ -40,14 +35,18 @@ const ModalShell = ({
               <img src={CloseIcon} alt="Закрыть" />
             </button>
 
-            {title && <h2 id={titleId} className={style.title}>{title}</h2>}
+            {title && (
+              <h2 id={titleId} className={style.title}>
+                {title}
+              </h2>
+            )}
 
             {children}
           </motion.div>
         </ModalOverlay>
       )}
     </AnimatePresence>
-  )
-}
+  );
+};
 
-export default ModalShell
+export default ModalShell;

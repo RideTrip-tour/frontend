@@ -1,7 +1,4 @@
-export function formatSelectionSummary(
-  values: string[],
-  visibleCount = 2,
-): string | undefined {
+export function formatSelectionSummary(values: string[], visibleCount = 2): string | undefined {
   if (values.length === 0) {
     return undefined;
   }

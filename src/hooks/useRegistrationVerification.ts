@@ -33,7 +33,9 @@ export function useRegistrationVerification(token: string, onComplete: () => voi
       },
     );
 
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, [token, attempt, onComplete]);
 
   const retry = () => {

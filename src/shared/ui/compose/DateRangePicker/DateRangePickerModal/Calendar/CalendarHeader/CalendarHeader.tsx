@@ -1,41 +1,43 @@
-import style from './calendarheader.module.scss'
-import './variables.css'
+import style from './calendarheader.module.scss';
+import './variables.css';
 
-import { MONTH_LABELS_RU } from '@/shared/ui/compose/DateRangePicker/constants.ts'
+import { MONTH_LABELS_RU } from '@/shared/ui/compose/DateRangePicker/constants.ts';
 
 interface CalendarHeaderProps {
-  displayYear: number
-  displayMonth: number
-  isPrevMonthDisabled: boolean
-  isNextMonthDisabled: boolean
-  onPrevMonth: () => void
-  onNextMonth: () => void
-  onOpenDrumPicker: () => void
+  displayYear: number;
+  displayMonth: number;
+  isPrevMonthDisabled: boolean;
+  isNextMonthDisabled: boolean;
+  onPrevMonth: () => void;
+  onNextMonth: () => void;
+  onOpenDrumPicker: () => void;
 }
 
 function CalendarHeader({
-                                 displayYear,
-                                 displayMonth,
-                                 isPrevMonthDisabled,
-                                 isNextMonthDisabled,
-                                 onPrevMonth,
-                                 onNextMonth,
-                                 onOpenDrumPicker,
-                               }: CalendarHeaderProps) {
-
+  displayYear,
+  displayMonth,
+  isPrevMonthDisabled,
+  isNextMonthDisabled,
+  onPrevMonth,
+  onNextMonth,
+  onOpenDrumPicker,
+}: CalendarHeaderProps) {
   const prevBtnClass = [
     style.calendarheader__navButton,
-    isPrevMonthDisabled && style['calendarheader__navButton--disabled']
-  ].filter(Boolean).join(' ')
+    isPrevMonthDisabled && style['calendarheader__navButton--disabled'],
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   const nextBtnClass = [
     style.calendarheader__navButton,
-    isNextMonthDisabled && style['calendarheader__navButton--disabled']
-  ].filter(Boolean).join(' ')
+    isNextMonthDisabled && style['calendarheader__navButton--disabled'],
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <div className={style.calendarheader}>
-
       <button
         className={prevBtnClass}
         onClick={onPrevMonth}
@@ -56,7 +58,7 @@ function CalendarHeader({
         </button>
 
         <div className={style.calendarheader__arrows}>
-          {(["▲", "▼"] as const).map((arrow) => (
+          {(['▲', '▼'] as const).map((arrow) => (
             <button
               key={arrow}
               onClick={onOpenDrumPicker}
@@ -77,9 +79,8 @@ function CalendarHeader({
       >
         ›
       </button>
-
     </div>
-  )
+  );
 }
 
-export default CalendarHeader
+export default CalendarHeader;

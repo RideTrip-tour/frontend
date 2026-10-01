@@ -1,1 +1,1 @@
-export {default} from './PhotoID.tsx'
+export { default } from './PhotoID.tsx';

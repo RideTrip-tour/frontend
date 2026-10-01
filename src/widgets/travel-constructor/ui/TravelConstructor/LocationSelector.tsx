@@ -32,9 +32,7 @@ export function LocationSelector({
       return cities;
     }
 
-    return cities.filter((city) => (
-      city.name.toLocaleLowerCase('ru-RU').includes(normalizedQuery)
-    ));
+    return cities.filter((city) => city.name.toLocaleLowerCase('ru-RU').includes(normalizedQuery));
   }, [cities, normalizedQuery]);
 
   const filteredCountries = useMemo(() => {
@@ -42,9 +40,9 @@ export function LocationSelector({
       return countries;
     }
 
-    return countries.filter((country) => (
-      country.name.toLocaleLowerCase('ru-RU').includes(normalizedQuery)
-    ));
+    return countries.filter((country) =>
+      country.name.toLocaleLowerCase('ru-RU').includes(normalizedQuery),
+    );
   }, [countries, normalizedQuery]);
 
   const hasResults = filteredCities.length > 0 || filteredCountries.length > 0;
@@ -73,14 +71,8 @@ export function LocationSelector({
 
       {hasResults ? (
         <>
-          <CitySelector
-            cities={filteredCities}
-            onSelect={completeCitySelection}
-          />
-          <CountrySelector
-            countries={filteredCountries}
-            onSelect={completeCountrySelection}
-          />
+          <CitySelector cities={filteredCities} onSelect={completeCitySelection} />
+          <CountrySelector countries={filteredCountries} onSelect={completeCountrySelection} />
         </>
       ) : (
         <EmptyState
