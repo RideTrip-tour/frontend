@@ -65,5 +65,7 @@ export default defineConfig([
     rules: {
       'no-restricted-imports': 'off'
     }
-  }
+  },
+  
+  eslintConfigPrettier
 ]);
