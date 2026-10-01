@@ -15,12 +15,12 @@
 | `npm run lint:fix`             | Запуск ESLint с автоматическим исправлением поддерживаемых замечаний. |
 | `npm run lint:fsd`             | Отдельная проверка архитектуры FSD через Steiger.                     |
 | `npm run lint:fsd:watch`       | Проверка FSD с повторным запуском при изменении исходников.           |
-| `npm run format`              | Форматирование файлов через Prettier.                                |
-| `npm run format:check`        | Проверка форматирования без изменения файлов.                        |
-| `npm run fix`                 | Последовательный запуск `lint:fix` и `format`.                        |
+| `npm run format`               | Форматирование файлов через Prettier.                                 |
+| `npm run format:check`         | Проверка форматирования без изменения файлов.                         |
+| `npm run fix`                  | Последовательный запуск `lint:fix` и `format`.                        |
 | `npm run typecheck`            | Проверка TypeScript командой `tsc -b`.                                |
 | `npm run check:no-direct-urls` | Проверка прямых URL в исходниках согласно правилам проекта.           |
-| `npm run check`                | Последовательный запуск ESLint, Prettier, TypeScript и проверки URL.   |
+| `npm run check`                | Последовательный запуск ESLint, Prettier, TypeScript и проверки URL.  |
 | `npm run api:generate`         | Генерация всех API-клиентов Orval.                                    |
 | `npm run api:auth`             | Генерация auth-клиента.                                               |
 | `npm run api:locations`        | Генерация locations-клиента.                                          |
@@ -32,27 +32,27 @@
 
 ## Форматирование и качество кода
 
-| Инструмент | Ответственность | Конфигурация |
-| ---------- | --------------- | ------------ |
-| Prettier | Форматирование кода и документации. | `.prettierrc`, `.prettierignore` |
-| ESLint | Статический анализ, правила React/TypeScript и ограничения импортов. | `eslint.config.js` |
-| Perfectionist | Сортировка импортов в файлах TypeScript и TSX через ESLint. | `perfectionist/sort-imports` в `eslint.config.js` |
-| Steiger | Проверка структуры и зависимостей по правилам FSD. | `steiger.config.js` |
-| TypeScript | Проверка типов. | `tsconfig.json`, `tsconfig.app.json`, `tsconfig.node.json` |
+| Инструмент    | Ответственность                                                      | Конфигурация                                               |
+| ------------- | -------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Prettier      | Форматирование кода и документации.                                  | `.prettierrc`, `.prettierignore`                           |
+| ESLint        | Статический анализ, правила React/TypeScript и ограничения импортов. | `eslint.config.js`                                         |
+| Perfectionist | Сортировка импортов в файлах TypeScript и TSX через ESLint.          | `perfectionist/sort-imports` в `eslint.config.js`          |
+| Steiger       | Проверка структуры и зависимостей по правилам FSD.                   | `steiger.config.js`                                        |
+| TypeScript    | Проверка типов.                                                      | `tsconfig.json`, `tsconfig.app.json`, `tsconfig.node.json` |
 
 ### Prettier
 
 Настройки `.prettierrc`:
 
-| Настройка | Значение | Результат |
-| --------- | -------- | --------- |
-| `singleQuote` | `true` | Одинарные кавычки там, где это поддерживает форматтер. |
-| `semi` | `true` | Точки с запятой в JavaScript и TypeScript. |
-| `trailingComma` | `"all"` | Завершающие запятые во всех поддерживаемых многострочных конструкциях. |
-| `printWidth` | `100` | Предпочтительная ширина строки; это не строгий предел длины. |
-| `tabWidth` | `2` | Отступ в два пробела. |
-| `useTabs` | `false` | Пробелы вместо табуляции. |
-| `endOfLine` | `"lf"` | Окончания строк LF. |
+| Настройка       | Значение | Результат                                                              |
+| --------------- | -------- | ---------------------------------------------------------------------- |
+| `singleQuote`   | `true`   | Одинарные кавычки там, где это поддерживает форматтер.                 |
+| `semi`          | `true`   | Точки с запятой в JavaScript и TypeScript.                             |
+| `trailingComma` | `"all"`  | Завершающие запятые во всех поддерживаемых многострочных конструкциях. |
+| `printWidth`    | `100`    | Предпочтительная ширина строки; это не строгий предел длины.           |
+| `tabWidth`      | `2`      | Отступ в два пробела.                                                  |
+| `useTabs`       | `false`  | Пробелы вместо табуляции.                                              |
+| `endOfLine`     | `"lf"`   | Окончания строк LF.                                                    |
 
 `npm run format` форматирует поддерживаемые файлы проекта, включая Markdown, JSON и стили. `npm run format:check` только проверяет их и возвращает ошибку, если требуется форматирование.
 

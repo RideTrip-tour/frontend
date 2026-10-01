@@ -13,7 +13,7 @@ export default defineConfig([
   {
     files: ['**/*.{ts,tsx}'],
     plugins: {
-      perfectionist
+      perfectionist,
     },
     extends: [
       js.configs.recommended,
@@ -40,12 +40,7 @@ export default defineConfig([
           internalPattern: ['^@/.+'],
 
           groups: [
-            [
-              'value-builtin',
-              'value-external',
-              'type-builtin',
-              'type-external'
-            ],
+            ['value-builtin', 'value-external', 'type-builtin', 'type-external'],
 
             ['value-internal', 'type-internal'],
 
@@ -55,7 +50,7 @@ export default defineConfig([
               'type-index',
               'value-parent',
               'value-sibling',
-              'value-index'
+              'value-index',
             ],
 
             'side-effect',
@@ -64,9 +59,9 @@ export default defineConfig([
 
             'side-effect-style',
 
-            'unknown'
-          ]
-        }
+            'unknown',
+          ],
+        },
       ],
       /**
        * HTTP-запросы выполняются в services и shared/api.
