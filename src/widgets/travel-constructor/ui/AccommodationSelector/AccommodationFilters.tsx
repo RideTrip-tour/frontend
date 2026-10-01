@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+
 import {
   EXPANDED_FILTER_GROUPS,
   LOCATION_FILTERS,
@@ -9,7 +10,9 @@ import {
   type RatingFilter,
 } from '@/widgets/travel-constructor/config/accommodationFilters';
 import { priceFormatter } from '@/widgets/travel-constructor/lib/formatters';
+
 import { FilterGroup } from './FilterGroup';
+
 import styles from './AccommodationSelector.module.scss';
 
 interface AccommodationFiltersProps {

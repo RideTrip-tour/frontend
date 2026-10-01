@@ -1,5 +1,6 @@
-import style from './planning.module.scss';
 import Steps from '@/shared/ui/base/Steps';
+
+import style from './planning.module.scss';
 
 function Planning() {
   const handleCta = () => {

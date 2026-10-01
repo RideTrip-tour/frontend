@@ -1,4 +1,5 @@
 import style from './profileprogress.module.scss';
+
 import './variables.css';
 
 interface ProfileProgressProps {

@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import type { ChildAgeGroup, GuestSelection } from '@/widgets/travel-constructor/model/types';
+
 import { MinusIcon, PlusIcon } from '@/assets/icons/constructor';
+import type { ChildAgeGroup, GuestSelection } from '@/widgets/travel-constructor/model/types';
+
 import styles from './GuestSelector.module.scss';
 
 const AGE_GROUPS: ChildAgeGroup[] = ['До 3-х лет', '4-12 лет', '13-17 лет'];

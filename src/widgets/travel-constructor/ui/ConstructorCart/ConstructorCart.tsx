@@ -1,26 +1,29 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useAuthStore } from '@/store/authStore';
-import type { CartModalState } from '@/widgets/travel-constructor/model/cartModalTypes';
-import { ConstructorCartModal } from '@/widgets/travel-constructor/ui/ConstructorCartModal';
+
+import { DownloadIcon, SadfaceIcon, ResetIcon, SaveIcon } from '@/assets/icons/constructor';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
-import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
-import {
-  MOCK_SKI_LEVEL_PRICES,
-  MOCK_TICKET_PRICE,
-} from '@/widgets/travel-constructor/mocks/prices';
+import { useAuthStore } from '@/store/authStore';
+import { formatCartDate, formatPrice } from '@/widgets/travel-constructor/lib/formatters';
+import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
 import {
   calculateActivityPrice,
   calculateAdditionalOptionsPrice,
 } from '@/widgets/travel-constructor/lib/pricing';
-import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
-import { formatCartDate, formatPrice } from '@/widgets/travel-constructor/lib/formatters';
-import { DownloadIcon, SadfaceIcon, ResetIcon, SaveIcon } from '@/assets/icons/constructor';
-import style from './ConstructorCart.module.scss';
+import {
+  MOCK_SKI_LEVEL_PRICES,
+  MOCK_TICKET_PRICE,
+} from '@/widgets/travel-constructor/mocks/prices';
+import type { CartModalState } from '@/widgets/travel-constructor/model/cartModalTypes';
+import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
+import { ConstructorCartModal } from '@/widgets/travel-constructor/ui/ConstructorCartModal';
+
 import { CartActions } from './CartActions';
-import { CartShareMenu } from './CartShareMenu';
 import { CartItemHeader } from './CartItemHeader';
+import { CartShareMenu } from './CartShareMenu';
 import { CartSummary } from './CartSummary';
+
+import style from './ConstructorCart.module.scss';
 
 interface PriceLineProps {
   price: number;

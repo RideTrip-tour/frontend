@@ -1,8 +1,10 @@
-import { useState } from 'react';
 import clsx from 'clsx';
+import { useState } from 'react';
+
+import { LikeIcon, LikeFilledIcon } from '@/assets/icons/constructor';
 import type { AccommodationOption } from '@/entities/accommodation';
 import { priceFormatter } from '@/widgets/travel-constructor/lib/formatters';
-import { LikeIcon, LikeFilledIcon } from '@/assets/icons/constructor';
+
 import styles from './AccommodationSelector.module.scss';
 
 interface AccommodationCardProps {

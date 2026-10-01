@@ -1,6 +1,8 @@
-import { AuthShell } from './index';
-import styles from './AuthState.module.scss';
 import WarningIcon from '@/assets/icons/warning.svg';
+
+import { AuthShell } from './index';
+
+import styles from './AuthState.module.scss';
 
 type RegistrationErrorModalProps = {
   onClose?: () => void;

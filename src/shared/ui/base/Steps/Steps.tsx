@@ -1,6 +1,8 @@
-import style from './steps.module.scss';
-import './variables.css';
 import { Icon } from '@iconify/react';
+
+import style from './steps.module.scss';
+
+import './variables.css';
 
 interface StepData {
   title: string;

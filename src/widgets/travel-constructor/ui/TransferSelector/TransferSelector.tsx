@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import { EmptyState } from '@/shared/ui/base/EmptyState';
+
 import { AlertIcon } from '@/assets/icons/constructor';
-import type {
-  ParkingPreference,
-  TransferSelection,
-  TransferType,
-} from '@/widgets/travel-constructor/model/types';
+import { EmptyState } from '@/shared/ui/base/EmptyState';
 import {
   TRANSFER_OPTIONS,
   TRANSFER_PRICE_FROM,
   type TransferOption,
 } from '@/widgets/travel-constructor/config/transferOptions';
+import type {
+  ParkingPreference,
+  TransferSelection,
+  TransferType,
+} from '@/widgets/travel-constructor/model/types';
+
 import styles from './TransferSelector.module.scss';
 
 const transferPriceFormatter = new Intl.NumberFormat('ru-RU');

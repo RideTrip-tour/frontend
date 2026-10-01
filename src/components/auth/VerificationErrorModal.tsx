@@ -1,4 +1,5 @@
 import AuthShell from './AuthShell';
+
 import styles from './AuthState.module.scss';
 
 type VerificationErrorModalProps = {

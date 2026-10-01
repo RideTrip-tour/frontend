@@ -1,13 +1,15 @@
-import { useState } from 'react';
 import clsx from 'clsx';
+import { useState } from 'react';
+
+import { SearchInfoIcon } from '@/assets/icons/constructor';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
 import { SearchInput } from '@/shared/ui/base/SearchInput';
-import { SearchInfoIcon } from '@/assets/icons/constructor';
 import {
   ADDITIONAL_ACTIVITIES,
   LIFT_TYPES,
   PRIMARY_ACTIVITIES,
 } from '@/widgets/travel-constructor/config/activityOptions';
+
 import styles from './ActivitySelector.module.scss';
 
 interface ActivitySelectorProps {

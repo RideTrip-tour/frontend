@@ -1,6 +1,8 @@
-import style from './reviewbigcard.module.scss';
-import './variables.css';
 import { Icon } from '@iconify/react';
+
+import style from './reviewbigcard.module.scss';
+
+import './variables.css';
 
 interface ReviewBigCardProps {
   photo: string;

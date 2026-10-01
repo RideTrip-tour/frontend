@@ -1,12 +1,14 @@
-import style from './bigresortcard.module.scss';
-import './variables.css';
-
 import { Icon } from '@iconify/react';
-import SkillsLevel from '@/shared/ui/base/SkillsLevel';
+
 import Badge from '@/shared/ui/base/Badge';
-import SmallCategory from '@/shared/ui/base/SmallCategory';
-import RatingNumber from '@/shared/ui/base/RatingNumber';
 import { Button } from '@/shared/ui/base/Button';
+import RatingNumber from '@/shared/ui/base/RatingNumber';
+import SkillsLevel from '@/shared/ui/base/SkillsLevel';
+import SmallCategory from '@/shared/ui/base/SmallCategory';
+
+import style from './bigresortcard.module.scss';
+
+import './variables.css';
 
 export interface BigResortCardProps {
   image: string;

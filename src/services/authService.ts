@@ -1,7 +1,8 @@
-import { useAuthStore } from '@/store/authStore';
 import { authApi, authRequestOptions } from '@/shared/api/auth/authApi';
 import { handleApiError } from '@/shared/api/errors';
 import type { UserCreate, ResetPass, UserBeforeVerify } from '@/shared/api/generated/auth/auth';
+import { useAuthStore } from '@/store/authStore';
+
 import { meRequest } from './usersService';
 
 export type VerifiedUser = UserBeforeVerify & {

@@ -1,6 +1,8 @@
-import { useRef, useState, useEffect, type ChangeEvent } from 'react';
 import { Icon } from '@iconify/react';
+import { useRef, useState, useEffect, type ChangeEvent } from 'react';
+
 import style from './profilephoto.module.scss';
+
 import './variables.css';
 
 interface ProfilePhotoProps {

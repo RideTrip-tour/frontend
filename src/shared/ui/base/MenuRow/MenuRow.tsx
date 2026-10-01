@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react';
-import './variables.css';
+
 import style from './menurow.module.scss';
+
+import './variables.css';
 
 interface MenuRowProps {
   text: string;

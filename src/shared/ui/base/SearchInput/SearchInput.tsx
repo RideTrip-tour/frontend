@@ -1,5 +1,6 @@
-import styles from './SearchInput.module.css';
 import { SearchIcon } from '@/assets/icons/constructor';
+
+import styles from './SearchInput.module.css';
 
 interface SearchInputProps {
   id?: string;

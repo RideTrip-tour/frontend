@@ -1,15 +1,18 @@
-import style from './daterangepickermodal.module.scss';
-import './variables.css';
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import type { SelectionTab } from '@/shared/ui/compose/DateRangePicker/types.ts';
+
 import {
   MAX_FUTURE_MONTHS,
   MONTH_LABELS_RU,
 } from '@/shared/ui/compose/DateRangePicker/constants.ts';
-import { formatDisplayDate } from '@/shared/ui/compose/DateRangePicker/utils.ts';
+import CalendarGrid from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid';
 import CalendarHeader from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarHeader';
 import DrumRoller from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarHeader/DrumRoller';
-import CalendarGrid from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid';
+import type { SelectionTab } from '@/shared/ui/compose/DateRangePicker/types.ts';
+import { formatDisplayDate } from '@/shared/ui/compose/DateRangePicker/utils.ts';
+
+import style from './daterangepickermodal.module.scss';
+
+import './variables.css';
 
 interface DateRangePickerModalProps {
   today: Date;

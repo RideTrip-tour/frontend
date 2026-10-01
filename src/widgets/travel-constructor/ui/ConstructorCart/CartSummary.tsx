@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from '@/assets/icons/constructor';
 import { Button } from '@/shared/ui/base/Button';
 import { formatPrice } from '@/widgets/travel-constructor/lib/formatters';
+
 import styles from './ConstructorCart.module.scss';
 
 interface CartSummaryProps {

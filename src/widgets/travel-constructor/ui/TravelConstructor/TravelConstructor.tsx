@@ -1,21 +1,5 @@
 import { useState } from 'react';
-import style from './TravelConstructor.module.scss';
-import { cities } from '@/entities/city';
-import { countries } from '@/entities/country';
-import { ConstructorCart } from '../ConstructorCart';
-import { ActivitySelector } from '../ActivitySelector';
-import { AccommodationSelector } from '../AccommodationSelector';
-import { TransferSelector } from '../TransferSelector';
-import { GuestSelector } from '../GuestSelector';
-import { SkiLevelSelector } from '../SkiLevelSelector';
-import { AdditionalOptionsSelector } from '../AdditionalOptionsSelector';
-import { DateRangePicker } from '../DateRangePicker';
-import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
-import type { ConstructorSelectionId } from '@/widgets/travel-constructor/model/types';
-import { formatTripDates } from '@/widgets/travel-constructor/lib/formatters';
-import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
-import { formatSelectionSummary } from '@/widgets/travel-constructor/lib/selectionSummary';
-import { INITIAL_OPEN_ITEMS } from '@/widgets/travel-constructor/config/constructorSections';
+
 import {
   MapMarkerIcon,
   RoadFinishIcon,
@@ -27,8 +11,27 @@ import {
   SkilLevelIcon,
   ShieldIcon,
 } from '@/assets/icons/constructor';
+import { cities } from '@/entities/city';
+import { countries } from '@/entities/country';
+import { INITIAL_OPEN_ITEMS } from '@/widgets/travel-constructor/config/constructorSections';
+import { formatTripDates } from '@/widgets/travel-constructor/lib/formatters';
+import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
+import { formatSelectionSummary } from '@/widgets/travel-constructor/lib/selectionSummary';
+import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
+import type { ConstructorSelectionId } from '@/widgets/travel-constructor/model/types';
+
+import { AccommodationSelector } from '../AccommodationSelector';
+import { ActivitySelector } from '../ActivitySelector';
+import { AdditionalOptionsSelector } from '../AdditionalOptionsSelector';
+import { ConstructorCart } from '../ConstructorCart';
+import { DateRangePicker } from '../DateRangePicker';
+import { GuestSelector } from '../GuestSelector';
+import { SkiLevelSelector } from '../SkiLevelSelector';
+import { TransferSelector } from '../TransferSelector';
 import { LocationSelector } from './LocationSelector';
 import { TravelConstructorSections, type ConstructorItem } from './TravelConstructorSections';
+
+import style from './TravelConstructor.module.scss';
 
 export function TravelConstructor() {
   const {

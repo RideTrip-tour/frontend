@@ -1,8 +1,9 @@
 import { useState, type FormEvent } from 'react';
-import ModalShell from '@/shared/ui/base/ModalShell';
-import ModalForm from '@/shared/ui/base/ModalForm';
-import ModalButton from '@/shared/ui/base/ModalButton';
+
 import Input from '@/shared/ui/base/Input/Input.tsx';
+import ModalButton from '@/shared/ui/base/ModalButton';
+import ModalForm from '@/shared/ui/base/ModalForm';
+import ModalShell from '@/shared/ui/base/ModalShell';
 
 interface ChangePhoneModalProps {
   isOpen: boolean;

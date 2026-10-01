@@ -1,6 +1,8 @@
-import './variables.css';
-import style from './togglerow.module.scss';
 import Switch from '../Switch';
+
+import style from './togglerow.module.scss';
+
+import './variables.css';
 
 interface ToggleRowProps {
   label: string;

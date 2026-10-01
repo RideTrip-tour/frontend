@@ -1,5 +1,7 @@
 import { useState, type CSSProperties } from 'react';
+
 import style from './toggle-text.module.scss';
+
 import './variables.css';
 
 interface ToggleTextProps {

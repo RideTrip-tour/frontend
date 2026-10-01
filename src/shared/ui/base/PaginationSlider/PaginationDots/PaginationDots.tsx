@@ -1,6 +1,8 @@
 import type { CSSProperties } from 'react';
-import './variables.css';
+
 import style from './paginationdots.module.scss';
+
+import './variables.css';
 
 interface PaginationDotsProps {
   total: number;

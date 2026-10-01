@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import './variables.css';
+
 import style from './triposetoggle.module.scss';
+
+import './variables.css';
 
 type TriState = 'default' | 'included' | 'excluded';
 

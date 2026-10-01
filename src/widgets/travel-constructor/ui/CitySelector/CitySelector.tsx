@@ -1,7 +1,9 @@
-import type { City } from '@/entities/city/model/types';
-import styles from './CitySelector.module.scss';
 import clsx from 'clsx';
+
+import type { City } from '@/entities/city/model/types';
 import { FREQUENT_CITY_NAMES } from '@/widgets/travel-constructor/config/citySelector';
+
+import styles from './CitySelector.module.scss';
 
 interface CitySelectorProps {
   cities: City[];

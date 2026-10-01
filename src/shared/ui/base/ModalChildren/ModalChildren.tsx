@@ -1,8 +1,11 @@
 import { Icon } from '@iconify/react';
-import style from './modalchildren.module.scss';
-import './variables.css';
 import type { ReactNode } from 'react';
+
 import ModalOverlay from '@/shared/ui/base/ModalOverlay';
+
+import style from './modalchildren.module.scss';
+
+import './variables.css';
 
 interface ModalChildrenProps {
   onClose: () => void;

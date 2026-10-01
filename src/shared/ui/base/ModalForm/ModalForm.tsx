@@ -1,5 +1,6 @@
-import style from './modalform.module.scss';
 import type { FormEvent, ReactNode } from 'react';
+
+import style from './modalform.module.scss';
 
 interface ModalFormProps {
   onSubmit: (e: FormEvent) => void;

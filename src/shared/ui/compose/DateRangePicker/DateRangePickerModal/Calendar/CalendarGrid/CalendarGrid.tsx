@@ -1,12 +1,14 @@
-import style from './calendargrid.module.scss';
-import './variables.css';
 import { useMemo, useCallback } from 'react';
-import type { DayCellFlags, SelectionTab } from '@/shared/ui/compose/DateRangePicker/types.ts';
-import { areSameDay, buildCalendarCells } from '@/shared/ui/compose/DateRangePicker/utils.ts';
-import { WEEKDAY_LABELS_SHORT } from '@/shared/ui/compose/DateRangePicker/constants.ts';
 
+import { WEEKDAY_LABELS_SHORT } from '@/shared/ui/compose/DateRangePicker/constants.ts';
 import DayCell from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid/DayCell';
 import WeekdayHeaderCell from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid/WeekdayHeaderCell';
+import type { DayCellFlags, SelectionTab } from '@/shared/ui/compose/DateRangePicker/types.ts';
+import { areSameDay, buildCalendarCells } from '@/shared/ui/compose/DateRangePicker/utils.ts';
+
+import style from './calendargrid.module.scss';
+
+import './variables.css';
 
 interface CalendarGridProps {
   displayYear: number;

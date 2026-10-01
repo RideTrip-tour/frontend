@@ -1,8 +1,10 @@
-import style from './welcome.module.scss';
-import IconSelect from '@/shared/ui/base/IconSelect';
-import { Button } from '@/shared/ui/base/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+
+import { Button } from '@/shared/ui/base/Button';
+import IconSelect from '@/shared/ui/base/IconSelect';
+
+import style from './welcome.module.scss';
 
 const locations = [
   { value: 'turkey', label: 'Турция' },

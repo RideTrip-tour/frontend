@@ -1,4 +1,5 @@
 import style from './smallcategory.module.scss';
+
 import './variables.css';
 
 interface SmallCategoryProps {

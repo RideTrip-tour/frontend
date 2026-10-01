@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import style from './notificationsblock.module.scss';
-import PageSection from '@/shared/ui/page/PageSection';
-import SectionHeader from '@/shared/ui/base/SectionHeader';
+
 import Divider from '@/shared/ui/base/Divider';
+import SectionHeader from '@/shared/ui/base/SectionHeader';
 import ToggleRow from '@/shared/ui/base/ToggleRow';
 import CheckOption from '@/shared/ui/compose/CheckOption';
+import PageSection from '@/shared/ui/page/PageSection';
 import { useProfileStore } from '@/store';
+
+import style from './notificationsblock.module.scss';
+
 import './variables.css';
 
 const HOW_TO_RECEIVE = [

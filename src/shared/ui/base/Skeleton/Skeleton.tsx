@@ -1,5 +1,6 @@
-import './variables.css';
 import style from './skeleton.module.scss';
+
+import './variables.css';
 
 interface SkeletonProps {
   width?: number | string;

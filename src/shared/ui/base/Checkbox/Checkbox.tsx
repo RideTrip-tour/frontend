@@ -1,4 +1,5 @@
 import style from './checkbox.module.scss';
+
 import './variables.css';
 
 interface CheckboxProps {

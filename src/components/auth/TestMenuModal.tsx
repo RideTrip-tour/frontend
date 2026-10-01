@@ -1,6 +1,8 @@
 import { useId } from 'react';
-import ModalOverlay from '@/shared/ui/base/ModalOverlay';
+
 import { logoutRequest } from '@/services/authService';
+import ModalOverlay from '@/shared/ui/base/ModalOverlay';
+
 import styles from './TestMenu.module.scss';
 
 const modalItems = [

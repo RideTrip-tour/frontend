@@ -1,8 +1,11 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import style from './reviewslider.module.scss';
-import './variables.css';
-import IconButton from '@/shared/ui/base/IconButton';
+
 import { Button } from '@/shared/ui/base/Button';
+import IconButton from '@/shared/ui/base/IconButton';
+
+import style from './reviewslider.module.scss';
+
+import './variables.css';
 
 interface CardMeasurement {
   left: number;

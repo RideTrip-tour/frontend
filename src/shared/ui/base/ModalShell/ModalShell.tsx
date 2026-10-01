@@ -1,8 +1,10 @@
-import style from './modalshell.module.scss';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useId, type ReactNode } from 'react';
+
 import CloseIcon from '@/assets/icons/close.svg';
 import ModalOverlay from '@/shared/ui/base/ModalOverlay';
+
+import style from './modalshell.module.scss';
 
 interface ModalShellProps {
   isOpen: boolean;

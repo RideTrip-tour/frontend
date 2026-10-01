@@ -1,5 +1,6 @@
-import './variables.css';
 import style from './sectionheader.module.scss';
+
+import './variables.css';
 
 interface SectionHeaderProps {
   title: string;

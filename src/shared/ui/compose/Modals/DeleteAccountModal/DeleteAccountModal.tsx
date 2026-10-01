@@ -1,9 +1,11 @@
-import style from './deleteaccountmodal.module.scss';
 import React, { useState } from 'react';
-import ModalShell from '@/shared/ui/base/ModalShell';
+import type { FormEvent } from 'react';
+
 import ModalButton from '@/shared/ui/base/ModalButton';
 import ModalForm from '@/shared/ui/base/ModalForm';
-import type { FormEvent } from 'react';
+import ModalShell from '@/shared/ui/base/ModalShell';
+
+import style from './deleteaccountmodal.module.scss';
 
 interface DeleteAccountModalProps {
   isOpen: boolean;

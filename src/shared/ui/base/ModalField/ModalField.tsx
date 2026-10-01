@@ -1,6 +1,7 @@
-import style from './modalfield.module.scss';
-import { useEffect, useId, useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
+import { useEffect, useId, useRef, useState } from 'react';
+
+import style from './modalfield.module.scss';
 
 export type ModalFieldStatus = 'default' | 'focus' | 'success' | 'error';
 

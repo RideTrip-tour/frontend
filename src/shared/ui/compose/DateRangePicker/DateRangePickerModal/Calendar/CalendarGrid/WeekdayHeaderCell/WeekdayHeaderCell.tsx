@@ -1,4 +1,5 @@
 import style from './weekdayheadercell.module.scss';
+
 import './variables.css';
 
 function WeekdayHeaderCell({ label }: { label: string }) {

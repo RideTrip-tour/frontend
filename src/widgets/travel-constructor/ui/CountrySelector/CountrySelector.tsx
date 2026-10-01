@@ -1,4 +1,5 @@
 import type { Country } from '@/entities/country/model/types';
+
 import styles from './CountrySelector.module.scss';
 
 interface CountrySelectorProps {

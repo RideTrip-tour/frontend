@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react';
+
 import style from './scrolltopbutton.module.scss';
 
 const ScrollTopButton = () => {

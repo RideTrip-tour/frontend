@@ -1,18 +1,21 @@
-import style from './profilesteps.module.scss';
-import Input from '@/shared/ui/base/Input';
-import Select from '@/shared/ui/base/Select';
-import { Button } from '@/shared/ui/base/Button';
-import TextLink from '@/shared/ui/base/TextLink';
-import Checkbox from '@/shared/ui/base/Checkbox';
-import ToggleText from '@/shared/ui/base/ToggleText/ToggleText';
-import Divider from '@/shared/ui/base/Divider';
-import PersonalBlock from '@/shared/ui/page/Profile/PersonalBlock';
 import { Fragment, useState } from 'react';
-import type { Option } from '@/shared/ui/base/Select/Select.tsx';
+
 import SkillQuiz from '@/pages/Profile/ProfileSteps/SkillQuiz';
-import ModalChildren from '@/shared/ui/base/ModalChildren';
-import { useProfileStore, type PersonalData as StorePersonalData } from '@/store';
 import { updateMyProfileRequest } from '@/services/profileService';
+import { Button } from '@/shared/ui/base/Button';
+import Checkbox from '@/shared/ui/base/Checkbox';
+import Divider from '@/shared/ui/base/Divider';
+import Input from '@/shared/ui/base/Input';
+import ModalChildren from '@/shared/ui/base/ModalChildren';
+import Select from '@/shared/ui/base/Select';
+import type { Option } from '@/shared/ui/base/Select/Select.tsx';
+import TextLink from '@/shared/ui/base/TextLink';
+import ToggleText from '@/shared/ui/base/ToggleText/ToggleText';
+import PersonalBlock from '@/shared/ui/page/Profile/PersonalBlock';
+import { useProfileStore, type PersonalData as StorePersonalData } from '@/store';
+
+import style from './profilesteps.module.scss';
+
 import './variables.css';
 
 const GENDER_OPTIONS: Option[] = [

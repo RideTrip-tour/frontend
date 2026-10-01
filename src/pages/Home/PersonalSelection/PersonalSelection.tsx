@@ -1,5 +1,6 @@
-import style from './personalselection.module.scss';
 import ToursFinder from '@/shared/ui/compose/ToursFinder';
+
+import style from './personalselection.module.scss';
 
 function PersonalSelection() {
   return (

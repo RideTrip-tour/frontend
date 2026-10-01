@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react';
-import { SearchInput } from '@/shared/ui/base/SearchInput';
-import { AccommodationMapModal } from '@/widgets/travel-constructor/ui/AccommodationMapModal';
+
 import {
   MOCK_ACCOMMODATIONS,
   type Accommodation,
   type AccommodationOption,
 } from '@/entities/accommodation';
+import { SearchInput } from '@/shared/ui/base/SearchInput';
 import {
   MAX_PRICE,
   RATING_FILTERS,
@@ -15,8 +15,11 @@ import {
   MOCK_TOTAL_ACCOMMODATION_COUNT,
   UNAVAILABLE_SEARCH_QUERIES,
 } from '@/widgets/travel-constructor/mocks/accommodationScenarios';
+import { AccommodationMapModal } from '@/widgets/travel-constructor/ui/AccommodationMapModal';
+
 import { AccommodationFilters } from './AccommodationFilters';
 import { AccommodationResults } from './AccommodationResults';
+
 import styles from './AccommodationSelector.module.scss';
 
 interface AccommodationSelectorProps {

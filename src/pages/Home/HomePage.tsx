@@ -1,16 +1,7 @@
-import { useEffect, useState } from 'react';
-import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
-import { useLocation, useNavigate, useSearchParams } from 'react-router';
 import { AnimatePresence, motion } from 'framer-motion';
-import Welcome from '@/pages/Home/Welcome';
-import Choice from '@/pages/Home/Choice';
-import Recommendations from '@/pages/Home/Recommendations';
-import Planning from '@/pages/Home/Planning';
-import PersonalSelection from '@/pages/Home/PersonalSelection';
-import Clients from '@/pages/Home/Clients';
-import PhotoBlock from '@/pages/Home/PhotoBlock';
-import ScrollTopButton from '@/components/layout/ScrollTopButton';
-import VerificationErrorModal from '@/components/auth/VerificationErrorModal';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router';
+
 import {
   PasswordEmailSentModal,
   PasswordResetSuccessModal,
@@ -22,6 +13,16 @@ import {
   UnifiedAuthModal,
   VerifyModal,
 } from '@/components/auth';
+import VerificationErrorModal from '@/components/auth/VerificationErrorModal';
+import ScrollTopButton from '@/components/layout/ScrollTopButton';
+import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
+import Choice from '@/pages/Home/Choice';
+import Clients from '@/pages/Home/Clients';
+import PersonalSelection from '@/pages/Home/PersonalSelection';
+import PhotoBlock from '@/pages/Home/PhotoBlock';
+import Planning from '@/pages/Home/Planning';
+import Recommendations from '@/pages/Home/Recommendations';
+import Welcome from '@/pages/Home/Welcome';
 import { loginRequest, registerRequest, forgotPasswordRequest } from '@/services/authService';
 
 type View =

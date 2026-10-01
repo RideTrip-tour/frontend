@@ -1,8 +1,10 @@
-import { EmptyState } from '@/shared/ui/base/EmptyState';
 import { AlertIcon, SearchInfoIcon } from '@/assets/icons/constructor';
 import type { AccommodationOption } from '@/entities/accommodation';
+import { EmptyState } from '@/shared/ui/base/EmptyState';
 import { formatResultCount } from '@/widgets/travel-constructor/lib/formatters';
+
 import { AccommodationCard } from './AccommodationCard';
+
 import styles from './AccommodationSelector.module.scss';
 
 interface AccommodationResultsProps {

@@ -1,7 +1,10 @@
 import { useId, type ReactNode } from 'react';
+
 import ModalOverlay from '@/shared/ui/base/ModalOverlay';
-import './variables.css';
+
 import style from './modal.module.scss';
+
+import './variables.css';
 
 interface ModalProps {
   isOpen: boolean;

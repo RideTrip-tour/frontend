@@ -1,5 +1,6 @@
-import type { SkiLevel } from '@/widgets/travel-constructor/model/types';
 import { SKI_LEVELS, SKI_LEVEL_HINTS } from '@/widgets/travel-constructor/config/skiLevels';
+import type { SkiLevel } from '@/widgets/travel-constructor/model/types';
+
 import styles from './SkiLevelSelector.module.scss';
 
 interface SkiLevelSelectorProps {

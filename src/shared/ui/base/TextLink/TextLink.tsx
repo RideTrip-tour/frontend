@@ -1,4 +1,5 @@
 import style from './textlink.module.scss';
+
 import './variables.css';
 
 interface TextLinkProps {

@@ -1,11 +1,14 @@
-import ModalOverlay from '@/shared/ui/base/ModalOverlay';
-import { useId, useMemo, useState, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import AuthField from './AuthField';
-import shellStyles from './AuthShell.module.scss';
-import formStyles from './AuthForm.module.scss';
+import { useId, useMemo, useState, type FormEvent } from 'react';
+
 import CloseIcon from '@/assets/icons/close.svg';
 import Loader from '@/assets/icons/loader.svg';
+import ModalOverlay from '@/shared/ui/base/ModalOverlay';
+
+import AuthField from './AuthField';
+
+import formStyles from './AuthForm.module.scss';
+import shellStyles from './AuthShell.module.scss';
 
 type ChangeEmailModalProps = {
   isLoading: boolean;

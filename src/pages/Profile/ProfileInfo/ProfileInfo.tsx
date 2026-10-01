@@ -1,5 +1,7 @@
 import { Icon } from '@iconify/react';
+
 import style from './profileinfo.module.scss';
+
 import './variables.css';
 
 const ProfileInfo = () => {

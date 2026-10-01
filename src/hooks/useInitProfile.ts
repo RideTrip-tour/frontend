@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { useAuthStore, useProfileStore } from '@/store';
+
 import { initProfile } from '@/services/initProfile';
+import { useAuthStore, useProfileStore } from '@/store';
 
 export const useInitProfile = (): void => {
   const isAuth = useAuthStore((s) => s.isAuth);

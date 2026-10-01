@@ -1,6 +1,7 @@
-import style from './clients.module.scss';
-import ReviewSlider from '@/shared/ui/compose/ReviewSlider';
 import ReviewBigCard from '@/shared/ui/compose/ReviewBigCard';
+import ReviewSlider from '@/shared/ui/compose/ReviewSlider';
+
+import style from './clients.module.scss';
 
 function Clients() {
   const reviews = [

@@ -1,7 +1,9 @@
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router';
-import './variables.css';
+
 import style from './backlink.module.scss';
+
+import './variables.css';
 
 interface BackLinkProps {
   text: string;

@@ -1,6 +1,8 @@
-import style from './photoblock.module.scss';
-import './variables.css';
 import { Button } from '@/shared/ui/base/Button';
+
+import style from './photoblock.module.scss';
+
+import './variables.css';
 
 interface PhotoBlockProps {
   onClick?: () => void;

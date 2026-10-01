@@ -1,6 +1,8 @@
-import { AuthShell } from './index';
-import styles from './AuthState.module.scss';
 import AirplaceIcon from '@/assets/icons/airplace.svg';
+
+import { AuthShell } from './index';
+
+import styles from './AuthState.module.scss';
 
 type PasswordResetSuccessModalProps = {
   onClose?: () => void;

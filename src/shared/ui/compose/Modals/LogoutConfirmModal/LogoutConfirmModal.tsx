@@ -1,8 +1,10 @@
-import style from './logoutconfirmmodal.module.scss';
-import ModalShell from '@/shared/ui/base/ModalShell';
+import type { FormEvent } from 'react';
+
 import ModalButton from '@/shared/ui/base/ModalButton';
 import ModalForm from '@/shared/ui/base/ModalForm';
-import type { FormEvent } from 'react';
+import ModalShell from '@/shared/ui/base/ModalShell';
+
+import style from './logoutconfirmmodal.module.scss';
 
 interface LogoutConfirmModalProps {
   isOpen: boolean;

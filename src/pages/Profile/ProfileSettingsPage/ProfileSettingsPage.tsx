@@ -1,11 +1,14 @@
-import style from './profilesettingspage.module.scss';
-import PageContent from '@/shared/ui/page/PageContent';
 import BackLink from '@/shared/ui/base/BackLink';
-import SecurityBlock from './SecurityBlock';
+import PageContent from '@/shared/ui/page/PageContent';
+
+import AccountBlock from './AccountBlock';
+import DocumentsBlock from './DocumentsBlock';
 import NotificationsBlock from './NotificationsBlock';
 import PrivacyBlock from './PrivacyBlock';
-import DocumentsBlock from './DocumentsBlock';
-import AccountBlock from './AccountBlock';
+import SecurityBlock from './SecurityBlock';
+
+import style from './profilesettingspage.module.scss';
+
 import './variables.css';
 
 function ProfileSettingsPage() {

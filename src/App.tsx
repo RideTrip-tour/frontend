@@ -1,8 +1,10 @@
-import { Header, Footer } from '@/components';
 import { useEffect } from 'react';
-import { useAuthStore } from '@/store';
+
+import { Header, Footer } from '@/components';
 import { useInitProfile } from '@/hooks';
 import { AppRouter } from '@/router';
+import { useAuthStore } from '@/store';
+
 import './index.css';
 import '@/shared/styles/themes/index.css';
 import './shared/styles/main/index.css';

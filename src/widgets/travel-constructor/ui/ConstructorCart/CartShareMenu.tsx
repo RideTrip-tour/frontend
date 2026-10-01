@@ -1,8 +1,10 @@
-import { useEffect, useId, useRef, useState } from 'react';
 import clsx from 'clsx';
+import { useEffect, useId, useRef, useState } from 'react';
+
 import { ShareIcon, CopyIcon, TelegramIcon, WhatsappIcon } from '@/assets/icons/constructor';
-import cartStyles from './ConstructorCart.module.scss';
+
 import styles from './CartShareMenu.module.scss';
+import cartStyles from './ConstructorCart.module.scss';
 
 interface CartShareMenuProps {
   hasSelectedItems: boolean;

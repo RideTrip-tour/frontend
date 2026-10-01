@@ -1,7 +1,9 @@
-import './variables.css';
-import style from './iconselect.module.scss';
-import { useState } from 'react';
 import { Icon } from '@iconify/react';
+import { useState } from 'react';
+
+import style from './iconselect.module.scss';
+
+import './variables.css';
 
 interface Option {
   value: string;

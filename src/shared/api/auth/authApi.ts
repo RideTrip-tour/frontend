@@ -1,4 +1,5 @@
 import { getFastAPI } from '@/shared/api/generated/auth/auth';
+
 import { apiClient } from '../client';
 
 export const authApi = getFastAPI(apiClient);

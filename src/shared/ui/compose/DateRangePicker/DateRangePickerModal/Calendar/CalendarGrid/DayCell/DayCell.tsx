@@ -1,6 +1,8 @@
-import style from './daycell.module.scss';
-import './variables.css';
 import type { DayCellFlags } from '@/shared/ui/compose/DateRangePicker/types.ts';
+
+import style from './daycell.module.scss';
+
+import './variables.css';
 
 interface DayCellProps {
   date: Date;

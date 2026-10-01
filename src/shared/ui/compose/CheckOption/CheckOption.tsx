@@ -1,6 +1,8 @@
-import './variables.css';
-import style from './checkoption.module.scss';
 import Checkbox from '@/shared/ui/base/Checkbox';
+
+import style from './checkoption.module.scss';
+
+import './variables.css';
 
 interface CheckOptionProps {
   checked: boolean;

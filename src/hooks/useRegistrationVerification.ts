@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+
 import { getVerificationError, verifyRequest } from '@/services/authService';
 
 const MISSING_TOKEN_ERROR = {

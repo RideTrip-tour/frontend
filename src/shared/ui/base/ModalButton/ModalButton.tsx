@@ -1,6 +1,8 @@
-import style from './modalbutton.module.scss';
 import { motion, AnimatePresence } from 'framer-motion';
+
 import Loader from '@/assets/icons/loader.svg';
+
+import style from './modalbutton.module.scss';
 
 interface ModalButtonProps {
   text: string;

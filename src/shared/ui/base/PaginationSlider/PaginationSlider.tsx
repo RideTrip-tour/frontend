@@ -1,12 +1,15 @@
 import { useState, useRef } from 'react';
 import type { MouseEvent, TouchEvent, ReactNode, RefObject } from 'react';
-import './variables.css';
-import style from './paginationslider.module.scss';
-import PaginationDots from './PaginationDots';
 
-import Loader from '../Loader';
 import { useInfiniteLoader } from '@/hooks/useInfiniteLoader.ts';
 import { wrapSliderChildren } from '@/utils/wrapChildrenWithIndex.tsx';
+
+import Loader from '../Loader';
+import PaginationDots from './PaginationDots';
+
+import style from './paginationslider.module.scss';
+
+import './variables.css';
 
 interface PaginationSliderProps {
   children: ReactNode;

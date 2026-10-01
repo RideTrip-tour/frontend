@@ -1,4 +1,5 @@
 import { CloseIcon } from '@/assets/icons/constructor';
+
 import styles from './ConstructorCart.module.scss';
 
 interface CartItemHeaderProps {

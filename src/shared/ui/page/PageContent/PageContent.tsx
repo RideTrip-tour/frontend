@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+
 import style from './pagecontent.module.scss';
 
 interface PageContentProps {

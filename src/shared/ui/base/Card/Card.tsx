@@ -1,4 +1,5 @@
 import style from './card.module.scss';
+
 import './variables.css';
 
 interface CardProps {

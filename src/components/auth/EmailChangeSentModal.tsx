@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
-import { AuthShell } from './index';
-import styles from './AuthState.module.scss';
+
 import EmailIcon from '@/assets/icons/email.svg';
+
+import { AuthShell } from './index';
+
+import styles from './AuthState.module.scss';
 
 type EmailChangeSentModalProps = {
   email: string;

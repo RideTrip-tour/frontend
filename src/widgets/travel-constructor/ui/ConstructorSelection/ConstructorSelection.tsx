@@ -1,7 +1,9 @@
-import type { ReactNode } from 'react';
 import clsx from 'clsx';
-import styles from './ConstructorSelection.module.scss';
+import type { ReactNode } from 'react';
+
 import { PlusIcon, CheckmarkIcon, ArrowUpIcon } from '@/assets/icons/constructor';
+
+import styles from './ConstructorSelection.module.scss';
 
 interface ConstructorSelectionProps {
   icon: ReactNode;

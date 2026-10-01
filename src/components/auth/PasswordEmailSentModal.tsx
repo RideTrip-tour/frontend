@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
-import ErrorMessage from '@/shared/ui/base/ErrorMessage';
-import { AuthShell } from './index';
-import styles from './AuthState.module.scss';
+
 import EmailIcon from '@/assets/icons/email.svg';
+import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
 import { resendForgotPasswordEmail } from '@/services/authService';
+import ErrorMessage from '@/shared/ui/base/ErrorMessage';
+
+import { AuthShell } from './index';
+
+import styles from './AuthState.module.scss';
 
 type PasswordEmailSentModalProps = {
   email: string;

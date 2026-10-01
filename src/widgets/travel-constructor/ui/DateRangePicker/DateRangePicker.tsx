@@ -1,5 +1,7 @@
 import { useState } from 'react';
+
 import { Calendar, type CalendarDateRange } from '@/shared/ui/base/Calendar';
+
 import styles from './DateRangePicker.module.scss';
 
 interface DateRangePickerProps {

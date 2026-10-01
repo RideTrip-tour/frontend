@@ -1,10 +1,12 @@
-import { Button } from '@/shared/ui/base/Button';
-import style from './header.module.scss';
+import clsx from 'clsx';
+import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
+
+import { Button } from '@/shared/ui/base/Button';
 import NavItem from '@/shared/ui/base/NavItem';
 import { useAuthStore } from '@/store';
-import { useEffect } from 'react';
-import clsx from 'clsx';
+
+import style from './header.module.scss';
 
 export function Header() {
   const navigate = useNavigate();

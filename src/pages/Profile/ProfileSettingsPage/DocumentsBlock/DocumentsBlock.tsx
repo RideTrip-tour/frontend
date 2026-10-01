@@ -1,10 +1,12 @@
-import style from './documentsblock.module.scss';
-import PageSection from '@/shared/ui/page/PageSection';
-import SectionHeader from '@/shared/ui/base/SectionHeader';
+import { useCopyToClipboard } from '@/hooks';
 import Divider from '@/shared/ui/base/Divider';
 import MenuRow from '@/shared/ui/base/MenuRow';
+import SectionHeader from '@/shared/ui/base/SectionHeader';
 import Tooltip from '@/shared/ui/base/Tooltip';
-import { useCopyToClipboard } from '@/hooks';
+import PageSection from '@/shared/ui/page/PageSection';
+
+import style from './documentsblock.module.scss';
+
 import './variables.css';
 
 const SUPPORT_EMAIL = 'support.travel@mail.ru';

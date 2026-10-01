@@ -1,4 +1,5 @@
 import style from './skillslevel.module.scss';
+
 import './variables.css';
 
 interface SkillsLevelProps {

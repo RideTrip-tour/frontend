@@ -1,5 +1,6 @@
-import style from './footer.module.scss';
 import { Icon } from '@iconify/react';
+
+import style from './footer.module.scss';
 
 export function Footer() {
   return (

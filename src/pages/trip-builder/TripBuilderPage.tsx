@@ -1,6 +1,7 @@
-import style from './TripBuilderPage.module.scss';
-import { ProgressBar, TravelConstructor } from '@/widgets/travel-constructor';
 import { ReadyTours } from '@/widgets/ready-tours/ui/ReadyTours';
+import { ProgressBar, TravelConstructor } from '@/widgets/travel-constructor';
+
+import style from './TripBuilderPage.module.scss';
 
 function TripBuilderPage() {
   return (

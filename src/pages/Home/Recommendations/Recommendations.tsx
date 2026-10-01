@@ -1,8 +1,9 @@
-import style from './recommendations.module.scss';
 import ToggleText from '@/shared/ui/base/ToggleText/ToggleText';
-import ResortSlider from '@/shared/ui/compose/ResortSlider';
 import type { BigResortCardProps } from '@/shared/ui/compose/BigResortCard/BigResortCard.tsx';
 import BigResortCard from '@/shared/ui/compose/BigResortCard/BigResortCard.tsx';
+import ResortSlider from '@/shared/ui/compose/ResortSlider';
+
+import style from './recommendations.module.scss';
 
 function Recommendations() {
   const cards: BigResortCardProps[] = [

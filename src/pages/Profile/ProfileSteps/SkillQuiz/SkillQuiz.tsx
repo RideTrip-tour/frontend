@@ -1,5 +1,6 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+
 import style from './skillquiz.module.scss';
 
 const QUESTIONS = [

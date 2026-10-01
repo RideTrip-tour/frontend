@@ -1,5 +1,6 @@
-import './variables.css';
 import style from './switch.module.scss';
+
+import './variables.css';
 
 interface SwitchProps {
   checked: boolean;

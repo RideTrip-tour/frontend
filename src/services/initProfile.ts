@@ -1,6 +1,7 @@
-import { meRequest } from './usersService';
-import { getMyProfileRequest, createProfileRequest, type Profile } from './profileService';
 import { useProfileStore } from '@/store/profileStore';
+
+import { getMyProfileRequest, createProfileRequest, type Profile } from './profileService';
+import { meRequest } from './usersService';
 
 const EMPTY_PROFILE_DATA = {
   first_name: '',

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+
 import { meRequest } from '@/services/usersService';
 import type { CurrentUser } from '@/services/usersService';
 import { setSessionExpiredHandler } from '@/shared/api/sessionEvents';

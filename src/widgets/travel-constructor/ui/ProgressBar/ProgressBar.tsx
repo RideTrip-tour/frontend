@@ -1,10 +1,11 @@
-import style from './ProgressBar.module.scss';
 import {
   TOTAL_FIELDS,
   selectFilledCount,
   selectProgress,
   useConstructor,
 } from '@/widgets/travel-constructor/model/constructorStore';
+
+import style from './ProgressBar.module.scss';
 
 export function ProgressBar() {
   const filledCount = useConstructor(selectFilledCount);

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import './variables.css';
+
 import style from './selectautocomplete.module.scss';
+
+import './variables.css';
 
 interface Option {
   value: string;

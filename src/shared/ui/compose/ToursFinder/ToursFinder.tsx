@@ -1,9 +1,12 @@
-import { useState } from 'react';
-import style from './toursfinder.module.scss';
-import './variables.css';
-import Select from '@/shared/ui/base/Select';
-import Input from '@/shared/ui/base/Input';
 import { Icon } from '@iconify/react';
+import { useState } from 'react';
+
+import Input from '@/shared/ui/base/Input';
+import Select from '@/shared/ui/base/Select';
+
+import style from './toursfinder.module.scss';
+
+import './variables.css';
 
 const activityOptions = [
   { value: 'snowboard', label: 'Сноуборд' },

@@ -1,6 +1,8 @@
-import style from './ratingnumber.module.scss';
-import './variables.css';
 import { Icon } from '@iconify/react';
+
+import style from './ratingnumber.module.scss';
+
+import './variables.css';
 
 interface RatingNumberProps {
   value: number;

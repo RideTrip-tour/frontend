@@ -1,9 +1,10 @@
-import style from './profilepage.module.scss';
 import PhotoID from '@/pages/Profile/PhotoID';
-import PageContent from '@/shared/ui/page/PageContent';
-import ProfileProgress from '@/pages/Profile/ProfileProgress';
 import ProfileInfo from '@/pages/Profile/ProfileInfo';
+import ProfileProgress from '@/pages/Profile/ProfileProgress';
 import ProfileSteps from '@/pages/Profile/ProfileSteps';
+import PageContent from '@/shared/ui/page/PageContent';
+
+import style from './profilepage.module.scss';
 
 function ProfilePage() {
   return (

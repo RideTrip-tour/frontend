@@ -1,15 +1,18 @@
 import { Icon } from '@iconify/react';
-import style from './accountblock.module.scss';
-import PageSection from '@/shared/ui/page/PageSection';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+
+import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
+import { logoutRequest } from '@/services/authService';
+import { deleteMyProfileRequest } from '@/services/profileService';
 import SectionHeader from '@/shared/ui/base/SectionHeader';
 import DeleteAccountModal from '@/shared/ui/compose/Modals/DeleteAccountModal';
 import LogoutConfirmModal from '@/shared/ui/compose/Modals/LogoutConfirmModal';
-import { logoutRequest } from '@/services/authService';
-import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
-import { deleteMyProfileRequest } from '@/services/profileService';
+import PageSection from '@/shared/ui/page/PageSection';
 import { useProfileStore } from '@/store';
-import { useNavigate } from 'react-router';
-import { useState } from 'react';
+
+import style from './accountblock.module.scss';
+
 import './variables.css';
 
 function AccountBlock() {

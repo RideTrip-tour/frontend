@@ -1,8 +1,10 @@
+import clsx from 'clsx';
 import { NavLink, useLocation } from 'react-router';
 import type { NavLinkRenderProps } from 'react-router';
+
 import style from './navitem.module.scss';
+
 import './variables.css';
-import clsx from 'clsx';
 
 function NavItem({ to, label }: { to: string; label: string }) {
   const location = useLocation();

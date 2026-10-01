@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react';
-import { EmptyState } from '@/shared/ui/base/EmptyState';
-import { SearchInput } from '@/shared/ui/base/SearchInput';
+
 import { AlertIcon } from '@/assets/icons/constructor';
 import type { City } from '@/entities/city';
 import type { Country } from '@/entities/country';
+import { EmptyState } from '@/shared/ui/base/EmptyState';
+import { SearchInput } from '@/shared/ui/base/SearchInput';
+
 import { CitySelector } from '../CitySelector';
 import { CountrySelector } from '../CountrySelector';
 

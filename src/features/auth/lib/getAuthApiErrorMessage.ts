@@ -1,4 +1,5 @@
 import { handleApiError } from '@/shared/api/errors';
+
 import { getAuthErrorMessage } from '../model/authErrorCodes';
 
 export function getAuthApiErrorMessage(error: unknown): string {

@@ -1,5 +1,6 @@
-import style from './choice.module.scss';
 import AdvantageCard from '@/shared/ui/base/AdvantageCard';
+
+import style from './choice.module.scss';
 
 function Choice() {
   return (

@@ -1,5 +1,3 @@
-import style from './drumroller.module.scss';
-import './variables.css';
 import {
   useState,
   useRef,
@@ -7,11 +5,16 @@ import {
   useCallback,
   type MouseEvent as ReactMouseEvent,
 } from 'react';
+
 import {
   DRUM_HALF_ITEMS,
   DRUM_ITEM_HEIGHT_PX,
   DRUM_VISIBLE_ITEMS,
 } from '@/shared/ui/compose/DateRangePicker/constants.ts';
+
+import style from './drumroller.module.scss';
+
+import './variables.css';
 
 export interface DrumRollerProps {
   items: readonly string[];

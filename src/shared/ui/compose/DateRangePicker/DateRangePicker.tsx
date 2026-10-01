@@ -1,7 +1,10 @@
-import style from './daterangepicker.module.scss';
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import { toMidnight, formatDisplayDate } from './utils.ts';
+
 import DateRangePickerModal from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal';
+
+import { toMidnight, formatDisplayDate } from './utils.ts';
+
+import style from './daterangepicker.module.scss';
 
 export default function DateRangePicker() {
   const today = useMemo(() => toMidnight(new Date()), []);

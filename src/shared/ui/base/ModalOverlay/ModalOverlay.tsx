@@ -1,7 +1,9 @@
 import { useEffect, useLayoutEffect, useRef, type ReactNode, type RefObject } from 'react';
 import { createPortal } from 'react-dom';
+
 import { focusInitialElement, trapTabKey } from './focus';
 import { lockBodyScroll } from './scrollLock';
+
 import styles from './modaloverlay.module.scss';
 
 interface ModalOverlayProps {

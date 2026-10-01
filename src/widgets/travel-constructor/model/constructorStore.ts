@@ -1,4 +1,9 @@
 import { create } from 'zustand';
+
+import type { Accommodation } from '@/entities/accommodation/model/types';
+import type { City } from '@/entities/city';
+import type { Country } from '@/entities/country';
+
 import type {
   AdditionalOption,
   ConstructorSelectionId,
@@ -7,9 +12,6 @@ import type {
   SkiLevel,
   TransferSelection,
 } from './types';
-import type { Accommodation } from '@/entities/accommodation/model/types';
-import type { City } from '@/entities/city';
-import type { Country } from '@/entities/country';
 
 export const TOTAL_FIELDS = 8;
 

@@ -1,4 +1,5 @@
 import style from './badge.module.scss';
+
 import './variables.css';
 
 interface BadgeProps {

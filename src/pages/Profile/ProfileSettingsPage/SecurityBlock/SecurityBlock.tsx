@@ -1,16 +1,19 @@
-import { useState } from 'react';
-import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
 import { AnimatePresence } from 'framer-motion';
-import style from './securityblock.module.scss';
-import PageSection from '@/shared/ui/page/PageSection';
-import SectionHeader from '@/shared/ui/base/SectionHeader';
+import { useState } from 'react';
+
+import { ChangePasswordModal, ChangeEmailModal, EmailChangeSentModal } from '@/components/auth';
+import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
+import { updateMyProfileRequest } from '@/services/profileService';
+import { changePasswordRequest, requestChangeEmailRequest } from '@/services/usersService';
 import Divider from '@/shared/ui/base/Divider';
 import InfoRow from '@/shared/ui/base/InfoRow';
-import { ChangePasswordModal, ChangeEmailModal, EmailChangeSentModal } from '@/components/auth';
+import SectionHeader from '@/shared/ui/base/SectionHeader';
 import ChangePhoneModal from '@/shared/ui/compose/Modals/ChangePhoneModal';
-import { changePasswordRequest, requestChangeEmailRequest } from '@/services/usersService';
-import { updateMyProfileRequest } from '@/services/profileService';
+import PageSection from '@/shared/ui/page/PageSection';
 import { useProfileStore } from '@/store';
+
+import style from './securityblock.module.scss';
+
 import './variables.css';
 
 function SecurityBlock() {

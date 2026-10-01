@@ -1,7 +1,10 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import style from './resortslider.module.scss';
-import './variables.css';
+
 import IconButton from '@/shared/ui/base/IconButton';
+
+import style from './resortslider.module.scss';
+
+import './variables.css';
 
 interface CardMeasurement {
   left: number;

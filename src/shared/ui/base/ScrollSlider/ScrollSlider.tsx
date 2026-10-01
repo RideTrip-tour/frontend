@@ -1,10 +1,13 @@
 import { forwardRef, Children, type ReactNode, type RefObject, type CSSProperties } from 'react';
-import './variables.css';
-import style from './scrollslider.module.scss';
+
 import { useHorizontalDragScroll } from '@/hooks/useHorizontalDragScroll';
 import { useInfiniteLoader } from '@/hooks/useInfiniteLoader';
-import { wrapSliderChildren } from '@/utils/wrapChildrenWithIndex';
 import Loader from '@/shared/ui/base/Loader';
+import { wrapSliderChildren } from '@/utils/wrapChildrenWithIndex';
+
+import style from './scrollslider.module.scss';
+
+import './variables.css';
 
 type ScrollDirection = 'horizontal' | 'vertical' | 'grid';
 

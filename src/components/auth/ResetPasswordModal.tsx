@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
+
 import { AuthField, AuthShell } from './index';
+
 import styles from './AuthForm.module.scss';
 
 type ResetPasswordModalProps = {

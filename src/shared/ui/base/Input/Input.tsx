@@ -1,6 +1,8 @@
-import './variables.css';
-import style from './input.module.scss';
 import { type ChangeEvent, type KeyboardEvent, useEffect, useRef, useState } from 'react';
+
+import style from './input.module.scss';
+
+import './variables.css';
 
 interface InputProps {
   onSubmit: (value: string) => void;

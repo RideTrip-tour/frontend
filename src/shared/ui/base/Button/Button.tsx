@@ -1,7 +1,9 @@
-import style from './button.module.scss';
-import './variables.css';
 import { Icon } from '@iconify/react';
 import type { MouseEventHandler, ReactNode } from 'react';
+
+import style from './button.module.scss';
+
+import './variables.css';
 
 export interface ButtonProps {
   onClick: MouseEventHandler<HTMLButtonElement>;

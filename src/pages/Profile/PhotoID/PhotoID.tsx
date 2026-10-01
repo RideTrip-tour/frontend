@@ -1,10 +1,13 @@
-import style from './photoid.module.scss';
-import ProfilePhoto from '@/shared/ui/base/ProfilePhoto/ProfilePhoto';
-import Tooltip from '@/shared/ui/base/Tooltip';
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router';
+
 import { useCopyToClipboard } from '@/hooks';
+import ProfilePhoto from '@/shared/ui/base/ProfilePhoto/ProfilePhoto';
+import Tooltip from '@/shared/ui/base/Tooltip';
 import { useProfileStore } from '@/store';
+
+import style from './photoid.module.scss';
+
 import './variables.css';
 
 function PhotoID() {

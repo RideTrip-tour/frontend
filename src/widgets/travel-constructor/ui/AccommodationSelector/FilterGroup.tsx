@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+
 import styles from './AccommodationSelector.module.scss';
 
 interface FilterGroupProps {

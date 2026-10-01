@@ -1,7 +1,8 @@
-import style from './calendarheader.module.scss';
-import './variables.css';
-
 import { MONTH_LABELS_RU } from '@/shared/ui/compose/DateRangePicker/constants.ts';
+
+import style from './calendarheader.module.scss';
+
+import './variables.css';
 
 interface CalendarHeaderProps {
   displayYear: number;

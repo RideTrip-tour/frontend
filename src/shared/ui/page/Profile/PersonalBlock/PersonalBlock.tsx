@@ -1,6 +1,8 @@
-import type { ReactNode } from 'react';
 import { Icon } from '@iconify/react';
+import type { ReactNode } from 'react';
+
 import style from './personalblock.module.scss';
+
 import './variables.css';
 
 interface PersonalBlockProps {
