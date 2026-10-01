@@ -2,14 +2,14 @@
   --animation-speed-button: 100ms;
 }
 
-body[data-theme="light"] {
+body[data-theme='light'] {
   --steps-dot-bg: var(--color-blue);
   --steps-dot-color: var(--color-white);
 
   --steps-connector-color: var(--color-blue);
 
   --steps-card-bg: var(--color-white);
-  --shadow-card: 0px 3px 10px 2px rgba(26, 26, 26, 0.10);
+  --shadow-card: 0px 3px 10px 2px rgba(26, 26, 26, 0.1);
 
   --steps-title-color: var(--color-black);
   --steps-text-color: var(--color-gray-dark);
@@ -22,6 +22,5 @@ body[data-theme="light"] {
   --steps-cta-text-hover: var(--color-white);
 }
 
-body[data-theme="dark"] {
-
+body[data-theme='dark'] {
 }

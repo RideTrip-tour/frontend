@@ -1,11 +1,9 @@
 :root {
-
 }
 
-body[data-theme="light"] {
+body[data-theme='light'] {
   --securityblock-bg: var(--color-white);
 }
 
-body[data-theme="dark"] {
-
+body[data-theme='dark'] {
 }

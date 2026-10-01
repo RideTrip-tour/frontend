@@ -1,5 +1,6 @@
-import styles from "./SearchInput.module.css";
-import { SearchIcon } from "@/assets/icons/constructor";
+import { SearchIcon } from '@/assets/icons/constructor';
+
+import styles from './SearchInput.module.css';
 
 interface SearchInputProps {
   id?: string;
@@ -15,18 +16,15 @@ export function SearchInput({
   name,
   value,
   onChange,
-  placeholder = "Поиск...",
-  ariaLabel = "Поиск",
+  placeholder = 'Поиск...',
+  ariaLabel = 'Поиск',
 }: SearchInputProps) {
   return (
     <div className={styles.searchWrapper}>
-      <label
-        htmlFor={id}
-        className={styles.visuallyHidden}
-      >
+      <label htmlFor={id} className={styles.visuallyHidden}>
         {ariaLabel}
       </label>
-      
+
       <input
         id={id}
         name={name}

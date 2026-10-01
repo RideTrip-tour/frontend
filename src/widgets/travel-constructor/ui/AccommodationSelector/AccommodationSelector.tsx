@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react';
-import { SearchInput } from '@/shared/ui/base/SearchInput';
-import { AccommodationMapModal } from '@/widgets/travel-constructor/ui/AccommodationMapModal';
+
 import {
   MOCK_ACCOMMODATIONS,
   type Accommodation,
   type AccommodationOption,
 } from '@/entities/accommodation';
+import { SearchInput } from '@/shared/ui/base/SearchInput';
 import {
   MAX_PRICE,
   RATING_FILTERS,
@@ -15,8 +15,11 @@ import {
   MOCK_TOTAL_ACCOMMODATION_COUNT,
   UNAVAILABLE_SEARCH_QUERIES,
 } from '@/widgets/travel-constructor/mocks/accommodationScenarios';
+import { AccommodationMapModal } from '@/widgets/travel-constructor/ui/AccommodationMapModal';
+
 import { AccommodationFilters } from './AccommodationFilters';
 import { AccommodationResults } from './AccommodationResults';
+
 import styles from './AccommodationSelector.module.scss';
 
 interface AccommodationSelectorProps {
@@ -51,10 +54,9 @@ export function AccommodationSelector({
   const [isMapOpen, setIsMapOpen] = useState(false);
 
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase('ru-RU');
-  const hasNoAvailableRooms = availabilityStatus === 'no-rooms'
-    || UNAVAILABLE_SEARCH_QUERIES.some(
-      (query) => normalizedQuery.includes(query),
-    );
+  const hasNoAvailableRooms =
+    availabilityStatus === 'no-rooms' ||
+    UNAVAILABLE_SEARCH_QUERIES.some((query) => normalizedQuery.includes(query));
 
   const filteredAccommodations = useMemo(() => {
     if (hasNoAvailableRooms) {
@@ -62,28 +64,34 @@ export function AccommodationSelector({
     }
 
     return options.filter((option) => {
-      const matchesSearch = !normalizedQuery
-        || option.name.toLocaleLowerCase('ru-RU').includes(normalizedQuery)
-        || option.location.toLocaleLowerCase('ru-RU').includes(normalizedQuery);
-      const matchesPrice = option.pricePerNight >= minPrice
-        && option.pricePerNight <= maxPrice;
-      const matchesLocation = locationFilters.length === 0
-        || locationFilters.every((filter) => option.locations.includes(filter));
-      const matchesAmenities = amenityFilters.length === 0
-        || amenityFilters.every((filter) => option.amenities.includes(filter));
-      const matchesExpandedFilters = expandedFilters.length === 0
-        || expandedFilters.every((filter) => option.expandedFilters.includes(filter));
-      const matchesRating = ratingFilter === RATING_FILTERS[0]
-        || (ratingFilter === '4,5 и выше' && option.rating >= 4.5)
-        || (ratingFilter === '4 и выше' && option.rating >= 4)
-        || (ratingFilter === '3 и выше' && option.rating >= 3);
+      const matchesSearch =
+        !normalizedQuery ||
+        option.name.toLocaleLowerCase('ru-RU').includes(normalizedQuery) ||
+        option.location.toLocaleLowerCase('ru-RU').includes(normalizedQuery);
+      const matchesPrice = option.pricePerNight >= minPrice && option.pricePerNight <= maxPrice;
+      const matchesLocation =
+        locationFilters.length === 0 ||
+        locationFilters.every((filter) => option.locations.includes(filter));
+      const matchesAmenities =
+        amenityFilters.length === 0 ||
+        amenityFilters.every((filter) => option.amenities.includes(filter));
+      const matchesExpandedFilters =
+        expandedFilters.length === 0 ||
+        expandedFilters.every((filter) => option.expandedFilters.includes(filter));
+      const matchesRating =
+        ratingFilter === RATING_FILTERS[0] ||
+        (ratingFilter === '4,5 и выше' && option.rating >= 4.5) ||
+        (ratingFilter === '4 и выше' && option.rating >= 4) ||
+        (ratingFilter === '3 и выше' && option.rating >= 3);
 
-      return matchesSearch
-        && matchesPrice
-        && matchesLocation
-        && matchesAmenities
-        && matchesExpandedFilters
-        && matchesRating;
+      return (
+        matchesSearch &&
+        matchesPrice &&
+        matchesLocation &&
+        matchesAmenities &&
+        matchesExpandedFilters &&
+        matchesRating
+      );
     });
   }, [
     amenityFilters,
@@ -98,13 +106,13 @@ export function AccommodationSelector({
   ]);
 
   const hasActiveFilters = Boolean(
-    normalizedQuery
-    || minPrice > 0
-    || maxPrice < MAX_PRICE
-    || locationFilters.length
-    || amenityFilters.length
-    || expandedFilters.length
-    || ratingFilter !== RATING_FILTERS[0],
+    normalizedQuery ||
+    minPrice > 0 ||
+    maxPrice < MAX_PRICE ||
+    locationFilters.length ||
+    amenityFilters.length ||
+    expandedFilters.length ||
+    ratingFilter !== RATING_FILTERS[0],
   );
   const resultCount = hasActiveFilters
     ? filteredAccommodations.length
@@ -128,7 +136,9 @@ export function AccommodationSelector({
         maxPrice={maxPrice}
         minPrice={minPrice}
         onAmenityToggle={(option) => setAmenityFilters((filters) => toggleValue(filters, option))}
-        onExpandedFilterToggle={(option) => setExpandedFilters((filters) => toggleValue(filters, option))}
+        onExpandedFilterToggle={(option) =>
+          setExpandedFilters((filters) => toggleValue(filters, option))
+        }
         onLocationToggle={(option) => setLocationFilters((filters) => toggleValue(filters, option))}
         onMaxPriceChange={setMaxPrice}
         onMinPriceChange={setMinPrice}

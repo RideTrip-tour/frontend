@@ -1,1 +1,1 @@
-export { default } from './ToggleRow.tsx'
+export { default } from './ToggleRow.tsx';

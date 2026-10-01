@@ -1,1 +1,1 @@
-export {default} from './ReviewBigCard.tsx'
+export { default } from './ReviewBigCard.tsx';

@@ -1,1 +1,1 @@
-export {default} from './ToggleText.tsx'
+export { default } from './ToggleText.tsx';

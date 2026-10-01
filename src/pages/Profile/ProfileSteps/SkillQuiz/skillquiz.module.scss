@@ -37,14 +37,14 @@
     }
 
     &__title {
-      color: #1A1A1A;
+      color: #1a1a1a;
       font-family: var(--text-font-family), sans-serif;
       font-size: 20px;
       font-weight: 700;
     }
 
     &__subtitle {
-      color: #5F6C7B;
+      color: #5f6c7b;
       font-family: var(--text-font-family), sans-serif;
       font-size: 15px;
     }
@@ -58,7 +58,7 @@
     width: 100%;
 
     &__counter {
-      color: #0E68D4;
+      color: #0e68d4;
       font-family: var(--text-font-family), sans-serif;
       font-size: 28px;
       font-weight: 500;
@@ -66,7 +66,7 @@
     }
 
     &__text {
-      color: #1A1A1A;
+      color: #1a1a1a;
       font-family: var(--text-font-family), sans-serif;
       font-size: 18px;
       font-weight: 700;
@@ -99,7 +99,7 @@
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      border: 1.5px solid #AFB6BD;
+      border: 1.5px solid #afb6bd;
       background: #fff;
       display: flex;
       align-items: center;
@@ -108,8 +108,8 @@
       transition: all 0.15s ease;
 
       &--selected {
-        border-color: #0E68D4;
-        background: #0E68D4;
+        border-color: #0e68d4;
+        background: #0e68d4;
       }
 
       &__dot {
@@ -123,7 +123,7 @@
     &__label {
       font-family: var(--text-font-family), sans-serif;
       font-size: 16px;
-      color: #1A1A1A;
+      color: #1a1a1a;
       line-height: 1.4;
     }
   }
@@ -148,14 +148,14 @@
     gap: 4px;
 
     &__title {
-      color: #0E68D4;
+      color: #0e68d4;
       font-family: var(--text-font-family), sans-serif;
       font-size: 22px;
       font-weight: 700;
     }
 
     &__subtitle {
-      color: #5F6C7B;
+      color: #5f6c7b;
       font-family: var(--text-font-family), sans-serif;
       font-size: 15px;
     }
@@ -179,13 +179,13 @@
 
     &__fill {
       height: 100%;
-      background: #0E68D4;
+      background: #0e68d4;
       border-radius: 99px;
       transition: width 0.4s ease;
     }
 
     &__label {
-      color: #5F6C7B;
+      color: #5f6c7b;
       font-size: 13px;
       font-family: var(--text-font-family), sans-serif;
     }
@@ -209,7 +209,7 @@
     }
 
     &__level {
-      color: #1A1A1A;
+      color: #1a1a1a;
       font-family: var(--text-font-family), sans-serif;
       font-size: 28px;
       font-weight: 600;
@@ -219,7 +219,7 @@
 
     &__formats {
       &__title {
-        color: #5F6C7B;
+        color: #5f6c7b;
         font-family: var(--text-font-family), sans-serif;
         font-size: 17px;
         font-weight: 700;
@@ -232,7 +232,7 @@
         gap: 10px;
         font-family: var(--text-font-family), sans-serif;
         font-size: 15px;
-        color: #1A1A1A;
+        color: #1a1a1a;
       }
 
       &__item {
@@ -242,7 +242,7 @@
       }
 
       &__icon {
-        color: #0E68D4;
+        color: #0e68d4;
         flex-shrink: 0;
         font-size: 16px;
         margin-top: 2px;
@@ -253,7 +253,7 @@
       }
 
       &__accent {
-        color: #0E68D4;
+        color: #0e68d4;
         font-weight: 600;
       }
     }
@@ -265,7 +265,7 @@
       gap: 8px;
 
       &__note {
-        color: #5F6C7B;
+        color: #5f6c7b;
         font-size: 13px;
         font-family: var(--text-font-family), sans-serif;
       }
@@ -283,7 +283,7 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    background: #0E68D4;
+    background: #0e68d4;
     color: #fff;
     border: none;
     border-radius: 40px;
@@ -295,7 +295,7 @@
     transition: background 0.2s ease;
 
     &--disabled {
-      background: #B0BEC5;
+      background: #b0bec5;
       cursor: not-allowed;
     }
   }

@@ -1,23 +1,20 @@
-import {type ReactNode, useState } from 'react'
-import './variables.css'
-import style from './tooltip.module.scss'
+import { type ReactNode, useState } from 'react';
+
+import style from './tooltip.module.scss';
+
+import './variables.css';
 
 interface TooltipProps {
-  text: string
-  position?: 'top' | 'bottom' | 'left' | 'right'
-  visible?: boolean
-  children: ReactNode
+  text: string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
+  visible?: boolean;
+  children: ReactNode;
 }
 
-const Tooltip = ({
-                   text,
-                   position = 'top',
-                   visible,
-                   children
-                 }: TooltipProps) => {
-  const [hoverVisible, setHoverVisible] = useState(false)
+const Tooltip = ({ text, position = 'top', visible, children }: TooltipProps) => {
+  const [hoverVisible, setHoverVisible] = useState(false);
 
-  const isVisible = visible === true || (visible === undefined && hoverVisible)
+  const isVisible = visible === true || (visible === undefined && hoverVisible);
 
   return (
     <div
@@ -33,7 +30,7 @@ const Tooltip = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Tooltip
+export default Tooltip;

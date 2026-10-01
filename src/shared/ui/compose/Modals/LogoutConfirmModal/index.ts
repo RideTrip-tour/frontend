@@ -1,1 +1,1 @@
-export { default } from './LogoutConfirmModal.tsx'
+export { default } from './LogoutConfirmModal.tsx';

@@ -1,1 +1,1 @@
-export {default} from './RatingStars.tsx'
+export { default } from './RatingStars.tsx';

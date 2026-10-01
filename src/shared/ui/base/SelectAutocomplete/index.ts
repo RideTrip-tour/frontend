@@ -1,1 +1,1 @@
-export {default} from './SelectAutocomplete.tsx'
+export { default } from './SelectAutocomplete.tsx';

@@ -1,1 +1,1 @@
-export { ReadyTours } from './ReadyTours'
+export { ReadyTours } from './ReadyTours';

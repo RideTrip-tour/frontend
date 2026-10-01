@@ -1,9 +1,9 @@
-import Welcome from '@/pages/Home/Welcome'
-import Choice from '@/pages/Home/Choice'
-import Recommendations from '@/pages/Home/Recommendations'
-import Planning from '@/pages/Home/Planning'
-import PersonalSelection from '@/pages/Home/PersonalSelection'
-import Clients from '@/pages/Home/Clients'
+import Choice from '@/pages/Home/Choice';
+import Clients from '@/pages/Home/Clients';
+import PersonalSelection from '@/pages/Home/PersonalSelection';
+import Planning from '@/pages/Home/Planning';
+import Recommendations from '@/pages/Home/Recommendations';
+import Welcome from '@/pages/Home/Welcome';
 
 function HomePage() {
   return (
@@ -15,7 +15,7 @@ function HomePage() {
       <PersonalSelection />
       <Clients />
     </>
-  )
+  );
 }
 
-export default HomePage
+export default HomePage;

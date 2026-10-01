@@ -1,18 +1,30 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Icon } from '@iconify/react'
-import style from './skillquiz.module.scss'
+import { Icon } from '@iconify/react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+
+import style from './skillquiz.module.scss';
 
 const QUESTIONS = [
   {
     id: 1,
     text: 'Какой у Вас опыт катания?',
-    options: ['Никогда не катался', 'Пробовал несколько раз', 'Катаюсь иногда', 'Катаюсь регулярно'],
+    options: [
+      'Никогда не катался',
+      'Пробовал несколько раз',
+      'Катаюсь иногда',
+      'Катаюсь регулярно',
+    ],
     scores: [0, 1, 2, 3],
   },
   {
     id: 2,
     text: 'Какую сложность трасс вы обычно выбираете?',
-    options: ['Только зелёные', 'Зелёные и синие', 'Синие и красные', 'Красные и чёрные', 'Катаюсь вне трасс'],
+    options: [
+      'Только зелёные',
+      'Зелёные и синие',
+      'Синие и красные',
+      'Красные и чёрные',
+      'Катаюсь вне трасс',
+    ],
     scores: [0, 1, 2, 3, 4],
   },
   {
@@ -33,46 +45,52 @@ const QUESTIONS = [
     options: ['Нет, хочу спокойное катание', 'Иногда', 'Да'],
     scores: [0, 1, 2],
   },
-]
+];
 
 const LOADING_TEXTS = [
   'Анализируем ваши ответы...',
   'Определяем уровень...',
   'Ищем идеальные туры...',
-]
+];
 
-const LOADING_BAR_STEPS = [15, 35, 55, 72, 88, 100]
+const LOADING_BAR_STEPS = [15, 35, 55, 72, 88, 100];
 
 interface Level {
-  label: string
-  formats: string[]
-  highlight: string
+  label: string;
+  formats: string[];
+  highlight: string;
 }
 
-type QuizStep = 'intro' | number | 'loading' | 'result'
+type QuizStep = 'intro' | number | 'loading' | 'result';
 
 const getLevel = (totalScore: number): Level => {
-  if (totalScore <= 2) return {
-    label: '«Новичок»',
-    formats: ['Подойдут зелёные трассы', 'Спокойные маршруты', 'Туры с инструкторами'],
-    highlight: 'групповых туров',
-  }
-  if (totalScore <= 7) return {
-    label: '«Средний»',
-    formats: ['Зелёные и синие трассы', 'Маршруты средней сложности', 'Туры с гидом по живописным склонам'],
-    highlight: 'синих трасс с гидом',
-  }
+  if (totalScore <= 2)
+    return {
+      label: '«Новичок»',
+      formats: ['Подойдут зелёные трассы', 'Спокойные маршруты', 'Туры с инструкторами'],
+      highlight: 'групповых туров',
+    };
+  if (totalScore <= 7)
+    return {
+      label: '«Средний»',
+      formats: [
+        'Зелёные и синие трассы',
+        'Маршруты средней сложности',
+        'Туры с гидом по живописным склонам',
+      ],
+      highlight: 'синих трасс с гидом',
+    };
   return {
     label: '«Продвинутый»',
     formats: ['Синие и красные трассы', 'Динамичные маршруты', 'Технические спуски и ски-туры'],
     highlight: 'красных трасс и ски-туров',
-  }
-}
+  };
+};
 
 interface QuizOptionProps {
-  label: string
-  selected: boolean
-  onClick: () => void
+  label: string;
+  selected: boolean;
+  onClick: () => void;
 }
 
 const QuizOption = ({ label, selected, onClick }: QuizOptionProps) => (
@@ -82,28 +100,30 @@ const QuizOption = ({ label, selected, onClick }: QuizOptionProps) => (
     onClick={onClick}
     aria-pressed={selected}
   >
-    <div className={`${style.skillquiz__option__radio} ${selected ? style['skillquiz__option__radio--selected'] : ''}`}>
+    <div
+      className={`${style.skillquiz__option__radio} ${selected ? style['skillquiz__option__radio--selected'] : ''}`}
+    >
       {selected && <div className={style.skillquiz__option__radio__dot} />}
     </div>
     <span className={style.skillquiz__option__label}>{label}</span>
   </button>
-)
+);
 
 const LoadingBar = () => {
-  const [percent, setPercent] = useState(0)
+  const [percent, setPercent] = useState(0);
 
   useEffect(() => {
-    let index = 0
+    let index = 0;
     const interval = setInterval(() => {
       if (index < LOADING_BAR_STEPS.length) {
-        setPercent(LOADING_BAR_STEPS[index])
-        index++
+        setPercent(LOADING_BAR_STEPS[index]);
+        index++;
       } else {
-        clearInterval(interval)
+        clearInterval(interval);
       }
-    }, 420)
-    return () => clearInterval(interval)
-  }, [])
+    }, 420);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className={style.skillquiz__loadingbar}>
@@ -112,96 +132,95 @@ const LoadingBar = () => {
       </div>
       <span className={style.skillquiz__loadingbar__label}>Готово: {percent}%</span>
     </div>
-  )
-}
+  );
+};
 
 const LoadingText = () => {
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex(prev => (prev < LOADING_TEXTS.length - 1 ? prev + 1 : prev))
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [])
+      setIndex((prev) => (prev < LOADING_TEXTS.length - 1 ? prev + 1 : prev));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className={style.skillquiz__loadingtext}>
       <div className={style.skillquiz__loadingtext__title}>{LOADING_TEXTS[index]}</div>
       <div className={style.skillquiz__loadingtext__subtitle}>Подбираем варианты под вас</div>
     </div>
-  )
-}
+  );
+};
 
 const SkillQuiz = () => {
-  const [visibleStep, setVisibleStep] = useState<QuizStep>('intro')
-  const [isExiting, setIsExiting] = useState(false)
-  const [answers, setAnswers] = useState<Record<number, number>>({})
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const [visibleStep, setVisibleStep] = useState<QuizStep>('intro');
+  const [isExiting, setIsExiting] = useState(false);
+  const [answers, setAnswers] = useState<Record<number, number>>({});
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  const wrapperRef = useRef<HTMLDivElement>(null)
-  const bodyRef = useRef<HTMLDivElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
 
-  const totalQ = QUESTIONS.length
-  const currentQ = typeof visibleStep === 'number' ? QUESTIONS[visibleStep - 1] : null
-  const isLastQuestion = visibleStep === totalQ
-  const totalScore = Object.values(answers).reduce((sum, score) => sum + score, 0)
-  const level = getLevel(totalScore)
+  const totalQ = QUESTIONS.length;
+  const currentQ = typeof visibleStep === 'number' ? QUESTIONS[visibleStep - 1] : null;
+  const isLastQuestion = visibleStep === totalQ;
+  const totalScore = Object.values(answers).reduce((sum, score) => sum + score, 0);
+  const level = getLevel(totalScore);
 
   useLayoutEffect(() => {
-    const wrapper = wrapperRef.current
-    const body = bodyRef.current
-    if (!wrapper || !body) return
+    const wrapper = wrapperRef.current;
+    const body = bodyRef.current;
+    if (!wrapper || !body) return;
 
     const updateHeight = () => {
-      const height = body.offsetHeight
-      if (height > 0) wrapper.style.height = `${height}px`
-    }
+      const height = body.offsetHeight;
+      if (height > 0) wrapper.style.height = `${height}px`;
+    };
 
-    updateHeight()
-    const observer = new ResizeObserver(updateHeight)
-    observer.observe(body)
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(body);
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   const transitionTo = (newStep: QuizStep) => {
-    setIsExiting(true)
+    setIsExiting(true);
     setTimeout(() => {
-      setVisibleStep(newStep)
-      setIsExiting(false)
-    }, 300)
-  }
+      setVisibleStep(newStep);
+      setIsExiting(false);
+    }, 300);
+  };
 
   const handleStart = () => {
-    setSelectedIndex(null)
-    setAnswers({})
-    transitionTo(1)
-  }
+    setSelectedIndex(null);
+    setAnswers({});
+    transitionTo(1);
+  };
 
   const handleNext = () => {
-    if (selectedIndex === null || !currentQ) return
-    const updatedAnswers = { ...answers, [currentQ.id]: currentQ.scores[selectedIndex] }
-    setAnswers(updatedAnswers)
+    if (selectedIndex === null || !currentQ) return;
+    const updatedAnswers = { ...answers, [currentQ.id]: currentQ.scores[selectedIndex] };
+    setAnswers(updatedAnswers);
     if (!isLastQuestion) {
-      setSelectedIndex(null)
-      transitionTo((visibleStep as number) + 1)
+      setSelectedIndex(null);
+      transitionTo((visibleStep as number) + 1);
     } else {
-      transitionTo('loading')
-      setTimeout(() => transitionTo('result'), 3300)
+      transitionTo('loading');
+      setTimeout(() => transitionTo('result'), 3300);
     }
-  }
+  };
 
   const bodyClass = [
     style.skillquiz__body,
     isExiting ? style['skillquiz__body--exit'] : style['skillquiz__body--enter'],
-  ].join(' ')
+  ].join(' ');
 
   return (
     <div className={style.skillquiz}>
       <div ref={wrapperRef} className={style.skillquiz__wrapper}>
         <div ref={bodyRef} className={bodyClass}>
-
           {visibleStep === 'intro' && (
             <div className={style.skillquiz__intro}>
               <div className={style.skillquiz__intro__texts}>
@@ -218,7 +237,11 @@ const SkillQuiz = () => {
 
           {visibleStep === 'loading' && (
             <div className={style.skillquiz__loading}>
-              <img src="/assets/images/pages/profile/quiz-level.gif" alt="Загрузка" className={style.skillquiz__loading__gif} />
+              <img
+                src="/assets/images/pages/profile/quiz-level.gif"
+                alt="Загрузка"
+                className={style.skillquiz__loading__gif}
+              />
               <LoadingText />
               <LoadingBar />
             </div>
@@ -233,23 +256,33 @@ const SkillQuiz = () => {
               <div className={style.skillquiz__result__formats}>
                 <div className={style.skillquiz__result__formats__title}>Подходящие форматы:</div>
                 <div className={style.skillquiz__result__formats__list}>
-                  {level.formats.map(format => (
+                  {level.formats.map((format) => (
                     <div key={format} className={style.skillquiz__result__formats__item}>
-                      <Icon icon="material-symbols:check" className={style.skillquiz__result__formats__icon} />
+                      <Icon
+                        icon="material-symbols:check"
+                        className={style.skillquiz__result__formats__icon}
+                      />
                       <span>{format}</span>
                     </div>
                   ))}
                   <div className={style.skillquiz__result__formats__highlight}>
                     Лучше всего начать с{' '}
-                    <span className={style.skillquiz__result__formats__accent}>{level.highlight}</span>
+                    <span className={style.skillquiz__result__formats__accent}>
+                      {level.highlight}
+                    </span>
                   </div>
                 </div>
               </div>
               <div className={style.skillquiz__result__actions}>
-                <button className={style.skillquiz__button} onClick={() => alert('Смотреть варианты')}>
+                <button
+                  className={style.skillquiz__button}
+                  onClick={() => alert('Смотреть варианты')}
+                >
                   Смотреть варианты
                 </button>
-                <span className={style.skillquiz__result__actions__note}>Ваши навыки подтверждены</span>
+                <span className={style.skillquiz__result__actions__note}>
+                  Ваши навыки подтверждены
+                </span>
               </div>
             </div>
           )}
@@ -272,7 +305,6 @@ const SkillQuiz = () => {
               </div>
             </div>
           )}
-
         </div>
       </div>
 
@@ -290,7 +322,7 @@ const SkillQuiz = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SkillQuiz
+export default SkillQuiz;

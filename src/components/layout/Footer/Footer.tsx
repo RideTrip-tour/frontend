@@ -1,11 +1,11 @@
-import style from './footer.module.scss'
-import {Icon} from '@iconify/react'
+import { Icon } from '@iconify/react';
+
+import style from './footer.module.scss';
 
 export function Footer() {
   return (
     <footer className={style.footer}>
       <div className={style.footer__inner}>
-
         <div className={style.footer__top}>
           <div className={style.footer__brand}>
             <div className={style.footer__logo}>Logo</div>
@@ -34,36 +34,51 @@ export function Footer() {
           <div className={style.footer__sections}>
             <div className={style.footer__section}>
               <div className={style.footer__sectionTitle}>НАВИГАЦИЯ</div>
-              <a href="/" className={style.footer__sectionLink}>Главная</a>
-              <a href="/trip-builder" className={style.footer__sectionLink}>Собрать поездку</a>
-              <a href="/tours" className={style.footer__sectionLink}>Мои туры</a>
-              <a href="/saved" className={style.footer__sectionLink}>Избранные</a>
+              <a href="/" className={style.footer__sectionLink}>
+                Главная
+              </a>
+              <a href="/trip-builder" className={style.footer__sectionLink}>
+                Собрать поездку
+              </a>
+              <a href="/tours" className={style.footer__sectionLink}>
+                Мои туры
+              </a>
+              <a href="/saved" className={style.footer__sectionLink}>
+                Избранные
+              </a>
             </div>
 
             <div className={style.footer__section}>
               <div className={style.footer__sectionTitle}>Как это работает</div>
-              <a href="/how-to-build" className={style.footer__sectionLink}>Как собрать поездку?</a>
-              <a href="/what-to-take" className={style.footer__sectionLink}>Что взять с собой?</a>
-              <a href="/quick-search" className={style.footer__sectionLink}>Быстрый подбор</a>
-              <a href="/advanced-search" className={style.footer__sectionLink}>Расширенный поиск</a>
+              <a href="/how-to-build" className={style.footer__sectionLink}>
+                Как собрать поездку?
+              </a>
+              <a href="/what-to-take" className={style.footer__sectionLink}>
+                Что взять с собой?
+              </a>
+              <a href="/quick-search" className={style.footer__sectionLink}>
+                Быстрый подбор
+              </a>
+              <a href="/advanced-search" className={style.footer__sectionLink}>
+                Расширенный поиск
+              </a>
             </div>
 
             <div className={style.footer__section}>
               <div className={style.footer__sectionTitle}>О сервисе</div>
-              <a href="/about" className={style.footer__sectionLink}>О нас</a>
-              <a href="/reviews" className={style.footer__sectionLink}>Отзывы</a>
+              <a href="/about" className={style.footer__sectionLink}>
+                О нас
+              </a>
+              <a href="/reviews" className={style.footer__sectionLink}>
+                Отзывы
+              </a>
             </div>
           </div>
         </div>
 
         <div className={style.footer__support}>
-          <span className={style.footer__supportLabel}>
-            Нужна помощь? Напишите нам
-          </span>
-          <a
-            href="mailto:support.travel@mail.ru"
-            className={style.footer__supportEmail}
-          >
+          <span className={style.footer__supportLabel}>Нужна помощь? Напишите нам</span>
+          <a href="mailto:support.travel@mail.ru" className={style.footer__supportEmail}>
             support.travel@mail.ru
           </a>
         </div>
@@ -86,8 +101,7 @@ export function Footer() {
             Условия использования
           </a>
         </div>
-
       </div>
     </footer>
-  )
+  );
 }

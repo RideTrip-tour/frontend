@@ -1,4 +1,4 @@
-import {type RefObject, useEffect, useRef, useState} from 'react'
+import { type RefObject, useEffect, useRef, useState } from 'react';
 
 interface UseInfiniteLoaderProps {
   onLoadMore?: (count: number | undefined) => void | Promise<void>;
@@ -12,15 +12,15 @@ interface UseInfiniteLoaderProps {
 }
 
 export const useInfiniteLoader = ({
-                                    onLoadMore,
-                                    loadThreshold = 3,
-                                    itemsPerLoad = 10,
-                                    maxItems = Infinity,
-                                    isLoading = false,
-                                    totalItems,
-                                    containerRef,
-                                    enabled = true
-                                  }: UseInfiniteLoaderProps) => {
+  onLoadMore,
+  loadThreshold = 3,
+  itemsPerLoad = 10,
+  maxItems = Infinity,
+  isLoading = false,
+  totalItems,
+  containerRef,
+  enabled = true,
+}: UseInfiniteLoaderProps) => {
   const [visibleIndices, setVisibleIndices] = useState<Set<number>>(new Set());
   const hasLoadedMoreRef = useRef(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -48,8 +48,8 @@ export const useInfiniteLoader = ({
       {
         root: containerRef.current,
         threshold: 0.3,
-        rootMargin: '0px 200px 0px 0px'
-      }
+        rootMargin: '0px 200px 0px 0px',
+      },
     );
 
     const children = containerRef.current.querySelectorAll('[data-index]');
@@ -61,7 +61,13 @@ export const useInfiniteLoader = ({
   }, [totalItems, containerRef, enabled, onLoadMore]);
 
   useEffect(() => {
-    if (!onLoadMore || !enabled || isLoading || hasLoadedMoreRef.current || totalItems >= maxItems) {
+    if (
+      !onLoadMore ||
+      !enabled ||
+      isLoading ||
+      hasLoadedMoreRef.current ||
+      totalItems >= maxItems
+    ) {
       return;
     }
 
@@ -77,10 +83,19 @@ export const useInfiniteLoader = ({
         hasLoadedMoreRef.current = false;
       });
     }
-  }, [visibleIndices, totalItems, onLoadMore, loadThreshold, itemsPerLoad, maxItems, isLoading, enabled]);
+  }, [
+    visibleIndices,
+    totalItems,
+    onLoadMore,
+    loadThreshold,
+    itemsPerLoad,
+    maxItems,
+    isLoading,
+    enabled,
+  ]);
 
   return {
     visibleIndices,
-    shouldShowLoader: enabled && !!onLoadMore && totalItems < maxItems
+    shouldShowLoader: enabled && !!onLoadMore && totalItems < maxItems,
   };
 };

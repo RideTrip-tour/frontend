@@ -1,2 +1,2 @@
-export { useCopyToClipboard } from './useCopyToClipboard'
-export { useInitProfile } from './useInitProfile'
+export { useCopyToClipboard } from './useCopyToClipboard';
+export { useInitProfile } from './useInitProfile';

@@ -1,8 +1,9 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { meRequest } from "@/services/usersService";
-import type { CurrentUser } from "@/services/usersService";
-import { setSessionExpiredHandler } from "@/shared/api/sessionEvents";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+import { meRequest } from '@/services/usersService';
+import type { CurrentUser } from '@/services/usersService';
+import { setSessionExpiredHandler } from '@/shared/api/sessionEvents';
 
 type AuthState = {
   user: CurrentUser | null;
@@ -28,7 +29,7 @@ export const useAuthStore = create<AuthState>()(
       logout: () => {
         set({
           user: null,
-          isAuth: false
+          isAuth: false,
         });
       },
 
@@ -42,16 +43,16 @@ export const useAuthStore = create<AuthState>()(
         } finally {
           set({ isLoading: false });
         }
-      }
+      },
     }),
     {
-      name: "auth-storage",
+      name: 'auth-storage',
       partialize: (state) => ({
         user: state.user,
-        isAuth: state.isAuth
-      })
-    }
-  )
+        isAuth: state.isAuth,
+      }),
+    },
+  ),
 );
 
 setSessionExpiredHandler(() => useAuthStore.getState().logout());

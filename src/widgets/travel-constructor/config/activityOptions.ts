@@ -6,11 +6,7 @@ export const PRIMARY_ACTIVITIES = [
   'Ски-туры/Сплитбординг',
 ] as const;
 
-export const ADDITIONAL_ACTIVITIES = [
-  'Сноупарк',
-  'Бэккантри',
-  'Хели-ски',
-] as const;
+export const ADDITIONAL_ACTIVITIES = ['Сноупарк', 'Бэккантри', 'Хели-ски'] as const;
 
 export const LIFT_TYPES = [
   'Ленточный',

@@ -1,2 +1,2 @@
-export * from "./layout";
-export { ProtectedRoute } from "./ProtectedRoute";
+export * from './layout';
+export { ProtectedRoute } from './ProtectedRoute';

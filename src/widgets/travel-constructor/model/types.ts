@@ -32,15 +32,7 @@ export interface GuestSelection {
 }
 
 export type ConstructorSelectionId =
-  | 'from'
-  | 'to'
-  | 'when'
-  | 'activity'
-  | 'hotel'
-  | 'transfer'
-  | 'people'
-  | 'level'
-  | 'additional';
+  'from' | 'to' | 'when' | 'activity' | 'hotel' | 'transfer' | 'people' | 'level' | 'additional';
 
 export interface ConstructorState {
   fromCity: City | null;

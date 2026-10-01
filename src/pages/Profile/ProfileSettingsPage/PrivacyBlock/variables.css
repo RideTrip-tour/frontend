@@ -1,11 +1,9 @@
 :root {
-
 }
 
-body[data-theme="light"] {
+body[data-theme='light'] {
   --privacyblock-group-title-color: var(--color-black);
 }
 
-body[data-theme="dark"] {
-
+body[data-theme='dark'] {
 }

@@ -1,1 +1,1 @@
-export {default} from './ProfilePhoto.tsx'
+export { default } from './ProfilePhoto.tsx';

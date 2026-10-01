@@ -1,8 +1,10 @@
-import ModalOverlay from '@/shared/ui/base/ModalOverlay'
-import { useId, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import styles from './AuthShell.module.scss';
+import { useId, type ReactNode } from 'react';
+
 import CloseIcon from '@/assets/icons/close.svg';
+import ModalOverlay from '@/shared/ui/base/ModalOverlay';
+
+import styles from './AuthShell.module.scss';
 
 type AuthShellProps = {
   title?: string;
@@ -31,7 +33,11 @@ export default function AuthShell({ title, onClose, customStyle, children }: Aut
           <img src={CloseIcon} alt="Закрыть" />
         </button>
 
-        {title && <h2 id={titleId} className={styles.title}>{title}</h2>}
+        {title && (
+          <h2 id={titleId} className={styles.title}>
+            {title}
+          </h2>
+        )}
 
         {children}
       </motion.div>

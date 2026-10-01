@@ -1,8 +1,7 @@
 :root {
-
 }
 
-body[data-theme="light"] {
+body[data-theme='light'] {
   --modal-bg: var(--color-white);
 
   --modal-title-color: var(--color-black);
@@ -11,6 +10,5 @@ body[data-theme="light"] {
   --modal-close-color: var(--color-gray-dark);
 }
 
-body[data-theme="dark"] {
-
+body[data-theme='dark'] {
 }

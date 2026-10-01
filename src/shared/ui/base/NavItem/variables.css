@@ -1,8 +1,7 @@
 :root {
-
 }
 
-body[data-theme="light"] {
+body[data-theme='light'] {
   --nav-item-bg: var(--color-white-30);
   --nav-item-color: var(--color-white);
 
@@ -10,6 +9,5 @@ body[data-theme="light"] {
   --nav-item-active-color: var(--color-black);
 }
 
-body[data-theme="dark"] {
-
+body[data-theme='dark'] {
 }

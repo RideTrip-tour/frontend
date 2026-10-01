@@ -7,7 +7,7 @@ export const useHorizontalDragScroll = <T extends HTMLElement>() => {
   const dragState = useRef({
     pointerStartX: 0,
     scrollStartLeft: 0,
-    isDragging: false
+    isDragging: false,
   });
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export const useHorizontalDragScroll = <T extends HTMLElement>() => {
       dragState.current = {
         pointerStartX: event.pageX,
         scrollStartLeft: container.scrollLeft,
-        isDragging: false
+        isDragging: false,
       };
     };
 

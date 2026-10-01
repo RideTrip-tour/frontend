@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
+
 import { AuthField, AuthShell } from './index';
+
 import styles from './AuthForm.module.scss';
 
 type ResetPasswordModalProps = {
@@ -18,7 +20,7 @@ export default function ResetPasswordModal({
   isLoading = false,
   serverError = '',
   onClose,
-  onSubmit
+  onSubmit,
 }: ResetPasswordModalProps) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -59,7 +61,7 @@ export default function ResetPasswordModal({
 
     await onSubmit?.({
       password: password.trim(),
-      confirmPassword: confirmPassword.trim()
+      confirmPassword: confirmPassword.trim(),
     });
   };
 

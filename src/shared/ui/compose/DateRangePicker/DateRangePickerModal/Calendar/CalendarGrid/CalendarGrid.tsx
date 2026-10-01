@@ -1,35 +1,34 @@
-import style from './calendargrid.module.scss'
-import './variables.css'
-import { useMemo, useCallback } from "react";
-import type { DayCellFlags, SelectionTab } from '@/shared/ui/compose/DateRangePicker/types.ts'
-import { areSameDay, buildCalendarCells } from '@/shared/ui/compose/DateRangePicker/utils.ts'
-import { WEEKDAY_LABELS_SHORT } from '@/shared/ui/compose/DateRangePicker/constants.ts'
+import { useMemo, useCallback } from 'react';
 
-import DayCell
-  from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid/DayCell'
-import WeekdayHeaderCell
-  from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid/WeekdayHeaderCell'
+import { WEEKDAY_LABELS_SHORT } from '@/shared/ui/compose/DateRangePicker/constants.ts';
+import DayCell from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid/DayCell';
+import WeekdayHeaderCell from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid/WeekdayHeaderCell';
+import type { DayCellFlags, SelectionTab } from '@/shared/ui/compose/DateRangePicker/types.ts';
+import { areSameDay, buildCalendarCells } from '@/shared/ui/compose/DateRangePicker/utils.ts';
+
+import style from './calendargrid.module.scss';
+
+import './variables.css';
 
 interface CalendarGridProps {
-  displayYear: number
-  displayMonth: number
-  selectionFrom: Date | null
-  selectionTo: Date | null
-  activeTab: SelectionTab
-  today: Date
-  onDayClick: (date: Date) => void
+  displayYear: number;
+  displayMonth: number;
+  selectionFrom: Date | null;
+  selectionTo: Date | null;
+  activeTab: SelectionTab;
+  today: Date;
+  onDayClick: (date: Date) => void;
 }
 
 function CalendarGrid({
-                               displayYear,
-                               displayMonth,
-                               selectionFrom,
-                               selectionTo,
-                               activeTab,
-                               today,
-                               onDayClick,
-                             }: CalendarGridProps) {
-
+  displayYear,
+  displayMonth,
+  selectionFrom,
+  selectionTo,
+  activeTab,
+  today,
+  onDayClick,
+}: CalendarGridProps) {
   const cells = useMemo(
     () => buildCalendarCells(displayYear, displayMonth),
     [displayYear, displayMonth],
@@ -53,15 +52,11 @@ function CalendarGrid({
         date < selectionTo
       );
 
-      const isDimmed = !!(
-        activeTab === "to" &&
-        selectionFrom &&
-        date < selectionFrom
-      );
+      const isDimmed = !!(activeTab === 'to' && selectionFrom && date < selectionFrom);
 
       let isDisabled: boolean;
 
-      if (activeTab === "from") {
+      if (activeTab === 'from') {
         isDisabled = date < today;
       } else {
         isDisabled = selectionFrom ? date < selectionFrom : date < today;
@@ -75,7 +70,7 @@ function CalendarGrid({
         isRangeStart,
         isRangeEnd,
         isInRange,
-        isDimmed
+        isDimmed,
       };
     },
     [selectionFrom, selectionTo, activeTab, today],
@@ -83,7 +78,6 @@ function CalendarGrid({
 
   return (
     <div className={style.calendargrid}>
-
       <div className={style.calendargrid__weekdays}>
         {WEEKDAY_LABELS_SHORT.map((label) => (
           <WeekdayHeaderCell label={label} />
@@ -93,22 +87,14 @@ function CalendarGrid({
       <div className={style.calendargrid__days}>
         {cells.map((date, cellIndex) =>
           date ? (
-            <DayCell
-              date={date}
-              flags={computeFlags(date)}
-              onClick={onDayClick}
-            />
+            <DayCell date={date} flags={computeFlags(date)} onClick={onDayClick} />
           ) : (
-            <div
-              key={`empty-${cellIndex}`}
-              className={style.calendargrid__empty}
-            />
-          )
+            <div key={`empty-${cellIndex}`} className={style.calendargrid__empty} />
+          ),
         )}
       </div>
-
     </div>
   );
 }
 
-export default CalendarGrid
+export default CalendarGrid;

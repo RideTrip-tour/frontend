@@ -40,9 +40,9 @@
     pointer-events: auto;
 
     transition:
-    font-size 150ms,
-    color 150ms,
-    opacity 150ms;
+      font-size 150ms,
+      color 150ms,
+      opacity 150ms;
 
     &--selected {
       font-weight: 700;
@@ -81,11 +81,11 @@
 
   &__gradientTop {
     top: 0;
-    background: linear-gradient(to bottom, rgba(255,255,255,1), transparent);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1), transparent);
   }
 
   &__gradientBottom {
     bottom: 0;
-    background: linear-gradient(to top, rgba(255,255,255,1), transparent);
+    background: linear-gradient(to top, rgba(255, 255, 255, 1), transparent);
   }
 }

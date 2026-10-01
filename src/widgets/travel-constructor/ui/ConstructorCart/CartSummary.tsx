@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from '@/assets/icons/constructor';
 import { Button } from '@/shared/ui/base/Button';
 import { formatPrice } from '@/widgets/travel-constructor/lib/formatters';
+
 import styles from './ConstructorCart.module.scss';
 
 interface CartSummaryProps {
@@ -9,11 +10,7 @@ interface CartSummaryProps {
   onCheckout: () => void;
 }
 
-export function CartSummary({
-  totalPrice,
-  hasSelectedItems,
-  onCheckout,
-}: CartSummaryProps) {
+export function CartSummary({ totalPrice, hasSelectedItems, onCheckout }: CartSummaryProps) {
   return (
     <>
       <div className={styles.totalRow}>

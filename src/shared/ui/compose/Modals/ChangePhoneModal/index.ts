@@ -1,1 +1,1 @@
-export { default } from './ChangePhoneModal.tsx'
+export { default } from './ChangePhoneModal.tsx';

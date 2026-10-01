@@ -1,32 +1,30 @@
-import {
-  forwardRef,
-  Children,
-  type ReactNode,
-  type RefObject, type CSSProperties
-} from 'react'
-import './variables.css'
-import style from './scrollslider.module.scss'
-import { useHorizontalDragScroll } from '@/hooks/useHorizontalDragScroll'
-import { useInfiniteLoader } from '@/hooks/useInfiniteLoader'
-import { wrapSliderChildren } from '@/utils/wrapChildrenWithIndex'
-import Loader from '@/shared/ui/base/Loader'
+import { forwardRef, Children, type ReactNode, type RefObject, type CSSProperties } from 'react';
 
-type ScrollDirection = 'horizontal' | 'vertical' | 'grid'
+import { useHorizontalDragScroll } from '@/hooks/useHorizontalDragScroll';
+import { useInfiniteLoader } from '@/hooks/useInfiniteLoader';
+import Loader from '@/shared/ui/base/Loader';
+import { wrapSliderChildren } from '@/utils/wrapChildrenWithIndex';
+
+import style from './scrollslider.module.scss';
+
+import './variables.css';
+
+type ScrollDirection = 'horizontal' | 'vertical' | 'grid';
 
 interface ScrollSliderProps {
-  children: ReactNode
-  className?: string
-  gap?: string
+  children: ReactNode;
+  className?: string;
+  gap?: string;
 
-  direction?: ScrollDirection
-  columns?: number
+  direction?: ScrollDirection;
+  columns?: number;
 
   onLoadMore?: (count?: number) => void | Promise<void>;
-  loadThreshold?: number
-  itemsPerLoad?: number
-  maxItems?: number
-  isLoading?: boolean
-  loaderComponent?: ReactNode
+  loadThreshold?: number;
+  itemsPerLoad?: number;
+  maxItems?: number;
+  isLoading?: boolean;
+  loaderComponent?: ReactNode;
 }
 
 const ScrollSlider = forwardRef<HTMLDivElement, ScrollSliderProps>(
@@ -43,13 +41,13 @@ const ScrollSlider = forwardRef<HTMLDivElement, ScrollSliderProps>(
       itemsPerLoad = 10,
       maxItems = Infinity,
       isLoading = false,
-      loaderComponent
+      loaderComponent,
     },
-    forwardedRef
+    forwardedRef,
   ) => {
-    const scrollRef = useHorizontalDragScroll<HTMLDivElement>()
-    const childrenArray = Children.toArray(children)
-    const totalItems = childrenArray.length
+    const scrollRef = useHorizontalDragScroll<HTMLDivElement>();
+    const childrenArray = Children.toArray(children);
+    const totalItems = childrenArray.length;
 
     const { shouldShowLoader } = useInfiniteLoader({
       onLoadMore,
@@ -59,38 +57,34 @@ const ScrollSlider = forwardRef<HTMLDivElement, ScrollSliderProps>(
       isLoading,
       totalItems,
       containerRef: scrollRef as RefObject<HTMLElement>,
-      enabled: !!onLoadMore
-    })
+      enabled: !!onLoadMore,
+    });
 
     const mergedRef = (el: HTMLDivElement | null) => {
-      scrollRef.current = el
+      scrollRef.current = el;
 
       if (typeof forwardedRef === 'function') {
-        forwardedRef(el)
+        forwardedRef(el);
       } else if (forwardedRef) {
-        forwardedRef.current = el
+        forwardedRef.current = el;
       }
-    }
+    };
 
     const wrappedChildren = wrapSliderChildren({
       children,
-      className: style.scrollslider__item
-    })
+      className: style.scrollslider__item,
+    });
 
-    const containerClasses = [
-      style.scrollslider,
-      style[`scrollslider--${direction}`],
-      className
-    ]
+    const containerClasses = [style.scrollslider, style[`scrollslider--${direction}`], className]
       .filter(Boolean)
-      .join(' ')
+      .join(' ');
 
     const trackStyle: CSSProperties = {
-      gap
-    }
+      gap,
+    };
 
     if (direction === 'grid') {
-      trackStyle.gridTemplateColumns = `repeat(${columns}, 1fr)`
+      trackStyle.gridTemplateColumns = `repeat(${columns}, 1fr)`;
     }
 
     return (
@@ -99,18 +93,15 @@ const ScrollSlider = forwardRef<HTMLDivElement, ScrollSliderProps>(
           {wrappedChildren}
 
           {shouldShowLoader && isLoading && (
-            <div
-              className={style.scrollslider__item}
-              data-index={totalItems}
-            >
+            <div className={style.scrollslider__item} data-index={totalItems}>
               {loaderComponent || <Loader />}
             </div>
           )}
         </div>
       </div>
-    )
-  }
-)
+    );
+  },
+);
 
-ScrollSlider.displayName = 'ScrollSlider'
-export default ScrollSlider
+ScrollSlider.displayName = 'ScrollSlider';
+export default ScrollSlider;

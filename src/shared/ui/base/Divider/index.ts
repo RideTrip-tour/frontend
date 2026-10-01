@@ -1,1 +1,1 @@
-export { default } from './Divider.tsx'
+export { default } from './Divider.tsx';

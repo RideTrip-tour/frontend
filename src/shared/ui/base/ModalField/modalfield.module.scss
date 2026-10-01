@@ -11,7 +11,9 @@
     border-radius: 20px;
     background: #ffffff;
     box-sizing: border-box;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .input {
@@ -43,8 +45,10 @@
   }
 
   @keyframes autofill {
-    from {}
-    to {}
+    from {
+    }
+    to {
+    }
   }
 
   .floatingLabel {

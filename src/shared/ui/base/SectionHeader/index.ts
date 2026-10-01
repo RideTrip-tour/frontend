@@ -1,1 +1,1 @@
-export { default } from './SectionHeader.tsx'
+export { default } from './SectionHeader.tsx';

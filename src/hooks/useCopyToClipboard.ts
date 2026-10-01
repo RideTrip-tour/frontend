@@ -17,7 +17,7 @@ export const useCopyToClipboard = (resetMs = 1500) => {
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => setCopied(false), resetMs);
     },
-    [resetMs]
+    [resetMs],
   );
 
   return { copied, copy };

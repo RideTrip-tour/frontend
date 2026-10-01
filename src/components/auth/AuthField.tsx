@@ -1,5 +1,6 @@
-import { useEffect, useId, useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
+import { useEffect, useId, useRef, useState } from 'react';
+
 import styles from './AuthForm.module.scss';
 
 export type AuthFieldStatus = 'default' | 'focus' | 'success' | 'error';
@@ -41,7 +42,7 @@ export default function AuthField({
   onChange,
   onFocus,
   onBlur,
-  isLast
+  isLast,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [autofillActive, setAutofillActive] = useState(false);

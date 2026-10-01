@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren } from 'react';
 
 type ContainerProps = PropsWithChildren<{
   className?: string;
@@ -9,9 +9,9 @@ export function Container({ children, className }: ContainerProps) {
     <div
       className={className}
       style={{
-        width: "1440px",
+        width: '1440px',
         flexShrink: 0,
-        margin: "0 auto",
+        margin: '0 auto',
       }}
     >
       {children}

@@ -1,22 +1,25 @@
-import './variables.css'
-import style from './switch.module.scss'
+import style from './switch.module.scss';
+
+import './variables.css';
 
 interface SwitchProps {
-  checked: boolean
-  onChange?: (value: boolean) => void
-  disabled?: boolean
+  checked: boolean;
+  onChange?: (value: boolean) => void;
+  disabled?: boolean;
 }
 
 const Switch = ({ checked, onChange, disabled = false }: SwitchProps) => {
   const classes = [
     style.switch,
     checked ? style['switch--active'] : '',
-    disabled ? style['switch--disabled'] : ''
-  ].filter(Boolean).join(' ')
+    disabled ? style['switch--disabled'] : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   const handleClick = () => {
-    if (!disabled) onChange?.(!checked)
-  }
+    if (!disabled) onChange?.(!checked);
+  };
 
   return (
     <button
@@ -29,7 +32,7 @@ const Switch = ({ checked, onChange, disabled = false }: SwitchProps) => {
     >
       <div className={style.switch__knob} />
     </button>
-  )
-}
+  );
+};
 
-export default Switch
+export default Switch;

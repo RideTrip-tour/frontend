@@ -1,1 +1,1 @@
-export { default } from './SecurityBlock.tsx'
+export { default } from './SecurityBlock.tsx';

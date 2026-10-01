@@ -1,1 +1,1 @@
-export {default} from './ToursFinder.tsx'
+export { default } from './ToursFinder.tsx';

@@ -1,18 +1,18 @@
-import './variables.css'
+import './variables.css';
 
 interface LoaderProps {
-  size?: number
-  color?: string
-  borderWidth?: number
-  invisibleColor?: string
+  size?: number;
+  color?: string;
+  borderWidth?: number;
+  invisibleColor?: string;
 }
 
 const Loader = ({
-                  size = 40,
-                  color = '#007bff',
-                  borderWidth = 4,
-                  invisibleColor = 'transparent'
-                }: LoaderProps) => {
+  size = 40,
+  color = '#007bff',
+  borderWidth = 4,
+  invisibleColor = 'transparent',
+}: LoaderProps) => {
   return (
     <div className="loader">
       <div
@@ -21,11 +21,11 @@ const Loader = ({
           width: size,
           height: size,
           border: `${borderWidth}px solid ${color}`,
-          borderTopColor: invisibleColor
+          borderTopColor: invisibleColor,
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default Loader
+export default Loader;

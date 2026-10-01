@@ -32,9 +32,9 @@
 
     // Стили для всех остальных страниц
     &_default {
-      background: #FFFFFF;
-      border: solid 1px #FFFFFF4D;
-      box-shadow: 0px 4px 10px 2px #1E4D8F1A;
+      background: #ffffff;
+      border: solid 1px #ffffff4d;
+      box-shadow: 0px 4px 10px 2px #1e4d8f1a;
       backdrop-filter: none;
     }
   }
@@ -53,7 +53,7 @@
 
     // Стили для всех остальных страниц
     &_default {
-      color: #1E4D8F;
+      color: #1e4d8f;
     }
   }
 
@@ -69,12 +69,12 @@
 
     // Стили для главной страницы
     &_home {
-      background: rgba(255, 255, 255, 0.30);
+      background: rgba(255, 255, 255, 0.3);
     }
 
     // Стили для всех остальных страниц
     &_default {
-      background: #FFFFFF4D;
+      background: #ffffff4d;
     }
   }
 }

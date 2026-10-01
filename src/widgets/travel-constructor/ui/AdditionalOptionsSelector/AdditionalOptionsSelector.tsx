@@ -1,5 +1,6 @@
-import type { AdditionalOption } from '@/widgets/travel-constructor/model/types';
 import { OPTION_GROUPS } from '@/widgets/travel-constructor/config/additionalOptions';
+import type { AdditionalOption } from '@/widgets/travel-constructor/model/types';
+
 import styles from './AdditionalOptionsSelector.module.scss';
 
 interface AdditionalOptionsSelectorProps {

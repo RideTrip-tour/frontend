@@ -1,1 +1,1 @@
-export {default} from './WeekdayHeaderCell.tsx'
+export { default } from './WeekdayHeaderCell.tsx';

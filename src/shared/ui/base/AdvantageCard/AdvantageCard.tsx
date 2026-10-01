@@ -1,11 +1,13 @@
-import style from './advantagecard.module.scss'
-import './variables.css'
-import { Icon } from '@iconify/react'
+import { Icon } from '@iconify/react';
+
+import style from './advantagecard.module.scss';
+
+import './variables.css';
 
 interface AdvantageCardProps {
-  icon: string
-  title: string
-  text: string
+  icon: string;
+  title: string;
+  text: string;
 }
 
 const AdvantageCard = ({ icon, title, text }: AdvantageCardProps) => {
@@ -19,7 +21,7 @@ const AdvantageCard = ({ icon, title, text }: AdvantageCardProps) => {
 
       <p className={style.advantagecard__text}>{text}</p>
     </div>
-  )
-}
+  );
+};
 
-export default AdvantageCard
+export default AdvantageCard;

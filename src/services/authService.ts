@@ -1,11 +1,8 @@
-import { useAuthStore } from '@/store/authStore';
 import { authApi, authRequestOptions } from '@/shared/api/auth/authApi';
 import { handleApiError } from '@/shared/api/errors';
-import type {
-  UserCreate,
-  ResetPass,
-  UserBeforeVerify
-} from '@/shared/api/generated/auth/auth';
+import type { UserCreate, ResetPass, UserBeforeVerify } from '@/shared/api/generated/auth/auth';
+import { useAuthStore } from '@/store/authStore';
+
 import { meRequest } from './usersService';
 
 export type VerifiedUser = UserBeforeVerify & {
@@ -18,9 +15,9 @@ export async function loginRequest(email: string, password: string) {
       {
         grant_type: 'password',
         username: email,
-        password
+        password,
       },
-      authRequestOptions
+      authRequestOptions,
     );
 
     const user = await meRequest();
@@ -30,14 +27,9 @@ export async function loginRequest(email: string, password: string) {
   }
 }
 
-export async function registerRequest(
-  data: Pick<UserCreate, 'email' | 'password'>
-) {
+export async function registerRequest(data: Pick<UserCreate, 'email' | 'password'>) {
   try {
-    await authApi.registerRegisterApiAuthRegisterPost(
-      data,
-      authRequestOptions
-    );
+    await authApi.registerRegisterApiAuthRegisterPost(data, authRequestOptions);
   } catch (error) {
     throw handleApiError(error);
   }
@@ -45,10 +37,7 @@ export async function registerRequest(
 
 export async function forgotPasswordRequest(email: string) {
   try {
-    await authApi.resetForgotPasswordApiAuthForgotPasswordPost(
-      { email },
-      authRequestOptions
-    );
+    await authApi.resetForgotPasswordApiAuthForgotPasswordPost({ email }, authRequestOptions);
   } catch (error) {
     throw handleApiError(error);
   }
@@ -60,10 +49,7 @@ export async function resendForgotPasswordEmail(email: string) {
 
 export async function resetPasswordRequest(data: ResetPass) {
   try {
-    await authApi.resetResetPasswordApiAuthResetPasswordPost(
-      data,
-      authRequestOptions
-    );
+    await authApi.resetResetPasswordApiAuthResetPasswordPost(data, authRequestOptions);
   } catch (error) {
     throw handleApiError(error);
   }
@@ -71,10 +57,7 @@ export async function resetPasswordRequest(data: ResetPass) {
 
 export async function verifyRequest(token: string): Promise<VerifiedUser> {
   try {
-    const response = await authApi.verifyVerifyApiAuthVerifyPost(
-      { token },
-      authRequestOptions
-    );
+    const response = await authApi.verifyVerifyApiAuthVerifyPost({ token }, authRequestOptions);
 
     if (response.data?.is_verified !== true) {
       throw new Error('Подтверждение почты не получено');
@@ -92,20 +75,20 @@ export function getVerificationError(error: unknown) {
   if (status === 400) {
     return {
       message: 'Ссылка недействительна, срок её действия истёк или почта уже подтверждена.',
-      canRetry: false
+      canRetry: false,
     };
   }
 
   if (status === 422) {
     return {
       message: 'Ссылка подтверждения некорректна. Откройте полную ссылку из письма.',
-      canRetry: false
+      canRetry: false,
     };
   }
 
   return {
     message: 'Не удалось подтвердить почту. Попробуйте ещё раз позже.',
-    canRetry: !status || status >= 500
+    canRetry: !status || status >= 500,
   };
 }
 

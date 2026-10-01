@@ -1,1 +1,1 @@
-export { default } from './DocumentsBlock.tsx'
+export { default } from './DocumentsBlock.tsx';

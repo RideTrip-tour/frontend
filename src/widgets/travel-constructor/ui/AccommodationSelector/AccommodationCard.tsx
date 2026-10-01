@@ -1,8 +1,10 @@
-import { useState } from 'react';
 import clsx from 'clsx';
+import { useState } from 'react';
+
+import { LikeIcon, LikeFilledIcon } from '@/assets/icons/constructor';
 import type { AccommodationOption } from '@/entities/accommodation';
 import { priceFormatter } from '@/widgets/travel-constructor/lib/formatters';
-import { LikeIcon, LikeFilledIcon } from '@/assets/icons/constructor';
+
 import styles from './AccommodationSelector.module.scss';
 
 interface AccommodationCardProps {
@@ -11,11 +13,7 @@ interface AccommodationCardProps {
   onSelect: (option: AccommodationOption) => void;
 }
 
-export function AccommodationCard({
-  option,
-  isSelected,
-  onSelect,
-}: AccommodationCardProps) {
+export function AccommodationCard({ option, isSelected, onSelect }: AccommodationCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   return (
@@ -25,11 +23,7 @@ export function AccommodationCard({
       })}
     >
       <div className={styles.imageWrapper}>
-        <img
-          alt={option.imageAlt}
-          className={styles.image}
-          src={option.image}
-        />
+        <img alt={option.imageAlt} className={styles.image} src={option.image} />
 
         <button
           aria-label={
@@ -57,9 +51,7 @@ export function AccommodationCard({
               ★
             </span>
             <strong>{option.rating.toFixed(2)}</strong>
-            <span className={styles.count}>
-              {option.reviews} отзывов
-            </span>
+            <span className={styles.count}>{option.reviews} отзывов</span>
           </p>
         </h4>
 
@@ -76,9 +68,7 @@ export function AccommodationCard({
         <div className={styles.footer}>
           <div className={styles.price}>
             <span>от</span>
-            <strong>
-              {priceFormatter.format(option.pricePerNight)} ₽
-            </strong>
+            <strong>{priceFormatter.format(option.pricePerNight)} ₽</strong>
           </div>
 
           <button

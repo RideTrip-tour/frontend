@@ -1,20 +1,22 @@
-import style from './pagesection.module.scss'
-import './variables.css'
-import type { ReactNode } from 'react'
+import type { ReactNode } from 'react';
+
+import style from './pagesection.module.scss';
+
+import './variables.css';
 
 interface PageSectionProps {
-  paddingVertical?: number
-  paddingHorizontal?: number
-  isEditing?: boolean
-  children: ReactNode
+  paddingVertical?: number;
+  paddingHorizontal?: number;
+  isEditing?: boolean;
+  children: ReactNode;
 }
 
 const PageSection = ({
-                       paddingVertical,
-                       paddingHorizontal,
-                       isEditing = false,
-                       children
-                     }: PageSectionProps) => {
+  paddingVertical,
+  paddingHorizontal,
+  isEditing = false,
+  children,
+}: PageSectionProps) => {
   return (
     <div
       className={style.pagesection}
@@ -25,7 +27,7 @@ const PageSection = ({
     >
       {children}
     </div>
-  )
-}
+  );
+};
 
-export default PageSection
+export default PageSection;

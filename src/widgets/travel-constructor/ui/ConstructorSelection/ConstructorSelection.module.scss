@@ -4,9 +4,9 @@
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  border: 1px solid #1E4D8F1A;
+  border: 1px solid #1e4d8f1a;
   border-radius: 12px;
-  background-color: #DFE2E540;
+  background-color: #dfe2e540;
 }
 
 .cardToggle {
@@ -17,7 +17,7 @@
 }
 
 .cardOpen {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
@@ -36,7 +36,7 @@
   width: 54px;
   height: 54px;
   flex: 0 0 54px;
-  color: #1A1A1A;
+  color: #1a1a1a;
 
   :global(svg) {
     display: block;
@@ -70,7 +70,7 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 24px;
-  color: #1A1A1A;
+  color: #1a1a1a;
 }
 
 .description {
@@ -78,7 +78,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  color: #5F6C7B;
+  color: #5f6c7b;
 }
 
 .status {
@@ -90,7 +90,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  color: #5F6C7B;
+  color: #5f6c7b;
 }
 
 .statusIcon {
@@ -118,7 +118,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  color: #1A1A1A;
+  color: #1a1a1a;
   padding: 20px 20px 36px;
   gap: 24px;
   cursor: default;

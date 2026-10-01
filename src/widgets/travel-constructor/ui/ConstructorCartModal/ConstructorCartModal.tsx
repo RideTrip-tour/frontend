@@ -1,10 +1,11 @@
-import { AlertIcon } from '@/assets/icons/constructor';
 import { SuccessIcon } from '@/assets/icons';
-import Modal from '@/shared/ui/base/Modal';
-import { EmptyState } from '@/shared/ui/base/EmptyState';
+import { AlertIcon } from '@/assets/icons/constructor';
 import { Button } from '@/shared/ui/base/Button';
+import { EmptyState } from '@/shared/ui/base/EmptyState';
+import Modal from '@/shared/ui/base/Modal';
 import { cartModalContent } from '@/widgets/travel-constructor/config/cartModalContent';
 import type { CartModalState } from '@/widgets/travel-constructor/model/cartModalTypes';
+
 import styles from './ConstructorCartModal.module.scss';
 
 interface ConstructorCartModalProps {
@@ -62,9 +63,13 @@ export function ConstructorCartModal({
     <Modal isOpen onClose={onClose} ariaLabel={content.title} variant="message">
       <EmptyState
         variant="message"
-        icon={state.type === 'save-success'
-          ? <SuccessIcon className={styles.statusIcon} aria-hidden="true" />
-          : <AlertIcon className={styles.statusIcon} viewBox="0 0 80 80" aria-hidden="true" />}
+        icon={
+          state.type === 'save-success' ? (
+            <SuccessIcon className={styles.statusIcon} aria-hidden="true" />
+          ) : (
+            <AlertIcon className={styles.statusIcon} viewBox="0 0 80 80" aria-hidden="true" />
+          )
+        }
         title={content.title}
         description={state.description ?? content.description}
       />

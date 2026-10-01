@@ -1,1 +1,1 @@
-export {default} from './DrumRoller.tsx'
+export { default } from './DrumRoller.tsx';

@@ -1,13 +1,15 @@
-import style from './modalbutton.module.scss'
-import { motion, AnimatePresence } from 'framer-motion'
-import Loader from '@/assets/icons/loader.svg'
+import { motion, AnimatePresence } from 'framer-motion';
+
+import Loader from '@/assets/icons/loader.svg';
+
+import style from './modalbutton.module.scss';
 
 interface ModalButtonProps {
-  text: string
-  isLoading: boolean
-  isActive: boolean
-  onClick?: () => void
-  type?: 'button' | 'submit'
+  text: string;
+  isLoading: boolean;
+  isActive: boolean;
+  onClick?: () => void;
+  type?: 'button' | 'submit';
 }
 
 const ModalButton = ({ text, isLoading, isActive, onClick, type = 'submit' }: ModalButtonProps) => {
@@ -47,7 +49,7 @@ const ModalButton = ({ text, isLoading, isActive, onClick, type = 'submit' }: Mo
         </AnimatePresence>
       </div>
     </button>
-  )
-}
+  );
+};
 
-export default ModalButton
+export default ModalButton;

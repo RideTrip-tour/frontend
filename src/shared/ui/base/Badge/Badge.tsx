@@ -1,18 +1,17 @@
-import style from './badge.module.scss'
-import './variables.css'
+import style from './badge.module.scss';
+
+import './variables.css';
 
 interface BadgeProps {
-  text: string
+  text: string;
 }
 
 const Badge = ({ text }: BadgeProps) => {
   return (
     <div className={style.badge}>
-      <span className={style.badge__text}>
-        {text}
-      </span>
+      <span className={style.badge__text}>{text}</span>
     </div>
-  )
-}
+  );
+};
 
-export default Badge
+export default Badge;

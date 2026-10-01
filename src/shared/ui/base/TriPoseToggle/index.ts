@@ -1,1 +1,1 @@
-export {default} from './TriPoseToggle.tsx'
+export { default } from './TriPoseToggle.tsx';

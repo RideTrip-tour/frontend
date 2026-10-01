@@ -1,1 +1,1 @@
-export {default} from './ProfileProgress.tsx'
+export { default } from './ProfileProgress.tsx';

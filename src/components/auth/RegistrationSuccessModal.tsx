@@ -1,6 +1,8 @@
-import { AuthShell } from './index';
-import styles from './AuthState.module.scss';
 import AirplaceIcon from '@/assets/icons/airplace.svg';
+
+import { AuthShell } from './index';
+
+import styles from './AuthState.module.scss';
 
 type RegistrationSuccessModalProps = {
   onClose?: () => void;
@@ -9,7 +11,7 @@ type RegistrationSuccessModalProps = {
 
 export default function RegistrationSuccessModal({
   onClose,
-  onHomeClick
+  onHomeClick,
 }: RegistrationSuccessModalProps) {
   return (
     <AuthShell onClose={onClose} customStyle={{ padding: '122px 114px' }}>

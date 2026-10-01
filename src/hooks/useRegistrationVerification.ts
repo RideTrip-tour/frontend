@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+
 import { getVerificationError, verifyRequest } from '@/services/authService';
 
 const MISSING_TOKEN_ERROR = {
@@ -33,7 +34,9 @@ export function useRegistrationVerification(token: string, onComplete: () => voi
       },
     );
 
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, [token, attempt, onComplete]);
 
   const retry = () => {

@@ -1,1 +1,1 @@
-export {default} from './PaginationDots.tsx'
+export { default } from './PaginationDots.tsx';

@@ -1,1 +1,1 @@
-export {default} from './TextLink.tsx'
+export { default } from './TextLink.tsx';

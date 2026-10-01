@@ -1,20 +1,19 @@
-import style from './ratingstars.module.scss'
-import './variables.css'
-import { Icon } from '@iconify/react'
+import { Icon } from '@iconify/react';
+
+import style from './ratingstars.module.scss';
+
+import './variables.css';
 
 interface RatingStarsProps {
-  value: number
+  value: number;
 }
 
 const RatingStars = ({ value }: RatingStarsProps) => {
-  const stars = [1, 2, 3, 4, 5]
+  const stars = [1, 2, 3, 4, 5];
 
   return (
     <div className={style.ratingstars}>
-
-      <div className={style.ratingstars__label}>
-        Оценка
-      </div>
+      <div className={style.ratingstars__label}>Оценка</div>
 
       <div className={style.ratingstars__stars}>
         {stars.map((star) => (
@@ -30,9 +29,8 @@ const RatingStars = ({ value }: RatingStarsProps) => {
           />
         ))}
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default RatingStars
+export default RatingStars;

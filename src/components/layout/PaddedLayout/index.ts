@@ -1,1 +1,1 @@
-export {default} from './PaddedLayout.tsx'
+export { default } from './PaddedLayout.tsx';

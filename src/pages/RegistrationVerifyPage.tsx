@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
-import VerifyModal from '@/components/auth/VerifyModal';
+
 import VerificationErrorModal from '@/components/auth/VerificationErrorModal';
+import VerifyModal from '@/components/auth/VerifyModal';
 import { useRegistrationVerification } from '@/hooks/useRegistrationVerification';
 
 function RegistrationVerification({ token }: Readonly<{ token: string }>) {

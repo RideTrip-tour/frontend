@@ -1,1 +1,1 @@
-export {default} from './ResortSlider.tsx'
+export { default } from './ResortSlider.tsx';

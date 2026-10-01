@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+
 import {
   EXPANDED_FILTER_GROUPS,
   LOCATION_FILTERS,
@@ -9,7 +10,9 @@ import {
   type RatingFilter,
 } from '@/widgets/travel-constructor/config/accommodationFilters';
 import { priceFormatter } from '@/widgets/travel-constructor/lib/formatters';
+
 import { FilterGroup } from './FilterGroup';
+
 import styles from './AccommodationSelector.module.scss';
 
 interface AccommodationFiltersProps {
@@ -48,11 +51,14 @@ export function AccommodationFilters({
   return (
     <>
       <section className={styles.priceSection} aria-labelledby="price-title">
-        <h3 className={styles.filterTitle} id="price-title">Цена за ночь</h3>
+        <h3 className={styles.filterTitle} id="price-title">
+          Цена за ночь
+        </h3>
         <div className={styles.priceValues}>
           <span>{priceFormatter.format(minPrice)} ₽</span>
           <span>
-            {priceFormatter.format(maxPrice)}{maxPrice === MAX_PRICE ? '+' : ''} ₽
+            {priceFormatter.format(maxPrice)}
+            {maxPrice === MAX_PRICE ? '+' : ''} ₽
           </span>
         </div>
         <div className={styles.range}>

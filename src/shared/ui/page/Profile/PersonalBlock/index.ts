@@ -1,1 +1,1 @@
-export { default } from './PersonalBlock.tsx'
+export { default } from './PersonalBlock.tsx';

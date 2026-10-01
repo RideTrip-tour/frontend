@@ -25,7 +25,7 @@ export class ApiError extends Error {
       data?: unknown;
       url?: string;
       code?: ApiErrorCode;
-    }
+    },
   ) {
     super(message);
 
@@ -67,10 +67,7 @@ export function normalizeAxiosError(err: unknown): ApiError {
       error?: string;
     }>;
 
-    if (
-      error.code === 'ECONNABORTED' ||
-      error.code === 'ETIMEDOUT'
-    ) {
+    if (error.code === 'ECONNABORTED' || error.code === 'ETIMEDOUT') {
       return new ApiError('Request timeout', {
         code: 'TIMEOUT',
         url: error.config?.url,
@@ -86,15 +83,9 @@ export function normalizeAxiosError(err: unknown): ApiError {
 
     const { status, data } = error.response;
 
-    const detail =
-      data?.detail ??
-      data?.message ??
-      data?.error;
+    const detail = data?.detail ?? data?.message ?? data?.error;
 
-    const message =
-      typeof detail === 'string'
-        ? detail
-        : error.message || 'Request failed';
+    const message = typeof detail === 'string' ? detail : error.message || 'Request failed';
 
     return new ApiError(message, {
       status,
@@ -104,10 +95,7 @@ export function normalizeAxiosError(err: unknown): ApiError {
     });
   }
 
-  const message =
-    err instanceof Error
-      ? err.message
-      : 'An unknown error occurred';
+  const message = err instanceof Error ? err.message : 'An unknown error occurred';
 
   return new ApiError(message, {
     code: 'UNKNOWN',

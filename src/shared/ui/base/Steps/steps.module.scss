@@ -127,9 +127,10 @@
     box-shadow: var(--shadow-card);
     white-space: nowrap;
     margin-bottom: 29px;
-    transition: background-color var(--animation-speed-button) ease,
-                color var(--animation-speed-button) ease,
-                border-color var(--animation-speed-button) ease;
+    transition:
+      background-color var(--animation-speed-button) ease,
+      color var(--animation-speed-button) ease,
+      border-color var(--animation-speed-button) ease;
 
     &:hover:not(:disabled) {
       background: var(--steps-cta-bg-hover);

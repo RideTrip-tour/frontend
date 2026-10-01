@@ -1,13 +1,11 @@
 :root {
-
 }
 
-body[data-theme="light"] {
+body[data-theme='light'] {
   --inforow-label-color: var(--color-black);
   --inforow-value-color: var(--color-gray-dark);
   --inforow-action-color: var(--color-blue);
 }
 
-body[data-theme="dark"] {
-
+body[data-theme='dark'] {
 }

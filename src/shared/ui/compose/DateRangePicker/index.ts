@@ -1,1 +1,1 @@
-export {default} from './DateRangePicker.tsx'
+export { default } from './DateRangePicker.tsx';

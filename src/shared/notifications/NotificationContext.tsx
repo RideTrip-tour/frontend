@@ -45,5 +45,5 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 //   return ctx.notify;
 // }
 
-import { ToastContainer } from './ToastContainer';
 import { registerNotifier } from './notifyBus';
+import { ToastContainer } from './ToastContainer';

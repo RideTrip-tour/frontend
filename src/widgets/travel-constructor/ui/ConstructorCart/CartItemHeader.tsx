@@ -1,4 +1,5 @@
 import { CloseIcon } from '@/assets/icons/constructor';
+
 import styles from './ConstructorCart.module.scss';
 
 interface CartItemHeaderProps {
@@ -7,11 +8,7 @@ interface CartItemHeaderProps {
   onReset: () => void;
 }
 
-export function CartItemHeader({
-  title,
-  resetLabel,
-  onReset,
-}: CartItemHeaderProps) {
+export function CartItemHeader({ title, resetLabel, onReset }: CartItemHeaderProps) {
   return (
     <div className={styles.cartItemHeader}>
       <h3 className={styles.sectionTitle}>{title}</h3>

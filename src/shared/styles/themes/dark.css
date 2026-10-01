@@ -1,4 +1,4 @@
-body[data-theme="dark"] {
+body[data-theme='dark'] {
   /* тут прописываем основные цвета темной темы */
   --color-main: #999999;
 

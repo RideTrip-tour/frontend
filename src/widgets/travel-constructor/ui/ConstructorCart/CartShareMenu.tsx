@@ -1,18 +1,10 @@
-import {
-  useEffect,
-  useId,
-  useRef,
-  useState
-} from 'react';
 import clsx from 'clsx';
-import {
-  ShareIcon,
-  CopyIcon,
-  TelegramIcon,
-  WhatsappIcon
-} from '@/assets/icons/constructor';
-import cartStyles from './ConstructorCart.module.scss';
+import { useEffect, useId, useRef, useState } from 'react';
+
+import { ShareIcon, CopyIcon, TelegramIcon, WhatsappIcon } from '@/assets/icons/constructor';
+
 import styles from './CartShareMenu.module.scss';
+import cartStyles from './ConstructorCart.module.scss';
 
 interface CartShareMenuProps {
   hasSelectedItems: boolean;
@@ -119,7 +111,9 @@ export function CartShareMenu({ hasSelectedItems }: Readonly<CartShareMenuProps>
           setIsOpen((open) => !open);
         }}
       >
-        <span aria-hidden="true" className={cartStyles.actionIcon}><ShareIcon /></span>
+        <span aria-hidden="true" className={cartStyles.actionIcon}>
+          <ShareIcon />
+        </span>
         <span>Поделиться</span>
       </button>
 
@@ -137,33 +131,19 @@ export function CartShareMenu({ hasSelectedItems }: Readonly<CartShareMenuProps>
             </button>
           </li>
           <li>
-            <button
-              type="button"
-              className={styles.item}
-              disabled={isPending}
-              onClick={shareTo}
-            >
+            <button type="button" className={styles.item} disabled={isPending} onClick={shareTo}>
               <TelegramIcon aria-hidden="true" />
               <span>Telegram</span>
             </button>
           </li>
           <li>
-            <button
-              type="button"
-              className={styles.item}
-              disabled={isPending}
-              onClick={shareTo}
-            >
+            <button type="button" className={styles.item} disabled={isPending} onClick={shareTo}>
               <WhatsappIcon aria-hidden="true" />
               <span>WhatsApp</span>
             </button>
           </li>
         </ul>
-        <output
-          className={styles.feedback}
-          data-type={feedback?.type}
-          aria-atomic="true"
-        >
+        <output className={styles.feedback} data-type={feedback?.type} aria-atomic="true">
           {feedback ? MESSAGES[feedback.type] : ''}
         </output>
       </div>

@@ -1,49 +1,50 @@
-import './variables.css'
-import { useState, type ChangeEvent, type KeyboardEvent } from 'react'
+import { useState, type ChangeEvent, type KeyboardEvent } from 'react';
+
+import './variables.css';
 
 interface PaginationProps {
-  currentPage: number
-  totalPages: number
-  onPageChange: (page: number) => void
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 }
 
 const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) => {
-  const [inputValue, setInputValue] = useState(currentPage.toString())
+  const [inputValue, setInputValue] = useState(currentPage.toString());
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
-  }
+    setInputValue(e.target.value);
+  };
 
   const handleGo = () => {
-    const page = parseInt(inputValue)
+    const page = parseInt(inputValue);
     if (!isNaN(page) && page >= 1 && page <= totalPages) {
-      onPageChange(page)
+      onPageChange(page);
     } else {
-      setInputValue(currentPage.toString())
+      setInputValue(currentPage.toString());
     }
-  }
+  };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleGo()
+      handleGo();
     }
-  }
+  };
 
   const renderPages = () => {
-    const pages = []
+    const pages = [];
 
     for (let i = currentPage - 2; i <= currentPage + 2; i++) {
       if (i >= 1 && i <= totalPages) {
-        pages.push(i)
+        pages.push(i);
       }
     }
 
-    return pages
-  }
+    return pages;
+  };
 
-  const pages = renderPages()
-  const showFirstEllipsis = pages[0] > 2
-  const showLastEllipsis = pages[pages.length - 1] < totalPages - 1
+  const pages = renderPages();
+  const showFirstEllipsis = pages[0] > 2;
+  const showLastEllipsis = pages[pages.length - 1] < totalPages - 1;
 
   return (
     <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
@@ -57,10 +58,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
 
       {!pages.includes(1) && (
         <>
-          <button
-            onClick={() => onPageChange(1)}
-            style={{ padding: '4px 8px' }}
-          >
+          <button onClick={() => onPageChange(1)} style={{ padding: '4px 8px' }}>
             1
           </button>
           {showFirstEllipsis && <span style={{ padding: '0 4px' }}>...</span>}
@@ -74,7 +72,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
           style={{
             padding: '4px 8px',
             fontWeight: page === currentPage ? 'bold' : 'normal',
-            backgroundColor: page === currentPage ? '#e0e0e0' : 'transparent'
+            backgroundColor: page === currentPage ? '#e0e0e0' : 'transparent',
           }}
         >
           {page}
@@ -84,10 +82,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
       {!pages.includes(totalPages) && (
         <>
           {showLastEllipsis && <span style={{ padding: '0 4px' }}>...</span>}
-          <button
-            onClick={() => onPageChange(totalPages)}
-            style={{ padding: '4px 8px' }}
-          >
+          <button onClick={() => onPageChange(totalPages)} style={{ padding: '4px 8px' }}>
             {totalPages}
           </button>
         </>
@@ -112,7 +107,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
         Перейти
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Pagination
+export default Pagination;

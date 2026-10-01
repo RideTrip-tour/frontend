@@ -1,18 +1,20 @@
-import style from './photoblock.module.scss'
-import './variables.css'
-import {Button} from '@/shared/ui/base/Button'
+import { Button } from '@/shared/ui/base/Button';
+
+import style from './photoblock.module.scss';
+
+import './variables.css';
 
 interface PhotoBlockProps {
-  onClick?: () => void
-  title?: string
-  ctaText?: string
+  onClick?: () => void;
+  title?: string;
+  ctaText?: string;
 }
 
 const PhotoBlock = ({
-                      onClick,
-                      title = 'Осталось всего три шага до поездки',
-                      ctaText = 'Начать подбор',
-                    }: PhotoBlockProps) => {
+  onClick,
+  title = 'Осталось всего три шага до поездки',
+  ctaText = 'Начать подбор',
+}: PhotoBlockProps) => {
   return (
     <section className={style.photoblock}>
       <div className={style.photoblock__banner}>
@@ -30,7 +32,7 @@ const PhotoBlock = ({
         )}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default PhotoBlock
+export default PhotoBlock;

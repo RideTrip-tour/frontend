@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
-import { AuthShell } from './index';
-import styles from './AuthState.module.scss';
+
 import EmailIcon from '@/assets/icons/email.svg';
+
+import { AuthShell } from './index';
+
+import styles from './AuthState.module.scss';
 
 type EmailChangeSentModalProps = {
   email: string;
@@ -16,7 +19,7 @@ export default function EmailChangeSentModal({
   isLoading,
   serverError,
   onClose,
-  onResend
+  onResend,
 }: EmailChangeSentModalProps) {
   const [cooldown, setCooldown] = useState(60);
 
@@ -56,8 +59,17 @@ export default function EmailChangeSentModal({
 
         {serverError && <p className={styles.centerError}>{serverError}</p>}
 
-        <button type="button" className={styles.linkButton} onClick={handleResend} disabled={disabled}>
-          {isLoading ? 'Отправка...' : cooldown > 0 ? `Отправить ещё раз (${cooldown}с)` : 'Отправить ещё раз'}
+        <button
+          type="button"
+          className={styles.linkButton}
+          onClick={handleResend}
+          disabled={disabled}
+        >
+          {isLoading
+            ? 'Отправка...'
+            : cooldown > 0
+              ? `Отправить ещё раз (${cooldown}с)`
+              : 'Отправить ещё раз'}
         </button>
       </div>
     </AuthShell>

@@ -14,7 +14,7 @@
   &__title {
     font-size: 28px;
     font-weight: 600;
-    color: #1A1A1A;
+    color: #1a1a1a;
     margin: 0;
   }
 
@@ -27,7 +27,7 @@
 
   &__description {
     font-size: 16px;
-    color: #5F6C7B;
+    color: #5f6c7b;
     margin: 0;
   }
 
@@ -35,14 +35,14 @@
     width: 100%;
     position: relative;
     height: 16px;
-    background: #E8ECF0;
+    background: #e8ecf0;
     border-radius: 4px;
     overflow: hidden;
   }
 
   &__fill {
     height: 100%;
-    background: linear-gradient(90deg, #0E68D4, #4A9BFA);
+    background: linear-gradient(90deg, #0e68d4, #4a9bfa);
     border-radius: 4px;
     transition: width 0.5s ease;
   }

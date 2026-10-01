@@ -1,1 +1,1 @@
-export { default } from './ModalShell.tsx'
+export { default } from './ModalShell.tsx';

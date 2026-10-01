@@ -1,1 +1,1 @@
-export {default} from './CalendarHeader.tsx'
+export { default } from './CalendarHeader.tsx';

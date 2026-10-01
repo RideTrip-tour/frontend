@@ -1,16 +1,15 @@
 :root {
-
 }
 
-body[data-theme="light"] {
-  --color-blue: #0E68D4;
-  --color-black: #1A1A1A;
+body[data-theme='light'] {
+  --color-blue: #0e68d4;
+  --color-black: #1a1a1a;
 
-  --color-gray-dark: #5F6C7B;
+  --color-gray-dark: #5f6c7b;
 
-  --color-white: #FFFFFF;
+  --color-white: #ffffff;
 
-  --color-blue-soft-bg: rgba(14, 104, 212, 0.10);
+  --color-blue-soft-bg: rgba(14, 104, 212, 0.1);
 
   --photoid-name-color: var(--color-black);
   --photoid-id-color: var(--color-black);
@@ -24,6 +23,5 @@ body[data-theme="light"] {
   --photoid-copy-icon: var(--color-black);
 }
 
-body[data-theme="dark"] {
-
+body[data-theme='dark'] {
 }

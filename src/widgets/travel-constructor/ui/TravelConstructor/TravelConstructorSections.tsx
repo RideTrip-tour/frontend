@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
+
 import type { ConstructorSelectionId } from '@/widgets/travel-constructor/model/types';
+
 import { ConstructorSelection } from '../ConstructorSelection';
 
 export interface ConstructorItem {

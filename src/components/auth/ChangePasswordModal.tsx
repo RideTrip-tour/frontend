@@ -1,11 +1,14 @@
-import ModalOverlay from '@/shared/ui/base/ModalOverlay'
-import { useId, useMemo, useState, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import AuthField from './AuthField';
-import shellStyles from './AuthShell.module.scss';
-import formStyles from './AuthForm.module.scss';
+import { useId, useMemo, useState, type FormEvent } from 'react';
+
 import CloseIcon from '@/assets/icons/close.svg';
 import Loader from '@/assets/icons/loader.svg';
+import ModalOverlay from '@/shared/ui/base/ModalOverlay';
+
+import AuthField from './AuthField';
+
+import formStyles from './AuthForm.module.scss';
+import shellStyles from './AuthShell.module.scss';
 
 type ChangePasswordModalProps = {
   isLoading: boolean;
@@ -22,7 +25,7 @@ export default function ChangePasswordModal({
   isLoading,
   serverError,
   onClose,
-  onSubmit
+  onSubmit,
 }: ChangePasswordModalProps) {
   const titleId = useId();
   const [currentPassword, setCurrentPassword] = useState('');
@@ -85,19 +88,22 @@ export default function ChangePasswordModal({
 
     onSubmit({
       current_password: currentPassword,
-      new_password: newPassword
+      new_password: newPassword,
     });
   };
 
   return (
-    <ModalOverlay
-      className={shellStyles.overlay}
-      onClose={onClose}
-      ariaLabelledBy={titleId}
-    >
+    <ModalOverlay className={shellStyles.overlay} onClose={onClose} ariaLabelledBy={titleId}>
       <motion.div
         className={shellStyles.modal}
-        style={{ height: '672px', overflow: 'hidden', padding: '0 130px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+        style={{
+          height: '672px',
+          overflow: 'hidden',
+          padding: '0 130px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
         initial={{ y: '100vh' }}
         animate={{ y: 0 }}
         exit={{ y: '100vh' }}
@@ -189,7 +195,16 @@ export default function ChangePasswordModal({
             disabled={!isSubmitEnabled}
             style={{ position: 'relative', zIndex: 10 }}
           >
-            <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '48px' }}>
+            <div
+              style={{
+                position: 'relative',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '48px',
+              }}
+            >
               <AnimatePresence initial={false}>
                 {isLoading ? (
                   <motion.img

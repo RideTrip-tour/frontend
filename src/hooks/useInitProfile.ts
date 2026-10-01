@@ -1,29 +1,30 @@
-import { useEffect } from 'react'
-import { useAuthStore, useProfileStore } from '@/store'
-import { initProfile } from '@/services/initProfile'
+import { useEffect } from 'react';
+
+import { initProfile } from '@/services/initProfile';
+import { useAuthStore, useProfileStore } from '@/store';
 
 export const useInitProfile = (): void => {
-  const isAuth = useAuthStore((s) => s.isAuth)
-  const resetProfile = useProfileStore((s) => s.reset)
+  const isAuth = useAuthStore((s) => s.isAuth);
+  const resetProfile = useProfileStore((s) => s.reset);
 
   useEffect(() => {
-    let cancelled = false
+    let cancelled = false;
 
     if (!isAuth) {
-      resetProfile()
+      resetProfile();
       return () => {
-        cancelled = true
-      }
+        cancelled = true;
+      };
     }
 
     initProfile().catch(() => {
       if (!cancelled) {
         // silent — initProfile логирует сам, если нужно
       }
-    })
+    });
 
     return () => {
-      cancelled = true
-    }
-  }, [isAuth, resetProfile])
-}
+      cancelled = true;
+    };
+  }, [isAuth, resetProfile]);
+};

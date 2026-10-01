@@ -1,34 +1,29 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useAuthStore } from '@/store/authStore';
-import  type { CartModalState } from '@/widgets/travel-constructor/model/cartModalTypes';
-import { ConstructorCartModal } from '@/widgets/travel-constructor/ui/ConstructorCartModal';
+
+import { DownloadIcon, SadfaceIcon, ResetIcon, SaveIcon } from '@/assets/icons/constructor';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
-import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
-import {
-  MOCK_SKI_LEVEL_PRICES,
-  MOCK_TICKET_PRICE,
-} from '@/widgets/travel-constructor/mocks/prices';
+import { useAuthStore } from '@/store/authStore';
+import { formatCartDate, formatPrice } from '@/widgets/travel-constructor/lib/formatters';
+import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
 import {
   calculateActivityPrice,
   calculateAdditionalOptionsPrice,
 } from '@/widgets/travel-constructor/lib/pricing';
-import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
 import {
-  formatCartDate,
-  formatPrice,
-} from '@/widgets/travel-constructor/lib/formatters';
-import {
-  DownloadIcon,
-  SadfaceIcon,
-  ResetIcon,
-  SaveIcon,
-} from '@/assets/icons/constructor';
-import style from './ConstructorCart.module.scss';
+  MOCK_SKI_LEVEL_PRICES,
+  MOCK_TICKET_PRICE,
+} from '@/widgets/travel-constructor/mocks/prices';
+import type { CartModalState } from '@/widgets/travel-constructor/model/cartModalTypes';
+import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
+import { ConstructorCartModal } from '@/widgets/travel-constructor/ui/ConstructorCartModal';
+
 import { CartActions } from './CartActions';
-import { CartShareMenu } from './CartShareMenu';
 import { CartItemHeader } from './CartItemHeader';
+import { CartShareMenu } from './CartShareMenu';
 import { CartSummary } from './CartSummary';
+
+import style from './ConstructorCart.module.scss';
 
 interface PriceLineProps {
   price: number;
@@ -92,13 +87,9 @@ export function ConstructorCart() {
 
   const origin = fromCity?.name ?? fromCountry?.name ?? null;
   const destination = toCity?.name ?? toCountry?.name ?? null;
-  const hasTicketDetails = Boolean(
-    origin || destination || departureDate || returnDate,
-  );
+  const hasTicketDetails = Boolean(origin || destination || departureDate || returnDate);
 
-  const route = origin || destination
-    ? `${origin ?? 'Откуда'} - ${destination ?? 'Куда'}`
-    : null;
+  const route = origin || destination ? `${origin ?? 'Откуда'} - ${destination ?? 'Куда'}` : null;
 
   const dates = departureDate
     ? returnDate
@@ -107,18 +98,15 @@ export function ConstructorCart() {
     : null;
 
   const hasActivityDetails = activities.length > 0 || liftTypes.length > 0;
-  const activityLabel = activities.length > 0
-    ? activities.join(', ')
-    : 'Активность не выбрана';
-  const liftTypesLabel = liftTypes.length > 0
-    ? ` (${liftTypes.join(', ')})`
-    : '';
+  const activityLabel = activities.length > 0 ? activities.join(', ') : 'Активность не выбрана';
+  const liftTypesLabel = liftTypes.length > 0 ? ` (${liftTypes.join(', ')})` : '';
 
-  const transferDetails = transfer?.type === 'needed'
-    ? ' (цена за человека)'
-    : transfer?.type === 'own-car' && transfer.parking
-      ? ` (парковка ${transfer.parking === 'needed' ? 'нужна' : 'не нужна'})`
-      : '';
+  const transferDetails =
+    transfer?.type === 'needed'
+      ? ' (цена за человека)'
+      : transfer?.type === 'own-car' && transfer.parking
+        ? ` (парковка ${transfer.parking === 'needed' ? 'нужна' : 'не нужна'})`
+        : '';
 
   const hasCompleteRoute = Boolean(fromCity && toCity);
   const ticketPrice = hasCompleteRoute ? MOCK_TICKET_PRICE : 0;
@@ -128,20 +116,22 @@ export function ConstructorCart() {
   const levelPrice = level ? MOCK_SKI_LEVEL_PRICES[level] : 0;
   const additionalOptionsPrice = calculateAdditionalOptionsPrice(additional);
 
-  const totalPrice = ticketPrice
-    + activityPrice
-    + accommodationPrice
-    + transferPrice
-    + levelPrice
-    + additionalOptionsPrice;
+  const totalPrice =
+    ticketPrice +
+    activityPrice +
+    accommodationPrice +
+    transferPrice +
+    levelPrice +
+    additionalOptionsPrice;
 
-  const hasSelectedItems = hasTicketDetails
-    || hasActivityDetails
-    || Boolean(accommodation)
-    || Boolean(transfer)
-    || Boolean(people)
-    || Boolean(level)
-    || additional.length > 0;
+  const hasSelectedItems =
+    hasTicketDetails ||
+    hasActivityDetails ||
+    Boolean(accommodation) ||
+    Boolean(transfer) ||
+    Boolean(people) ||
+    Boolean(level) ||
+    additional.length > 0;
   const hasVisibleItems = hasSelectedItems || activeSelectorId !== null;
 
   const saveCart = () => {
@@ -172,10 +162,7 @@ export function ConstructorCart() {
 
     try {
       // Заменить localStorage на API сохранения в «Избранные».
-      window.localStorage.setItem(
-        'ride-trip-constructor-cart',
-        JSON.stringify(snapshot),
-      );
+      window.localStorage.setItem('ride-trip-constructor-cart', JSON.stringify(snapshot));
       setModal({ type: 'save-success' });
     } catch {
       setModal({ type: 'save-error' });
@@ -210,7 +197,7 @@ export function ConstructorCart() {
           </div>
         ) : (
           <>
-          <p className={style.subtitle}>Вот что вы выбрали</p>
+            <p className={style.subtitle}>Вот что вы выбрали</p>
             {(hasTicketDetails || isSelectingTickets) && (
               <section className={style.cartItem} aria-label="Билеты">
                 <CartItemHeader
@@ -223,11 +210,11 @@ export function ConstructorCart() {
                   {(route || isSelectingFrom || isSelectingTo) && (
                     <>
                       <span className={isSelectingFrom ? style.selectingStatus : undefined}>
-                        {isSelectingFrom ? 'Выбирается сейчас...' : origin ?? 'Откуда'}
+                        {isSelectingFrom ? 'Выбирается сейчас...' : (origin ?? 'Откуда')}
                       </span>
                       {' - '}
                       <span className={isSelectingTo ? style.selectingStatus : undefined}>
-                        {isSelectingTo ? 'Выбирается сейчас...' : destination ?? 'Куда'}
+                        {isSelectingTo ? 'Выбирается сейчас...' : (destination ?? 'Куда')}
                       </span>
                     </>
                   )}
@@ -318,21 +305,17 @@ export function ConstructorCart() {
               </section>
             )}
 
-            {(
-              people
-              || level
-              || additional.length > 0
-              || isSelectingPeople
-              || isSelectingLevel
-              || isSelectingAdditional
-            ) && (
+            {(people ||
+              level ||
+              additional.length > 0 ||
+              isSelectingPeople ||
+              isSelectingLevel ||
+              isSelectingAdditional) && (
               <section
                 className={style.additionalInfoSection}
                 aria-label="Дополнительная информация"
               >
-                <h3 className={style.additionalInfoTitle}>
-                  Дополнительная информация:
-                </h3>
+                <h3 className={style.additionalInfoTitle}>Дополнительная информация:</h3>
 
                 {(people || isSelectingPeople) && (
                   <div className={style.cartItem}>
@@ -347,9 +330,7 @@ export function ConstructorCart() {
                       </p>
                     ) : people ? (
                       <>
-                        <p className={style.primaryValue}>
-                          {formatGuestSummary(people)}
-                        </p>
+                        <p className={style.primaryValue}>{formatGuestSummary(people)}</p>
                         {/* TODO: Переработать формат гостей, отделить описание (в скобках) от основы */}
                         {/* <span className={style.secondaryValue}>{formatGuestSummary(people)}</span> */}
                         <PriceLine price={0} />
@@ -391,9 +372,7 @@ export function ConstructorCart() {
                       </p>
                     ) : (
                       <>
-                        <p className={style.primaryValue}>
-                          {additional.join(', ')}
-                        </p>
+                        <p className={style.primaryValue}>{additional.join(', ')}</p>
                         <PriceLine price={additionalOptionsPrice} />
                       </>
                     )}
@@ -414,14 +393,16 @@ export function ConstructorCart() {
 
         <CartActions
           actions={[
-            { icon: <ResetIcon />, label: 'Сбросить', onClick: () => setModal({ type: 'reset-confirm' }) },
+            {
+              icon: <ResetIcon />,
+              label: 'Сбросить',
+              onClick: () => setModal({ type: 'reset-confirm' }),
+            },
             { icon: <SaveIcon />, label: 'Сохранить', onClick: saveCart },
             { icon: <DownloadIcon />, label: 'Скачать PDF', onClick: downloadPdf },
           ]}
         >
-          <CartShareMenu
-            hasSelectedItems={hasSelectedItems}
-          />
+          <CartShareMenu hasSelectedItems={hasSelectedItems} />
         </CartActions>
       </div>
       <ConstructorCartModal
@@ -437,4 +418,3 @@ export function ConstructorCart() {
     </aside>
   );
 }
-

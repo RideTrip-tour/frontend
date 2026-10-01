@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+
 import styles from './AccommodationSelector.module.scss';
 
 interface FilterGroupProps {
@@ -8,12 +9,7 @@ interface FilterGroupProps {
   onToggle: (option: string) => void;
 }
 
-export function FilterGroup({
-  title,
-  options,
-  selectedOptions,
-  onToggle,
-}: FilterGroupProps) {
+export function FilterGroup({ title, options, selectedOptions, onToggle }: FilterGroupProps) {
   return (
     <section className={styles.filterGroup}>
       <h3 className={styles.filterTitle}>{title}</h3>

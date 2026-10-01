@@ -1,8 +1,7 @@
 :root {
-
 }
 
-body[data-theme="light"] {
+body[data-theme='light'] {
   --card-bg: var(--color-white);
   --card-shadow: rgba(14, 104, 212, 0.25);
 
@@ -17,6 +16,5 @@ body[data-theme="light"] {
   --card-condition-icon-color: var(--color-blue);
 }
 
-body[data-theme="dark"] {
-
+body[data-theme='dark'] {
 }

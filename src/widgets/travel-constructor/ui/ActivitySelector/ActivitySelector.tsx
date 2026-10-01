@@ -1,13 +1,15 @@
-import { useState } from 'react';
 import clsx from 'clsx';
+import { useState } from 'react';
+
+import { SearchInfoIcon } from '@/assets/icons/constructor';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
 import { SearchInput } from '@/shared/ui/base/SearchInput';
-import { SearchInfoIcon } from '@/assets/icons/constructor';
 import {
   ADDITIONAL_ACTIVITIES,
   LIFT_TYPES,
   PRIMARY_ACTIVITIES,
 } from '@/widgets/travel-constructor/config/activityOptions';
+
 import styles from './ActivitySelector.module.scss';
 
 interface ActivitySelectorProps {
@@ -24,12 +26,7 @@ interface OptionListProps {
   onChange: (options: string[]) => void;
 }
 
-function OptionList({
-  name,
-  options,
-  selectedOptions,
-  onChange,
-}: OptionListProps) {
+function OptionList({ name, options, selectedOptions, onChange }: OptionListProps) {
   const toggleOption = (option: string) => {
     const nextOptions = selectedOptions.includes(option)
       ? selectedOptions.filter((selectedOption) => selectedOption !== option)
@@ -41,9 +38,7 @@ function OptionList({
   return (
     <div className={styles.optionList}>
       {options.map((option) => {
-        const inputId = `${name}-${option}`
-          .toLowerCase()
-          .replace(/[^a-zа-яё0-9]+/gi, '-');
+        const inputId = `${name}-${option}`.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-');
 
         return (
           <label className={styles.option} htmlFor={inputId} key={option}>
@@ -74,9 +69,8 @@ export function ActivitySelector({
 
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase('ru-RU');
   const allActivities = [...PRIMARY_ACTIVITIES, ...ADDITIONAL_ACTIVITIES];
-  const visibleActivities = normalizedQuery || showAllActivities
-    ? allActivities
-    : PRIMARY_ACTIVITIES;
+  const visibleActivities =
+    normalizedQuery || showAllActivities ? allActivities : PRIMARY_ACTIVITIES;
 
   const filteredActivities = visibleActivities.filter((activity) =>
     activity.toLocaleLowerCase('ru-RU').includes(normalizedQuery),

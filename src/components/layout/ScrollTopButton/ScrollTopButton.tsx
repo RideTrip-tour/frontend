@@ -1,10 +1,11 @@
-import {Icon} from '@iconify/react'
-import style from './scrolltopbutton.module.scss'
+import { Icon } from '@iconify/react';
+
+import style from './scrolltopbutton.module.scss';
 
 const ScrollTopButton = () => {
   const handleClick = () => {
-    window.scrollTo({top: 0, behavior: 'smooth'})
-  }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <button
@@ -15,7 +16,7 @@ const ScrollTopButton = () => {
     >
       <Icon icon="iconamoon:arrow-up-2" />
     </button>
-  )
-}
+  );
+};
 
-export default ScrollTopButton
+export default ScrollTopButton;

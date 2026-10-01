@@ -1,9 +1,6 @@
 import type { GuestSelection } from '@/widgets/travel-constructor/model/types';
 
-function pluralize(
-  value: number,
-  forms: [singular: string, paucal: string, plural: string],
-) {
+function pluralize(value: number, forms: [singular: string, paucal: string, plural: string]) {
   const lastTwoDigits = value % 100;
   const lastDigit = value % 10;
 
@@ -32,14 +29,10 @@ export function getGuestCounts(selection: GuestSelection) {
 export function formatGuestSummary(selection: GuestSelection) {
   const { adults, children } = getGuestCounts(selection);
   const total = adults + children;
-  const details = [
-    `${adults} ${pluralize(adults, ['взрослый', 'взрослых', 'взрослых'])}`,
-  ];
+  const details = [`${adults} ${pluralize(adults, ['взрослый', 'взрослых', 'взрослых'])}`];
 
   if (children > 0) {
-    details.push(
-      `${children} ${pluralize(children, ['ребёнок', 'ребёнка', 'детей'])}`,
-    );
+    details.push(`${children} ${pluralize(children, ['ребёнок', 'ребёнка', 'детей'])}`);
   }
 
   return `${total} ${pluralize(total, ['человек', 'человека', 'человек'])} (${details.join(', ')})`;

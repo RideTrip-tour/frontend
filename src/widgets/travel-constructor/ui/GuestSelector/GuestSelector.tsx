@@ -1,19 +1,11 @@
 import { useState } from 'react';
-import type {
-  ChildAgeGroup,
-  GuestSelection,
-} from '@/widgets/travel-constructor/model/types';
-import {
-  MinusIcon,
-  PlusIcon,
-} from '@/assets/icons/constructor';
+
+import { MinusIcon, PlusIcon } from '@/assets/icons/constructor';
+import type { ChildAgeGroup, GuestSelection } from '@/widgets/travel-constructor/model/types';
+
 import styles from './GuestSelector.module.scss';
 
-const AGE_GROUPS: ChildAgeGroup[] = [
-  'До 3-х лет',
-  '4-12 лет',
-  '13-17 лет',
-];
+const AGE_GROUPS: ChildAgeGroup[] = ['До 3-х лет', '4-12 лет', '13-17 лет'];
 
 const MAX_ADULTS = 8;
 const MAX_CHILDREN = 8;
@@ -23,21 +15,15 @@ interface GuestSelectorProps {
   onChange: (selection: GuestSelection) => void;
 }
 
-function createAgeGroups(
-  children: number,
-  selectedGroups: Array<ChildAgeGroup | null> = [],
-) {
-  return Array.from(
-    { length: children },
-    (_, index) => selectedGroups[index] ?? null,
-  );
+function createAgeGroups(children: number, selectedGroups: Array<ChildAgeGroup | null> = []) {
+  return Array.from({ length: children }, (_, index) => selectedGroups[index] ?? null);
 }
 
 export function GuestSelector({ value, onChange }: GuestSelectorProps) {
   const [adults, setAdults] = useState(value?.adults ?? 0);
   const [children, setChildren] = useState(value?.children ?? 0);
-  const [childAgeGroups, setChildAgeGroups] = useState<Array<ChildAgeGroup | null>>(
-    () => createAgeGroups(value?.children ?? 0, value?.childAgeGroups),
+  const [childAgeGroups, setChildAgeGroups] = useState<Array<ChildAgeGroup | null>>(() =>
+    createAgeGroups(value?.children ?? 0, value?.childAgeGroups),
   );
 
   const updateSelection = (
@@ -67,11 +53,10 @@ export function GuestSelector({ value, onChange }: GuestSelectorProps) {
     updateSelection(adults, nextChildren, nextAgeGroups);
   };
 
-
   const selectAgeGroup = (childIndex: number, ageGroup: ChildAgeGroup) => {
-    const nextAgeGroups = childAgeGroups.map((currentAgeGroup, index) => (
-      index === childIndex ? ageGroup : currentAgeGroup
-    ));
+    const nextAgeGroups = childAgeGroups.map((currentAgeGroup, index) =>
+      index === childIndex ? ageGroup : currentAgeGroup,
+    );
 
     setChildAgeGroups(nextAgeGroups);
     updateSelection(adults, children, nextAgeGroups);
@@ -137,9 +122,7 @@ export function GuestSelector({ value, onChange }: GuestSelectorProps) {
                 role="group"
               >
                 {children > 1 && (
-                  <span className={styles.childLabel}>
-                    Ребёнок {childIndex + 1}
-                  </span>
+                  <span className={styles.childLabel}>Ребёнок {childIndex + 1}</span>
                 )}
                 <div className={styles.ageOptions}>
                   {AGE_GROUPS.map((ageGroup) => (

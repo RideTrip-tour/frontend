@@ -1,15 +1,18 @@
-import style from './daterangepickermodal.module.scss'
-import './variables.css'
-import { useState, useEffect, useCallback, useMemo } from "react";
-import type { SelectionTab } from '@/shared/ui/compose/DateRangePicker/types.ts'
-import { MAX_FUTURE_MONTHS, MONTH_LABELS_RU } from '@/shared/ui/compose/DateRangePicker/constants.ts'
-import { formatDisplayDate } from '@/shared/ui/compose/DateRangePicker/utils.ts'
-import CalendarHeader
-  from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarHeader'
-import DrumRoller
-  from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarHeader/DrumRoller'
-import CalendarGrid
-  from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid'
+import { useState, useEffect, useCallback, useMemo } from 'react';
+
+import {
+  MAX_FUTURE_MONTHS,
+  MONTH_LABELS_RU,
+} from '@/shared/ui/compose/DateRangePicker/constants.ts';
+import CalendarGrid from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarGrid';
+import CalendarHeader from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarHeader';
+import DrumRoller from '@/shared/ui/compose/DateRangePicker/DateRangePickerModal/Calendar/CalendarHeader/DrumRoller';
+import type { SelectionTab } from '@/shared/ui/compose/DateRangePicker/types.ts';
+import { formatDisplayDate } from '@/shared/ui/compose/DateRangePicker/utils.ts';
+
+import style from './daterangepickermodal.module.scss';
+
+import './variables.css';
 
 interface DateRangePickerModalProps {
   today: Date;
@@ -20,14 +23,13 @@ interface DateRangePickerModalProps {
 }
 
 function DateRangePickerModal({
-                                       today,
-                                       initialFrom,
-                                       initialTo,
-                                       onRangeChange,
-                                       onClose,
-                                     }: DateRangePickerModalProps) {
-
-  const [activeTab, setActiveTab] = useState<SelectionTab>("from");
+  today,
+  initialFrom,
+  initialTo,
+  onRangeChange,
+  onClose,
+}: DateRangePickerModalProps) {
+  const [activeTab, setActiveTab] = useState<SelectionTab>('from');
   const [selectionFrom, setSelectionFrom] = useState<Date | null>(initialFrom);
   const [selectionTo, setSelectionTo] = useState<Date | null>(initialTo);
 
@@ -49,7 +51,8 @@ function DateRangePickerModal({
   );
 
   const isNextMonthDisabled = useMemo(
-    () => displayYear === maxAllowedDate.getFullYear() && displayMonth === maxAllowedDate.getMonth(),
+    () =>
+      displayYear === maxAllowedDate.getFullYear() && displayMonth === maxAllowedDate.getMonth(),
     [displayYear, displayMonth, maxAllowedDate],
   );
 
@@ -57,15 +60,7 @@ function DateRangePickerModal({
     const years = new Set<string>();
 
     for (let i = 0; i <= MAX_FUTURE_MONTHS; i++) {
-      years.add(
-        String(
-          new Date(
-            today.getFullYear(),
-            today.getMonth() + i,
-            1,
-          ).getFullYear()
-        )
-      );
+      years.add(String(new Date(today.getFullYear(), today.getMonth() + i, 1).getFullYear()));
     }
 
     return [...years];
@@ -77,12 +72,12 @@ function DateRangePickerModal({
   );
 
   const monthDrumMinIndex = useMemo(
-    () => displayYear === today.getFullYear() ? today.getMonth() : 0,
+    () => (displayYear === today.getFullYear() ? today.getMonth() : 0),
     [displayYear, today],
   );
 
   const monthDrumMaxIndex = useMemo(
-    () => displayYear === maxAllowedDate.getFullYear() ? maxAllowedDate.getMonth() : 11,
+    () => (displayYear === maxAllowedDate.getFullYear() ? maxAllowedDate.getMonth() : 11),
     [displayYear, maxAllowedDate],
   );
 
@@ -116,76 +111,70 @@ function DateRangePickerModal({
     setDisplayMonth(monthIndex);
   }, []);
 
-  const handleDrumYearChange = useCallback((yearIndex: number) => {
-    const newYear = parseInt(availableYears[yearIndex], 10);
-    const minDate = new Date(today.getFullYear(), today.getMonth(), 1);
+  const handleDrumYearChange = useCallback(
+    (yearIndex: number) => {
+      const newYear = parseInt(availableYears[yearIndex], 10);
+      const minDate = new Date(today.getFullYear(), today.getMonth(), 1);
 
-    let clampedMonth = displayMonth;
+      let clampedMonth = displayMonth;
 
-    const candidateDate = new Date(newYear, displayMonth, 1);
+      const candidateDate = new Date(newYear, displayMonth, 1);
 
-    if (candidateDate < minDate) {
-      clampedMonth = today.getMonth();
-    } else if (candidateDate > maxAllowedDate) {
-      clampedMonth = maxAllowedDate.getMonth();
-    }
+      if (candidateDate < minDate) {
+        clampedMonth = today.getMonth();
+      } else if (candidateDate > maxAllowedDate) {
+        clampedMonth = maxAllowedDate.getMonth();
+      }
 
-    setDisplayYear(newYear);
-    setDisplayMonth(clampedMonth);
+      setDisplayYear(newYear);
+      setDisplayMonth(clampedMonth);
+    },
+    [availableYears, displayMonth, today, maxAllowedDate],
+  );
 
-  }, [availableYears, displayMonth, today, maxAllowedDate]);
+  const handleDayClick = useCallback(
+    (clickedDate: Date) => {
+      if (activeTab === 'from') {
+        setSelectionFrom(clickedDate);
 
-  const handleDayClick = useCallback((clickedDate: Date) => {
+        setSelectionTo((prevTo) => (prevTo && clickedDate <= prevTo ? prevTo : null));
 
-    if (activeTab === "from") {
+        setActiveTab('to');
+      } else {
+        if (selectionFrom && clickedDate < selectionFrom) return;
 
-      setSelectionFrom(clickedDate);
+        setSelectionTo(clickedDate);
+      }
+    },
+    [activeTab, selectionFrom],
+  );
 
-      setSelectionTo((prevTo) =>
-        prevTo && clickedDate <= prevTo ? prevTo : null
-      );
+  const fromFormatted = selectionFrom ? formatDisplayDate(selectionFrom.getTime()) : null;
 
-      setActiveTab("to");
-
-    } else {
-
-      if (selectionFrom && clickedDate < selectionFrom) return;
-
-      setSelectionTo(clickedDate);
-
-    }
-
-  }, [activeTab, selectionFrom]);
-
-  const fromFormatted = selectionFrom
-    ? formatDisplayDate(selectionFrom.getTime())
-    : null;
-
-  const toFormatted = selectionTo
-    ? formatDisplayDate(selectionTo.getTime())
-    : null;
+  const toFormatted = selectionTo ? formatDisplayDate(selectionTo.getTime()) : null;
 
   return (
     <div className={style.daterangepickermodal}>
-
       <div className={style.daterangepickermodal__tabs}>
-
-        {(["from", "to"] as const).map((tab) => {
-
+        {(['from', 'to'] as const).map((tab) => {
           const isActive = activeTab === tab;
-          const tabLabel = tab === "from" ? "Когда" : "Обратно";
-          const tabDateText = tab === "from" ? fromFormatted : toFormatted;
+          const tabLabel = tab === 'from' ? 'Когда' : 'Обратно';
+          const tabDateText = tab === 'from' ? fromFormatted : toFormatted;
 
           const tabClass = [
             style.daterangepickermodal__tab,
-            isActive && style['daterangepickermodal__tab--active']
-          ].filter(Boolean).join(" ");
+            isActive && style['daterangepickermodal__tab--active'],
+          ]
+            .filter(Boolean)
+            .join(' ');
 
           const valueClass = [
             style.daterangepickermodal__tabValue,
             isActive && tabDateText && style['daterangepickermodal__tabValue--active'],
-            !tabDateText && style['daterangepickermodal__tabValue--empty']
-          ].filter(Boolean).join(" ");
+            !tabDateText && style['daterangepickermodal__tabValue--empty'],
+          ]
+            .filter(Boolean)
+            .join(' ');
 
           return (
             <button
@@ -195,33 +184,21 @@ function DateRangePickerModal({
               className={tabClass}
               aria-pressed={isActive}
             >
-              <div className={style.daterangepickermodal__tabLabel}>
-                {tabLabel}
-              </div>
+              <div className={style.daterangepickermodal__tabLabel}>{tabLabel}</div>
 
-              <div className={valueClass}>
-                {tabDateText ?? "—"}
-              </div>
+              <div className={valueClass}>{tabDateText ?? '—'}</div>
             </button>
           );
         })}
 
-        <button
-          type="button"
-          onClick={onClose}
-          className={style.daterangepickermodal__okButton}
-        >
+        <button type="button" onClick={onClose} className={style.daterangepickermodal__okButton}>
           OK
         </button>
-
       </div>
 
       {showDrumPicker ? (
-
         <div>
-
           <div className={style.daterangepickermodal__drumHeader}>
-
             <span className={style.daterangepickermodal__drumTitle}>
               {MONTH_LABELS_RU[displayMonth]} {displayYear}
             </span>
@@ -233,16 +210,13 @@ function DateRangePickerModal({
             >
               Готово
             </button>
-
           </div>
 
           <div className={style.daterangepickermodal__drums}>
-
-            <div className={`${style.daterangepickermodal__drum} ${style['daterangepickermodal__drum--month']}`}>
-
-              <div className={style.daterangepickermodal__drumLabel}>
-                МЕСЯЦ
-              </div>
+            <div
+              className={`${style.daterangepickermodal__drum} ${style['daterangepickermodal__drum--month']}`}
+            >
+              <div className={style.daterangepickermodal__drumLabel}>МЕСЯЦ</div>
 
               <DrumRoller
                 items={MONTH_LABELS_RU}
@@ -251,14 +225,12 @@ function DateRangePickerModal({
                 maxValidIndex={monthDrumMaxIndex}
                 onChange={handleDrumMonthChange}
               />
-
             </div>
 
-            <div className={`${style.daterangepickermodal__drum} ${style['daterangepickermodal__drum--year']}`}>
-
-              <div className={style.daterangepickermodal__drumLabel}>
-                ГОД
-              </div>
+            <div
+              className={`${style.daterangepickermodal__drum} ${style['daterangepickermodal__drum--year']}`}
+            >
+              <div className={style.daterangepickermodal__drumLabel}>ГОД</div>
 
               <DrumRoller
                 items={availableYears}
@@ -267,15 +239,10 @@ function DateRangePickerModal({
                 maxValidIndex={availableYears.length - 1}
                 onChange={handleDrumYearChange}
               />
-
             </div>
-
           </div>
-
         </div>
-
       ) : (
-
         <>
           <CalendarHeader
             displayYear={displayYear}
@@ -298,9 +265,8 @@ function DateRangePickerModal({
           />
         </>
       )}
-
     </div>
   );
 }
 
-export default DateRangePickerModal
+export default DateRangePickerModal;
