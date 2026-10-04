@@ -3,6 +3,7 @@ import { useId, useMemo, useState, type FormEvent } from 'react';
 
 import CloseIcon from '@/assets/icons/close.svg';
 import Loader from '@/assets/icons/loader.svg';
+import { isValidPassword, PASSWORD_HINT } from '@/features/auth/lib/passwordValidation';
 import ModalOverlay from '@/shared/ui/base/ModalOverlay';
 
 import AuthField from './AuthField';
@@ -30,8 +31,6 @@ type UnifiedAuthModalProps = {
 
 type FieldStatus = 'default' | 'focus' | 'success' | 'error';
 
-const passwordHint = 'Минимум 8 символов, латиница, буквы и цифры';
-
 export default function UnifiedAuthModal({
   initialView = 'login',
   isLoading,
@@ -56,8 +55,6 @@ export default function UnifiedAuthModal({
   const [confirmFocused, setConfirmFocused] = useState(false);
 
   const cleanEmail = email.trim();
-  const cleanPassword = password.trim();
-  const cleanConfirmPassword = confirmPassword.trim();
 
   const isEmailValid = useMemo(() => {
     const trimmed = cleanEmail;
@@ -76,21 +73,12 @@ export default function UnifiedAuthModal({
     if (view === 'login') {
       return password.length >= 8;
     }
-    if (cleanPassword.length < 8) return false;
-    if (/[а-яА-Я]/.test(cleanPassword)) return false;
-    if (/[^a-zA-Z0-9]/.test(cleanPassword)) return false;
-    if (!/[a-zA-Z]/.test(cleanPassword)) return false;
-    if (!/\d/.test(cleanPassword)) return false;
-    return true;
-  }, [password, cleanPassword, view]);
+    return isValidPassword(password);
+  }, [password, view]);
 
   const passwordsMatch = useMemo(() => {
-    return (
-      cleanPassword.length > 0 &&
-      cleanConfirmPassword.length > 0 &&
-      cleanPassword === cleanConfirmPassword
-    );
-  }, [cleanPassword, cleanConfirmPassword]);
+    return password.length > 0 && confirmPassword.length > 0 && password === confirmPassword;
+  }, [password, confirmPassword]);
 
   const emailStatus: FieldStatus = useMemo(() => {
     if (serverError) return 'error';
@@ -280,7 +268,7 @@ export default function UnifiedAuthModal({
                     label="Пароль"
                     value={password}
                     status={passwordStatus}
-                    hint={passwordHint}
+                    hint={PASSWORD_HINT}
                     hintTone={
                       passwordStatus === 'error'
                         ? 'error'

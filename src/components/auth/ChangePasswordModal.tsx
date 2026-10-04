@@ -3,6 +3,7 @@ import { useId, useMemo, useState, type FormEvent } from 'react';
 
 import CloseIcon from '@/assets/icons/close.svg';
 import Loader from '@/assets/icons/loader.svg';
+import { isValidPassword, PASSWORD_HINT } from '@/features/auth/lib/passwordValidation';
 import ModalOverlay from '@/shared/ui/base/ModalOverlay';
 
 import AuthField from './AuthField';
@@ -18,8 +19,6 @@ type ChangePasswordModalProps = {
 };
 
 type FieldStatus = 'default' | 'focus' | 'success' | 'error';
-
-const passwordHint = 'Минимум 8 символов, латиница, буквы и цифры';
 
 export default function ChangePasswordModal({
   isLoading,
@@ -40,25 +39,13 @@ export default function ChangePasswordModal({
   const [newFocused, setNewFocused] = useState(false);
   const [confirmFocused, setConfirmFocused] = useState(false);
 
-  const cleanNewPassword = newPassword.trim();
-  const cleanConfirmPassword = confirmPassword.trim();
-
   const isNewPasswordValid = useMemo(() => {
-    if (cleanNewPassword.length < 8) return false;
-    if (/[а-яА-Я]/.test(cleanNewPassword)) return false;
-    if (/[^a-zA-Z0-9]/.test(cleanNewPassword)) return false;
-    if (!/[a-zA-Z]/.test(cleanNewPassword)) return false;
-    if (!/\d/.test(cleanNewPassword)) return false;
-    return true;
-  }, [cleanNewPassword]);
+    return isValidPassword(newPassword);
+  }, [newPassword]);
 
   const passwordsMatch = useMemo(() => {
-    return (
-      cleanNewPassword.length > 0 &&
-      cleanConfirmPassword.length > 0 &&
-      cleanNewPassword === cleanConfirmPassword
-    );
-  }, [cleanNewPassword, cleanConfirmPassword]);
+    return newPassword.length > 0 && confirmPassword.length > 0 && newPassword === confirmPassword;
+  }, [newPassword, confirmPassword]);
 
   const currentStatus: FieldStatus = useMemo(() => {
     if (serverError) return 'error';
@@ -153,7 +140,7 @@ export default function ChangePasswordModal({
             label="Новый пароль"
             value={newPassword}
             status={newPasswordStatus}
-            hint={passwordHint}
+            hint={PASSWORD_HINT}
             hintTone={
               newPasswordStatus === 'error'
                 ? 'error'

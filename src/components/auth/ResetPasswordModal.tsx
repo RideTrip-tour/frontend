@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
 
+import { isValidPassword, PASSWORD_HINT } from '@/features/auth/lib/passwordValidation';
+
 import { AuthField, AuthShell } from './index';
 
 import styles from './AuthForm.module.scss';
@@ -13,8 +15,6 @@ type ResetPasswordModalProps = {
 };
 
 type FieldStatus = 'default' | 'focus' | 'success' | 'error';
-
-const passwordHint = 'Минимум 8 символов, буквы и цифры';
 
 export default function ResetPasswordModal({
   isLoading = false,
@@ -31,10 +31,10 @@ export default function ResetPasswordModal({
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [confirmFocused, setConfirmFocused] = useState(false);
 
-  const passwordValid = password.trim().length >= 8;
-  const confirmValid = confirmPassword.trim().length >= 8;
+  const passwordValid = isValidPassword(password);
+  const confirmValid = isValidPassword(confirmPassword);
   const passwordsMatch =
-    password.trim().length > 0 && confirmPassword.trim().length > 0 && password === confirmPassword;
+    password.length > 0 && confirmPassword.length > 0 && password === confirmPassword;
 
   // флаг ошибки несоответствия паролей
   const hasMismatchError = !passwordsMatch && confirmPassword.length > 0;
@@ -42,9 +42,9 @@ export default function ResetPasswordModal({
   const passwordStatus: FieldStatus = useMemo(() => {
     if (hasMismatchError || serverError) return 'error';
     if (passwordFocused) return 'focus';
-    if (passwordValid) return 'success';
-    return 'default';
-  }, [hasMismatchError, serverError, passwordFocused, passwordValid]);
+    if (!password) return 'default';
+    return passwordValid ? 'success' : 'error';
+  }, [hasMismatchError, serverError, passwordFocused, passwordValid, password]);
 
   const confirmStatus: FieldStatus = useMemo(() => {
     if (hasMismatchError || serverError) return 'error';
@@ -60,8 +60,8 @@ export default function ResetPasswordModal({
     if (!isSubmitEnabled) return;
 
     await onSubmit?.({
-      password: password.trim(),
-      confirmPassword: confirmPassword.trim(),
+      password,
+      confirmPassword,
     });
   };
 
@@ -74,7 +74,7 @@ export default function ResetPasswordModal({
           label="Новый пароль"
           value={password}
           status={passwordStatus}
-          hint={passwordHint}
+          hint={PASSWORD_HINT}
           hintTone={passwordStatus === 'error' ? 'error' : 'default'}
           autoComplete="new-password"
           showToggle
@@ -92,7 +92,7 @@ export default function ResetPasswordModal({
           label="Повторите пароль"
           value={confirmPassword}
           status={confirmStatus}
-          hint={passwordHint}
+          hint={PASSWORD_HINT}
           hintTone={confirmStatus === 'error' ? 'error' : 'default'}
           autoComplete="new-password"
           showToggle
