@@ -1,6 +1,6 @@
-:root {
-  color-scheme: light dark;
+@import './variables.css';
 
+:root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -13,13 +13,9 @@
   box-sizing: border-box;
 }
 
-a {
-  text-decoration: inherit;
-}
-
-p {
-  margin: 0;
-  padding: 0;
+html,
+body {
+  min-height: 100%;
 }
 
 body {
@@ -28,8 +24,18 @@ body {
   min-width: 1440px;
   max-width: 1920px;
   min-height: 100vh;
-
+  background-color: var(--color-white-1);
+  color: var(--color-black);
   font-family: var(--text-font-family), sans-serif;
+}
+
+a {
+  text-decoration: inherit;
+}
+
+p {
+  margin: 0;
+  padding: 0;
 }
 
 #root {
@@ -40,6 +46,4 @@ body {
 
 .iconify {
   display: block;
-}
-@media (prefers-color-scheme: light) {
 }
