@@ -89,9 +89,9 @@ function HomePage() {
     }
   }, [searchParams, location.state, navigate]);
 
-  const closeAuth = () => {
+  const closeAuth = (to = '/') => {
     setView('none');
-    navigate('/', { replace: true });
+    navigate(to, { replace: true, state: null });
   };
 
   const closeTestMenu = () => {
@@ -119,7 +119,13 @@ function HomePage() {
       setEmail(data.email);
       if (modalView === 'login') {
         await loginRequest(data.email, data.password!);
-        closeAuth();
+
+        const from = location.state?.from;
+        const returnTo = from
+          ? `${from.pathname}${from.search ?? ''}${from.hash ?? ''}`
+          : '/';
+
+        closeAuth(returnTo);
       } else if (modalView === 'register') {
         await registerRequest({ email: data.email, password: data.password! });
         setView('registration-email-sent');

@@ -1,33 +1,5 @@
-import { useNavigate } from 'react-router';
-
-import { meRequest } from '@/services/usersService';
-import { useAuthStore } from '@/store/authStore';
+import { Navigate } from 'react-router';
 
 export function LoginPage() {
-  const setUser = useAuthStore((s) => s.setUser);
-  const navigate = useNavigate();
-
-  const handleLogin = async () => {
-    try {
-      const user = await meRequest();
-      setUser(user);
-      navigate('/');
-    } catch {
-      alert('Не удалось получить данные пользователя');
-    }
-  };
-
-  return (
-    <div>
-      <h1>Login</h1>
-      <button
-        onClick={handleLogin}
-        style={{
-          marginTop: '100px',
-        }}
-      >
-        Login
-      </button>
-    </div>
-  );
+  return <Navigate to="/?auth=login" replace />;
 }

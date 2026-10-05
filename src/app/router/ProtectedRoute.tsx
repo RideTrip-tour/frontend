@@ -13,7 +13,7 @@ export function ProtectedRoute() {
   if (authStatus === 'anonymous') {
     return (
       <Navigate
-        to="/login"
+        to="/?auth=login"
         replace
         state={{ from: location }}
       />
