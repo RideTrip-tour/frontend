@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router';
 
+import { ProtectedRoute } from '@/app/router/ProtectedRoute';
 import PaddedLayout from '@/components/layout/PaddedLayout';
 
 const HomePage = lazy(() => import('@/pages/Home'));
@@ -30,14 +31,16 @@ export function AppRouter() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/auth/verify" element={<RegistrationVerifyPage />} />
+        <Route path="/trip-builder" element={<TripBuilderPage />} />
 
-        <Route element={<PaddedLayout />}>
-          <Route path="/profile">
-            <Route index element={<ProfilePage />} />
-            <Route path="settings" element={<ProfileSettingsPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<PaddedLayout />}>
+            <Route path="/profile">
+              <Route index element={<ProfilePage />} />
+              <Route path="settings" element={<ProfileSettingsPage />} />
+            </Route>
           </Route>
         </Route>
-        <Route path="/trip-builder" element={<TripBuilderPage />} />
       </Routes>
     </Suspense>
   );

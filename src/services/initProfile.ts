@@ -1,7 +1,7 @@
 import { useProfileStore } from '@/store/profileStore';
 
 import { getMyProfileRequest, createProfileRequest, type Profile } from './profileService';
-import { meRequest } from './usersService';
+import type { CurrentUser } from './usersService';
 
 const EMPTY_PROFILE_DATA = {
   first_name: '',
@@ -36,31 +36,29 @@ const applyProfile = (profile: Profile) => {
   if (fullName) store.setUserName(fullName);
 };
 
-export const initProfile = async (): Promise<void> => {
+export const initProfile = async (user: CurrentUser): Promise<void> => {
   const store = useProfileStore.getState();
 
-  try {
-    const user = await meRequest();
-    if (user?.id != null) store.setUserId(String(user.id));
-    if (user?.email) store.setUserEmail(user.email);
-  } catch {
-    return;
-  }
+  store.setUserId(String(user.id));
+  store.setUserEmail(user.email);
 
   try {
     const profile = await getMyProfileRequest();
     applyProfile(profile);
-  } catch (e: unknown) {
+  } catch (error) {
     const status =
-      (e as { status?: number; response?: { status?: number } })?.status ??
-      (e as { response?: { status?: number } })?.response?.status;
-    if (status === 404) {
-      try {
-        const created = await createProfileRequest(EMPTY_PROFILE_DATA);
-        applyProfile(created);
-      } catch {
-        // профиль не удалось создать — оставляем стор с userId/email
-      }
+      (error as { status?: number })?.status ??
+      (error as { response?: { status?: number } })?.response?.status;
+
+    if (status !== 404) {
+      return;
+    }
+
+    try {
+      const profile = await createProfileRequest(EMPTY_PROFILE_DATA);
+      applyProfile(profile);
+    } catch {
+      // Профиль не удалось создать.
     }
   }
 };
