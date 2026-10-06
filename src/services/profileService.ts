@@ -1,5 +1,6 @@
 import { apiClient } from '@/shared/api/client';
 import { handleApiError } from '@/shared/api/errors';
+import { profileApi, profileRequestOptions } from '@/shared/api/profile/profileApi';
 
 export type ProfileData = {
   first_name: string;
@@ -60,7 +61,7 @@ export async function updateMyProfileRequest(data: ProfileData) {
 
 export async function deleteMyProfileRequest() {
   try {
-    await apiClient.delete('/profile/me');
+    await profileApi.deleteProfileByIdApiProfileMeDelete(profileRequestOptions);
   } catch (e) {
     throw handleApiError(e);
   }

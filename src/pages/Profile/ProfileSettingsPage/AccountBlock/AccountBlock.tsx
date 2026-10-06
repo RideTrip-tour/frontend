@@ -9,7 +9,7 @@ import SectionHeader from '@/shared/ui/base/SectionHeader';
 import DeleteAccountModal from '@/shared/ui/compose/Modals/DeleteAccountModal';
 import LogoutConfirmModal from '@/shared/ui/compose/Modals/LogoutConfirmModal';
 import PageSection from '@/shared/ui/page/PageSection';
-import { useProfileStore } from '@/store';
+import { useAuthStore, useProfileStore } from '@/store';
 
 import style from './accountblock.module.scss';
 
@@ -19,6 +19,7 @@ function AccountBlock() {
   const navigate = useNavigate();
   const reset = useProfileStore((s) => s.reset);
   const userEmail = useProfileStore((s) => s.userEmail);
+  const logout = useAuthStore((s) => s.logout);
 
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -36,7 +37,7 @@ function AccountBlock() {
       return;
     }
     reset();
-    navigate('/login');
+    void navigate('/login');
   };
 
   const handleDelete = async () => {
@@ -50,7 +51,8 @@ function AccountBlock() {
       return;
     }
     reset();
-    navigate('/login');
+    logout();
+    void navigate('/login');
   };
 
   return (
