@@ -42,7 +42,11 @@ function PhotoID() {
                   onClick={() => copy(userId)}
                   aria-label="copy id"
                 >
-                  <Icon icon="solar:copy-line-duotone" width={20} height={20} />
+                  <Icon
+                    icon="solar:copy-line-duotone"
+                    width={20}
+                    height={20}
+                  />
                 </button>
               </Tooltip>
             </div>
@@ -61,7 +65,10 @@ function PhotoID() {
           >
             <span className={style.photoid__settings__text}>Настройки</span>
             <span className={style.photoid__settings__icon}>
-              <Icon icon="weui:setting-filled" className={style.photoid__settings__svg} />
+              <Icon
+                icon="weui:setting-filled"
+                className={style.photoid__settings__svg}
+              />
             </span>
           </button>
         </div>

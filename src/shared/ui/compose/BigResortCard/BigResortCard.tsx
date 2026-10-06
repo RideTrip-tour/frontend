@@ -61,7 +61,11 @@ const BigResortCard = ({
   return (
     <div className={`${style.card} ${active ? style['card--active'] : ''}`}>
       <div className={style.card__imageWrapper}>
-        <img src={image} className={style.card__image} alt={title} />
+        <img
+          src={image}
+          className={style.card__image}
+          alt={title}
+        />
       </div>
       {badgeText && (
         <div className={style.card__badge}>
@@ -106,8 +110,14 @@ const BigResortCard = ({
               if (!condition) return null;
 
               return (
-                <div key={i} className={style.card__condition}>
-                  <Icon icon={condition.icon} width="20" />
+                <div
+                  key={i}
+                  className={style.card__condition}
+                >
+                  <Icon
+                    icon={condition.icon}
+                    width="20"
+                  />
 
                   <span>{condition.text}</span>
                 </div>
@@ -127,7 +137,11 @@ const BigResortCard = ({
             <span className={style.card__pricePer}>за человека</span>
           </div>
 
-          <Button text="Подробнее" onClick={() => {}} variant={'secondary'} />
+          <Button
+            text="Подробнее"
+            onClick={() => {}}
+            variant={'secondary'}
+          />
         </div>
       </div>
     </div>

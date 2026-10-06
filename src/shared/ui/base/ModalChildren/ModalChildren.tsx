@@ -19,7 +19,11 @@ const ModalChildren = ({
   ariaLabel = 'Модальное окно',
 }: Readonly<ModalChildrenProps>) => {
   return (
-    <ModalOverlay className={style.overlay} onClose={onClose} ariaLabel={ariaLabel}>
+    <ModalOverlay
+      className={style.overlay}
+      onClose={onClose}
+      ariaLabel={ariaLabel}
+    >
       <div className={style.modal}>
         <button
           type="button"
@@ -27,7 +31,11 @@ const ModalChildren = ({
           className={style.modal__close}
           onClick={onClose}
         >
-          <Icon icon="material-symbols:close-rounded" width="32" height="32" />
+          <Icon
+            icon="material-symbols:close-rounded"
+            width="32"
+            height="32"
+          />
         </button>
 
         {children}

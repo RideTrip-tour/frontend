@@ -57,7 +57,10 @@ function Clients() {
         <div className={style.clients__slider}>
           <ReviewSlider
             items={reviews.map((review, index) => (
-              <ReviewBigCard key={index} {...review} />
+              <ReviewBigCard
+                key={index}
+                {...review}
+              />
             ))}
           />
         </div>

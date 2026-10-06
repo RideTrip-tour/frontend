@@ -48,7 +48,13 @@ const TriPoseToggle = ({
       <div className={style.triposetoggle__content}>
         <div className={style.triposetoggle__text}>{text}</div>
 
-        {iconSrc && <img src={iconSrc} className={style.triposetoggle__icon} alt="" />}
+        {iconSrc && (
+          <img
+            src={iconSrc}
+            className={style.triposetoggle__icon}
+            alt=""
+          />
+        )}
       </div>
     </button>
   );

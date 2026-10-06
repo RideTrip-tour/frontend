@@ -41,7 +41,11 @@ function OptionList({ name, options, selectedOptions, onChange }: OptionListProp
         const inputId = `${name}-${option}`.toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-');
 
         return (
-          <label className={styles.option} htmlFor={inputId} key={option}>
+          <label
+            className={styles.option}
+            htmlFor={inputId}
+            key={option}
+          >
             <input
               checked={selectedOptions.includes(option)}
               className={styles.checkbox}
@@ -95,8 +99,14 @@ export function ActivitySelector({
 
       {hasResults ? (
         <div className={styles.columns}>
-          <section className={styles.group} aria-labelledby="activity-types-title">
-            <h3 className={styles.groupTitle} id="activity-types-title">
+          <section
+            className={styles.group}
+            aria-labelledby="activity-types-title"
+          >
+            <h3
+              className={styles.groupTitle}
+              id="activity-types-title"
+            >
               Виды активностей
             </h3>
 
@@ -125,8 +135,14 @@ export function ActivitySelector({
             )}
           </section>
 
-          <section className={styles.group} aria-labelledby="lift-types-title">
-            <h3 className={styles.groupTitle} id="lift-types-title">
+          <section
+            className={styles.group}
+            aria-labelledby="lift-types-title"
+          >
+            <h3
+              className={styles.groupTitle}
+              id="lift-types-title"
+            >
               Виды подъёмников
             </h3>
 

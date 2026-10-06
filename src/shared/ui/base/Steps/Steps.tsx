@@ -32,7 +32,10 @@ const Steps = ({ steps, onCtaClick, ctaText = 'Начнём подбор' }: Ste
 
         <div className={style.steps__row}>
           {entries.map(({ number }) => (
-            <div key={number} className={style.steps__col}>
+            <div
+              key={number}
+              className={style.steps__col}
+            >
               <div className={style.steps__dot}>
                 <span className={style.steps__dot_value}>{number}</span>
               </div>
@@ -42,7 +45,10 @@ const Steps = ({ steps, onCtaClick, ctaText = 'Начнём подбор' }: Ste
 
         <div className={style.steps__row}>
           {entries.map(({ number, title, text }) => (
-            <div key={number} className={style.steps__col}>
+            <div
+              key={number}
+              className={style.steps__col}
+            >
               <div className={style.steps__card}>
                 <div className={style.steps__title}>{title}</div>
                 <div className={style.steps__text}>{text}</div>
@@ -53,9 +59,15 @@ const Steps = ({ steps, onCtaClick, ctaText = 'Начнём подбор' }: Ste
       </div>
 
       {onCtaClick && (
-        <button className={style.steps__cta} onClick={onCtaClick}>
+        <button
+          className={style.steps__cta}
+          onClick={onCtaClick}
+        >
           <span className={style.steps__cta_text}>{ctaText}</span>
-          <Icon className={style.steps__cta_icon} icon="material-symbols:arrow-downward-rounded" />
+          <Icon
+            className={style.steps__cta_icon}
+            icon="material-symbols:arrow-downward-rounded"
+          />
         </button>
       )}
     </div>

@@ -15,7 +15,10 @@ export function SkiLevelSelector({ value, onChange }: SkiLevelSelectorProps) {
         <legend>Выберите Ваш уровень</legend>
 
         {SKI_LEVELS.map((level) => (
-          <label className={styles.levelOption} key={level}>
+          <label
+            className={styles.levelOption}
+            key={level}
+          >
             <input
               checked={value === level}
               name="ski-level"
@@ -29,9 +32,16 @@ export function SkiLevelSelector({ value, onChange }: SkiLevelSelectorProps) {
       </fieldset>
 
       <div className={styles.helpsec}>
-        <div className={styles.hint} id="ski-level-hint" role="tooltip">
+        <div
+          className={styles.hint}
+          id="ski-level-hint"
+          role="tooltip"
+        >
           {SKI_LEVELS.map((levelOption) => (
-            <section className={styles.hintSection} key={levelOption}>
+            <section
+              className={styles.hintSection}
+              key={levelOption}
+            >
               <h4>{SKI_LEVEL_HINTS[levelOption].heading}</h4>
               <ul>
                 {SKI_LEVEL_HINTS[levelOption].bullets.map((line, lineIndex) => (

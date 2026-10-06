@@ -87,9 +87,16 @@ function CalendarGrid({
       <div className={style.calendargrid__days}>
         {cells.map((date, cellIndex) =>
           date ? (
-            <DayCell date={date} flags={computeFlags(date)} onClick={onDayClick} />
+            <DayCell
+              date={date}
+              flags={computeFlags(date)}
+              onClick={onDayClick}
+            />
           ) : (
-            <div key={`empty-${cellIndex}`} className={style.calendargrid__empty} />
+            <div
+              key={`empty-${cellIndex}`}
+              className={style.calendargrid__empty}
+            />
           ),
         )}
       </div>

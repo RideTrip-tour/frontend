@@ -115,9 +115,15 @@ function SecurityBlock() {
   };
 
   return (
-    <PageSection paddingVertical={32} paddingHorizontal={40}>
+    <PageSection
+      paddingVertical={32}
+      paddingHorizontal={40}
+    >
       <div className={style.securityblock}>
-        <SectionHeader title="Безопасность" subtitle="Управление доступом к аккаунту" />
+        <SectionHeader
+          title="Безопасность"
+          subtitle="Управление доступом к аккаунту"
+        />
         <Divider />
         <div className={style.securityblock__rows}>
           <div className={style.securityblock__row}>

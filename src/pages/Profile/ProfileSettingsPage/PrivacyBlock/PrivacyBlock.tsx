@@ -57,7 +57,10 @@ function PrivacyBlock() {
       setter((prev) => ({ ...prev, [key]: value }));
 
   return (
-    <PageSection paddingVertical={32} paddingHorizontal={40}>
+    <PageSection
+      paddingVertical={32}
+      paddingHorizontal={40}
+    >
       <div className={style.privacyblock}>
         <SectionHeader
           title="Приватность"

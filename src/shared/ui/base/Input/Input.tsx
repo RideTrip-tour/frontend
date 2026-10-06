@@ -150,7 +150,10 @@ const Input = ({
   return (
     <div className={style.inputWrapper}>
       {label && (
-        <label htmlFor={id} className={style.inputLabel}>
+        <label
+          htmlFor={id}
+          className={style.inputLabel}
+        >
           {label}
         </label>
       )}
@@ -161,7 +164,11 @@ const Input = ({
         <div className={style.input__content}>
           {icon && (
             <span className={style.input__icon}>
-              <img src={icon} className={style.input__icon_img} alt="icon" />
+              <img
+                src={icon}
+                className={style.input__icon_img}
+                alt="icon"
+              />
             </span>
           )}
 

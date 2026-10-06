@@ -14,7 +14,10 @@ const ToggleRow = ({ label, checked, onChange }: ToggleRowProps) => {
   return (
     <div className={style.togglerow}>
       <div className={style.togglerow__label}>{label}</div>
-      <Switch checked={checked} onChange={onChange} />
+      <Switch
+        checked={checked}
+        onChange={onChange}
+      />
     </div>
   );
 };

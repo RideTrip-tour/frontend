@@ -48,7 +48,10 @@ export default function TestMenuModal({ onOpenView, onClose }: TestMenuModalProp
         >
           &times;
         </button>
-        <h2 id={titleId} className={styles.title}>
+        <h2
+          id={titleId}
+          className={styles.title}
+        >
           Тестовое меню
         </h2>
         <p className={styles.subtitle}>Выберите модальное окно для просмотра:</p>

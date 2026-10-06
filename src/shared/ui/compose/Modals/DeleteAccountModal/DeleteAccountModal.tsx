@@ -44,14 +44,24 @@ const DeleteAccountModal = ({
   };
 
   return (
-    <ModalShell isOpen={isOpen} title="Удалить аккаунт" onClose={onClose}>
-      <ModalForm onSubmit={handleSubmit} serverError={serverError}>
+    <ModalShell
+      isOpen={isOpen}
+      title="Удалить аккаунт"
+      onClose={onClose}
+    >
+      <ModalForm
+        onSubmit={handleSubmit}
+        serverError={serverError}
+      >
         <p className={style.deleteaccountmodal__warning}>
           Данное действие нельзя будет отменить. Аккаунт будет удалён навсегда.
         </p>
 
         <div className={style.deleteaccountmodal__field}>
-          <label htmlFor="delete-account-email" className={style.deleteaccountmodal__label}>
+          <label
+            htmlFor="delete-account-email"
+            className={style.deleteaccountmodal__label}
+          >
             Введите ваш email для подтверждения
           </label>
           <input
@@ -70,7 +80,11 @@ const DeleteAccountModal = ({
           <span className={style.deleteaccountmodal__hint}>Введите: {expectedEmail}</span>
         </div>
 
-        <ModalButton text="Удалить аккаунт" isLoading={isLoading} isActive={isActive} />
+        <ModalButton
+          text="Удалить аккаунт"
+          isLoading={isLoading}
+          isActive={isActive}
+        />
       </ModalForm>
     </ModalShell>
   );

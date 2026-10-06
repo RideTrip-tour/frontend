@@ -41,7 +41,10 @@ export default function EmailChangeSentModal({
     <AuthShell onClose={onClose}>
       <div className={styles.centerContent}>
         <div className={`${styles.iconBox} ${styles.blueBox}`}>
-          <img src={EmailIcon} alt="электронная почта" />
+          <img
+            src={EmailIcon}
+            alt="электронная почта"
+          />
         </div>
 
         <h2 className={styles.bigTitle}>

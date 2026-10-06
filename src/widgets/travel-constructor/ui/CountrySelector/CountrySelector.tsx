@@ -32,10 +32,16 @@ export function CountrySelector({ countries, onSelect }: CountrySelectorProps) {
       {/* Страны в 3 колонки */}
       <div className={styles.columnsWrapper}>
         {columns.map((columnCountries, colIndex) => (
-          <div key={colIndex} className={styles.column}>
+          <div
+            key={colIndex}
+            className={styles.column}
+          >
             <ul className={styles.list}>
               {columnCountries.map((country) => (
-                <li key={country.id} className={styles.listItem}>
+                <li
+                  key={country.id}
+                  className={styles.listItem}
+                >
                   <button
                     type="button"
                     className={styles.countryButton}

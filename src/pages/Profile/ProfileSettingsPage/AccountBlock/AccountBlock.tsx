@@ -54,10 +54,17 @@ function AccountBlock() {
   };
 
   return (
-    <PageSection paddingVertical={32} paddingHorizontal={40}>
+    <PageSection
+      paddingVertical={32}
+      paddingHorizontal={40}
+    >
       <div className={style.accountblock}>
         <div className={style.accountblock__content}>
-          <SectionHeader title="Аккаунт" subtitle="Управление вашим аккаунтом" variant="muted" />
+          <SectionHeader
+            title="Аккаунт"
+            subtitle="Управление вашим аккаунтом"
+            variant="muted"
+          />
           <div className={style.accountblock__actions}>
             <button
               type="button"
@@ -67,7 +74,10 @@ function AccountBlock() {
                 setIsLogoutOpen(true);
               }}
             >
-              <Icon icon="uil:exit" className={style.accountblock__logoutIcon} />
+              <Icon
+                icon="uil:exit"
+                className={style.accountblock__logoutIcon}
+              />
               <span className={style.accountblock__logoutText}>Выйти из аккаунта</span>
             </button>
             <div className={style.accountblock__deleteInfo}>

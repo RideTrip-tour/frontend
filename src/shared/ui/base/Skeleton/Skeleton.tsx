@@ -11,7 +11,10 @@ interface SkeletonProps {
 
 const Skeleton = ({ width = '100%', height = 20, borderRadius = 4, className }: SkeletonProps) => {
   return (
-    <div className={`${style.skeleton} ${className || ''}`} style={{ width, height, borderRadius }}>
+    <div
+      className={`${style.skeleton} ${className || ''}`}
+      style={{ width, height, borderRadius }}
+    >
       <div className={style.skeleton__shimmer}></div>
     </div>
   );

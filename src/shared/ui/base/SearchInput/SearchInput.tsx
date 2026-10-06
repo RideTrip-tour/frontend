@@ -21,7 +21,10 @@ export function SearchInput({
 }: SearchInputProps) {
   return (
     <div className={styles.searchWrapper}>
-      <label htmlFor={id} className={styles.visuallyHidden}>
+      <label
+        htmlFor={id}
+        className={styles.visuallyHidden}
+      >
         {ariaLabel}
       </label>
 

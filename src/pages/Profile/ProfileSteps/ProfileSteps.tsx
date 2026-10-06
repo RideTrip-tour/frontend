@@ -303,7 +303,10 @@ function ProfileSteps() {
         />
         <div className={style.profilesteps__consent__text}>
           <span>Я согласен на&nbsp;</span>
-          <TextLink text="обработку персональных данных." to="/privacy" />
+          <TextLink
+            text="обработку персональных данных."
+            to="/privacy"
+          />
           <span>&nbsp;Они не будут переданы третьим лицам.</span>
         </div>
       </div>
@@ -357,7 +360,10 @@ function ProfileSteps() {
                 <div className={style.profilesteps__levelCard__title}>{level.title}</div>
                 <div className={style.profilesteps__levelCard__text}>
                   {level.description.map((line, lineIdx) => (
-                    <div key={lineIdx} className={style.profilesteps__levelCard__bullet}>
+                    <div
+                      key={lineIdx}
+                      className={style.profilesteps__levelCard__bullet}
+                    >
                       <span className={style.profilesteps__levelCard__dot} />
                       <span>
                         {line.map((part, partIdx) => (
@@ -437,7 +443,12 @@ function ProfileSteps() {
 
   const step3Bottom = (
     <div className={style.profilesteps__saveRow}>
-      <Button onClick={saveTrip} text="Сохранить" variant="secondary" disabled={!isEditing(3)} />
+      <Button
+        onClick={saveTrip}
+        text="Сохранить"
+        variant="secondary"
+        disabled={!isEditing(3)}
+      />
     </div>
   );
 
@@ -471,7 +482,10 @@ function ProfileSteps() {
       </PersonalBlock>
 
       {isQuizOpen && (
-        <ModalChildren ariaLabel="Подбор уровня катания" onClose={() => setIsQuizOpen(false)}>
+        <ModalChildren
+          ariaLabel="Подбор уровня катания"
+          onClose={() => setIsQuizOpen(false)}
+        >
           <SkillQuiz />
         </ModalChildren>
       )}

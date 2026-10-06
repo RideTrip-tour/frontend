@@ -121,9 +121,7 @@ function HomePage() {
         await loginRequest(data.email, data.password!);
 
         const from = location.state?.from;
-        const returnTo = from
-          ? `${from.pathname}${from.search ?? ''}${from.hash ?? ''}`
-          : '/';
+        const returnTo = from ? `${from.pathname}${from.search ?? ''}${from.hash ?? ''}` : '/';
 
         closeAuth(returnTo);
       } else if (modalView === 'register') {
@@ -159,11 +157,19 @@ function HomePage() {
 
       <ScrollTopButton />
 
-      {showTestMenu && <TestMenuModal onOpenView={handleTestOpenView} onClose={closeTestMenu} />}
+      {showTestMenu && (
+        <TestMenuModal
+          onOpenView={handleTestOpenView}
+          onClose={closeTestMenu}
+        />
+      )}
 
       <AnimatePresence mode="wait">
         {showUnified && (
-          <motion.div key="auth" {...fade}>
+          <motion.div
+            key="auth"
+            {...fade}
+          >
             <UnifiedAuthModal
               initialView={view as 'login' | 'register' | 'forgot'}
               isLoading={isLoading}
@@ -176,7 +182,10 @@ function HomePage() {
         )}
 
         {view === 'registration-email-sent' && (
-          <motion.div key="reg-email-sent" {...fade}>
+          <motion.div
+            key="reg-email-sent"
+            {...fade}
+          >
             <RegistrationEmailSentModal
               email={email}
               isLoading={isLoading}
@@ -187,7 +196,10 @@ function HomePage() {
         )}
 
         {view === 'password-email-sent' && (
-          <motion.div key="password-email-sent" {...fade}>
+          <motion.div
+            key="password-email-sent"
+            {...fade}
+          >
             <PasswordEmailSentModal
               email={email}
               isLoading={isLoading}
@@ -200,7 +212,10 @@ function HomePage() {
         )}
 
         {view === 'registration-success' && (
-          <RegistrationSuccessModal onClose={closeAuth} onHomeClick={closeAuth} />
+          <RegistrationSuccessModal
+            onClose={closeAuth}
+            onHomeClick={closeAuth}
+          />
         )}
 
         {view === 'registration-error' && (
@@ -224,13 +239,19 @@ function HomePage() {
         )}
 
         {view === 'verify' && (
-          <motion.div key="verify" {...fade}>
+          <motion.div
+            key="verify"
+            {...fade}
+          >
             <VerifyModal onClose={closeAuth} />
           </motion.div>
         )}
 
         {view === 'reset-password' && (
-          <motion.div key="reset-password" {...fade}>
+          <motion.div
+            key="reset-password"
+            {...fade}
+          >
             <ResetPasswordModal
               isLoading={isLoading}
               serverError={serverError}
@@ -241,8 +262,14 @@ function HomePage() {
         )}
 
         {view === 'password-reset-success' && (
-          <motion.div key="password-reset-success" {...fade}>
-            <PasswordResetSuccessModal onClose={closeAuth} onGoToCabinet={closeAuth} />
+          <motion.div
+            key="password-reset-success"
+            {...fade}
+          >
+            <PasswordResetSuccessModal
+              onClose={closeAuth}
+              onGoToCabinet={closeAuth}
+            />
           </motion.div>
         )}
       </AnimatePresence>

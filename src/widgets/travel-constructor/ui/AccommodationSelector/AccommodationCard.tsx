@@ -23,7 +23,11 @@ export function AccommodationCard({ option, isSelected, onSelect }: Accommodatio
       })}
     >
       <div className={styles.imageWrapper}>
-        <img alt={option.imageAlt} className={styles.image} src={option.image} />
+        <img
+          alt={option.imageAlt}
+          className={styles.image}
+          src={option.image}
+        />
 
         <button
           aria-label={
@@ -47,7 +51,10 @@ export function AccommodationCard({ option, isSelected, onSelect }: Accommodatio
           {option.name}
 
           <p className={styles.rating}>
-            <span aria-hidden="true" className={styles.star}>
+            <span
+              aria-hidden="true"
+              className={styles.star}
+            >
               ★
             </span>
             <strong>{option.rating.toFixed(2)}</strong>
@@ -59,7 +66,10 @@ export function AccommodationCard({ option, isSelected, onSelect }: Accommodatio
 
         <div className={styles.badges}>
           {option.badges.map((badge) => (
-            <span className={styles.badge} key={badge}>
+            <span
+              className={styles.badge}
+              key={badge}
+            >
               {badge}
             </span>
           ))}

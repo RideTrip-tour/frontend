@@ -52,14 +52,25 @@ const IconSelect = ({
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
       >
-        <div className={style.iconselect__iconWrap} style={{ backgroundColor: iconBg }}>
-          <Icon icon={icon} width="24" style={{ color: iconColor }} />
+        <div
+          className={style.iconselect__iconWrap}
+          style={{ backgroundColor: iconBg }}
+        >
+          <Icon
+            icon={icon}
+            width="24"
+            style={{ color: iconColor }}
+          />
         </div>
 
         <div className={style.iconselect__content}>
           <div className={style.iconselect__label}>
             <span className={style.iconselect__labelText}>{text}</span>
-            <Icon icon="iconamoon:arrow-down-2" width="20" className={style.iconselect__arrow} />
+            <Icon
+              icon="iconamoon:arrow-down-2"
+              width="20"
+              className={style.iconselect__arrow}
+            />
           </div>
 
           <span className={style.iconselect__value}>{selected?.label || placeholder}</span>

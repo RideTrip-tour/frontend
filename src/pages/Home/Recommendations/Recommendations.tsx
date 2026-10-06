@@ -131,16 +131,35 @@ function Recommendations() {
           Если вы уже знаете чего хотите, мы покажем где можно это сделать.
         </div>
         <div className={style.recommendations__filters}>
-          <ToggleText name={'Все туры'} defaultOn width={230} />
-          <ToggleText name={'Для первого раза'} width={230} />
-          <ToggleText name={'Уверенно и быстро'} width={230} />
-          <ToggleText name={'Экстрим и фрирайд'} width={230} />
-          <ToggleText name={'Семейные курорты'} width={230} />
+          <ToggleText
+            name={'Все туры'}
+            defaultOn
+            width={230}
+          />
+          <ToggleText
+            name={'Для первого раза'}
+            width={230}
+          />
+          <ToggleText
+            name={'Уверенно и быстро'}
+            width={230}
+          />
+          <ToggleText
+            name={'Экстрим и фрирайд'}
+            width={230}
+          />
+          <ToggleText
+            name={'Семейные курорты'}
+            width={230}
+          />
         </div>
         <div className={style.recommendations__slider}>
           <ResortSlider
             items={cards.map((card, index) => (
-              <BigResortCard key={index} {...card} />
+              <BigResortCard
+                key={index}
+                {...card}
+              />
             ))}
           />
         </div>

@@ -16,7 +16,10 @@ const Checkbox = ({
   'aria-label': ariaLabel = 'Выбрать',
 }: Readonly<CheckboxProps>) => {
   return (
-    <label className={style.checkbox} data-disabled={disabled}>
+    <label
+      className={style.checkbox}
+      data-disabled={disabled}
+    >
       <input
         type="checkbox"
         className={style.checkbox__input}
@@ -25,7 +28,10 @@ const Checkbox = ({
         aria-label={ariaLabel}
         onChange={(event) => onChange?.(event.currentTarget.checked)}
       />
-      <span className={style.checkbox__box} aria-hidden="true">
+      <span
+        className={style.checkbox__box}
+        aria-hidden="true"
+      >
         {checked && (
           <svg
             aria-hidden="true"

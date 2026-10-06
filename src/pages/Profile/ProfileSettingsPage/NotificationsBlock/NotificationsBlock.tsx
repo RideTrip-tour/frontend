@@ -69,9 +69,15 @@ function NotificationsBlock() {
   };
 
   return (
-    <PageSection paddingVertical={32} paddingHorizontal={40}>
+    <PageSection
+      paddingVertical={32}
+      paddingHorizontal={40}
+    >
       <div className={style.notificationsblock}>
-        <SectionHeader title="Уведомления" subtitle="Выберите что и как вы хотите получать" />
+        <SectionHeader
+          title="Уведомления"
+          subtitle="Выберите что и как вы хотите получать"
+        />
         <Divider />
         <div className={style.notificationsblock__group}>
           <div className={style.notificationsblock__groupTitle}>Как получать</div>

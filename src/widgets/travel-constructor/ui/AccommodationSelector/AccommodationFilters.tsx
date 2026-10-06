@@ -50,8 +50,14 @@ export function AccommodationFilters({
 }: AccommodationFiltersProps) {
   return (
     <>
-      <section className={styles.priceSection} aria-labelledby="price-title">
-        <h3 className={styles.filterTitle} id="price-title">
+      <section
+        className={styles.priceSection}
+        aria-labelledby="price-title"
+      >
+        <h3
+          className={styles.filterTitle}
+          id="price-title"
+        >
           Цена за ночь
         </h3>
         <div className={styles.priceValues}>

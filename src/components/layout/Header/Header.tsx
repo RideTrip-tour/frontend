@@ -56,10 +56,22 @@ export function Header() {
             [style.header__nav_default]: !isHomePage,
           })}
         >
-          <NavItem to="/" label="Главная" />
-          <NavItem to="/trip-builder" label="Собрать поездку" />
-          <NavItem to="/tours" label="Мои туры" />
-          <NavItem to="/saved" label="Избранные" />
+          <NavItem
+            to="/"
+            label="Главная"
+          />
+          <NavItem
+            to="/trip-builder"
+            label="Собрать поездку"
+          />
+          <NavItem
+            to="/tours"
+            label="Мои туры"
+          />
+          <NavItem
+            to="/saved"
+            label="Избранные"
+          />
         </nav>
         <Button
           text={isAuth ? 'Профиль' : 'Авторизация'}

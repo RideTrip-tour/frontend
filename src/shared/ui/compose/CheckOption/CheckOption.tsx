@@ -14,7 +14,11 @@ interface CheckOptionProps {
 const CheckOption = ({ checked, onChange, title, description }: CheckOptionProps) => {
   return (
     <div className={style.checkoption}>
-      <Checkbox aria-label={title} checked={checked} onChange={onChange} />
+      <Checkbox
+        aria-label={title}
+        checked={checked}
+        onChange={onChange}
+      />
       <div className={style.checkoption__content}>
         <div className={style.checkoption__title}>{title}</div>
         {description && <div className={style.checkoption__description}>{description}</div>}

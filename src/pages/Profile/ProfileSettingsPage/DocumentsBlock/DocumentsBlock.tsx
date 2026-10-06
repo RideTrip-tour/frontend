@@ -28,7 +28,10 @@ function DocumentsBlock() {
   };
 
   return (
-    <PageSection paddingVertical={32} paddingHorizontal={40}>
+    <PageSection
+      paddingVertical={32}
+      paddingHorizontal={40}
+    >
       <div className={style.documentsblock}>
         <SectionHeader
           title="Документы"
@@ -38,7 +41,10 @@ function DocumentsBlock() {
         <Divider />
         <div className={style.documentsblock__list}>
           {DOCUMENTS.map((doc) => (
-            <div key={doc} className={style.documentsblock__item}>
+            <div
+              key={doc}
+              className={style.documentsblock__item}
+            >
               <MenuRow text={doc} />
               <Divider />
             </div>
@@ -46,7 +52,11 @@ function DocumentsBlock() {
         </div>
         <div className={style.documentsblock__support}>
           <div className={style.documentsblock__supportText}>Нужна помощь? Напишите нам</div>
-          <Tooltip text="Скопировано" position="top" visible={copied}>
+          <Tooltip
+            text="Скопировано"
+            position="top"
+            visible={copied}
+          >
             <button
               type="button"
               className={style.documentsblock__supportMail}

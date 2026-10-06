@@ -29,12 +29,22 @@ export default function AuthShell({ title, onClose, customStyle, children }: Aut
         exit={{ y: '100vh' }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
-        <button type="button" className={styles.closeButton} onClick={onClose}>
-          <img src={CloseIcon} alt="Закрыть" />
+        <button
+          type="button"
+          className={styles.closeButton}
+          onClick={onClose}
+        >
+          <img
+            src={CloseIcon}
+            alt="Закрыть"
+          />
         </button>
 
         {title && (
-          <h2 id={titleId} className={styles.title}>
+          <h2
+            id={titleId}
+            className={styles.title}
+          >
             {title}
           </h2>
         )}

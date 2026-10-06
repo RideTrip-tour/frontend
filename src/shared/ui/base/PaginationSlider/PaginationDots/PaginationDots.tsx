@@ -55,8 +55,14 @@ const PaginationDots = ({
 
   return (
     <div className={style.paginationdots}>
-      <div className={style.paginationdots__dotsWrapper} style={dotsWrapperStyle}>
-        <div className={style.paginationdots__dotsContainer} style={dotsContainerStyle}>
+      <div
+        className={style.paginationdots__dotsWrapper}
+        style={dotsWrapperStyle}
+      >
+        <div
+          className={style.paginationdots__dotsContainer}
+          style={dotsContainerStyle}
+        >
           {Array.from({ length: total }, (_, index) => (
             <button
               key={index}

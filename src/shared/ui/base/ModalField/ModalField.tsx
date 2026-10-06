@@ -118,9 +118,17 @@ const ModalField = ({
             aria-label={isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'}
           >
             {isPasswordVisible ? (
-              <Icon icon="mdi:eye" width="24" height="24" />
+              <Icon
+                icon="mdi:eye"
+                width="24"
+                height="24"
+              />
             ) : (
-              <Icon icon="mdi:eye-off" width="24" height="24" />
+              <Icon
+                icon="mdi:eye-off"
+                width="24"
+                height="24"
+              />
             )}
           </button>
         )}

@@ -30,8 +30,15 @@ const LogoutConfirmModal = ({
   };
 
   return (
-    <ModalShell isOpen={isOpen} title="Выйти из аккаунта?" onClose={onClose}>
-      <ModalForm onSubmit={handleSubmit} serverError={serverError}>
+    <ModalShell
+      isOpen={isOpen}
+      title="Выйти из аккаунта?"
+      onClose={onClose}
+    >
+      <ModalForm
+        onSubmit={handleSubmit}
+        serverError={serverError}
+      >
         <p className={style.logoutconfirmmodal__text}>Вы сможете снова войти в любое время.</p>
 
         <div className={style.logoutconfirmmodal__actions}>
@@ -43,7 +50,11 @@ const LogoutConfirmModal = ({
           >
             Нет
           </button>
-          <ModalButton text="Да" isLoading={isLoading} isActive={isActive} />
+          <ModalButton
+            text="Да"
+            isLoading={isLoading}
+            isActive={isActive}
+          />
         </div>
       </ModalForm>
     </ModalShell>

@@ -19,10 +19,18 @@ const PersonalBlock = ({ title, subtitle, onEdit, children }: PersonalBlockProps
         <div className={style.personalblock__header__title}>{title}</div>
         <div className={style.personalblock__header__subtitle}>{subtitle}</div>
       </div>
-      <button type="button" className={style.personalblock__header__edit} onClick={onEdit}>
+      <button
+        type="button"
+        className={style.personalblock__header__edit}
+        onClick={onEdit}
+      >
         <span className={style.personalblock__header__edit__text}>Редактировать</span>
         <span className={style.personalblock__header__edit__icon}>
-          <Icon icon="solar:pen-bold" width="24" height="24" />
+          <Icon
+            icon="solar:pen-bold"
+            width="24"
+            height="24"
+          />
         </span>
       </button>
     </div>

@@ -191,7 +191,11 @@ function DateRangePickerModal({
           );
         })}
 
-        <button type="button" onClick={onClose} className={style.daterangepickermodal__okButton}>
+        <button
+          type="button"
+          onClick={onClose}
+          className={style.daterangepickermodal__okButton}
+        >
           OK
         </button>
       </div>

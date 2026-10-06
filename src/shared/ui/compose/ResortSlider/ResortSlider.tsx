@@ -113,14 +113,20 @@ const ResortSlider: React.FC<ResortSliderProps> = ({
 
   return (
     <div className={`${style.resortsliderWrapper} ${className || ''}`}>
-      <div className={style.resortslider__window} style={{ width: windowWidth }}>
+      <div
+        className={style.resortslider__window}
+        style={{ width: windowWidth }}
+      >
         <div
           ref={trackRef}
           className={style.resortslider__track}
           style={{ transform: `translateX(-${currentOffset}px)` }}
         >
           {items.map((item, i) => (
-            <div key={i} className={style.resortslider__item}>
+            <div
+              key={i}
+              className={style.resortslider__item}
+            >
               {item}
             </div>
           ))}
@@ -136,7 +142,10 @@ const ResortSlider: React.FC<ResortSliderProps> = ({
             disabled={isAtStart}
           />
           <div className={style.resortslider__progressWrap}>
-            <div className={style.resortslider__progressFill} style={{ width: `${progress}%` }} />
+            <div
+              className={style.resortslider__progressFill}
+              style={{ width: `${progress}%` }}
+            />
           </div>
           <IconButton
             icon="material-symbols:arrow-forward-rounded"

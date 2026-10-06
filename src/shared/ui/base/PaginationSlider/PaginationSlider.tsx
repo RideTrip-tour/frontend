@@ -133,7 +133,11 @@ const PaginationSlider = ({
           {wrappedChildren}
 
           {showLoader && (
-            <div key="loader" data-index={totalItems} className={style.paginationslider__slide}>
+            <div
+              key="loader"
+              data-index={totalItems}
+              className={style.paginationslider__slide}
+            >
               {loaderComponent || <Loader />}
             </div>
           )}
@@ -141,7 +145,11 @@ const PaginationSlider = ({
       </div>
 
       {showPagination && (
-        <PaginationDots total={totalSlides} current={currentSlide} onDotClick={handleDotClick} />
+        <PaginationDots
+          total={totalSlides}
+          current={currentSlide}
+          onDotClick={handleDotClick}
+        />
       )}
     </div>
   );

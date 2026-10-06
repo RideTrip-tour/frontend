@@ -14,7 +14,11 @@ const AdvantageCard = ({ icon, title, text }: AdvantageCardProps) => {
   return (
     <div className={style.advantagecard}>
       <div className={style.advantagecard__iconWrap}>
-        <Icon icon={icon} width="40" className={style.advantagecard__icon} />
+        <Icon
+          icon={icon}
+          width="40"
+          className={style.advantagecard__icon}
+        />
       </div>
 
       <h3 className={style.advantagecard__title}>{title}</h3>

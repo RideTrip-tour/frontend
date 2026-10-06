@@ -38,5 +38,10 @@ export default function RegistrationVerifyPage() {
   const [searchParams] = useSearchParams();
   const token = (searchParams.get('verify_token') ?? '').trim();
 
-  return <RegistrationVerification key={token} token={token} />;
+  return (
+    <RegistrationVerification
+      key={token}
+      token={token}
+    />
+  );
 }

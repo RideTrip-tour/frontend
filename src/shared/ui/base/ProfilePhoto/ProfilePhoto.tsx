@@ -63,14 +63,24 @@ const ProfilePhoto = ({ photo, size = 160, onUpload }: ProfilePhotoProps) => {
         {/* IMAGE STATE */}
         <div className={[style.state, style.stateImage, isHovered ? style.hidden : ''].join(' ')}>
           {preview ? (
-            <img src={preview} className={style.image} alt="profile" />
+            <img
+              src={preview}
+              className={style.image}
+              alt="profile"
+            />
           ) : (
-            <Icon icon="ic:sharp-face-2" style={{ fontSize: iconSize }} />
+            <Icon
+              icon="ic:sharp-face-2"
+              style={{ fontSize: iconSize }}
+            />
           )}
         </div>
 
         <div className={[style.state, style.stateHover, isHovered ? '' : style.hidden].join(' ')}>
-          <Icon icon="ic:round-photo-camera" style={{ fontSize: iconSize }} />
+          <Icon
+            icon="ic:round-photo-camera"
+            style={{ fontSize: iconSize }}
+          />
           <span className={style.text}>Добавить фото</span>
         </div>
       </button>

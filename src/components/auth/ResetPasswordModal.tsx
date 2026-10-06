@@ -66,8 +66,14 @@ export default function ResetPasswordModal({
   };
 
   return (
-    <AuthShell title="Восстановление пароля" onClose={onClose}>
-      <form className={styles.form} onSubmit={handleSubmit}>
+    <AuthShell
+      title="Восстановление пароля"
+      onClose={onClose}
+    >
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit}
+      >
         <AuthField
           id="reset-password"
           type="password"
