@@ -59,14 +59,28 @@ export async function verifyRequest(token: string): Promise<VerifiedUser> {
   try {
     const response = await authApi.verifyVerifyApiAuthVerifyPost({ token }, authRequestOptions);
 
-    if (response.data?.is_verified !== true) {
-      throw new Error('Подтверждение почты не получено');
-    }
-
     return { ...response.data, is_verified: true };
   } catch (error) {
     throw handleApiError(error);
   }
+}
+
+export function isAlreadyVerifiedError(error: unknown): boolean {
+  const apiError = handleApiError(error);
+
+  if (apiError.status !== 400) {
+    return false;
+  }
+
+  const data = apiError.data;
+  const detail =
+    typeof data === 'object' && data !== null && 'detail' in data
+      ? (data as { detail?: unknown }).detail
+      : undefined;
+
+  return (
+    detail === 'VERIFY_USER_ALREADY_VERIFIED' || apiError.message === 'VERIFY_USER_ALREADY_VERIFIED'
+  );
 }
 
 export function getVerificationError(error: unknown) {

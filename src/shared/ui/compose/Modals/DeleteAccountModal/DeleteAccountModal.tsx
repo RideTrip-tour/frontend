@@ -33,14 +33,10 @@ const DeleteAccountModal = ({
     setTyped(e.target.value);
   };
 
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    e.preventDefault();
-  };
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!isActive) return;
-    onConfirm();
+    void onConfirm();
   };
 
   return (
@@ -70,8 +66,6 @@ const DeleteAccountModal = ({
             className={style.deleteaccountmodal__input}
             value={typed}
             onChange={handleChange}
-            onPaste={handlePaste}
-            onDrop={(e) => e.preventDefault()}
             placeholder={expectedEmail}
             autoComplete="off"
             autoCorrect="off"

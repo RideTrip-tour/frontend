@@ -65,14 +65,16 @@ function HomePage() {
 
   useEffect(() => {
     if (searchParams.has('verify_token')) {
-      const params = new URLSearchParams({ token: searchParams.get('verify_token') ?? '' });
-      navigate(`/auth/verify?${params}`, { replace: true });
+      const params = new URLSearchParams({
+        verify_token: searchParams.get('verify_token') ?? '',
+      });
+      void navigate(`/auth/verify?${params}`, { replace: true });
       return;
     }
 
     if (location.state?.registrationVerified === true) {
       setView('registration-success');
-      navigate('/', { replace: true, state: null });
+      void navigate('/', { replace: true, state: null });
       return;
     }
 
@@ -89,14 +91,19 @@ function HomePage() {
     }
   }, [searchParams, location.state, navigate]);
 
-  const closeAuth = (to = '/') => {
+  const closeAuth = () => {
     setView('none');
-    navigate(to, { replace: true, state: null });
+    void navigate('/', { replace: true, state: null });
+  };
+
+  const closeAuthAt = (to: string) => {
+    setView('none');
+    void navigate(to, { replace: true, state: null });
   };
 
   const closeTestMenu = () => {
     setShowTestMenu(false);
-    navigate('/', { replace: true });
+    void navigate('/', { replace: true });
   };
 
   const handleTestOpenView = (v: string) => {
@@ -106,7 +113,7 @@ function HomePage() {
   };
 
   const handlePhotoBlockCta = () => {
-    navigate('/trip-builder');
+    void navigate('/trip-builder');
   };
 
   const handleUnifiedSubmit = async (
@@ -123,7 +130,7 @@ function HomePage() {
         const from = location.state?.from;
         const returnTo = from ? `${from.pathname}${from.search ?? ''}${from.hash ?? ''}` : '/';
 
-        closeAuth(returnTo);
+        closeAuthAt(returnTo);
       } else if (modalView === 'register') {
         await registerRequest({ email: data.email, password: data.password! });
         setView('registration-email-sent');
@@ -222,11 +229,11 @@ function HomePage() {
           <RegistrationErrorModal
             onClose={() => {
               setView('none');
-              navigate('/', { replace: true });
+              void navigate('/', { replace: true });
             }}
             onRetry={() => {
               setView('register');
-              navigate('/', { replace: true });
+              void navigate('/', { replace: true });
             }}
           />
         )}

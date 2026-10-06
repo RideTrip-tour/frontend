@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { getVerificationError, verifyRequest } from '@/services/authService';
+import {
+  getVerificationError,
+  isAlreadyVerifiedError,
+  verifyRequest,
+} from '@/services/authService';
 
 const MISSING_TOKEN_ERROR = {
   message: 'В ссылке отсутствует токен подтверждения. Откройте полную ссылку из письма.',
@@ -30,7 +34,14 @@ export function useRegistrationVerification(token: string, onComplete: () => voi
         if (active) onComplete();
       },
       (reason: unknown) => {
-        if (active) setError(getVerificationError(reason));
+        if (!active) return;
+
+        if (isAlreadyVerifiedError(reason)) {
+          onComplete();
+          return;
+        }
+
+        setError(getVerificationError(reason));
       },
     );
 
