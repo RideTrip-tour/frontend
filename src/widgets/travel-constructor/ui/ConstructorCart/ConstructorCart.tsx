@@ -183,7 +183,10 @@ export function ConstructorCart() {
   };
 
   return (
-    <aside className={style.card} aria-label="Корзина конструктора путешествия">
+    <aside
+      className={style.card}
+      aria-label="Корзина конструктора путешествия"
+    >
       <h2 className={style.title}>Ваше путешествие</h2>
 
       <div className={style.cartContent}>
@@ -199,14 +202,20 @@ export function ConstructorCart() {
           <>
             <p className={style.subtitle}>Вот что вы выбрали</p>
             {(hasTicketDetails || isSelectingTickets) && (
-              <section className={style.cartItem} aria-label="Билеты">
+              <section
+                className={style.cartItem}
+                aria-label="Билеты"
+              >
                 <CartItemHeader
                   onReset={clearTickets}
                   resetLabel="Сбросить билеты"
                   title="Билеты:"
                 />
 
-                <p aria-live="polite" className={style.primaryValue}>
+                <p
+                  aria-live="polite"
+                  className={style.primaryValue}
+                >
                   {(route || isSelectingFrom || isSelectingTo) && (
                     <>
                       <span className={isSelectingFrom ? style.selectingStatus : undefined}>
@@ -233,14 +242,20 @@ export function ConstructorCart() {
             )}
 
             {(hasActivityDetails || isSelectingActivity) && (
-              <section className={style.cartItem} aria-label="Вид активности">
+              <section
+                className={style.cartItem}
+                aria-label="Вид активности"
+              >
                 <CartItemHeader
                   onReset={clearActivities}
                   resetLabel="Сбросить вид активности"
                   title="Вид активности:"
                 />
                 {isSelectingActivity ? (
-                  <p aria-live="polite" className={style.selectingStatus}>
+                  <p
+                    aria-live="polite"
+                    className={style.selectingStatus}
+                  >
                     Выбирается сейчас...
                   </p>
                 ) : (
@@ -258,14 +273,20 @@ export function ConstructorCart() {
             )}
 
             {(accommodation || isSelectingAccommodation) && (
-              <section className={style.cartItem} aria-label="Проживание">
+              <section
+                className={style.cartItem}
+                aria-label="Проживание"
+              >
                 <CartItemHeader
                   onReset={clearAccommodation}
                   resetLabel="Сбросить проживание"
                   title="Проживание:"
                 />
                 {isSelectingAccommodation ? (
-                  <p aria-live="polite" className={style.selectingStatus}>
+                  <p
+                    aria-live="polite"
+                    className={style.selectingStatus}
+                  >
                     Выбирается сейчас...
                   </p>
                 ) : accommodation ? (
@@ -281,14 +302,20 @@ export function ConstructorCart() {
             )}
 
             {(transfer || isSelectingTransfer) && (
-              <section className={style.cartItem} aria-label="Трансфер">
+              <section
+                className={style.cartItem}
+                aria-label="Трансфер"
+              >
                 <CartItemHeader
                   onReset={clearTransfer}
                   resetLabel="Сбросить трансфер"
                   title="Трансфер:"
                 />
                 {isSelectingTransfer ? (
-                  <p aria-live="polite" className={style.selectingStatus}>
+                  <p
+                    aria-live="polite"
+                    className={style.selectingStatus}
+                  >
                     Выбирается сейчас...
                   </p>
                 ) : transfer ? (
@@ -325,7 +352,10 @@ export function ConstructorCart() {
                       title="Количество человек:"
                     />
                     {isSelectingPeople ? (
-                      <p aria-live="polite" className={style.selectingStatus}>
+                      <p
+                        aria-live="polite"
+                        className={style.selectingStatus}
+                      >
                         Выбирается сейчас...
                       </p>
                     ) : people ? (
@@ -347,7 +377,10 @@ export function ConstructorCart() {
                       title="Уровень катания:"
                     />
                     {isSelectingLevel ? (
-                      <p aria-live="polite" className={style.selectingStatus}>
+                      <p
+                        aria-live="polite"
+                        className={style.selectingStatus}
+                      >
                         Выбирается сейчас...
                       </p>
                     ) : level ? (
@@ -367,7 +400,10 @@ export function ConstructorCart() {
                       title="Дополнительные возможности:"
                     />
                     {isSelectingAdditional ? (
-                      <p aria-live="polite" className={style.selectingStatus}>
+                      <p
+                        aria-live="polite"
+                        className={style.selectingStatus}
+                      >
                         Выбирается сейчас...
                       </p>
                     ) : (

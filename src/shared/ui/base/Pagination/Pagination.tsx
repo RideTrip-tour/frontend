@@ -58,7 +58,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
 
       {!pages.includes(1) && (
         <>
-          <button onClick={() => onPageChange(1)} style={{ padding: '4px 8px' }}>
+          <button
+            onClick={() => onPageChange(1)}
+            style={{ padding: '4px 8px' }}
+          >
             1
           </button>
           {showFirstEllipsis && <span style={{ padding: '0 4px' }}>...</span>}
@@ -82,7 +85,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
       {!pages.includes(totalPages) && (
         <>
           {showLastEllipsis && <span style={{ padding: '0 4px' }}>...</span>}
-          <button onClick={() => onPageChange(totalPages)} style={{ padding: '4px 8px' }}>
+          <button
+            onClick={() => onPageChange(totalPages)}
+            style={{ padding: '4px 8px' }}
+          >
             {totalPages}
           </button>
         </>
@@ -103,7 +109,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
         onKeyDown={handleKeyDown}
         style={{ width: '50px', padding: '4px' }}
       />
-      <button onClick={handleGo} style={{ padding: '4px 8px' }}>
+      <button
+        onClick={handleGo}
+        style={{ padding: '4px 8px' }}
+      >
         Перейти
       </button>
     </div>

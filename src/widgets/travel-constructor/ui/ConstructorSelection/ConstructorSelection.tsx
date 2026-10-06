@@ -55,7 +55,12 @@ export function ConstructorSelection({
       })}
       style={status.color ? { borderColor: status.color } : undefined}
     >
-      <button type="button" className={styles.cardToggle} onClick={onToggle} aria-expanded={isOpen}>
+      <button
+        type="button"
+        className={styles.cardToggle}
+        onClick={onToggle}
+        aria-expanded={isOpen}
+      >
         <div className={styles.header}>
           <div className={styles.main}>
             <div
@@ -82,9 +87,15 @@ export function ConstructorSelection({
             </div>
           </div>
 
-          <div className={styles.status} style={status.color ? { color: status.color } : undefined}>
+          <div
+            className={styles.status}
+            style={status.color ? { color: status.color } : undefined}
+          >
             <span>{status.text}</span>
-            <span className={styles.statusIcon} aria-hidden="true">
+            <span
+              className={styles.statusIcon}
+              aria-hidden="true"
+            >
               <StatusIcon />
             </span>
           </div>

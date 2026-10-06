@@ -32,7 +32,12 @@ export function ConstructorCartModal({
       : 'Войдите в аккаунт или зарегистрируйтесь, \n чтобы сохранить поездку или вернуться \n к ней позже';
 
     return (
-      <Modal isOpen onClose={onClose} ariaLabel={title} variant="confirmation">
+      <Modal
+        isOpen
+        onClose={onClose}
+        ariaLabel={title}
+        variant="confirmation"
+      >
         <div className={styles.content}>
           <h2 className={styles.title}>{title}</h2>
           {isReset && (
@@ -60,14 +65,26 @@ export function ConstructorCartModal({
   const content = cartModalContent[state.type];
 
   return (
-    <Modal isOpen onClose={onClose} ariaLabel={content.title} variant="message">
+    <Modal
+      isOpen
+      onClose={onClose}
+      ariaLabel={content.title}
+      variant="message"
+    >
       <EmptyState
         variant="message"
         icon={
           state.type === 'save-success' ? (
-            <SuccessIcon className={styles.statusIcon} aria-hidden="true" />
+            <SuccessIcon
+              className={styles.statusIcon}
+              aria-hidden="true"
+            />
           ) : (
-            <AlertIcon className={styles.statusIcon} viewBox="0 0 80 80" aria-hidden="true" />
+            <AlertIcon
+              className={styles.statusIcon}
+              viewBox="0 0 80 80"
+              aria-hidden="true"
+            />
           )
         }
         title={content.title}

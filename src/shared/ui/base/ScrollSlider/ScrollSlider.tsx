@@ -88,12 +88,21 @@ const ScrollSlider = forwardRef<HTMLDivElement, ScrollSliderProps>(
     }
 
     return (
-      <div ref={mergedRef} className={containerClasses}>
-        <div className={style.scrollslider__track} style={trackStyle}>
+      <div
+        ref={mergedRef}
+        className={containerClasses}
+      >
+        <div
+          className={style.scrollslider__track}
+          style={trackStyle}
+        >
           {wrappedChildren}
 
           {shouldShowLoader && isLoading && (
-            <div className={style.scrollslider__item} data-index={totalItems}>
+            <div
+              className={style.scrollslider__item}
+              data-index={totalItems}
+            >
               {loaderComponent || <Loader />}
             </div>
           )}

@@ -13,7 +13,10 @@ const ProfileProgress = ({ value = 0 }: ProfileProgressProps) => {
   return (
     <div className={style.profileprogress}>
       <div className={style.profileprogress__bar}>
-        <div className={style.profileprogress__fill} style={{ width: fillWidth }} />
+        <div
+          className={style.profileprogress__fill}
+          style={{ width: fillWidth }}
+        />
       </div>
 
       <div className={style.profileprogress__text}>Профиль заполнен на {safeValue}%</div>

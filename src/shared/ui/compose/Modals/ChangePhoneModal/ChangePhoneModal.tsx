@@ -42,8 +42,15 @@ const ChangePhoneModal = ({
   };
 
   return (
-    <ModalShell isOpen={isOpen} title="Изменить номер телефона" onClose={onClose}>
-      <ModalForm onSubmit={handleSubmit} serverError={serverError}>
+    <ModalShell
+      isOpen={isOpen}
+      title="Изменить номер телефона"
+      onClose={onClose}
+    >
+      <ModalForm
+        onSubmit={handleSubmit}
+        serverError={serverError}
+      >
         <Input
           id="change-phone"
           label="Номер телефона"
@@ -58,7 +65,11 @@ const ChangePhoneModal = ({
           autoSubmit={false}
         />
 
-        <ModalButton text="Сохранить" isLoading={isLoading} isActive={isActive} />
+        <ModalButton
+          text="Сохранить"
+          isLoading={isLoading}
+          isActive={isActive}
+        />
       </ModalForm>
     </ModalShell>
   );

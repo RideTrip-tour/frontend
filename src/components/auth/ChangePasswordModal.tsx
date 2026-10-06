@@ -80,7 +80,11 @@ export default function ChangePasswordModal({
   };
 
   return (
-    <ModalOverlay className={shellStyles.overlay} onClose={onClose} ariaLabelledBy={titleId}>
+    <ModalOverlay
+      className={shellStyles.overlay}
+      onClose={onClose}
+      ariaLabelledBy={titleId}
+    >
       <motion.div
         className={shellStyles.modal}
         style={{
@@ -96,11 +100,21 @@ export default function ChangePasswordModal({
         exit={{ y: '100vh' }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
-        <button type="button" className={shellStyles.closeButton} onClick={onClose}>
-          <img src={CloseIcon} alt="Закрыть" />
+        <button
+          type="button"
+          className={shellStyles.closeButton}
+          onClick={onClose}
+        >
+          <img
+            src={CloseIcon}
+            alt="Закрыть"
+          />
         </button>
 
-        <h2 id={titleId} className={shellStyles.title}>
+        <h2
+          id={titleId}
+          className={shellStyles.title}
+        >
           <div style={{ position: 'relative', minHeight: '1.2em' }}>
             <AnimatePresence initial={false}>
               <motion.span
@@ -117,7 +131,10 @@ export default function ChangePasswordModal({
           </div>
         </h2>
 
-        <form className={formStyles.form} onSubmit={handleSubmit}>
+        <form
+          className={formStyles.form}
+          onSubmit={handleSubmit}
+        >
           <AuthField
             id="change-password-current"
             type="password"

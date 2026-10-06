@@ -73,8 +73,14 @@ export function LocationSelector({
 
       {hasResults ? (
         <>
-          <CitySelector cities={filteredCities} onSelect={completeCitySelection} />
-          <CountrySelector countries={filteredCountries} onSelect={completeCountrySelection} />
+          <CitySelector
+            cities={filteredCities}
+            onSelect={completeCitySelection}
+          />
+          <CountrySelector
+            countries={filteredCountries}
+            onSelect={completeCountrySelection}
+          />
         </>
       ) : (
         <EmptyState

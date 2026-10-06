@@ -31,7 +31,11 @@ function Choice() {
           />
         </div>
 
-        <img src="/assets/images/imageBG.png" className={style.choice__photo} alt="" />
+        <img
+          src="/assets/images/imageBG.png"
+          className={style.choice__photo}
+          alt=""
+        />
 
         <div className={style.choice__col}>
           <AdvantageCard

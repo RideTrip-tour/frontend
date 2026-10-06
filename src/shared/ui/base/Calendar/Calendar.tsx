@@ -165,7 +165,10 @@ export function Calendar({
   const monthLabel = monthFormatter.format(month);
 
   return (
-    <section className={styles.calendar} aria-label={`Календарь: ${monthLabel}`}>
+    <section
+      className={styles.calendar}
+      aria-label={`Календарь: ${monthLabel}`}
+    >
       <div className={styles.monthHeader}>
         {onPreviousMonth && (
           <button
@@ -193,9 +196,15 @@ export function Calendar({
         )}
       </div>
 
-      <div className={styles.weekdays} aria-hidden="true">
+      <div
+        className={styles.weekdays}
+        aria-hidden="true"
+      >
         {WEEKDAYS.map((weekday) => (
-          <span key={weekday} className={styles.weekday}>
+          <span
+            key={weekday}
+            className={styles.weekday}
+          >
             {weekday}
           </span>
         ))}
@@ -204,7 +213,12 @@ export function Calendar({
       <div className={styles.days}>
         {days.map((date, index) => {
           if (!date) {
-            return <span key={`empty-${index}`} className={styles.emptyDay} />;
+            return (
+              <span
+                key={`empty-${index}`}
+                className={styles.emptyDay}
+              />
+            );
           }
 
           return (

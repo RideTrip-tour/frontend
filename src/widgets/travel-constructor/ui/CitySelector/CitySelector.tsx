@@ -19,11 +19,21 @@ const COLUMN_KEYS = ['left', 'center', 'right'] as const;
 
 function CityColumns({ columns, onSelect }: CityColumnsProps) {
   return columns.map((columnCities, colIndex) => (
-    <div key={COLUMN_KEYS[colIndex]} className={styles.column}>
+    <div
+      key={COLUMN_KEYS[colIndex]}
+      className={styles.column}
+    >
       <ul className={styles.list}>
         {columnCities.map((city) => (
-          <li key={city.id} className={styles.listItem}>
-            <button type="button" className={styles.cityButton} onClick={() => onSelect(city)}>
+          <li
+            key={city.id}
+            className={styles.listItem}
+          >
+            <button
+              type="button"
+              className={styles.cityButton}
+              onClick={() => onSelect(city)}
+            >
               {city.name}
             </button>
           </li>
@@ -69,14 +79,20 @@ export function CitySelector({ cities, onSelect }: CitySelectorProps) {
       {/* Секция 2: Часто нажимаемые в 3 колонки */}
       {frequentCities.length > 0 && (
         <div className={clsx(styles.columnsWrapper, styles.frequentColumns)}>
-          <CityColumns columns={frequentColumns} onSelect={onSelect} />
+          <CityColumns
+            columns={frequentColumns}
+            onSelect={onSelect}
+          />
         </div>
       )}
 
       {/* Секция 3: Остальные города в 3 колонки */}
       {restCities.length > 0 && (
         <div className={styles.columnsWrapper}>
-          <CityColumns columns={columns} onSelect={onSelect} />
+          <CityColumns
+            columns={columns}
+            onSelect={onSelect}
+          />
         </div>
       )}
     </div>

@@ -56,15 +56,33 @@ export const Button = ({
     // Если передали строку Iconify:
     // icon="mdi:plus"
     if (icon.includes(':')) {
-      return <Icon className={style.button__icon_img} icon={icon} aria-hidden="true" />;
+      return (
+        <Icon
+          className={style.button__icon_img}
+          icon={icon}
+          aria-hidden="true"
+        />
+      );
     }
 
     // Если передали путь к SVG/изображению:
-    return <img src={icon} alt="" className={style.button__icon_img} aria-hidden />;
+    return (
+      <img
+        src={icon}
+        alt=""
+        className={style.button__icon_img}
+        aria-hidden
+      />
+    );
   };
 
   return (
-    <button type={type} className={classes} onClick={onClick} disabled={disabled}>
+    <button
+      type={type}
+      className={classes}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {hasIcon && <div className={style.button__icon}>{renderIcon()}</div>}
 
       {hasText && <span className={style.button__text}>{text}</span>}

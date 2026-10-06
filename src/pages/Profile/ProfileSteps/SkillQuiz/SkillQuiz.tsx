@@ -128,7 +128,10 @@ const LoadingBar = () => {
   return (
     <div className={style.skillquiz__loadingbar}>
       <div className={style.skillquiz__loadingbar__track}>
-        <div className={style.skillquiz__loadingbar__fill} style={{ width: `${percent}%` }} />
+        <div
+          className={style.skillquiz__loadingbar__fill}
+          style={{ width: `${percent}%` }}
+        />
       </div>
       <span className={style.skillquiz__loadingbar__label}>Готово: {percent}%</span>
     </div>
@@ -219,8 +222,14 @@ const SkillQuiz = () => {
 
   return (
     <div className={style.skillquiz}>
-      <div ref={wrapperRef} className={style.skillquiz__wrapper}>
-        <div ref={bodyRef} className={bodyClass}>
+      <div
+        ref={wrapperRef}
+        className={style.skillquiz__wrapper}
+      >
+        <div
+          ref={bodyRef}
+          className={bodyClass}
+        >
           {visibleStep === 'intro' && (
             <div className={style.skillquiz__intro}>
               <div className={style.skillquiz__intro__texts}>
@@ -229,7 +238,10 @@ const SkillQuiz = () => {
                   Ответьте на несколько вопросов — это займёт меньше минуты.
                 </div>
               </div>
-              <button className={style.skillquiz__button} onClick={handleStart}>
+              <button
+                className={style.skillquiz__button}
+                onClick={handleStart}
+              >
                 Начать
               </button>
             </div>
@@ -257,7 +269,10 @@ const SkillQuiz = () => {
                 <div className={style.skillquiz__result__formats__title}>Подходящие форматы:</div>
                 <div className={style.skillquiz__result__formats__list}>
                   {level.formats.map((format) => (
-                    <div key={format} className={style.skillquiz__result__formats__item}>
+                    <div
+                      key={format}
+                      className={style.skillquiz__result__formats__item}
+                    >
                       <Icon
                         icon="material-symbols:check"
                         className={style.skillquiz__result__formats__icon}
@@ -317,7 +332,12 @@ const SkillQuiz = () => {
             disabled={selectedIndex === null}
           >
             {isLastQuestion ? 'Узнать уровень' : 'Далее'}
-            {!isLastQuestion && <Icon icon="material-symbols:arrow-forward-rounded" width="18" />}
+            {!isLastQuestion && (
+              <Icon
+                icon="material-symbols:arrow-forward-rounded"
+                width="18"
+              />
+            )}
           </button>
         </div>
       )}

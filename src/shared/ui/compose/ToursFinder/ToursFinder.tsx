@@ -145,9 +145,16 @@ export const ToursFinder = () => {
       </div>
 
       <div className={style.toursFinder__button}>
-        <button type="button" className={style.toursFinder__button__btn} onClick={handleSearch}>
+        <button
+          type="button"
+          className={style.toursFinder__button__btn}
+          onClick={handleSearch}
+        >
           <span>Найти мой идеальный тур</span>
-          <Icon icon="material-symbols:arrow-forward-rounded" width={28} />
+          <Icon
+            icon="material-symbols:arrow-forward-rounded"
+            width={28}
+          />
         </button>
       </div>
     </div>

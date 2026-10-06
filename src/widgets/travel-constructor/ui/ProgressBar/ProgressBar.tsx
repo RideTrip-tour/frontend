@@ -18,7 +18,10 @@ export function ProgressBar() {
       </div>
       <div className={style.progressBar__content}>
         <div className={style.progressBar__track}>
-          <div className={style.progressBar__fill} style={{ width: `${progress}%` }} />
+          <div
+            className={style.progressBar__fill}
+            style={{ width: `${progress}%` }}
+          />
           <span className={style.progressBar__count}>
             {filledCount}/{TOTAL_FIELDS}
           </span>

@@ -89,9 +89,9 @@ function HomePage() {
     }
   }, [searchParams, location.state, navigate]);
 
-  const closeAuth = () => {
+  const closeAuth = (to = '/') => {
     setView('none');
-    navigate('/', { replace: true });
+    navigate(to, { replace: true, state: null });
   };
 
   const closeTestMenu = () => {
@@ -119,7 +119,11 @@ function HomePage() {
       setEmail(data.email);
       if (modalView === 'login') {
         await loginRequest(data.email, data.password!);
-        closeAuth();
+
+        const from = location.state?.from;
+        const returnTo = from ? `${from.pathname}${from.search ?? ''}${from.hash ?? ''}` : '/';
+
+        closeAuth(returnTo);
       } else if (modalView === 'register') {
         await registerRequest({ email: data.email, password: data.password! });
         setView('registration-email-sent');
@@ -153,11 +157,19 @@ function HomePage() {
 
       <ScrollTopButton />
 
-      {showTestMenu && <TestMenuModal onOpenView={handleTestOpenView} onClose={closeTestMenu} />}
+      {showTestMenu && (
+        <TestMenuModal
+          onOpenView={handleTestOpenView}
+          onClose={closeTestMenu}
+        />
+      )}
 
       <AnimatePresence mode="wait">
         {showUnified && (
-          <motion.div key="auth" {...fade}>
+          <motion.div
+            key="auth"
+            {...fade}
+          >
             <UnifiedAuthModal
               initialView={view as 'login' | 'register' | 'forgot'}
               isLoading={isLoading}
@@ -170,7 +182,10 @@ function HomePage() {
         )}
 
         {view === 'registration-email-sent' && (
-          <motion.div key="reg-email-sent" {...fade}>
+          <motion.div
+            key="reg-email-sent"
+            {...fade}
+          >
             <RegistrationEmailSentModal
               email={email}
               isLoading={isLoading}
@@ -181,7 +196,10 @@ function HomePage() {
         )}
 
         {view === 'password-email-sent' && (
-          <motion.div key="password-email-sent" {...fade}>
+          <motion.div
+            key="password-email-sent"
+            {...fade}
+          >
             <PasswordEmailSentModal
               email={email}
               isLoading={isLoading}
@@ -194,7 +212,10 @@ function HomePage() {
         )}
 
         {view === 'registration-success' && (
-          <RegistrationSuccessModal onClose={closeAuth} onHomeClick={closeAuth} />
+          <RegistrationSuccessModal
+            onClose={closeAuth}
+            onHomeClick={closeAuth}
+          />
         )}
 
         {view === 'registration-error' && (
@@ -218,13 +239,19 @@ function HomePage() {
         )}
 
         {view === 'verify' && (
-          <motion.div key="verify" {...fade}>
+          <motion.div
+            key="verify"
+            {...fade}
+          >
             <VerifyModal onClose={closeAuth} />
           </motion.div>
         )}
 
         {view === 'reset-password' && (
-          <motion.div key="reset-password" {...fade}>
+          <motion.div
+            key="reset-password"
+            {...fade}
+          >
             <ResetPasswordModal
               isLoading={isLoading}
               serverError={serverError}
@@ -235,8 +262,14 @@ function HomePage() {
         )}
 
         {view === 'password-reset-success' && (
-          <motion.div key="password-reset-success" {...fade}>
-            <PasswordResetSuccessModal onClose={closeAuth} onGoToCabinet={closeAuth} />
+          <motion.div
+            key="password-reset-success"
+            {...fade}
+          >
+            <PasswordResetSuccessModal
+              onClose={closeAuth}
+              onGoToCabinet={closeAuth}
+            />
           </motion.div>
         )}
       </AnimatePresence>

@@ -4,27 +4,20 @@ import { initProfile } from '@/services/initProfile';
 import { useAuthStore, useProfileStore } from '@/store';
 
 export const useInitProfile = (): void => {
-  const isAuth = useAuthStore((s) => s.isAuth);
-  const resetProfile = useProfileStore((s) => s.reset);
+  const authStatus = useAuthStore((state) => state.authStatus);
+  const user = useAuthStore((state) => state.user);
+  const resetProfile = useProfileStore((state) => state.reset);
 
   useEffect(() => {
-    let cancelled = false;
-
-    if (!isAuth) {
-      resetProfile();
-      return () => {
-        cancelled = true;
-      };
+    if (authStatus === 'checking') {
+      return;
     }
 
-    initProfile().catch(() => {
-      if (!cancelled) {
-        // silent — initProfile логирует сам, если нужно
-      }
-    });
+    if (authStatus === 'anonymous' || !user) {
+      resetProfile();
+      return;
+    }
 
-    return () => {
-      cancelled = true;
-    };
-  }, [isAuth, resetProfile]);
+    void initProfile(user);
+  }, [authStatus, user, resetProfile]);
 };

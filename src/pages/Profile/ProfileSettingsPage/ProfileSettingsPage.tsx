@@ -16,7 +16,10 @@ function ProfileSettingsPage() {
     <div className={style.profilesettingspage}>
       <PageContent>
         <div className={style.profilesettingspage__header}>
-          <BackLink text="К профилю" to="/profile" />
+          <BackLink
+            text="К профилю"
+            to="/profile"
+          />
           <div className={style.profilesettingspage__title}>Настройки</div>
         </div>
         <div className={style.profilesettingspage__content}>

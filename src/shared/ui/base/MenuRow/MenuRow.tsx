@@ -12,9 +12,16 @@ interface MenuRowProps {
 
 const MenuRow = ({ text, icon = 'iconamoon:arrow-right-2', onClick }: MenuRowProps) => {
   return (
-    <button type="button" className={style.menurow} onClick={onClick}>
+    <button
+      type="button"
+      className={style.menurow}
+      onClick={onClick}
+    >
       <div className={style.menurow__text}>{text}</div>
-      <Icon icon={icon} className={style.menurow__icon} />
+      <Icon
+        icon={icon}
+        className={style.menurow__icon}
+      />
     </button>
   );
 };

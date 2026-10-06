@@ -36,9 +36,16 @@ export function AccommodationResults({
             Найдено {hasActiveFilters ? formatResultCount(resultCount) : `${resultCount} отелей`}
           </h3>
         )}
-        <button className={styles.mapButton} onClick={onOpenMap} type="button">
+        <button
+          className={styles.mapButton}
+          onClick={onOpenMap}
+          type="button"
+        >
           <span>{hasNoAvailableRooms ? 'Отели на карте' : 'Показать на карте'}</span>
-          <span aria-hidden="true" className={styles.mapArrow}>
+          <span
+            aria-hidden="true"
+            className={styles.mapArrow}
+          >
             ›
           </span>
         </button>

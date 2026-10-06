@@ -113,14 +113,20 @@ const ReviewSlider: React.FC<ReviewSliderProps> = ({
 
   return (
     <div className={`${style.reviewsliderWrapper} ${className || ''}`}>
-      <div className={style.reviewslider__window} style={{ width: windowWidth }}>
+      <div
+        className={style.reviewslider__window}
+        style={{ width: windowWidth }}
+      >
         <div
           ref={trackRef}
           className={style.reviewslider__track}
           style={{ transform: `translateX(-${currentOffset}px)` }}
         >
           {items.map((item, i) => (
-            <div key={i} className={style.reviewslider__item}>
+            <div
+              key={i}
+              className={style.reviewslider__item}
+            >
               {item}
             </div>
           ))}

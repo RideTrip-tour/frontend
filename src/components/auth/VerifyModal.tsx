@@ -10,7 +10,10 @@ export default function VerifyModal({ onClose }: Readonly<VerifyModalProps>) {
   return (
     <AuthShell onClose={onClose}>
       <div className={styles.centerContent}>
-        <div className={styles.loader} aria-hidden="true" />
+        <div
+          className={styles.loader}
+          aria-hidden="true"
+        />
         <output className={styles.text}>Проверяем верификацию</output>
       </div>
     </AuthShell>

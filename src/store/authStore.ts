@@ -1,58 +1,88 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
-import { meRequest } from '@/services/usersService';
-import type { CurrentUser } from '@/services/usersService';
+import { meRequest, type CurrentUser } from '@/services/usersService';
 import { setSessionExpiredHandler } from '@/shared/api/sessionEvents';
+
+type AuthStatus = 'checking' | 'authenticated' | 'anonymous';
 
 type AuthState = {
   user: CurrentUser | null;
   isAuth: boolean;
-  isLoading: boolean;
+  authStatus: AuthStatus;
 
   setUser: (user: CurrentUser) => void;
   logout: () => void;
-  checkAuth: () => Promise<void>;
+  checkAuth: () => Promise<CurrentUser | null>;
 };
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
+let authCheckPromise: Promise<CurrentUser | null> | null = null;
+let authBootstrapCompleted = false;
+
+export const useAuthStore = create<AuthState>((set, get) => ({
+  user: null,
+  isAuth: false,
+  authStatus: 'checking',
+
+  setUser: (user) => {
+    authBootstrapCompleted = true;
+
+    set({
+      user,
+      isAuth: true,
+      authStatus: 'authenticated',
+    });
+  },
+
+  logout: () => {
+    authBootstrapCompleted = true;
+
+    set({
       user: null,
       isAuth: false,
-      isLoading: false,
+      authStatus: 'anonymous',
+    });
+  },
 
-      setUser: (user) => {
-        set({ user, isAuth: true });
-      },
+  checkAuth: () => {
+    if (authBootstrapCompleted) {
+      return Promise.resolve(get().user);
+    }
 
-      logout: () => {
+    if (authCheckPromise) {
+      return authCheckPromise;
+    }
+
+    authCheckPromise = (async () => {
+      set({ authStatus: 'checking' });
+
+      try {
+        const user = await meRequest();
+
+        set({
+          user,
+          isAuth: true,
+          authStatus: 'authenticated',
+        });
+
+        return user;
+      } catch {
         set({
           user: null,
           isAuth: false,
+          authStatus: 'anonymous',
         });
-      },
 
-      checkAuth: async () => {
-        try {
-          set({ isLoading: true });
-          const user = await meRequest();
-          set({ user, isAuth: true });
-        } catch {
-          set({ user: null, isAuth: false });
-        } finally {
-          set({ isLoading: false });
-        }
-      },
-    }),
-    {
-      name: 'auth-storage',
-      partialize: (state) => ({
-        user: state.user,
-        isAuth: state.isAuth,
-      }),
-    },
-  ),
-);
+        return null;
+      } finally {
+        authBootstrapCompleted = true;
+        authCheckPromise = null;
+      }
+    })();
 
-setSessionExpiredHandler(() => useAuthStore.getState().logout());
+    return authCheckPromise;
+  },
+}));
+
+setSessionExpiredHandler(() => {
+  useAuthStore.getState().logout();
+});

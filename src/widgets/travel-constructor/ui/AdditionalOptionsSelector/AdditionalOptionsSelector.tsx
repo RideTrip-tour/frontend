@@ -28,7 +28,10 @@ export function AdditionalOptionsSelector({
 
       <div className={styles.groups}>
         {OPTION_GROUPS.map((group) => (
-          <section className={styles.group} key={group.title}>
+          <section
+            className={styles.group}
+            key={group.title}
+          >
             <h4>{group.title}</h4>
             <div className={styles.options}>
               {group.options.map((option) => {

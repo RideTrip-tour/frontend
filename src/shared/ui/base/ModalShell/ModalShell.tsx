@@ -33,12 +33,22 @@ const ModalShell = ({ isOpen, title, onClose, children }: ModalShellProps) => {
             exit={{ y: '100vh', opacity: 1 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            <button type="button" className={style.closeButton} onClick={onClose}>
-              <img src={CloseIcon} alt="Закрыть" />
+            <button
+              type="button"
+              className={style.closeButton}
+              onClick={onClose}
+            >
+              <img
+                src={CloseIcon}
+                alt="Закрыть"
+              />
             </button>
 
             {title && (
-              <h2 id={titleId} className={style.title}>
+              <h2
+                id={titleId}
+                className={style.title}
+              >
                 {title}
               </h2>
             )}

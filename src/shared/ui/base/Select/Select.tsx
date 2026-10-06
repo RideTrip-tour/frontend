@@ -56,7 +56,11 @@ const Select = ({
         >
           <div className={style.select__value}>{selected?.label || placeholder}</div>
 
-          <Icon icon={icon} width="24" className={style.select__icon} />
+          <Icon
+            icon={icon}
+            width="24"
+            className={style.select__icon}
+          />
         </button>
 
         {isOpen && (

@@ -13,7 +13,10 @@ const Card = ({ imageSrc, title, description, onClick }: CardProps) => {
   const content = (
     <>
       <div className={style.card__image}>
-        <img src={imageSrc} alt={title} />
+        <img
+          src={imageSrc}
+          alt={title}
+        />
       </div>
 
       <div className={style.card__content}>
@@ -31,7 +34,11 @@ const Card = ({ imageSrc, title, description, onClick }: CardProps) => {
 
   if (onClick) {
     return (
-      <button type="button" className={style.card} onClick={onClick}>
+      <button
+        type="button"
+        className={style.card}
+        onClick={onClick}
+      >
         {content}
       </button>
     );

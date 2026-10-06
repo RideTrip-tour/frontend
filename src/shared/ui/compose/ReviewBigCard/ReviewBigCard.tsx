@@ -19,7 +19,11 @@ const ReviewBigCard = ({ photo, name, category, rating, date, text }: ReviewBigC
   return (
     <article className={style.card}>
       <div className={style.card__author}>
-        <img src={photo} alt={name} className={style.card__avatar} />
+        <img
+          src={photo}
+          alt={name}
+          className={style.card__avatar}
+        />
         <div className={style.card__authorInfo}>
           <span className={style.card__name}>{name}</span>
           <span className={style.card__badge}>{category}</span>

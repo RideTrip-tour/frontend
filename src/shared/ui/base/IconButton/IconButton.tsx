@@ -29,12 +29,24 @@ export const IconButton = ({
     .join(' ');
 
   return (
-    <button className={classes} onClick={onClick} disabled={disabled}>
+    <button
+      className={classes}
+      onClick={onClick}
+      disabled={disabled}
+    >
       <div className={style.iconbutton__icon}>
         {isIconify ? (
-          <Icon className={style.iconbutton__icon_img} icon={icon || ''} />
+          <Icon
+            className={style.iconbutton__icon_img}
+            icon={icon || ''}
+          />
         ) : (
-          <img src={icon} alt="" className={style.iconbutton__icon_img} aria-hidden />
+          <img
+            src={icon}
+            alt=""
+            className={style.iconbutton__icon_img}
+            aria-hidden
+          />
         )}
       </div>
     </button>

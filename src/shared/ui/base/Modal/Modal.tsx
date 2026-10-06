@@ -50,7 +50,10 @@ const Modal = ({
           .join(' ')}
       >
         {title && (
-          <h2 className={style.modal__title} id={titleId}>
+          <h2
+            className={style.modal__title}
+            id={titleId}
+          >
             {title}
           </h2>
         )}

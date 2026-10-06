@@ -14,7 +14,10 @@ export default function RegistrationErrorModal({ onClose, onRetry }: Registratio
     <AuthShell onClose={onClose}>
       <div className={styles.centerContent}>
         <div className={styles.iconBox}>
-          <img src={WarningIcon} alt="Ошибка при регистрации" />
+          <img
+            src={WarningIcon}
+            alt="Ошибка при регистрации"
+          />
         </div>
 
         <h2 className={styles.bigTitle}>
@@ -25,7 +28,11 @@ export default function RegistrationErrorModal({ onClose, onRetry }: Registratio
 
         <p className={styles.text}>
           Попробуйте пройти{' '}
-          <button type="button" className={styles.linkInline} onClick={onRetry}>
+          <button
+            type="button"
+            className={styles.linkInline}
+            onClick={onRetry}
+          >
             регистрацию
           </button>{' '}
           ещё раз
