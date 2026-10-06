@@ -1,0 +1,47 @@
+.skillslevel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 4px 0;
+
+  &__label {
+    font-family: var(--text-font-family), sans-serif;
+
+    font-size: var(--font-body-2-size);
+    font-weight: 600;
+    line-height: var(--text-line-height-20);
+
+    color: var(--skills-level-text);
+  }
+
+  &__circles {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+
+    transition: background 0.2s ease;
+  }
+
+  &__circle--inactive {
+    background: var(--skills-level-inactive);
+  }
+
+  &--green &__circle--active {
+    background: var(--color-green);
+  }
+
+  &--orange &__circle--active {
+    background: var(--color-orange);
+  }
+
+  &--red &__circle--active {
+    background: var(--color-red);
+  }
+}

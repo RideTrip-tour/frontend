@@ -38,7 +38,7 @@ walk(ROOT);
 
 if (violations.length) {
   console.error(
-    'Найдены прямые URL-адреса в src/. Интерфейс должен вызывать только шлюз через env (VITE_API_URL).'
+    'Найдены прямые URL-адреса в src/. Интерфейс должен вызывать только шлюз через env (VITE_API_URL).',
   );
   for (const v of violations) {
     console.error(`- ${v.path}: ${v.url}`);

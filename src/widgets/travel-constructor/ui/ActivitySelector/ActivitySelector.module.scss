@@ -1,0 +1,105 @@
+.selector {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.columns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.group {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.groupTitle {
+  margin: 0;
+  color: #1a1a1a;
+  font-family: var(--text-font-family-2);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.optionList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 24px;
+  color: #5f6c7b;
+  font-family: var(--text-font-family-2);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  flex: 0 0 24px;
+  appearance: none;
+  border: 2px solid #afb6bd;
+  border-radius: 3px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:checked {
+    border-color: #0e68d4;
+    background-color: #0e68d4;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='m4 10 4 4 8-9'/%3E%3C/svg%3E");
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(14, 104, 212, 0.25);
+    outline-offset: 2px;
+  }
+}
+
+.showMoreButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  color: #0e68d4;
+  background: transparent;
+  font-family: var(--text-font-family-3);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.chevron {
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.15s ease;
+}
+
+.chevronUp {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.emptyStateWrapper {
+  min-height: 220px;
+  color: #5f6c7b;
+}

@@ -1,0 +1,131 @@
+/*
+ * Global design tokens and theme values.
+ *
+ * Components should consume these tokens from their CSS Modules. Theme changes
+ * are made here by changing body[data-theme], without importing a palette into
+ * individual components.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Brand and semantic colors: light theme defaults. */
+  --color-blue: #0e68d4;
+  --color-blue-light: #4274c7;
+  --color-blue-dark-1: #1e4d8f;
+  --color-blue-dark-1-10: rgba(30, 77, 143, 0.1);
+  --color-blue-dark-2: #223a5e;
+
+  --color-gray: #afb6bd;
+  --color-gray-dark: #5f6c7b;
+  --color-light-gray-25: rgba(223, 226, 229, 0.25);
+
+  --color-black: #1a1a1a;
+  --color-white: #ffffff;
+  --color-white-1: #f7f9fc;
+  --color-white-30: rgba(247, 249, 252, 0.3);
+  --color-white-75: rgba(255, 255, 255, 0.75);
+
+  --color-green: #3cb371;
+  --color-orange: #ff8a00;
+  --color-yellow: #ffd900;
+  --color-red: #d92d20;
+
+  --color-disabled-primary: #e0e0e0;
+  --color-disabled-secondary: #a0a0a0;
+
+  /* Typography. */
+  --text-font-family: 'Inter', sans-serif;
+  --text-font-family-2: 'Poppins', sans-serif;
+  --text-font-family-3: 'Source Sans 3', sans-serif;
+  --text-size-60: 60px;
+  --text-size-32: 32px;
+  --text-size-28: 28px;
+  --text-size-20: 20px;
+  --text-size-18: 18px;
+  --text-size-16: 16px;
+  --text-size-14: 14px;
+  --text-size-12: 12px;
+  --text-line-height-24: 24px;
+  --text-line-height-22: 22px;
+  --text-line-height-20: 20px;
+  --text-line-height-16: 16px;
+
+  --font-thin: 100;
+  --font-ultra-light: 200;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semi-bold: 600;
+  --font-bold: 700;
+  --font-extra-bold: 800;
+  --font-heavy: 900;
+
+  --font-h1-size: var(--text-size-60);
+  --font-h1-weight: var(--font-medium);
+  --font-h2-size: var(--text-size-32);
+  --font-h2-weight: var(--font-medium);
+  --font-h3-size: var(--text-size-28);
+  --font-h3-weight: var(--font-semi-bold);
+  --font-body-1-size: var(--text-size-18);
+  --font-body-1-weight: var(--font-medium);
+  --font-body-2-size: var(--text-size-16);
+  --font-body-2-weight: var(--font-regular);
+  --font-small-size: var(--text-size-14);
+  --font-small-weight: var(--font-regular);
+
+  /* Spacing, shape, effects and animation. */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+
+  --radius-2: 2px;
+  --radius-4: 4px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-32: 32px;
+  --radius-40: 40px;
+  --radius-50: 50px;
+  --radius-100: 100px;
+
+  --blur-2: 2px;
+  --blur-4: 4px;
+  --blur-6: 6px;
+  --blur-8: 8px;
+  --blur-12: 12px;
+  --blur-16: 16px;
+  --blur-24: 24px;
+
+  --shadow-2: 0px 3px 10px 2px rgba(26, 26, 26, 0.15);
+  --shadow-4: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --shadow-6: 0 6px 12px rgba(0, 0, 0, 0.14);
+  --shadow-8: 0 8px 16px rgba(0, 0, 0, 0.16);
+  --shadow-12: 0 12px 24px rgba(0, 0, 0, 0.18);
+
+  --animation-speed-70: 70ms;
+  --animation-speed-100: 100ms;
+  --animation-speed-200: 200ms;
+  --animation-speed-300: 300ms;
+  --animation-speed-400: 400ms;
+  --animation-speed-500: 500ms;
+  --animation-speed-600: 600ms;
+  --animation-speed-800: 800ms;
+  --animation-speed-1000: 1000ms;
+  --animation-delay-100: 100ms;
+  --animation-delay-200: 200ms;
+  --animation-delay-300: 300ms;
+  --animation-delay-400: 400ms;
+  --animation-delay-500: 500ms;
+  --active-scale: 0.88;
+
+  --icons-size-28: 28px;
+  --icons-size-24: 24px;
+}
