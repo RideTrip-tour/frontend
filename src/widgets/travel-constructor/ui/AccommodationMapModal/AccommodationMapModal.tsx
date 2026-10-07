@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 import { AlertIcon, PlusIcon, MinusIcon } from '@/assets/icons/constructor';
-import { Button } from '@/shared/ui/base/Button';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
 import Modal from '@/shared/ui/base/Modal';
 import { SearchInput } from '@/shared/ui/base/SearchInput';
+import { Button } from '@/shared/ui/Button';
 import { MOCK_MAP_MARKERS } from '@/widgets/travel-constructor/mocks/mapMarkers';
 
 import styles from './AccommodationMapModal.module.scss';

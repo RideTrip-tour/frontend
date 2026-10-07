@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 
-import { Button } from '@/shared/ui/base/Button';
 import NavItem from '@/shared/ui/base/NavItem';
+import { Button } from '@/shared/ui/Button';
 import { useAuthStore } from '@/store';
 
 import style from './header.module.scss';

@@ -1,0 +1,85 @@
+.iconbutton {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-50);
+  padding: 14px;
+  cursor: pointer;
+  border: none;
+  background: var(--btn-bg);
+  transition: background var(--animation-speed-100) ease;
+  transform-origin: center;
+  -webkit-tap-highlight-color: transparent;
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &_img {
+      width: var(--icons-size-24);
+      height: var(--icons-size-24);
+      color: var(--btn-icon);
+    }
+  }
+
+  &:not(:disabled):hover {
+    .button__icon {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+.iconbutton--primary {
+  --btn-bg: var(--color-blue);
+  --btn-icon: var(--color-white);
+  &:not(:disabled):hover {
+    --btn-bg: var(--color-blue-light);
+  }
+  &:not(:disabled):active {
+    --btn-bg: var(--color-blue-dark-1);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    background-color: var(--color-gray-dark);
+    --btn-icon: var(--color-disabled-primary);
+  }
+}
+
+.iconbutton--secondary {
+  --btn-bg: var(--color-white);
+  --btn-icon: var(--color-blue);
+  &:not(:disabled):hover {
+    --btn-bg: var(--color-white-30);
+  }
+  &:not(:disabled):active {
+    --btn-bg: var(--color-white);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    background-color: var(--color-gray-dark);
+    --btn-icon: var(--color-disabled-primary);
+  }
+}
+
+.iconbutton--pagination {
+  --btn-bg: var(--color-blue);
+  --btn-icon: var(--color-white);
+  &:not(:disabled):hover {
+    --btn-bg: var(--color-blue-light);
+  }
+  &:not(:disabled):active {
+    --btn-bg: var(--color-blue-dark-1);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    background: transparent;
+    --btn-icon: var(--color-gray-dark);
+  }
+}

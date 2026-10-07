@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { Button } from '@/shared/ui/base/Button';
 import IconSelect from '@/shared/ui/base/IconSelect';
+import { Button } from '@/shared/ui/Button';
 
 import style from './welcome.module.scss';
 
@@ -31,7 +31,7 @@ function Welcome() {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    navigate('/trip-builder');
+    void navigate('/trip-builder');
   };
 
   return (

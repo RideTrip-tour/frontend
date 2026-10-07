@@ -1,8 +1,8 @@
 import { SuccessIcon } from '@/assets/icons';
 import { AlertIcon } from '@/assets/icons/constructor';
-import { Button } from '@/shared/ui/base/Button';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
 import Modal from '@/shared/ui/base/Modal';
+import { Button } from '@/shared/ui/Button';
 import { cartModalContent } from '@/widgets/travel-constructor/config/cartModalContent';
 import type { CartModalState } from '@/widgets/travel-constructor/model/cartModalTypes';
 

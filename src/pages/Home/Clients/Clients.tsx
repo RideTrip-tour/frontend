@@ -1,5 +1,5 @@
 import ReviewBigCard from '@/shared/ui/compose/ReviewBigCard';
-import ReviewSlider from '@/shared/ui/compose/ReviewSlider';
+import ReviewSlider from '@/widgets/reviews/ui/ReviewSlider';
 
 import style from './clients.module.scss';
 
