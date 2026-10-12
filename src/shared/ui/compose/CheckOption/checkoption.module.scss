@@ -1,0 +1,23 @@
+.checkoption {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  &__title {
+    font-size: var(--text-size-16);
+    color: var(--checkoption-title-color);
+  }
+
+  &__description {
+    font-size: var(--text-size-14);
+    color: var(--checkoption-description-color);
+  }
+}
