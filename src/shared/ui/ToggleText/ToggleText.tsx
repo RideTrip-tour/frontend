@@ -10,7 +10,13 @@ interface ToggleTextProps {
   width?: number;
 }
 
-export const ToggleText = ({ name, onEnable, onDisable, defaultOn = false, width }: ToggleTextProps) => {
+export const ToggleText = ({
+  name,
+  onEnable,
+  onDisable,
+  defaultOn = false,
+  width,
+}: ToggleTextProps) => {
   const [isOn, setIsOn] = useState(defaultOn);
 
   const handleToggle = () => {

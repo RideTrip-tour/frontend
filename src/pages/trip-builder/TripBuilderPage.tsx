@@ -18,7 +18,8 @@ function TripBuilderPage() {
             destinationCity: tour.destinationCity,
             activityOption: tour.activityOption,
             transferType: tour.transferType,
-            transferLabel: tour.transferType === 'needed' ? 'Нужен трансфер' : 'Доберусь самостоятельно',
+            transferLabel:
+              tour.transferType === 'needed' ? 'Нужен трансфер' : 'Доберусь самостоятельно',
             transferPriceFrom: tour.transferType === 'needed' ? TRANSFER_PRICE_FROM : undefined,
             level: tour.level,
           })

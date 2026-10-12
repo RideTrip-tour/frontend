@@ -10,7 +10,11 @@ interface CartSummaryProps {
   onCheckout: () => void;
 }
 
-export function CartSummary({ totalPrice, hasSelectedItems, onCheckout }: Readonly<CartSummaryProps>) {
+export function CartSummary({
+  totalPrice,
+  hasSelectedItems,
+  onCheckout,
+}: Readonly<CartSummaryProps>) {
   return (
     <>
       <div className={styles.totalRow}>

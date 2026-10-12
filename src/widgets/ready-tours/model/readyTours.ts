@@ -54,4 +54,3 @@ export const READY_TOURS: ReadyTourPreset[] = [
     price: 4600,
   },
 ];
-
