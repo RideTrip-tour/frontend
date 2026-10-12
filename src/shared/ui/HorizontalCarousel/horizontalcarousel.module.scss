@@ -6,7 +6,6 @@
 .horizontalcarousel__window {
   position: relative;
   margin: 0 auto;
-  padding-block: 24px;
   overflow: hidden;
 }
 
@@ -21,4 +20,12 @@
 .horizontalcarousel__item {
   display: flex;
   flex-shrink: 0;
+}
+
+.horizontalcarousel__windowControls {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  left: 0;
+  pointer-events: none;
 }

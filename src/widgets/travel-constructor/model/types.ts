@@ -34,6 +34,15 @@ export interface GuestSelection {
 export type ConstructorSelectionId =
   'from' | 'to' | 'when' | 'activity' | 'hotel' | 'transfer' | 'people' | 'level' | 'additional';
 
+export interface ReadyTourSelection {
+  destinationCity: City;
+  activityOption: string;
+  transferType: TransferType;
+  transferLabel: string;
+  transferPriceFrom?: number;
+  level: SkiLevel;
+}
+
 export interface ConstructorState {
   fromCity: City | null;
   fromCountry: Country | null;

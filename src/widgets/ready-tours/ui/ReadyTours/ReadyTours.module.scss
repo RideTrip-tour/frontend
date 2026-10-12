@@ -14,27 +14,41 @@
 
 .readyTours__title {
   margin: 0 0 var(--spacing-8);
-  font-family: var(--text-font-family-2), sans-serif;
-  font-size: var(--font-h2-size);
-  font-weight: var(--font-h2-weight);
+  font-family: var(--text-font-family-2);
+  font-size: var(--font-h3-size);
+  font-weight: var(--font-h3-weight);
   line-height: var(--text-line-height-24);
 }
 
 .readyTours__description {
   margin: 0;
   color: var(--color-gray-dark);
-  font-family: var(--text-font-family-2), sans-serif;
+  font-family: var(--text-font-family-2);
   font-size: var(--font-body-2-size);
   line-height: var(--text-line-height-20);
 }
 
 .readyTours__link {
-  color: var(--color-blue-dark-1);
-  font-family: var(--text-font-family-2), sans-serif;
-  font-size: var(--font-body-2-size);
-  line-height: var(--text-line-height-20);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--color-blue);
+  font-family: var(--text-font-family-3);
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  cursor: pointer;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .readyTours__slider {
@@ -47,7 +61,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-20);
 }
 
 .readyTours__progress {
@@ -67,4 +80,18 @@
   border-radius: var(--radius-100);
   background: var(--carousel-progress-fill);
   transition: width var(--animation-speed-300) ease;
+}
+
+.readyTours__arrows {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding-inline: 8px;
+  pointer-events: none;
+}
+
+.readyTours__arrow {
+  pointer-events: auto;
 }

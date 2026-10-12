@@ -11,13 +11,22 @@ export interface HorizontalCarouselControls {
   progress: number;
 }
 
+interface CarouselPadding {
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
+}
+
 export interface HorizontalCarouselProps {
   items: ReactNode[];
   windowWidth?: number;
   gap?: number | string;
   edgePadding?: number;
+  windowPadding?: CarouselPadding;
   className?: string;
   renderControls?: (controls: HorizontalCarouselControls) => ReactNode;
+  renderWindowControls?: (controls: HorizontalCarouselControls) => ReactNode;
 }
 
 interface CardMeasurement {
@@ -28,19 +37,27 @@ interface CardMeasurement {
 const DEFAULT_WINDOW_WIDTH = 1440;
 const DEFAULT_GAP = 24;
 const DEFAULT_EDGE_PADDING = 0;
+const DEFAULT_VERTICAL_PADDING = 24;
 
 export function HorizontalCarousel({
   items,
   windowWidth = DEFAULT_WINDOW_WIDTH,
   gap = DEFAULT_GAP,
   edgePadding = DEFAULT_EDGE_PADDING,
+  windowPadding,
   className,
   renderControls,
+  renderWindowControls,
 }: Readonly<HorizontalCarouselProps>) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [measurements, setMeasurements] = useState<CardMeasurement[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const children = Children.toArray(items);
+
+  const paddingTop = windowPadding?.top ?? DEFAULT_VERTICAL_PADDING;
+  const paddingRight = windowPadding?.right ?? edgePadding;
+  const paddingBottom = windowPadding?.bottom ?? DEFAULT_VERTICAL_PADDING;
+  const paddingLeft = windowPadding?.left ?? edgePadding;
 
   const measure = useCallback(() => {
     const track = trackRef.current;
@@ -87,7 +104,7 @@ export function HorizontalCarousel({
 
   const lastCard = measurements.at(-1);
   const totalWidth = lastCard ? lastCard.left + lastCard.width : 0;
-  const viewportWidth = Math.max(0, windowWidth - edgePadding * 2);
+  const viewportWidth = Math.max(0, windowWidth - paddingLeft - paddingRight);
   const maxOffset = Math.max(0, totalWidth - viewportWidth);
 
   const getOffset = useCallback(
@@ -143,20 +160,40 @@ export function HorizontalCarousel({
   const previousDisabled = currentOffset <= 1;
   const nextDisabled = currentOffset >= maxOffset - 1 || maxOffset <= 0;
   const progress = maxOffset > 0 ? Math.min(100, (currentOffset / maxOffset) * 100) : 0;
+
+  const controls: HorizontalCarouselControls = {
+    onPrevious,
+    onNext,
+    previousDisabled,
+    nextDisabled,
+    progress,
+  };
+
   const trackStyle: CSSProperties = {
     gap: typeof gap === 'number' ? `${gap}px` : gap,
     transform: `translateX(-${currentOffset}px)`,
   };
+
+  const windowStyle: CSSProperties = {
+    width: windowWidth,
+    paddingTop,
+    paddingRight,
+    paddingBottom,
+    paddingLeft,
+  };
+
+  const windowControlsStyle: CSSProperties = {
+    top: paddingTop,
+    bottom: paddingBottom,
+  };
+
   const rootClassName = [style.horizontalcarousel, className].filter(Boolean).join(' ');
 
   return (
     <div className={rootClassName}>
       <div
         className={style.horizontalcarousel__window}
-        style={{
-          width: windowWidth,
-          paddingInline: edgePadding,
-        }}
+        style={windowStyle}
       >
         <div
           ref={trackRef}
@@ -167,15 +204,18 @@ export function HorizontalCarousel({
             <div className={style.horizontalcarousel__item}>{child}</div>
           ))}
         </div>
+
+        {renderWindowControls && (
+          <div
+            className={style.horizontalcarousel__windowControls}
+            style={windowControlsStyle}
+          >
+            {renderWindowControls(controls)}
+          </div>
+        )}
       </div>
 
-      {renderControls?.({
-        onPrevious,
-        onNext,
-        previousDisabled,
-        nextDisabled,
-        progress,
-      })}
+      {renderControls?.(controls)}
     </div>
   );
 }

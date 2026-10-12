@@ -24,7 +24,7 @@ export const ResortSlider = ({ windowWidth = 1440, className, items }: ResortSli
         <div className={style.resortslider__controls}>
           <div className={style.resortslider__buttons}>
             <IconButton
-              icon="material-symbols:arrow-back-rounded"
+              icon="iconamoon:arrow-left-2"
               variant="pagination"
               ariaLabel="Предыдущий курорт"
               onClick={onPrevious}
@@ -39,7 +39,7 @@ export const ResortSlider = ({ windowWidth = 1440, className, items }: ResortSli
             </div>
 
             <IconButton
-              icon="material-symbols:arrow-forward-rounded"
+              icon="iconamoon:arrow-right-2"
               variant="pagination"
               ariaLabel="Следующий курорт"
               onClick={onNext}

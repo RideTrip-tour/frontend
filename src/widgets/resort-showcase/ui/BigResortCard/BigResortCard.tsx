@@ -8,8 +8,6 @@ import { SmallCategory } from '@/shared/ui/SmallCategory';
 
 import style from './bigresortcard.module.scss';
 
-import './variables.css';
-
 export interface BigResortCardProps {
   image: string;
   title: string;
@@ -94,8 +92,8 @@ export const BigResortCard = ({
           <h3 className={style.card__subtitle}>Дополнительная информация:</h3>
 
           <ul className={style.card__list}>
-            {info.map((item, i) => (
-              <li key={i}>• {item}</li>
+            {info.map((item) => (
+              <li key={item}>• {item}</li>
             ))}
           </ul>
         </div>
@@ -104,14 +102,14 @@ export const BigResortCard = ({
           <h3 className={style.card__subtitle}>Маршруты и условия:</h3>
 
           <div className={style.card__conditionList}>
-            {conditions.map((c, i) => {
+            {conditions.map((c) => {
               const condition = conditionMap[c];
 
               if (!condition) return null;
 
               return (
                 <div
-                  key={i}
+                  key={c}
                   className={style.card__condition}
                 >
                   <Icon

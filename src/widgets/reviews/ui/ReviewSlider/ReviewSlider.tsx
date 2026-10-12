@@ -34,7 +34,7 @@ const ReviewSlider = ({ windowWidth = 1440, className, items, onViewAll }: Revie
 
           <div className={style.reviewslider__buttons}>
             <IconButton
-              icon="material-symbols:arrow-back-rounded"
+              icon="iconamoon:arrow-left-2"
               variant="pagination"
               ariaLabel="Предыдущий отзыв"
               onClick={onPrevious}
@@ -42,7 +42,7 @@ const ReviewSlider = ({ windowWidth = 1440, className, items, onViewAll }: Revie
             />
 
             <IconButton
-              icon="material-symbols:arrow-forward-rounded"
+              icon="iconamoon:arrow-right-2"
               variant="pagination"
               ariaLabel="Следующий отзыв"
               onClick={onNext}

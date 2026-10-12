@@ -76,10 +76,9 @@
     --btn-bg: var(--color-blue-dark-1);
   }
   &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+    cursor: default;
     transform: none !important;
-    background: transparent;
+    background-color: var(--color-white);
     --btn-icon: var(--color-gray-dark);
   }
 }
