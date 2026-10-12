@@ -29,7 +29,7 @@ export function TransferSelector({
   onChange,
   onComplete,
   isTransferAvailable = true,
-}: TransferSelectorProps) {
+}: Readonly<TransferSelectorProps>) {
   const [attemptedType, setAttemptedType] = useState<TransferType | null>(value?.type ?? null);
   const [showUnavailableError, setShowUnavailableError] = useState(false);
 
@@ -79,7 +79,7 @@ export function TransferSelector({
     });
   };
 
-  const selectedType = attemptedType ?? value?.type ?? null;
+  const selectedType = value?.type ?? attemptedType ?? null;
   const selectedParking = value?.type === 'own-car' ? value.parking : undefined;
 
   return (

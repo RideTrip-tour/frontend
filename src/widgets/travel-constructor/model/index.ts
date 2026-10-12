@@ -10,6 +10,7 @@ export type {
   ConstructorSelectionId,
   GuestSelection,
   ParkingPreference,
+  ReadyTourSelection,
   SkiLevel,
   TransferSelection,
   TransferType,

@@ -1,11 +1,10 @@
-import ToggleText from '@/shared/ui/base/ToggleText/ToggleText';
-import type { BigResortCardProps } from '@/shared/ui/compose/BigResortCard/BigResortCard.tsx';
-import BigResortCard from '@/shared/ui/compose/BigResortCard/BigResortCard.tsx';
-import ResortSlider from '@/shared/ui/compose/ResortSlider';
+import { ToggleText } from '@/shared/ui/ToggleText';
+import { BigResortCard, type BigResortCardProps } from '@/widgets/resort-showcase/ui/BigResortCard';
+import { ResortSlider } from '@/widgets/resort-showcase/ui/ResortSlider';
 
 import style from './recommendations.module.scss';
 
-function Recommendations() {
+export function Recommendations() {
   const cards: BigResortCardProps[] = [
     {
       image: '/assets/images/imageBG.png',
@@ -124,48 +123,44 @@ function Recommendations() {
   ];
 
   return (
-    <>
-      <div className={style.recommendations}>
-        <div className={style.recommendations__title}>Итак, ваше путешествие</div>
-        <div className={style.recommendations__text}>
-          Если вы уже знаете чего хотите, мы покажем где можно это сделать.
-        </div>
-        <div className={style.recommendations__filters}>
-          <ToggleText
-            name={'Все туры'}
-            defaultOn
-            width={230}
-          />
-          <ToggleText
-            name={'Для первого раза'}
-            width={230}
-          />
-          <ToggleText
-            name={'Уверенно и быстро'}
-            width={230}
-          />
-          <ToggleText
-            name={'Экстрим и фрирайд'}
-            width={230}
-          />
-          <ToggleText
-            name={'Семейные курорты'}
-            width={230}
-          />
-        </div>
-        <div className={style.recommendations__slider}>
-          <ResortSlider
-            items={cards.map((card, index) => (
-              <BigResortCard
-                key={index}
-                {...card}
-              />
-            ))}
-          />
-        </div>
+    <div className={style.recommendations}>
+      <div className={style.recommendations__title}>Итак, ваше путешествие</div>
+      <div className={style.recommendations__text}>
+        Если вы уже знаете чего хотите, мы покажем где можно это сделать.
       </div>
-    </>
+      <div className={style.recommendations__filters}>
+        <ToggleText
+          name={'Все туры'}
+          defaultOn
+          width={230}
+        />
+        <ToggleText
+          name={'Для первого раза'}
+          width={230}
+        />
+        <ToggleText
+          name={'Уверенно и быстро'}
+          width={230}
+        />
+        <ToggleText
+          name={'Экстрим и фрирайд'}
+          width={230}
+        />
+        <ToggleText
+          name={'Семейные курорты'}
+          width={230}
+        />
+      </div>
+      <div className={style.recommendations__slider}>
+        <ResortSlider
+          items={cards.map((card) => (
+            <BigResortCard
+              key={card.title}
+              {...card}
+            />
+          ))}
+        />
+      </div>
+    </div>
   );
 }
-
-export default Recommendations;

@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui/base/Button';
+import { Button } from '@/shared/ui/Button';
 
 import style from './photoblock.module.scss';
 

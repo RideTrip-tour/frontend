@@ -21,7 +21,7 @@ import Clients from '@/pages/Home/Clients';
 import PersonalSelection from '@/pages/Home/PersonalSelection';
 import PhotoBlock from '@/pages/Home/PhotoBlock';
 import Planning from '@/pages/Home/Planning';
-import Recommendations from '@/pages/Home/Recommendations';
+import { Recommendations } from '@/pages/Home/Recommendations';
 import Welcome from '@/pages/Home/Welcome';
 import { loginRequest, registerRequest, forgotPasswordRequest } from '@/services/authService';
 

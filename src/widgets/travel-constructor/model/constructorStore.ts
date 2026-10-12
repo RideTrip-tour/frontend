@@ -9,6 +9,7 @@ import type {
   ConstructorSelectionId,
   ConstructorState,
   GuestSelection,
+  ReadyTourSelection,
   SkiLevel,
   TransferSelection,
 } from './types';
@@ -31,6 +32,7 @@ export interface ConstructorStore extends ConstructorState {
   setPeople: (people: GuestSelection | null) => void;
   setLevel: (level: SkiLevel | null) => void;
   setAdditional: (additional: AdditionalOption[]) => void;
+  applyReadyTour: (selection: ReadyTourSelection) => void;
   setActiveSelectorId: (selectorId: ConstructorSelectionId | null) => void;
 
   clearTickets: () => void;
@@ -104,6 +106,27 @@ export const useConstructor = create<ConstructorStore>((set) => ({
   setPeople: (people) => set({ people }),
   setLevel: (level) => set({ level }),
   setAdditional: (additional) => set({ additional }),
+  applyReadyTour: ({
+    destinationCity,
+    activityOption,
+    transferType,
+    transferLabel,
+    transferPriceFrom,
+    level,
+  }) =>
+    set({
+      toCity: destinationCity,
+      toCountry: null,
+      activities: [activityOption],
+      liftTypes: [],
+      transfer: {
+        type: transferType,
+        label: transferLabel,
+        ...(transferPriceFrom === undefined ? {} : { priceFrom: transferPriceFrom }),
+      },
+      level,
+      activeSelectorId: null,
+    }),
   setActiveSelectorId: (activeSelectorId) => set({ activeSelectorId }),
 
   clearTickets: () =>
