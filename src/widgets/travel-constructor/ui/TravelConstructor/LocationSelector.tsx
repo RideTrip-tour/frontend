@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { AlertIcon } from '@/assets/icons/constructor';
 import type { City } from '@/entities/city';
@@ -9,6 +9,10 @@ import { SearchInput } from '@/shared/ui/base/SearchInput';
 import { CitySelector } from '../CitySelector';
 import { CountrySelector } from '../CountrySelector';
 
+import styles from './LocationSelector.module.scss';
+
+const MIN_SEARCH_LENGTH = 3;
+
 interface LocationSelectorProps {
   idPrefix: string;
   cities: City[];
@@ -16,6 +20,7 @@ interface LocationSelectorProps {
   onCitySelect: (city: City) => void;
   onCountrySelect: (country: Country) => void;
   onComplete: () => void;
+  onCitySearch?: (query: string) => Promise<void>;
 }
 
 export function LocationSelector({
@@ -25,17 +30,39 @@ export function LocationSelector({
   onCitySelect,
   onCountrySelect,
   onComplete,
-}: LocationSelectorProps) {
+  onCitySearch,
+}: Readonly<LocationSelectorProps>) {
   const [searchQuery, setSearchQuery] = useState('');
+  const isInitialSearchRef = useRef(true);
 
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase('ru-RU');
-  const filteredCities = useMemo(() => {
-    if (!normalizedQuery) {
-      return cities;
+
+  const isShortQuery =
+    normalizedQuery.length > 0 &&
+    normalizedQuery.length < MIN_SEARCH_LENGTH;
+
+  useEffect(() => {
+    if (!onCitySearch) {
+      return;
     }
 
-    return cities.filter((city) => city.name.toLocaleLowerCase('ru-RU').includes(normalizedQuery));
-  }, [cities, normalizedQuery]);
+    if (isInitialSearchRef.current) {
+      isInitialSearchRef.current = false;
+      return;
+    }
+
+    const query = searchQuery.trim();
+
+    if (query.length > 0 && query.length < MIN_SEARCH_LENGTH) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      void onCitySearch(query);
+    }, 300);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [onCitySearch, searchQuery]);
 
   const filteredCountries = useMemo(() => {
     if (!normalizedQuery) {
@@ -47,7 +74,7 @@ export function LocationSelector({
     );
   }, [countries, normalizedQuery]);
 
-  const hasResults = filteredCities.length > 0 || filteredCountries.length > 0;
+  const hasResults = cities.length > 0 || filteredCountries.length > 0;
 
   const completeCitySelection = (city: City) => {
     onCitySelect(city);
@@ -71,16 +98,25 @@ export function LocationSelector({
         value={searchQuery}
       />
 
+      {isShortQuery ? (
+        <p className={styles.searchHint}>
+          Введите минимум 3 символа для поиска
+        </p>
+      ) : null}
+
       {hasResults ? (
         <>
           <CitySelector
-            cities={filteredCities}
+            cities={cities}
             onSelect={completeCitySelection}
           />
-          <CountrySelector
-            countries={filteredCountries}
-            onSelect={completeCountrySelection}
-          />
+
+          {filteredCountries.length > 0 ? (
+            <CountrySelector
+              countries={filteredCountries}
+              onSelect={completeCountrySelection}
+            />
+          ) : null}
         </>
       ) : (
         <EmptyState

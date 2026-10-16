@@ -11,14 +11,15 @@ import {
   SkilLevelIcon,
   ShieldIcon,
 } from '@/assets/icons/constructor';
-import { cities } from '@/entities/city';
-import { countries } from '@/entities/country';
+import { cities as mockCities } from '@/entities/city';
+import { countries as mockCountries } from '@/entities/country';
 import { INITIAL_OPEN_ITEMS } from '@/widgets/travel-constructor/config/constructorSections';
 import { formatTripDates } from '@/widgets/travel-constructor/lib/formatters';
 import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
 import { formatSelectionSummary } from '@/widgets/travel-constructor/lib/selectionSummary';
 import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
 import type { ConstructorSelectionId } from '@/widgets/travel-constructor/model/types';
+import { useLocationReferences } from '@/widgets/travel-constructor/model/useLocationReferences';
 
 import { AccommodationSelector } from '../AccommodationSelector';
 import { ActivitySelector } from '../ActivitySelector';
@@ -67,6 +68,11 @@ export function TravelConstructor() {
 
   const [openItems, setOpenItems] = useState(INITIAL_OPEN_ITEMS);
   const [showAdditional, setShowAdditional] = useState(false);
+  const {
+    cities,
+    countries,
+    searchCities,
+  } = useLocationReferences();
 
   const displayValueFrom = fromCountry?.name ?? fromCity?.name;
   const displayValueTo = toCountry?.name ?? toCity?.name;
@@ -130,6 +136,7 @@ export function TravelConstructor() {
         <LocationSelector
           cities={cities}
           countries={countries}
+          onCitySearch={searchCities}
           idPrefix="from"
           onCitySelect={(city) => {
             setFromCity(city);
@@ -151,8 +158,8 @@ export function TravelConstructor() {
       value: displayValueTo,
       children: (
         <LocationSelector
-          cities={cities}
-          countries={countries}
+          cities={mockCities}
+          countries={mockCountries}
           idPrefix="to"
           onCitySelect={(city) => {
             setToCity(city);

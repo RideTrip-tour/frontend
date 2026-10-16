@@ -7,8 +7,8 @@ interface CountrySelectorProps {
   onSelect: (country: Country) => void;
 }
 
-export function CountrySelector({ countries, onSelect }: CountrySelectorProps) {
-  // Сортируем страны по алфавиту
+export function CountrySelector({ countries, onSelect }: Readonly<CountrySelectorProps>) {
+  /**Сортируем страны по алфавиту */
   const sortedCountries = [...countries].sort((a, b) => a.name.localeCompare(b.name));
 
   // Разбиваем страны по 3 колонкам

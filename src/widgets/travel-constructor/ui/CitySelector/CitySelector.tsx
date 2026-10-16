@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 import type { City } from '@/entities/city/model/types';
-import { FREQUENT_CITY_NAMES } from '@/widgets/travel-constructor/config/citySelector';
+import { POPULAR_CITY_NAMES } from '@/widgets/travel-constructor/config/citySelector';
 
 import styles from './CitySelector.module.scss';
 
@@ -17,10 +17,14 @@ interface CityColumnsProps {
 
 const COLUMN_KEYS = ['left', 'center', 'right'] as const;
 
+function normalizeCityName(name: string): string {
+  return name.trim().toLocaleLowerCase('ru-RU');
+}
+
 function CityColumns({ columns, onSelect }: CityColumnsProps) {
-  return columns.map((columnCities, colIndex) => (
+  return columns.map((columnCities, columnIndex) => (
     <div
-      key={COLUMN_KEYS[colIndex]}
+      key={COLUMN_KEYS[columnIndex]}
       className={styles.column}
     >
       <ul className={styles.list}>
@@ -43,58 +47,57 @@ function CityColumns({ columns, onSelect }: CityColumnsProps) {
   ));
 }
 
-export function CitySelector({ cities, onSelect }: CitySelectorProps) {
-  // Сортируем города по алфавиту
-  const sortedCities = [...cities].sort((a, b) => a.name.localeCompare(b.name));
-
-  // Часто нажимаемые - только Москва и Санкт-Петербург
-  const frequentCities = sortedCities.filter((city) =>
-    FREQUENT_CITY_NAMES.some((name) => name === city.name),
-  );
-
-  // Остальные города (без Москвы и Санкт-Петербурга)
-  const restCities = sortedCities.filter(
-    (city) => !FREQUENT_CITY_NAMES.some((name) => name === city.name),
-  );
-
-  // Разбиваем остальные города по 3 колонкам
+function createColumns(cities: City[]): City[][] {
   const columns: City[][] = [[], [], []];
 
-  restCities.forEach((city, index) => {
-    const columnIndex = index % 3;
-    columns[columnIndex].push(city);
+  cities.forEach((city, index) => {
+    columns[index % 3].push(city);
   });
 
-  // Разбиваем частые города по колонкам (Москва - 1-я, Питер - 2-я)
-  const frequentColumns: City[][] = [[], [], []];
-  frequentCities.forEach((city, index) => {
-    frequentColumns[index].push(city);
-  });
+  return columns;
+}
+
+export function CitySelector({
+  cities,
+  onSelect,
+}: Readonly<CitySelectorProps>) {
+  const popularCityNames = new Set(
+    POPULAR_CITY_NAMES.map(normalizeCityName),
+  );
+
+  const sortedCities = [...cities].sort((a, b) =>
+    a.name.localeCompare(b.name, 'ru'),
+  );
+
+  const popularCities = sortedCities.filter((city) =>
+    popularCityNames.has(normalizeCityName(city.name)),
+  );
+
+  const regularCities = sortedCities.filter(
+    (city) => !popularCityNames.has(normalizeCityName(city.name)),
+  );
 
   return (
     <div className={styles.container}>
-      {/* Секция 1: Заголовок */}
       <div className={styles.title}>Города России</div>
 
-      {/* Секция 2: Часто нажимаемые в 3 колонки */}
-      {frequentCities.length > 0 && (
+      {popularCities.length > 0 ? (
         <div className={clsx(styles.columnsWrapper, styles.frequentColumns)}>
           <CityColumns
-            columns={frequentColumns}
+            columns={createColumns(popularCities)}
             onSelect={onSelect}
           />
         </div>
-      )}
+      ) : null}
 
-      {/* Секция 3: Остальные города в 3 колонки */}
-      {restCities.length > 0 && (
+      {regularCities.length > 0 ? (
         <div className={styles.columnsWrapper}>
           <CityColumns
-            columns={columns}
+            columns={createColumns(regularCities)}
             onSelect={onSelect}
           />
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
