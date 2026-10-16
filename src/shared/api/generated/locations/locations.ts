@@ -30,6 +30,32 @@ export interface AdminCityCreate {
   longitude: number;
 }
 
+export interface AdminCityRead {
+  /**
+     * @minLength 1
+     * @maxLength 150
+     */
+  name: string;
+  id: number;
+  /**
+     * @minimum -90
+     * @maximum 90
+     */
+  latitude: number;
+  /**
+     * @minimum -180
+     * @maximum 180
+     */
+  longitude: number;
+}
+
+export interface AdminCityListResponse {
+  total: number;
+  limit: number;
+  offset: number;
+  items: AdminCityRead[];
+}
+
 export interface AdminCityUpdate {
   /**
      * @minLength 1
@@ -64,7 +90,6 @@ export interface AdminLocationCreate {
   styles?: string[];
   levels?: string[];
   is_active?: boolean;
-  slug?: string | null;
 }
 
 export interface AdminLocationRead {
@@ -90,7 +115,6 @@ export interface AdminLocationRead {
   styles?: string[];
   levels?: string[];
   is_active?: boolean;
-  slug?: string | null;
   id: number;
   distance_to_city_km?: string | null;
   /**
@@ -111,12 +135,72 @@ export interface AdminLocationListResponse {
   items: AdminLocationRead[];
 }
 
+export interface AdminLocationUpdate {
+  name?: string | null;
+  city_id?: number | null;
+  description?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  activity_ids?: number[] | null;
+  styles?: string[] | null;
+  levels?: string[] | null;
+  is_active?: boolean | null;
+}
+
 export interface AdminReferenceCreate {
   /**
      * @minLength 1
      * @maxLength 150
      */
   name: string;
+}
+
+/**
+ * @minItems 2
+ * @maxItems 2
+ */
+export type Position2D = [number, number];
+
+/**
+ * @minItems 3
+ * @maxItems 3
+ */
+export type Position3D = [number, number, number];
+
+/**
+ * Polygon Model
+ */
+export interface Polygon {
+  bbox?: [number, number, number, number] | [number, number, number, number, number, number] | null;
+  type: 'Polygon';
+  /** @items.minItems 4 */
+  coordinates: ((Position2D | Position3D)[])[];
+}
+
+/**
+ * MultiPolygon Model
+ */
+export interface MultiPolygon {
+  bbox?: [number, number, number, number] | [number, number, number, number, number, number] | null;
+  type: 'MultiPolygon';
+  /** @items.items.minItems 4 */
+  coordinates: (((Position2D | Position3D)[])[])[];
+}
+
+export type FeatureUnionPolygonMultiPolygonDictProperties = { [key: string]: unknown } | null;
+
+export interface FeatureUnionPolygonMultiPolygonDict {
+  bbox?: [number, number, number, number] | [number, number, number, number, number, number] | null;
+  type: 'Feature';
+  geometry: Polygon | MultiPolygon | null;
+  properties: FeatureUnionPolygonMultiPolygonDictProperties;
+  id?: number | string | null;
+}
+
+export interface FeatureCollectionFeatureUnionPolygonMultiPolygonDict {
+  bbox?: [number, number, number, number] | [number, number, number, number, number, number] | null;
+  type: 'FeatureCollection';
+  features: FeatureUnionPolygonMultiPolygonDict[];
 }
 
 export interface AdminRegionCreate {
@@ -126,6 +210,8 @@ export interface AdminRegionCreate {
      */
   name: string;
   country_id: number;
+  /** GeoJSON FeatureCollection от geojson.io. Doc for FeatureCollection, https://turfjs.org/docs/api/featureCollection. */
+  border: FeatureCollectionFeatureUnionPolygonMultiPolygonDict;
 }
 
 export interface AdminRegionUpdate {
@@ -135,6 +221,23 @@ export interface AdminRegionUpdate {
      */
   name: string;
   country_id?: number | null;
+}
+
+export interface ReferenceRead {
+  /**
+     * @minLength 1
+     * @maxLength 150
+     */
+  name: string;
+  id: number;
+}
+
+export interface CityWithinRadius {
+  total: number;
+  limit: number;
+  offset: number;
+  radius?: string | null;
+  items: ReferenceRead[];
 }
 
 export type ValidationErrorCtx = { [key: string]: unknown };
@@ -183,7 +286,6 @@ export interface LocationRead {
   styles?: string[];
   levels?: string[];
   is_active?: boolean;
-  slug?: string | null;
   id: number;
   distance_to_city_km?: string | null;
   /**
@@ -204,13 +306,12 @@ export interface LocationListResponse {
   items: LocationRead[];
 }
 
-export interface ReferenceRead {
-  /**
-     * @minLength 1
-     * @maxLength 150
-     */
-  name: string;
-  id: number;
+export interface LocationWithinRadius {
+  total: number;
+  limit: number;
+  offset: number;
+  radius?: string | null;
+  items: LocationRead[];
 }
 
 export interface ReferenceListResponse {
@@ -244,6 +345,33 @@ country?: string[] | null;
 activity_id?: number[] | null;
 styles?: string[] | null;
 levels?: string[] | null;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+/**
+ * @minimum 0
+ */
+offset?: number;
+};
+
+export type ReadLocationsWithinRadiusApiLocationsRadiusGetParams = {
+/**
+ * @minimum -90
+ * @maximum 90
+ */
+latitude: number;
+/**
+ * @minimum -180
+ * @maximum 180
+ */
+longitude: number;
+/**
+ * In km.
+ * @minimum 0.001
+ */
+radius: number;
 /**
  * @minimum 1
  * @maximum 100
@@ -290,6 +418,7 @@ offset?: number;
 };
 
 export type ReadCitiesApiLocationsReferencesCitiesGetParams = {
+region_id?: number | null;
 name?: string | null;
 /**
  * Reference ids. Supports repeated values and CSV, e.g. activity_id=1&activity_id=2 or 1,2.
@@ -306,7 +435,36 @@ limit?: number;
 offset?: number;
 };
 
+export type ReadCitiesWithinRadiusApiLocationsReferencesRadiusGetParams = {
+/**
+ * @minimum -90
+ * @maximum 90
+ */
+latitude: number;
+/**
+ * @minimum -180
+ * @maximum 180
+ */
+longitude: number;
+/**
+ * In km.
+ * @minimum 0.001
+ */
+radius: number;
+region_id?: number | null;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+/**
+ * @minimum 0
+ */
+offset?: number;
+};
+
 export type ReadRegionsApiLocationsReferencesRegionsGetParams = {
+country_id?: number | null;
 name?: string | null;
 /**
  * Reference ids. Supports repeated values and CSV, e.g. activity_id=1&activity_id=2 or 1,2.
@@ -388,24 +546,42 @@ limit?: number;
 offset?: number;
 };
 
+export type ReadCitiesApiAdminReferencesCitiesGetParams = {
+region_id?: number | null;
+name?: string | null;
+/**
+ * Reference ids. Supports repeated values and CSV, e.g. activity_id=1&activity_id=2 or 1,2.
+ */
+id?: number[] | null;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+/**
+ * @minimum 0
+ */
+offset?: number;
+};
+
 export const getLocationService = (axiosInstance: AxiosInstance = axios.default) => {
 /**
  * @summary Health Check
  */
-const healthCheckLocationsHealthGet = (
+const healthCheckApiLocationsHealthGet = (
      options?: AxiosRequestConfig
  ): Promise<AxiosResponse<unknown>> => {
     return axiosInstance.get(
-      `/locations/health`,options
+      `/api/locations/health`,options
     );
   }
-const getHealthCheckLocationsHealthGetUrl = () => {
+const getHealthCheckApiLocationsHealthGetUrl = () => {
 
   return axiosInstance.create({
     baseURL: '',
     params: null,
   }).getUri({
-    url: `/locations/health`,
+    url: `/api/locations/health`,
     baseURL: '',
 
 
@@ -457,6 +633,32 @@ const getReadLocationFiltersApiLocationsFiltersGetUrl = () => {
     url: `/api/locations/filters`,
     baseURL: '',
 
+
+  });
+}
+
+/**
+ * Returns a paginated list of locations within the given radius.
+ * @summary Read Locations Within Radius
+ */
+const readLocationsWithinRadiusApiLocationsRadiusGet = (
+    params: ReadLocationsWithinRadiusApiLocationsRadiusGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<LocationWithinRadius>> => {
+    return axiosInstance.get(
+      `/api/locations/radius`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getReadLocationsWithinRadiusApiLocationsRadiusGetUrl = (params: ReadLocationsWithinRadiusApiLocationsRadiusGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/locations/radius`,
+    baseURL: '',
+    params,
 
   });
 }
@@ -553,6 +755,32 @@ const getReadCitiesApiLocationsReferencesCitiesGetUrl = (params?: ReadCitiesApiL
     params: null,
   }).getUri({
     url: `/api/locations/references/cities`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * Returns a paginated list of cities within the given radius.
+ * @summary Read Cities Within Radius
+ */
+const readCitiesWithinRadiusApiLocationsReferencesRadiusGet = (
+    params: ReadCitiesWithinRadiusApiLocationsReferencesRadiusGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<CityWithinRadius>> => {
+    return axiosInstance.get(
+      `/api/locations/references/radius`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getReadCitiesWithinRadiusApiLocationsReferencesRadiusGetUrl = (params: ReadCitiesWithinRadiusApiLocationsReferencesRadiusGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/locations/references/radius`,
     baseURL: '',
     params,
 
@@ -706,6 +934,31 @@ const getReadLocationApiAdminLocationsLocationIdGetUrl = (locationId: string,) =
 }
 
 /**
+ * @summary Update Location By Id
+ */
+const updateLocationByIdApiAdminLocationsLocationIdPatch = (
+    locationId: string,
+    adminLocationUpdate: AdminLocationUpdate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<AdminLocationRead>> => {
+    return axiosInstance.patch(
+      `/api/admin/locations/${locationId}`,
+      adminLocationUpdate,options
+    );
+  }
+const getUpdateLocationByIdApiAdminLocationsLocationIdPatchUrl = (locationId: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/admin/locations/${locationId}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
  * @summary Delete Location By Id
  */
 const deleteLocationByIdApiAdminLocationsLocationIdDelete = (
@@ -780,6 +1033,56 @@ const getReadLevelLocationsApiAdminReferencesLevelsLevelIdLocationsGetUrl = (lev
     url: `/api/admin/references/levels/${levelId}/locations`,
     baseURL: '',
     params,
+
+  });
+}
+
+/**
+ * @summary Read Cities
+ */
+const readCitiesApiAdminReferencesCitiesGet = (
+    params?: ReadCitiesApiAdminReferencesCitiesGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<AdminCityListResponse>> => {
+    return axiosInstance.get(
+      `/api/admin/references/cities`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getReadCitiesApiAdminReferencesCitiesGetUrl = (params?: ReadCitiesApiAdminReferencesCitiesGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/admin/references/cities`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * Create a city linked to an existing region.
+ * @summary Create Cities
+ */
+const createCitiesApiAdminReferencesCitiesPost = (
+    adminCityCreate: AdminCityCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<AdminCityRead>> => {
+    return axiosInstance.post(
+      `/api/admin/references/cities`,
+      adminCityCreate,options
+    );
+  }
+const getCreateCitiesApiAdminReferencesCitiesPostUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/admin/references/cities`,
+    baseURL: '',
+
 
   });
 }
@@ -875,31 +1178,6 @@ const getCreateRegionsApiAdminReferencesRegionsPostUrl = () => {
     params: null,
   }).getUri({
     url: `/api/admin/references/regions`,
-    baseURL: '',
-
-
-  });
-}
-
-/**
- * Create a city linked to an existing region.
- * @summary Create Cities
- */
-const createCitiesApiAdminReferencesCitiesPost = (
-    adminCityCreate: AdminCityCreate, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<ReferenceRead>> => {
-    return axiosInstance.post(
-      `/api/admin/references/cities`,
-      adminCityCreate,options
-    );
-  }
-const getCreateCitiesApiAdminReferencesCitiesPostUrl = () => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/api/admin/references/cities`,
     baseURL: '',
 
 
@@ -1153,28 +1431,32 @@ const getUpdateCityByIdApiAdminReferencesCitiesCityIdPatchUrl = (cityId: number,
   });
 }
 
-return {healthCheckLocationsHealthGet,readLocationsApiLocationsGet,readLocationFiltersApiLocationsFiltersGet,readLocationApiLocationsLocationIdGet,readStylesApiLocationsReferencesStylesGet,readLevelsApiLocationsReferencesLevelsGet,readCitiesApiLocationsReferencesCitiesGet,readRegionsApiLocationsReferencesRegionsGet,readCountriesApiLocationsReferencesCountriesGet,getListLocationsApiAdminLocationsGet,createLocationApiAdminLocationsPost,readLocationFiltersApiAdminLocationsFiltersGet,readLocationApiAdminLocationsLocationIdGet,deleteLocationByIdApiAdminLocationsLocationIdDelete,readStyleLocationsApiAdminReferencesStylesStyleIdLocationsGet,readLevelLocationsApiAdminReferencesLevelsLevelIdLocationsGet,createStyleApiAdminReferencesStylesPost,createLevelsApiAdminReferencesLevelsPost,createCountriesApiAdminReferencesCountriesPost,createRegionsApiAdminReferencesRegionsPost,createCitiesApiAdminReferencesCitiesPost,deleteStyleByIdApiAdminReferencesStylesStyleIdDelete,updateStyleByIdApiAdminReferencesStylesStyleIdPatch,deleteLevelByIdApiAdminReferencesLevelsLevelIdDelete,updateLevelByIdApiAdminReferencesLevelsLevelIdPatch,deleteCountryByIdApiAdminReferencesCountriesCountryIdDelete,updateCountryByIdApiAdminReferencesCountriesCountryIdPatch,deleteRegionByIdApiAdminReferencesRegionsRegionIdDelete,updateRegionByIdApiAdminReferencesRegionsRegionIdPatch,deleteCityByIdApiAdminReferencesCitiesCityIdDelete,updateCityByIdApiAdminReferencesCitiesCityIdPatch,getHealthCheckLocationsHealthGetUrl,getReadLocationsApiLocationsGetUrl,getReadLocationFiltersApiLocationsFiltersGetUrl,getReadLocationApiLocationsLocationIdGetUrl,getReadStylesApiLocationsReferencesStylesGetUrl,getReadLevelsApiLocationsReferencesLevelsGetUrl,getReadCitiesApiLocationsReferencesCitiesGetUrl,getReadRegionsApiLocationsReferencesRegionsGetUrl,getReadCountriesApiLocationsReferencesCountriesGetUrl,getGetListLocationsApiAdminLocationsGetUrl,getCreateLocationApiAdminLocationsPostUrl,getReadLocationFiltersApiAdminLocationsFiltersGetUrl,getReadLocationApiAdminLocationsLocationIdGetUrl,getDeleteLocationByIdApiAdminLocationsLocationIdDeleteUrl,getReadStyleLocationsApiAdminReferencesStylesStyleIdLocationsGetUrl,getReadLevelLocationsApiAdminReferencesLevelsLevelIdLocationsGetUrl,getCreateStyleApiAdminReferencesStylesPostUrl,getCreateLevelsApiAdminReferencesLevelsPostUrl,getCreateCountriesApiAdminReferencesCountriesPostUrl,getCreateRegionsApiAdminReferencesRegionsPostUrl,getCreateCitiesApiAdminReferencesCitiesPostUrl,getDeleteStyleByIdApiAdminReferencesStylesStyleIdDeleteUrl,getUpdateStyleByIdApiAdminReferencesStylesStyleIdPatchUrl,getDeleteLevelByIdApiAdminReferencesLevelsLevelIdDeleteUrl,getUpdateLevelByIdApiAdminReferencesLevelsLevelIdPatchUrl,getDeleteCountryByIdApiAdminReferencesCountriesCountryIdDeleteUrl,getUpdateCountryByIdApiAdminReferencesCountriesCountryIdPatchUrl,getDeleteRegionByIdApiAdminReferencesRegionsRegionIdDeleteUrl,getUpdateRegionByIdApiAdminReferencesRegionsRegionIdPatchUrl,getDeleteCityByIdApiAdminReferencesCitiesCityIdDeleteUrl,getUpdateCityByIdApiAdminReferencesCitiesCityIdPatchUrl}};
-export type HealthCheckLocationsHealthGetResult = AxiosResponse<unknown>
+return {healthCheckApiLocationsHealthGet,readLocationsApiLocationsGet,readLocationFiltersApiLocationsFiltersGet,readLocationsWithinRadiusApiLocationsRadiusGet,readLocationApiLocationsLocationIdGet,readStylesApiLocationsReferencesStylesGet,readLevelsApiLocationsReferencesLevelsGet,readCitiesApiLocationsReferencesCitiesGet,readCitiesWithinRadiusApiLocationsReferencesRadiusGet,readRegionsApiLocationsReferencesRegionsGet,readCountriesApiLocationsReferencesCountriesGet,getListLocationsApiAdminLocationsGet,createLocationApiAdminLocationsPost,readLocationFiltersApiAdminLocationsFiltersGet,readLocationApiAdminLocationsLocationIdGet,updateLocationByIdApiAdminLocationsLocationIdPatch,deleteLocationByIdApiAdminLocationsLocationIdDelete,readStyleLocationsApiAdminReferencesStylesStyleIdLocationsGet,readLevelLocationsApiAdminReferencesLevelsLevelIdLocationsGet,readCitiesApiAdminReferencesCitiesGet,createCitiesApiAdminReferencesCitiesPost,createStyleApiAdminReferencesStylesPost,createLevelsApiAdminReferencesLevelsPost,createCountriesApiAdminReferencesCountriesPost,createRegionsApiAdminReferencesRegionsPost,deleteStyleByIdApiAdminReferencesStylesStyleIdDelete,updateStyleByIdApiAdminReferencesStylesStyleIdPatch,deleteLevelByIdApiAdminReferencesLevelsLevelIdDelete,updateLevelByIdApiAdminReferencesLevelsLevelIdPatch,deleteCountryByIdApiAdminReferencesCountriesCountryIdDelete,updateCountryByIdApiAdminReferencesCountriesCountryIdPatch,deleteRegionByIdApiAdminReferencesRegionsRegionIdDelete,updateRegionByIdApiAdminReferencesRegionsRegionIdPatch,deleteCityByIdApiAdminReferencesCitiesCityIdDelete,updateCityByIdApiAdminReferencesCitiesCityIdPatch,getHealthCheckApiLocationsHealthGetUrl,getReadLocationsApiLocationsGetUrl,getReadLocationFiltersApiLocationsFiltersGetUrl,getReadLocationsWithinRadiusApiLocationsRadiusGetUrl,getReadLocationApiLocationsLocationIdGetUrl,getReadStylesApiLocationsReferencesStylesGetUrl,getReadLevelsApiLocationsReferencesLevelsGetUrl,getReadCitiesApiLocationsReferencesCitiesGetUrl,getReadCitiesWithinRadiusApiLocationsReferencesRadiusGetUrl,getReadRegionsApiLocationsReferencesRegionsGetUrl,getReadCountriesApiLocationsReferencesCountriesGetUrl,getGetListLocationsApiAdminLocationsGetUrl,getCreateLocationApiAdminLocationsPostUrl,getReadLocationFiltersApiAdminLocationsFiltersGetUrl,getReadLocationApiAdminLocationsLocationIdGetUrl,getUpdateLocationByIdApiAdminLocationsLocationIdPatchUrl,getDeleteLocationByIdApiAdminLocationsLocationIdDeleteUrl,getReadStyleLocationsApiAdminReferencesStylesStyleIdLocationsGetUrl,getReadLevelLocationsApiAdminReferencesLevelsLevelIdLocationsGetUrl,getReadCitiesApiAdminReferencesCitiesGetUrl,getCreateCitiesApiAdminReferencesCitiesPostUrl,getCreateStyleApiAdminReferencesStylesPostUrl,getCreateLevelsApiAdminReferencesLevelsPostUrl,getCreateCountriesApiAdminReferencesCountriesPostUrl,getCreateRegionsApiAdminReferencesRegionsPostUrl,getDeleteStyleByIdApiAdminReferencesStylesStyleIdDeleteUrl,getUpdateStyleByIdApiAdminReferencesStylesStyleIdPatchUrl,getDeleteLevelByIdApiAdminReferencesLevelsLevelIdDeleteUrl,getUpdateLevelByIdApiAdminReferencesLevelsLevelIdPatchUrl,getDeleteCountryByIdApiAdminReferencesCountriesCountryIdDeleteUrl,getUpdateCountryByIdApiAdminReferencesCountriesCountryIdPatchUrl,getDeleteRegionByIdApiAdminReferencesRegionsRegionIdDeleteUrl,getUpdateRegionByIdApiAdminReferencesRegionsRegionIdPatchUrl,getDeleteCityByIdApiAdminReferencesCitiesCityIdDeleteUrl,getUpdateCityByIdApiAdminReferencesCitiesCityIdPatchUrl}};
+export type HealthCheckApiLocationsHealthGetResult = AxiosResponse<unknown>
 export type ReadLocationsApiLocationsGetResult = AxiosResponse<LocationListResponse>
 export type ReadLocationFiltersApiLocationsFiltersGetResult = AxiosResponse<LocationFilterOptions>
+export type ReadLocationsWithinRadiusApiLocationsRadiusGetResult = AxiosResponse<LocationWithinRadius>
 export type ReadLocationApiLocationsLocationIdGetResult = AxiosResponse<LocationRead>
 export type ReadStylesApiLocationsReferencesStylesGetResult = AxiosResponse<ReferenceListResponse>
 export type ReadLevelsApiLocationsReferencesLevelsGetResult = AxiosResponse<ReferenceListResponse>
 export type ReadCitiesApiLocationsReferencesCitiesGetResult = AxiosResponse<ReferenceListResponse>
+export type ReadCitiesWithinRadiusApiLocationsReferencesRadiusGetResult = AxiosResponse<CityWithinRadius>
 export type ReadRegionsApiLocationsReferencesRegionsGetResult = AxiosResponse<ReferenceListResponse>
 export type ReadCountriesApiLocationsReferencesCountriesGetResult = AxiosResponse<ReferenceListResponse>
 export type GetListLocationsApiAdminLocationsGetResult = AxiosResponse<AdminLocationListResponse>
 export type CreateLocationApiAdminLocationsPostResult = AxiosResponse<AdminLocationRead>
 export type ReadLocationFiltersApiAdminLocationsFiltersGetResult = AxiosResponse<LocationFilterOptions>
 export type ReadLocationApiAdminLocationsLocationIdGetResult = AxiosResponse<AdminLocationRead>
+export type UpdateLocationByIdApiAdminLocationsLocationIdPatchResult = AxiosResponse<AdminLocationRead>
 export type DeleteLocationByIdApiAdminLocationsLocationIdDeleteResult = AxiosResponse<void>
 export type ReadStyleLocationsApiAdminReferencesStylesStyleIdLocationsGetResult = AxiosResponse<ReferenceLocationsResponse>
 export type ReadLevelLocationsApiAdminReferencesLevelsLevelIdLocationsGetResult = AxiosResponse<ReferenceLocationsResponse>
+export type ReadCitiesApiAdminReferencesCitiesGetResult = AxiosResponse<AdminCityListResponse>
+export type CreateCitiesApiAdminReferencesCitiesPostResult = AxiosResponse<AdminCityRead>
 export type CreateStyleApiAdminReferencesStylesPostResult = AxiosResponse<ReferenceRead>
 export type CreateLevelsApiAdminReferencesLevelsPostResult = AxiosResponse<ReferenceRead>
 export type CreateCountriesApiAdminReferencesCountriesPostResult = AxiosResponse<ReferenceRead>
 export type CreateRegionsApiAdminReferencesRegionsPostResult = AxiosResponse<ReferenceRead>
-export type CreateCitiesApiAdminReferencesCitiesPostResult = AxiosResponse<ReferenceRead>
 export type DeleteStyleByIdApiAdminReferencesStylesStyleIdDeleteResult = AxiosResponse<void>
 export type UpdateStyleByIdApiAdminReferencesStylesStyleIdPatchResult = AxiosResponse<ReferenceRead>
 export type DeleteLevelByIdApiAdminReferencesLevelsLevelIdDeleteResult = AxiosResponse<void>
