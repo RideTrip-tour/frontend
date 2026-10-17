@@ -6,11 +6,9 @@ function normalizeCityName(name: string): string {
 }
 
 export function selectPresetCities(cities: City[]): City[] {
-  const citiesByName = new Map(
-    cities.map((city) => [normalizeCityName(city.name), city]),
-  );
+  const citiesByName = new Map(cities.map((city) => [normalizeCityName(city.name), city]));
 
-  return PRESET_CITY_NAMES.map((name) =>
-    citiesByName.get(normalizeCityName(name)),
-  ).filter((city): city is City => city !== undefined);
+  return PRESET_CITY_NAMES.map((name) => citiesByName.get(normalizeCityName(name))).filter(
+    (city): city is City => city !== undefined,
+  );
 }

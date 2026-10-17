@@ -1,9 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import {
-  getCities,
-  getPresetCities,
-} from '@/entities/city/api/getCities';
+import { getCities, getPresetCities } from '@/entities/city/api/getCities';
 import type { City } from '@/entities/city/model/types';
 import { getCountries } from '@/entities/country/api/getCountries';
 import type { Country } from '@/entities/country/model/types';

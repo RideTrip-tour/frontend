@@ -1,9 +1,6 @@
 import { selectPresetCities } from '@/entities/city/lib/selectPresetCities';
 import type { City } from '@/entities/city/model/types';
-import {
-  locationsApi,
-  locationsRequestOptions,
-} from '@/shared/api/locations/locationsApi';
+import { locationsApi, locationsRequestOptions } from '@/shared/api/locations/locationsApi';
 
 /**
  * Максимальное количество городов,
@@ -53,18 +50,15 @@ function createRequestOptions(signal?: AbortSignal) {
  * @returns Массив найденных городов.
  * @throws Ошибка API или сети при неудачном запросе.
  */
-export async function getCities(
-  options: GetCitiesOptions = {},
-): Promise<City[]> {
-  const { data } =
-    await locationsApi.readCitiesApiLocationsReferencesCitiesGet(
-      {
-        limit: SEARCH_CITY_LIMIT,
-        offset: 0,
-        name: options.name?.trim() || undefined,
-      },
-      createRequestOptions(options.signal),
-    );
+export async function getCities(options: GetCitiesOptions = {}): Promise<City[]> {
+  const { data } = await locationsApi.readCitiesApiLocationsReferencesCitiesGet(
+    {
+      limit: SEARCH_CITY_LIMIT,
+      offset: 0,
+      name: options.name?.trim() || undefined,
+    },
+    createRequestOptions(options.signal),
+  );
 
   return data.items;
 }
@@ -84,23 +78,18 @@ async function loadPresetCities(): Promise<City[]> {
   let offset = 0;
 
   while (true) {
-    const { data } =
-      await locationsApi.readCitiesApiLocationsReferencesCitiesGet(
-        {
-          limit: API_PAGE_SIZE,
-          offset,
-        },
-        createRequestOptions(),
-      );
+    const { data } = await locationsApi.readCitiesApiLocationsReferencesCitiesGet(
+      {
+        limit: API_PAGE_SIZE,
+        offset,
+      },
+      createRequestOptions(),
+    );
 
     allCities.push(...data.items);
     offset += data.items.length;
 
-    if (
-      data.items.length === 0 ||
-      offset >= data.total ||
-      data.items.length < API_PAGE_SIZE
-    ) {
+    if (data.items.length === 0 || offset >= data.total || data.items.length < API_PAGE_SIZE) {
       break;
     }
   }

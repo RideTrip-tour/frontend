@@ -31,9 +31,7 @@ interface GetCountriesOptions {
  * @returns Массив стран для отображения.
  * @throws Ошибка API или сети при неудачном запросе.
  */
-export async function getCountries(
-  options: GetCountriesOptions = {},
-): Promise<Country[]> {
+export async function getCountries(options: GetCountriesOptions = {}): Promise<Country[]> {
   const countries: Country[] = [];
   let offset = 0;
 
@@ -55,11 +53,7 @@ export async function getCountries(
     countries.push(...data.items);
     offset += data.items.length;
 
-    if (
-      data.items.length === 0 ||
-      offset >= data.total ||
-      data.items.length < COUNTRY_PAGE_SIZE
-    ) {
+    if (data.items.length === 0 || offset >= data.total || data.items.length < COUNTRY_PAGE_SIZE) {
       break;
     }
   }

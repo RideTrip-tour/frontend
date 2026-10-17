@@ -1,8 +1,4 @@
-export const POPULAR_CITY_NAMES = [
-  'Москва',
-  'Санкт-Петербург',
-
-] as const;
+export const POPULAR_CITY_NAMES = ['Москва', 'Санкт-Петербург'] as const;
 
 export const CITY_NAMES = [
   'Казань',
@@ -28,7 +24,4 @@ export const CITY_NAMES = [
   'Ярославль',
 ] as const;
 
-export const PRESET_CITY_NAMES = [
-  ...POPULAR_CITY_NAMES,
-  ...CITY_NAMES,
-] as const;
+export const PRESET_CITY_NAMES = [...POPULAR_CITY_NAMES, ...CITY_NAMES] as const;
