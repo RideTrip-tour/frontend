@@ -4,15 +4,13 @@ import { useState } from 'react';
 import { SearchInfoIcon } from '@/assets/icons/constructor';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
 import { SearchInput } from '@/shared/ui/base/SearchInput';
-import {
-  ADDITIONAL_ACTIVITIES,
-  LIFT_TYPES,
-  PRIMARY_ACTIVITIES,
-} from '@/widgets/travel-constructor/config/activityOptions';
+import { LIFT_TYPES } from '@/widgets/travel-constructor/config/activityOptions';
 
 import styles from './ActivitySelector.module.scss';
 
 interface ActivitySelectorProps {
+  activities: string[];
+  isActivitiesLoading: boolean;
   selectedActivities: string[];
   selectedLiftTypes: string[];
   onActivitiesChange: (activities: string[]) => void;
@@ -63,6 +61,8 @@ function OptionList({ name, options, selectedOptions, onChange }: OptionListProp
 }
 
 export function ActivitySelector({
+  activities,
+  isActivitiesLoading,
   selectedActivities,
   selectedLiftTypes,
   onActivitiesChange,
@@ -72,9 +72,8 @@ export function ActivitySelector({
   const [showAllActivities, setShowAllActivities] = useState(false);
 
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase('ru-RU');
-  const allActivities = [...PRIMARY_ACTIVITIES, ...ADDITIONAL_ACTIVITIES];
-  const visibleActivities =
-    normalizedQuery || showAllActivities ? allActivities : PRIMARY_ACTIVITIES;
+  const primaryActivities = activities.slice(0, 5);
+  const visibleActivities = normalizedQuery || showAllActivities ? activities : primaryActivities;
 
   const filteredActivities = visibleActivities.filter((activity) =>
     activity.toLocaleLowerCase('ru-RU').includes(normalizedQuery),
@@ -97,7 +96,9 @@ export function ActivitySelector({
         value={searchQuery}
       />
 
-      {hasResults ? (
+      {isActivitiesLoading ? (
+        <p className={styles.loading}>Загрузка видов активностей...</p>
+      ) : hasResults ? (
         <div className={styles.columns}>
           <section
             className={styles.group}

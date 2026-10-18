@@ -68,7 +68,8 @@ export function TravelConstructor() {
 
   const [openItems, setOpenItems] = useState(INITIAL_OPEN_ITEMS);
   const [showAdditional, setShowAdditional] = useState(false);
-  const { cities, countries, searchCities } = useLocationReferences();
+  const { cities, countries, isSkiStylesLoading, searchCities, skiStyles } =
+    useLocationReferences();
 
   const displayValueFrom = fromCountry?.name ?? fromCity?.name;
   const displayValueTo = toCountry?.name ?? toCity?.name;
@@ -199,6 +200,8 @@ export function TravelConstructor() {
         <ActivitySelector
           onActivitiesChange={setActivities}
           onLiftTypesChange={setLiftTypes}
+          activities={skiStyles.map((style) => style.name)}
+          isActivitiesLoading={isSkiStylesLoading}
           selectedActivities={activities}
           selectedLiftTypes={liftTypes}
         />

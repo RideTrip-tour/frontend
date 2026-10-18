@@ -4,16 +4,22 @@ import { getCities, getPresetCities } from '@/entities/city/api/getCities';
 import type { City } from '@/entities/city/model/types';
 import { getCountries } from '@/entities/country/api/getCountries';
 import type { Country } from '@/entities/country/model/types';
+import { getSkiStyles } from '@/entities/ski-style';
+import type { SkiStyle } from '@/entities/ski-style';
 
 interface LocationReferencesState {
   cities: City[];
   countries: Country[];
+  skiStyles: SkiStyle[];
+  isSkiStylesLoading: boolean;
   searchCities: (query: string) => Promise<void>;
 }
 
 export function useLocationReferences(): LocationReferencesState {
   const [cities, setCities] = useState<City[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
+  const [skiStyles, setSkiStyles] = useState<SkiStyle[]>([]);
+  const [isSkiStylesLoading, setIsSkiStylesLoading] = useState(true);
 
   const citySearchControllerRef = useRef<AbortController | null>(null);
 
@@ -46,19 +52,20 @@ export function useLocationReferences(): LocationReferencesState {
 
     const loadReferences = async () => {
       try {
-        const [loadedCities, loadedCountries] = await Promise.all([
+        const [citiesResult, countriesResult, skiStylesResult] = await Promise.allSettled([
           getPresetCities(),
           getCountries({ signal: controller.signal }),
+          getSkiStyles(controller.signal),
         ]);
 
         if (!controller.signal.aborted) {
-          setCities(loadedCities);
-          setCountries(loadedCountries);
+          setCities(citiesResult.status === 'fulfilled' ? citiesResult.value : []);
+          setCountries(countriesResult.status === 'fulfilled' ? countriesResult.value : []);
+          setSkiStyles(skiStylesResult.status === 'fulfilled' ? skiStylesResult.value : []);
         }
-      } catch {
+      } finally {
         if (!controller.signal.aborted) {
-          setCities([]);
-          setCountries([]);
+          setIsSkiStylesLoading(false);
         }
       }
     };
@@ -74,6 +81,8 @@ export function useLocationReferences(): LocationReferencesState {
   return {
     cities,
     countries,
+    isSkiStylesLoading,
     searchCities,
+    skiStyles,
   };
 }
