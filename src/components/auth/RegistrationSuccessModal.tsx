@@ -6,13 +6,13 @@ import styles from './AuthState.module.scss';
 
 type RegistrationSuccessModalProps = {
   onClose?: () => void;
-  onHomeClick?: () => void;
+  onProfileClick?: () => void;
 };
 
 export default function RegistrationSuccessModal({
   onClose,
-  onHomeClick,
-}: RegistrationSuccessModalProps) {
+  onProfileClick,
+}: Readonly<RegistrationSuccessModalProps>) {
   return (
     <AuthShell
       onClose={onClose}
@@ -37,9 +37,9 @@ export default function RegistrationSuccessModal({
         <button
           type="button"
           className={styles.linkButton}
-          onClick={onHomeClick}
+          onClick={onProfileClick}
         >
-          На главную
+          К профилю
         </button>
       </div>
     </AuthShell>
