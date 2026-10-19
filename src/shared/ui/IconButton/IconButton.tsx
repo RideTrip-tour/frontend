@@ -9,6 +9,7 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'pagination';
   disabled?: boolean;
   ariaLabel?: string;
+  className?: string;
 }
 
 export const IconButton = ({
@@ -17,13 +18,15 @@ export const IconButton = ({
   onClick,
   disabled = false,
   ariaLabel,
+  className = '',
 }: ButtonProps) => {
-  const isIconify = Boolean(icon?.includes(':'));
+  const isIconify = /^[\w-]+:[\w-]+$/.test(icon ?? '');
 
   const classes = [
     style.iconbutton,
     style[`iconbutton--${variant}`],
     disabled ? style['iconbutton--disabled'] : '',
+    className,
   ]
     .filter(Boolean)
     .join(' ');
