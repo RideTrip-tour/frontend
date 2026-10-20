@@ -73,8 +73,7 @@ export function ActivitySelector({
 
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase('ru-RU');
   const primaryActivities = activities.slice(0, 5);
-  const visibleActivities =
-    normalizedQuery || showAllActivities ? activities : primaryActivities;
+  const visibleActivities = normalizedQuery || showAllActivities ? activities : primaryActivities;
 
   const filteredActivities = visibleActivities.filter((activity) =>
     activity.toLocaleLowerCase('ru-RU').includes(normalizedQuery),
