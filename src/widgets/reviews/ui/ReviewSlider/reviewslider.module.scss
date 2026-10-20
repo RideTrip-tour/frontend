@@ -1,5 +1,13 @@
 .reviewsliderWrapper {
   width: 100%;
+
+  --pagination-bg: var(--color-white);
+  --pagination-icon-color: var(--color-blue);
+
+  --pagination-hover-bg: #f7f9fc;
+  --pagination-active-bg: #eaf2fc;
+
+  --pagination-disabled-bg: #f7f9fc;
 }
 
 .reviewslider__controls {

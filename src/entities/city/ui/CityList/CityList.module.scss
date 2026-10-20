@@ -1,0 +1,41 @@
+.columnsWrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 240px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  color: #1a1a1a;
+  font-family: var(--text-font-family-3);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.highlighted {
+  font-weight: 600;
+}
+
+.cityButton {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}

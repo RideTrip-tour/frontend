@@ -11,24 +11,25 @@ import {
   SkilLevelIcon,
   ShieldIcon,
 } from '@/assets/icons/constructor';
-import { cities } from '@/entities/city';
-import { countries } from '@/entities/country';
+import { cities as mockCities } from '@/entities/city';
+import { countries as mockCountries } from '@/entities/country';
 import { INITIAL_OPEN_ITEMS } from '@/widgets/travel-constructor/config/constructorSections';
 import { formatTripDates } from '@/widgets/travel-constructor/lib/formatters';
 import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
 import { formatSelectionSummary } from '@/widgets/travel-constructor/lib/selectionSummary';
 import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
 import type { ConstructorSelectionId } from '@/widgets/travel-constructor/model/types';
+import { useLocationReferences } from '@/widgets/travel-constructor/model/useLocationReferences';
 
 import { AccommodationSelector } from '../AccommodationSelector';
 import { ActivitySelector } from '../ActivitySelector';
 import { AdditionalOptionsSelector } from '../AdditionalOptionsSelector';
 import { ConstructorCart } from '../ConstructorCart';
 import { DateRangePicker } from '../DateRangePicker';
+import { DeparturePlaceSelector } from '../DeparturePlaceSelector';
 import { GuestSelector } from '../GuestSelector';
 import { SkiLevelSelector } from '../SkiLevelSelector';
 import { TransferSelector } from '../TransferSelector';
-import { LocationSelector } from './LocationSelector';
 import { TravelConstructorSections, type ConstructorItem } from './TravelConstructorSections';
 
 import style from './TravelConstructor.module.scss';
@@ -67,6 +68,8 @@ export function TravelConstructor() {
 
   const [openItems, setOpenItems] = useState(INITIAL_OPEN_ITEMS);
   const [showAdditional, setShowAdditional] = useState(false);
+  const { cities, countries, isSkiStylesLoading, searchCities, skiStyles } =
+    useLocationReferences();
 
   const displayValueFrom = fromCountry?.name ?? fromCity?.name;
   const displayValueTo = toCountry?.name ?? toCity?.name;
@@ -127,9 +130,10 @@ export function TravelConstructor() {
       description: 'Например "Москва"',
       value: displayValueFrom,
       children: (
-        <LocationSelector
+        <DeparturePlaceSelector
           cities={cities}
           countries={countries}
+          onCitySearch={searchCities}
           idPrefix="from"
           onCitySelect={(city) => {
             setFromCity(city);
@@ -150,9 +154,9 @@ export function TravelConstructor() {
       description: 'Например "Москва"',
       value: displayValueTo,
       children: (
-        <LocationSelector
-          cities={cities}
-          countries={countries}
+        <DeparturePlaceSelector
+          cities={mockCities}
+          countries={mockCountries}
           idPrefix="to"
           onCitySelect={(city) => {
             setToCity(city);
@@ -196,6 +200,8 @@ export function TravelConstructor() {
         <ActivitySelector
           onActivitiesChange={setActivities}
           onLiftTypesChange={setLiftTypes}
+          activities={skiStyles.map((style) => style.name)}
+          isActivitiesLoading={isSkiStylesLoading}
           selectedActivities={activities}
           selectedLiftTypes={liftTypes}
         />
