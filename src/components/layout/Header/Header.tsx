@@ -4,7 +4,7 @@ import { useLocation } from 'react-router';
 
 import NavItem from '@/shared/ui/base/NavItem';
 
-import { HeaderActions } from './HeaderActions';
+import { HeaderActions } from './HeaderActions/HeaderActions.tsx';
 
 import style from './header.module.scss';
 
@@ -71,7 +71,7 @@ export function Header() {
             label="Избранные"
           />
         </nav>
-        <HeaderActions />
+        <HeaderActions isHomePage={isHomePage} />
       </div>
     </header>
   );

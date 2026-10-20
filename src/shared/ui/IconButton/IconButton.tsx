@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
-import type { MouseEventHandler } from 'react';
+import clsx from 'clsx';
+import { forwardRef, type MouseEventHandler, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 
 import style from './iconbutton.module.scss';
 
@@ -10,16 +11,22 @@ interface ButtonProps {
   disabled?: boolean;
   ariaLabel?: string;
   className?: string;
+  iconClassName?: string;
+  ariaExpanded?: boolean;
+  ariaHasPopup?: 'menu' | 'dialog' | 'grid' | 'listbox' | 'tree' | 'true' | 'false';
 }
 
-export const IconButton = ({
+const IconButtonComponent = ({
   icon = '',
   variant = 'primary',
   onClick,
   disabled = false,
   ariaLabel,
   className = '',
-}: ButtonProps) => {
+  iconClassName = '',
+  ariaExpanded,
+  ariaHasPopup,
+}: ButtonProps, ref: React.Ref<HTMLButtonElement>) => {
   const isIconify = /^[\w-]+:[\w-]+$/.test(icon ?? '');
 
   const classes = [
@@ -33,22 +40,25 @@ export const IconButton = ({
 
   return (
     <button
+      ref={ref}
       className={classes}
       onClick={onClick}
       disabled={disabled}
       aria-label={ariaLabel}
+      aria-expanded={ariaExpanded}
+      aria-haspopup={ariaHasPopup}
     >
       <div className={style.iconbutton__icon}>
         {isIconify ? (
           <Icon
-            className={style.iconbutton__icon_img}
+            className={clsx(style.iconbutton__icon_img, iconClassName)}
             icon={icon || ''}
           />
         ) : (
           <img
             src={icon}
             alt=""
-            className={style.iconbutton__icon_img}
+            className={clsx(style.iconbutton__icon_img, iconClassName)}
             aria-hidden
           />
         )}
@@ -56,3 +66,6 @@ export const IconButton = ({
     </button>
   );
 };
+
+export const IconButton = forwardRef<HTMLButtonElement, ButtonProps>(IconButtonComponent) as ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>;
+IconButton.displayName = 'IconButton';

@@ -18,15 +18,6 @@ export function AppRouter() {
   return (
     <Suspense fallback={<div>Loading page...</div>}>
       <Routes>
-        {/*<Route*/}
-        {/*  path="/"*/}
-        {/*  element={*/}
-        {/*    <ProtectedRoute>*/}
-        {/*      <HomePage />*/}
-        {/*    </ProtectedRoute>*/}
-        {/*  }*/}
-        {/*/>*/}
-
         <Route
           path="/"
           element={<HomePage />}
