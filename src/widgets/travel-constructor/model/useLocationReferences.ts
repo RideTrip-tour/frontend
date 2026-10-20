@@ -1,0 +1,88 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+import { getCities, getPresetCities } from '@/entities/city/api/getCities';
+import type { City } from '@/entities/city/model/types';
+import { getCountries } from '@/entities/country/api/getCountries';
+import type { Country } from '@/entities/country/model/types';
+import { getSkiStyles } from '@/entities/ski-style';
+import type { SkiStyle } from '@/entities/ski-style';
+
+interface LocationReferencesState {
+  cities: City[];
+  countries: Country[];
+  skiStyles: SkiStyle[];
+  isSkiStylesLoading: boolean;
+  searchCities: (query: string) => Promise<void>;
+}
+
+export function useLocationReferences(): LocationReferencesState {
+  const [cities, setCities] = useState<City[]>([]);
+  const [countries, setCountries] = useState<Country[]>([]);
+  const [skiStyles, setSkiStyles] = useState<SkiStyle[]>([]);
+  const [isSkiStylesLoading, setIsSkiStylesLoading] = useState(true);
+
+  const citySearchControllerRef = useRef<AbortController | null>(null);
+
+  const searchCities = useCallback(async (query: string): Promise<void> => {
+    citySearchControllerRef.current?.abort();
+
+    const controller = new AbortController();
+    citySearchControllerRef.current = controller;
+
+    try {
+      const loadedCities = query.trim()
+        ? await getCities({
+            name: query,
+            signal: controller.signal,
+          })
+        : await getPresetCities();
+
+      if (!controller.signal.aborted) {
+        setCities(loadedCities);
+      }
+    } catch {
+      if (!controller.signal.aborted) {
+        setCities([]);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadReferences = async () => {
+      try {
+        const [citiesResult, countriesResult, skiStylesResult] = await Promise.allSettled([
+          getPresetCities(),
+          getCountries({ signal: controller.signal }),
+          getSkiStyles(controller.signal),
+        ]);
+
+        if (!controller.signal.aborted) {
+          setCities(citiesResult.status === 'fulfilled' ? citiesResult.value : []);
+          setCountries(countriesResult.status === 'fulfilled' ? countriesResult.value : []);
+          setSkiStyles(skiStylesResult.status === 'fulfilled' ? skiStylesResult.value : []);
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setIsSkiStylesLoading(false);
+        }
+      }
+    };
+
+    void loadReferences();
+
+    return () => {
+      controller.abort();
+      citySearchControllerRef.current?.abort();
+    };
+  }, []);
+
+  return {
+    cities,
+    countries,
+    isSkiStylesLoading,
+    searchCities,
+    skiStyles,
+  };
+}

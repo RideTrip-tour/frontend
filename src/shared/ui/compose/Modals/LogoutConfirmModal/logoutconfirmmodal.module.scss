@@ -1,0 +1,43 @@
+.logoutconfirmmodal {
+  &__text {
+    margin: 0 0 32px;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #2f2f2f;
+    text-align: center;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 48px;
+    padding: 0 18px;
+    border: 1px solid #0e68d4;
+    border-radius: 24px;
+    background: transparent;
+    color: #0e68d4;
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 500;
+    font-family: var(--text-font-family), sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:not(:disabled):hover {
+      background: rgba(14, 104, 212, 0.08);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

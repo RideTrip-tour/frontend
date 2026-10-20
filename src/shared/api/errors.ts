@@ -1,0 +1,103 @@
+import { isAxiosError } from 'axios';
+import type { AxiosError } from 'axios';
+
+export type ApiErrorCode =
+  | 'NETWORK'
+  | 'TIMEOUT'
+  | 'BAD_REQUEST'
+  | 'UNAUTHORIZED'
+  | 'FORBIDDEN'
+  | 'NOT_FOUND'
+  | 'VALIDATION'
+  | 'SERVER'
+  | 'UNKNOWN';
+
+export class ApiError extends Error {
+  status?: number;
+  data?: unknown;
+  url?: string;
+  code: ApiErrorCode;
+
+  constructor(
+    message: string,
+    opts?: {
+      status?: number;
+      data?: unknown;
+      url?: string;
+      code?: ApiErrorCode;
+    },
+  ) {
+    super(message);
+
+    this.name = 'ApiError';
+    this.status = opts?.status;
+    this.data = opts?.data;
+    this.url = opts?.url;
+    this.code = opts?.code ?? 'UNKNOWN';
+
+    Object.setPrototypeOf(this, ApiError.prototype);
+  }
+}
+
+function mapStatusToCode(status?: number): ApiErrorCode {
+  if (!status) return 'UNKNOWN';
+  if (status === 400) return 'BAD_REQUEST';
+  if (status === 401) return 'UNAUTHORIZED';
+  if (status === 403) return 'FORBIDDEN';
+  if (status === 404) return 'NOT_FOUND';
+  if (status === 422) return 'VALIDATION';
+  if (status >= 500) return 'SERVER';
+
+  return 'UNKNOWN';
+}
+
+export function handleApiError(err: unknown): ApiError {
+  return err instanceof ApiError ? err : normalizeAxiosError(err);
+}
+
+export function normalizeAxiosError(err: unknown): ApiError {
+  if (err instanceof ApiError) {
+    return err;
+  }
+
+  if (isAxiosError(err)) {
+    const error = err as AxiosError<{
+      detail?: unknown;
+      message?: string;
+      error?: string;
+    }>;
+
+    if (error.code === 'ECONNABORTED' || error.code === 'ETIMEDOUT') {
+      return new ApiError('Request timeout', {
+        code: 'TIMEOUT',
+        url: error.config?.url,
+      });
+    }
+
+    if (!error.response) {
+      return new ApiError('Network error', {
+        code: 'NETWORK',
+        url: error.config?.url,
+      });
+    }
+
+    const { status, data } = error.response;
+
+    const detail = data?.detail ?? data?.message ?? data?.error;
+
+    const message = typeof detail === 'string' ? detail : error.message || 'Request failed';
+
+    return new ApiError(message, {
+      status,
+      data,
+      url: error.config?.url,
+      code: mapStatusToCode(status),
+    });
+  }
+
+  const message = err instanceof Error ? err.message : 'An unknown error occurred';
+
+  return new ApiError(message, {
+    code: 'UNKNOWN',
+  });
+}

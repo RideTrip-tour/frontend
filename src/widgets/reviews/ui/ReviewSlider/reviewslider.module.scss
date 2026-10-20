@@ -1,0 +1,28 @@
+.reviewsliderWrapper {
+  width: 100%;
+
+  --pagination-bg: var(--color-white);
+  --pagination-icon-color: var(--color-blue);
+
+  --pagination-hover-bg: #f7f9fc;
+  --pagination-active-bg: #eaf2fc;
+
+  --pagination-disabled-bg: #f7f9fc;
+}
+
+.reviewslider__controls {
+  position: relative;
+  width: min(100%, 1440px);
+  margin: 15px auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reviewslider__buttons {
+  position: absolute;
+  right: 0;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
