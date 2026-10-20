@@ -2,7 +2,7 @@ import { Outlet } from 'react-router';
 
 export function PaddedLayout() {
   return (
-    <div style={{ paddingTop: '180px', paddingBottom: '120px' }}>
+    <div style={{ paddingTop: '50px', paddingBottom: '120px' }}>
       <Outlet />
     </div>
   );

@@ -1,17 +1,15 @@
 import clsx from 'clsx';
 import { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 
 import NavItem from '@/shared/ui/base/NavItem';
-import { Button } from '@/shared/ui/Button';
-import { useAuthStore } from '@/store';
+
+import { HeaderActions } from './HeaderActions/HeaderActions.tsx';
 
 import style from './header.module.scss';
 
 export function Header() {
-  const navigate = useNavigate();
   const location = useLocation();
-  const isAuth = useAuthStore((s) => s.isAuth);
 
   // Определяем, находимся ли мы на главной странице
   const isHomePage = location.pathname === '/';
@@ -73,16 +71,7 @@ export function Header() {
             label="Избранные"
           />
         </nav>
-        <Button
-          text={isAuth ? 'Профиль' : 'Авторизация'}
-          icon="material-symbols:arrow-forward-rounded"
-          onClick={() => (isAuth ? navigate('/profile') : navigate('/?auth=login'))}
-          variant="primary"
-          className={clsx(style.profileButton, {
-            [style.button_home]: isHomePage,
-            [style.button_default]: !isHomePage,
-          })}
-        />
+        <HeaderActions isHomePage={isHomePage} />
       </div>
     </header>
   );
