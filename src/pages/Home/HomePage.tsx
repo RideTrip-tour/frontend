@@ -221,7 +221,7 @@ function HomePage() {
         {view === 'registration-success' && (
           <RegistrationSuccessModal
             onClose={closeAuth}
-            onHomeClick={closeAuth}
+            onProfileClick={() => closeAuthAt('/profile')}
           />
         )}
 
