@@ -1,6 +1,11 @@
 import { Icon } from '@iconify/react';
 import clsx from 'clsx';
-import { forwardRef, type MouseEventHandler, type ForwardRefExoticComponent, type RefAttributes } from 'react';
+import {
+  forwardRef,
+  type MouseEventHandler,
+  type ForwardRefExoticComponent,
+  type RefAttributes,
+} from 'react';
 
 import style from './iconbutton.module.scss';
 
@@ -16,17 +21,20 @@ interface ButtonProps {
   ariaHasPopup?: 'menu' | 'dialog' | 'grid' | 'listbox' | 'tree' | 'true' | 'false';
 }
 
-const IconButtonComponent = ({
-  icon = '',
-  variant = 'primary',
-  onClick,
-  disabled = false,
-  ariaLabel,
-  className = '',
-  iconClassName = '',
-  ariaExpanded,
-  ariaHasPopup,
-}: ButtonProps, ref: React.Ref<HTMLButtonElement>) => {
+const IconButtonComponent = (
+  {
+    icon = '',
+    variant = 'primary',
+    onClick,
+    disabled = false,
+    ariaLabel,
+    className = '',
+    iconClassName = '',
+    ariaExpanded,
+    ariaHasPopup,
+  }: ButtonProps,
+  ref: React.Ref<HTMLButtonElement>,
+) => {
   const isIconify = /^[\w-]+:[\w-]+$/.test(icon ?? '');
 
   const classes = [
@@ -67,5 +75,7 @@ const IconButtonComponent = ({
   );
 };
 
-export const IconButton = forwardRef<HTMLButtonElement, ButtonProps>(IconButtonComponent) as ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>;
+export const IconButton = forwardRef<HTMLButtonElement, ButtonProps>(
+  IconButtonComponent,
+) as ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>;
 IconButton.displayName = 'IconButton';

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import ManIcon from '@/assets/icons/gender/man.svg';
 import UnspecifiedIcon from '@/assets/icons/gender/unspecified.svg';
 import WomanIcon from '@/assets/icons/gender/woman.svg';
-import NotificationIcon from '@/assets/icons/notifications/notification-default.svg'
+import NotificationIcon from '@/assets/icons/notifications/notification-default.svg';
 import { Button } from '@/shared/ui/Button';
 import { IconButton } from '@/shared/ui/IconButton';
 import { useAuthStore } from '@/store/authStore.ts';
@@ -68,10 +68,17 @@ export function HeaderActions({ isHomePage }: Readonly<HeaderActionsProps>) {
         icon={NotificationIcon}
         ariaLabel={unreadCount > 0 ? `Уведомлений: ${unreadCount}` : 'Уведомлений нет'}
         onClick={() => navigate('/notifications')}
-        className={clsx(style.iconButton, style.notificationButton, unreadCount > 0 && style.hasNotifications)}
+        className={clsx(
+          style.iconButton,
+          style.notificationButton,
+          unreadCount > 0 && style.hasNotifications,
+        )}
         iconClassName={style.bellIcon}
       />
-      <div className={style.profileWrapper} style={{ position: 'relative' }}>
+      <div
+        className={style.profileWrapper}
+        style={{ position: 'relative' }}
+      >
         <IconButton
           ref={profileButtonRef}
           variant="secondary"

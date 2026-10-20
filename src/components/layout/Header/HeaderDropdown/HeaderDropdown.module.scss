@@ -10,11 +10,13 @@
   overflow: hidden;
   opacity: 0;
   transform: translateY(-8px);
-  transition: opacity 200ms ease, transform 200ms ease;
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
   pointer-events: none;
 }
 
-.dropdown[data-open="true"] {
+.dropdown[data-open='true'] {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
