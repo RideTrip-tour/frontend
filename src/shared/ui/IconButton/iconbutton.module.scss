@@ -67,18 +67,21 @@
 }
 
 .iconbutton--pagination {
-  --btn-bg: var(--color-blue);
-  --btn-icon: var(--color-white);
+  --btn-bg: var(--pagination-bg, var(--color-blue));
+  --btn-icon: var(--pagination-icon-color, var(--color-white));
+
   &:not(:disabled):hover {
-    --btn-bg: var(--color-blue-light);
+    --btn-bg: var(--pagination-hover-bg, var(--color-blue-light));
   }
+
   &:not(:disabled):active {
-    --btn-bg: var(--color-blue-dark-1);
+    --btn-bg: var(--pagination-active-bg, var(--color-blue-dark-1));
   }
+
   &:disabled {
     cursor: default;
     transform: none !important;
-    background-color: var(--color-white);
+    --btn-bg: var(--color-white);
     --btn-icon: var(--color-gray-dark);
   }
 }
