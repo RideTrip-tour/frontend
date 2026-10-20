@@ -33,16 +33,18 @@
 .iconbutton--primary {
   --btn-bg: var(--color-blue);
   --btn-icon: var(--color-white);
+
   &:not(:disabled):hover {
     --btn-bg: var(--color-blue-light);
   }
+
   &:not(:disabled):active {
     --btn-bg: var(--color-blue-dark-1);
   }
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    transform: none !important;
     background-color: var(--color-gray-dark);
     --btn-icon: var(--color-disabled-primary);
   }
@@ -51,16 +53,18 @@
 .iconbutton--secondary {
   --btn-bg: var(--color-white);
   --btn-icon: var(--color-blue);
+
   &:not(:disabled):hover {
     --btn-bg: var(--color-white-30);
   }
+
   &:not(:disabled):active {
     --btn-bg: var(--color-white);
   }
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    transform: none !important;
     background-color: var(--color-gray-dark);
     --btn-icon: var(--color-disabled-primary);
   }
@@ -80,7 +84,6 @@
 
   &:disabled {
     cursor: default;
-    transform: none !important;
     --btn-bg: var(--color-white);
     --btn-icon: var(--color-gray-dark);
   }
