@@ -211,7 +211,7 @@ jobs:
           FAILED_JOB="Unknown"
 
           if [[ "${{ needs.check_build.result }}" == "failure" ]]; then
-            FAILED_JOB="Build/Push"
+            FAILED_JOB="Checks/Build"
           elif [[ "${{ needs.build_push.result }}" == "failure" ]]; then
             FAILED_JOB="Build/Push"
           elif [[ "${{ needs.deploy.result }}" == "failure" ]]; then
