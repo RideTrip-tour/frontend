@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import path from 'path';
+import path from 'node:path';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
@@ -15,7 +15,7 @@ export default defineConfig({
     host: '127.0.0.1',
     proxy: {
       '/api': {
-        target: 'https://trip.elmobil.ru',
+        target: 'http://62.109.12.9:8081',
         changeOrigin: true,
       },
     },
