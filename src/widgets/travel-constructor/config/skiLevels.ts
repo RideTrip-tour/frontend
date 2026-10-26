@@ -1,13 +1,9 @@
-import type { SkiLevel } from '@/widgets/travel-constructor/model/types';
-
-export const SKI_LEVELS: SkiLevel[] = ['Новичок', 'Средний', 'Продвинутый'];
-
 export interface SkiLevelHintLine {
   text: string;
   emphasis?: boolean;
 }
 
-export const SKI_LEVEL_HINTS: Record<SkiLevel, { bullets: SkiLevelHintLine[][]; heading: string }> =
+export const SKI_LEVEL_HINTS: Record<string, { bullets: SkiLevelHintLine[][]; heading: string }> =
   {
     Новичок: {
       heading: 'Новичок',

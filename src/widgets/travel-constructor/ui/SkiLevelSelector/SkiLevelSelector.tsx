@@ -1,34 +1,44 @@
-import { SKI_LEVELS, SKI_LEVEL_HINTS } from '@/widgets/travel-constructor/config/skiLevels';
-import type { SkiLevel } from '@/widgets/travel-constructor/model/types';
+import { SKI_LEVEL_HINTS } from '@/widgets/travel-constructor/config/skiLevels';
 
 import styles from './SkiLevelSelector.module.scss';
 
 interface SkiLevelSelectorProps {
-  value: SkiLevel | null;
-  onChange: (level: SkiLevel) => void;
+  value: string | null;
+  onChange: (level: string) => void;
+  levels: string[];
+  isLoading?: boolean;
 }
 
-export function SkiLevelSelector({ value, onChange }: SkiLevelSelectorProps) {
+export function SkiLevelSelector({
+  value,
+  onChange,
+  levels,
+  isLoading = false,
+}: Readonly<SkiLevelSelectorProps>) {
   return (
     <div className={styles.selector}>
       <fieldset className={styles.levels}>
         <legend>Выберите Ваш уровень</legend>
 
-        {SKI_LEVELS.map((level) => (
-          <label
-            className={styles.levelOption}
-            key={level}
-          >
-            <input
-              checked={value === level}
-              name="ski-level"
-              onChange={() => onChange(level)}
-              type="radio"
-              value={level}
-            />
-            <span>{level}</span>
-          </label>
-        ))}
+        {isLoading ? (
+          <p>Загрузка уровней...</p>
+        ) : (
+          levels.map((level) => (
+            <label
+              className={styles.levelOption}
+              key={level}
+            >
+              <input
+                checked={value === level}
+                name="ski-level"
+                onChange={() => onChange(level)}
+                type="radio"
+                value={level}
+              />
+              <span>{level}</span>
+            </label>
+          ))
+        )}
       </fieldset>
 
       <div className={styles.helpsec}>
@@ -37,14 +47,14 @@ export function SkiLevelSelector({ value, onChange }: SkiLevelSelectorProps) {
           id="ski-level-hint"
           role="tooltip"
         >
-          {SKI_LEVELS.map((levelOption) => (
+          {levels.map((levelOption) => (
             <section
               className={styles.hintSection}
               key={levelOption}
             >
-              <h4>{SKI_LEVEL_HINTS[levelOption].heading}</h4>
+              <h4>{SKI_LEVEL_HINTS[levelOption]?.heading ?? levelOption}</h4>
               <ul>
-                {SKI_LEVEL_HINTS[levelOption].bullets.map((line, lineIndex) => (
+                {(SKI_LEVEL_HINTS[levelOption]?.bullets ?? []).map((line, lineIndex) => (
                   <li key={`${levelOption}-${lineIndex}`}>
                     {line.map((part) =>
                       part.emphasis ? <strong key={part.text}>{part.text}</strong> : part.text,

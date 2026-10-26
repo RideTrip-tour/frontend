@@ -4,7 +4,6 @@ import type { Country } from '@/entities/country/model/types';
 
 export type TransferType = 'needed' | 'self' | 'own-car';
 export type ParkingPreference = 'needed' | 'not-needed';
-export type SkiLevel = 'Новичок' | 'Средний' | 'Продвинутый';
 export type AdditionalOption =
   | 'Безбарьерная среда'
   | 'Пандусы и лифты'
@@ -40,7 +39,7 @@ export interface ReadyTourSelection {
   transferType: TransferType;
   transferLabel: string;
   transferPriceFrom?: number;
-  level: SkiLevel;
+  level: string;
 }
 
 export interface ConstructorState {
@@ -55,6 +54,6 @@ export interface ConstructorState {
   accommodation: Accommodation | null;
   transfer: TransferSelection | null;
   people: GuestSelection | null;
-  level: SkiLevel | null;
+  level: string | null;
   additional: AdditionalOption[];
 }
