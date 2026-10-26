@@ -11,7 +11,6 @@ export type {
   GuestSelection,
   ParkingPreference,
   ReadyTourSelection,
-  SkiLevel,
   TransferSelection,
   TransferType,
 } from './types';

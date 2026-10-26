@@ -68,8 +68,15 @@ export function TravelConstructor() {
 
   const [openItems, setOpenItems] = useState(INITIAL_OPEN_ITEMS);
   const [showAdditional, setShowAdditional] = useState(false);
-  const { cities, countries, isSkiStylesLoading, searchCities, skiStyles } =
-    useLocationReferences();
+  const {
+    cities,
+    countries,
+    isSkiStylesLoading,
+    isSkiLevelsLoading,
+    searchCities,
+    skiStyles,
+    skiLevels,
+  } = useLocationReferences();
 
   const displayValueFrom = fromCountry?.name ?? fromCity?.name;
   const displayValueTo = toCountry?.name ?? toCity?.name;
@@ -260,6 +267,8 @@ export function TravelConstructor() {
       children: (
         <SkiLevelSelector
           onChange={setLevel}
+          isLoading={isSkiLevelsLoading}
+          levels={skiLevels.map((item) => item.name)}
           value={level}
         />
       ),

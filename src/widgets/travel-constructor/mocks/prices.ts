@@ -1,4 +1,4 @@
-import type { AdditionalOption, SkiLevel } from '@/widgets/travel-constructor/model/types';
+import type { AdditionalOption } from '@/widgets/travel-constructor/model/types';
 
 export const MOCK_TICKET_PRICE = 12_200;
 
@@ -21,7 +21,7 @@ export const MOCK_LIFT_PRICES: Record<string, number> = {
   Гондольный: 1_800,
 };
 
-export const MOCK_SKI_LEVEL_PRICES: Record<SkiLevel, number> = {
+export const MOCK_SKI_LEVEL_PRICES: Record<string, number> = {
   Новичок: 2_500,
   Средний: 1_800,
   Продвинутый: 1_200,

@@ -10,7 +10,6 @@ import type {
   ConstructorState,
   GuestSelection,
   ReadyTourSelection,
-  SkiLevel,
   TransferSelection,
 } from './types';
 
@@ -30,7 +29,7 @@ export interface ConstructorStore extends ConstructorState {
   setAccommodation: (accommodation: Accommodation | null) => void;
   setTransfer: (transfer: TransferSelection | null) => void;
   setPeople: (people: GuestSelection | null) => void;
-  setLevel: (level: SkiLevel | null) => void;
+  setLevel: (level: string | null) => void;
   setAdditional: (additional: AdditionalOption[]) => void;
   applyReadyTour: (selection: ReadyTourSelection) => void;
   setActiveSelectorId: (selectorId: ConstructorSelectionId | null) => void;
