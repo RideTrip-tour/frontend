@@ -2,7 +2,6 @@ import type { ReactNode } from 'react';
 
 import style from './pagesection.module.scss';
 
-import './variables.css';
 
 interface PageSectionProps {
   paddingVertical?: number;
@@ -31,3 +30,4 @@ const PageSection = ({
 };
 
 export default PageSection;
+

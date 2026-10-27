@@ -3,7 +3,6 @@ import { useRef, useState, useEffect, type ChangeEvent } from 'react';
 
 import style from './profilephoto.module.scss';
 
-import './variables.css';
 
 interface ProfilePhotoProps {
   photo?: string;
@@ -96,3 +95,4 @@ const ProfilePhoto = ({ photo, size = 160, onUpload }: ProfilePhotoProps) => {
 };
 
 export default ProfilePhoto;
+

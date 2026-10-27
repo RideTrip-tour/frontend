@@ -4,9 +4,8 @@ import type { NavLinkRenderProps } from 'react-router';
 
 import style from './navitem.module.scss';
 
-import './variables.css';
 
-function NavItem({ to, label }: { to: string; label: string }) {
+function NavItem({ to, label }: Readonly<{ to: string; label: string }>) {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
@@ -30,3 +29,4 @@ function NavItem({ to, label }: { to: string; label: string }) {
 }
 
 export default NavItem;
+

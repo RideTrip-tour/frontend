@@ -6,8 +6,6 @@ import Select from '@/shared/ui/base/Select';
 
 import style from './toursfinder.module.scss';
 
-import './variables.css';
-
 const activityOptions = [
   { value: 'snowboard', label: 'Сноуборд' },
   { value: 'ski', label: 'Лыжи' },

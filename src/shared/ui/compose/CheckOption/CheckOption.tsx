@@ -2,8 +2,6 @@ import Checkbox from '@/shared/ui/base/Checkbox';
 
 import style from './checkoption.module.scss';
 
-import './variables.css';
-
 interface CheckOptionProps {
   checked: boolean;
   onChange?: (value: boolean) => void;

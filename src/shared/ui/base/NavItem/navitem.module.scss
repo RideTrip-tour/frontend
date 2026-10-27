@@ -20,8 +20,8 @@
 
   // Стили для домашней страницы (неактивное состояние)
   &--home {
-    background: var(--nav-item-bg);
-    color: var(--nav-item-color);
+    background: var(--color-white-30);
+    color: var(--color-white);
 
     &:hover {
       background: var(--nav-item-hover-bg);
@@ -30,8 +30,8 @@
 
   // Активное состояние для домашней страницы
   &--active-home {
-    background: var(--nav-item-active-bg);
-    color: var(--nav-item-active-color);
+    background: var(--color-white);
+    color: var(--color-black);
   }
 
   // Стили для обычных страниц (неактивное состояние) - без бэкграунда
@@ -46,8 +46,8 @@
 
   // Активное состояние для обычных страниц
   &--active-default {
-    background: var(--nav-item-active-bg);
-    color: var(--nav-item-active-color);
+    background: var(--color-white);
+    color: var(--color-black);
     box-shadow: 0px 3px 10px 2px #1a1a1a1a;
   }
 }

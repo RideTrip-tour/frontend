@@ -2,7 +2,6 @@ import { Icon } from '@iconify/react';
 
 import style from './select.module.scss';
 
-import './variables.css';
 
 export interface Option {
   value: string;
@@ -85,3 +84,4 @@ const Select = ({
 };
 
 export default Select;
+

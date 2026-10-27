@@ -2,7 +2,6 @@ import { Icon } from '@iconify/react';
 
 import style from './steps.module.scss';
 
-import './variables.css';
 
 interface StepData {
   title: string;
@@ -75,3 +74,4 @@ const Steps = ({ steps, onCtaClick, ctaText = 'Начнём подбор' }: Ste
 };
 
 export default Steps;
+

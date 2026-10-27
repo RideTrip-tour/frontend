@@ -12,8 +12,6 @@ import { formatDisplayDate } from '@/shared/ui/compose/DateRangePicker/utils.ts'
 
 import style from './daterangepickermodal.module.scss';
 
-import './variables.css';
-
 interface DateRangePickerModalProps {
   today: Date;
   initialFrom: Date | null;
@@ -28,7 +26,7 @@ function DateRangePickerModal({
   initialTo,
   onRangeChange,
   onClose,
-}: DateRangePickerModalProps) {
+}: Readonly<DateRangePickerModalProps>) {
   const [activeTab, setActiveTab] = useState<SelectionTab>('from');
   const [selectionFrom, setSelectionFrom] = useState<Date | null>(initialFrom);
   const [selectionTo, setSelectionTo] = useState<Date | null>(initialTo);
@@ -113,7 +111,7 @@ function DateRangePickerModal({
 
   const handleDrumYearChange = useCallback(
     (yearIndex: number) => {
-      const newYear = parseInt(availableYears[yearIndex], 10);
+      const newYear = Number.parseInt(availableYears[yearIndex], 10);
       const minDate = new Date(today.getFullYear(), today.getMonth(), 1);
 
       let clampedMonth = displayMonth;

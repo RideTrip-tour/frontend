@@ -6,7 +6,7 @@
 
   &__label {
     font-size: var(--text-size-18);
-    color: var(--inforow-label-color);
+    color: var(--color-black);
   }
 
   &__content {
@@ -18,7 +18,7 @@
 
   &__value {
     font-size: var(--text-size-16);
-    color: var(--inforow-value-color);
+    color: var(--color-gray-dark);
   }
 
   &__action {
@@ -29,6 +29,6 @@
 
     font-size: var(--text-size-16);
     font-weight: bold;
-    color: var(--inforow-action-color);
+    color: var(--color-blue);
   }
 }

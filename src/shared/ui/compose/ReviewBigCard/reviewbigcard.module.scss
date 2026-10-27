@@ -3,8 +3,8 @@
   min-height: 280px;
   gap: 16px;
   padding: 20px 24px;
-  background: var(--reviewcard-bg);
-  box-shadow: var(--reviewcard-shadow);
+  background: var(--color-white);
+  box-shadow: 0px 3px 10px 2px rgba(26, 26, 26, 0.1);
   border-radius: 20px;
   flex-shrink: 0;
 
@@ -39,7 +39,7 @@
   }
 
   &__name {
-    color: var(--reviewcard-text-color);
+    color: var(--color-black);
     font-family: Poppins, sans-serif;
     font-size: 18px;
     font-weight: 500;
@@ -53,8 +53,8 @@
     justify-content: center;
     padding: 2px 4px;
     border-radius: 100px;
-    background: var(--reviewcard-badge-bg);
-    color: var(--reviewcard-badge-text);
+    background: rgba(30, 77, 143, 0.1);
+    color: var(--color-blue-dark-1);
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -64,7 +64,7 @@
   }
 
   &__ratingLabel {
-    color: var(--reviewcard-text-secondary);
+    color: var(--color-gray-dark);
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 16px;
     font-weight: 400;
@@ -83,14 +83,14 @@
   &__star {
     width: 16px;
     height: 16px;
-    color: var(--reviewcard-star-color);
+    color: var(--color-yellow);
     flex-shrink: 0;
   }
 
   &__text {
     align-self: stretch;
     margin: 0;
-    color: var(--reviewcard-text-color);
+    color: var(--color-black);
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 16px;
     font-weight: 400;
@@ -112,7 +112,7 @@
   &__dateValue {
     align-self: stretch;
     text-align: right;
-    color: var(--reviewcard-text-secondary);
+    color: var(--color-gray-dark);
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 16px;
     font-weight: 400;

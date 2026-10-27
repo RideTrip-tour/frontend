@@ -8,16 +8,15 @@ import { areSameDay, buildCalendarCells } from '@/shared/ui/compose/DateRangePic
 
 import style from './calendargrid.module.scss';
 
-import './variables.css';
 
 interface CalendarGridProps {
-  displayYear: number;
-  displayMonth: number;
-  selectionFrom: Date | null;
-  selectionTo: Date | null;
-  activeTab: SelectionTab;
-  today: Date;
-  onDayClick: (date: Date) => void;
+  readonly displayYear: number;
+  readonly displayMonth: number;
+  readonly selectionFrom: Date | null;
+  readonly selectionTo: Date | null;
+  readonly activeTab: SelectionTab;
+  readonly today: Date;
+  readonly onDayClick: (date: Date) => void;
 }
 
 function CalendarGrid({
@@ -28,7 +27,7 @@ function CalendarGrid({
   activeTab,
   today,
   onDayClick,
-}: CalendarGridProps) {
+}: Readonly<CalendarGridProps>) {
   const cells = useMemo(
     () => buildCalendarCells(displayYear, displayMonth),
     [displayYear, displayMonth],
@@ -76,25 +75,26 @@ function CalendarGrid({
     [selectionFrom, selectionTo, activeTab, today],
   );
 
-  return (
+return (
     <div className={style.calendargrid}>
       <div className={style.calendargrid__weekdays}>
         {WEEKDAY_LABELS_SHORT.map((label) => (
-          <WeekdayHeaderCell label={label} />
+          <WeekdayHeaderCell key={label} label={label} />
         ))}
       </div>
 
       <div className={style.calendargrid__days}>
-        {cells.map((date, cellIndex) =>
+        {cells.map((date) =>
           date ? (
             <DayCell
+              key={date.toISOString()}
               date={date}
               flags={computeFlags(date)}
               onClick={onDayClick}
             />
           ) : (
             <div
-              key={`empty-${cellIndex}`}
+              key={`empty-${date.toISOString()}`}
               className={style.calendargrid__empty}
             />
           ),
@@ -105,3 +105,4 @@ function CalendarGrid({
 }
 
 export default CalendarGrid;
+

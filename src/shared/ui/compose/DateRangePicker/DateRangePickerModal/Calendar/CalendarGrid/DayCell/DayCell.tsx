@@ -2,7 +2,6 @@ import type { DayCellFlags } from '@/shared/ui/compose/DateRangePicker/types.ts'
 
 import style from './daycell.module.scss';
 
-import './variables.css';
 
 interface DayCellProps {
   date: Date;
@@ -10,7 +9,7 @@ interface DayCellProps {
   onClick: (date: Date) => void;
 }
 
-function DayCell({ date, flags, onClick }: DayCellProps) {
+function DayCell({ date, flags, onClick }: Readonly<DayCellProps>) {
   const {
     isToday,
     isWeekend,
@@ -50,3 +49,4 @@ function DayCell({ date, flags, onClick }: DayCellProps) {
 }
 
 export default DayCell;
+

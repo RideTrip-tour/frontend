@@ -2,7 +2,6 @@ import { Icon } from '@iconify/react';
 
 import style from './ratingstars.module.scss';
 
-import './variables.css';
 
 interface RatingStarsProps {
   value: number;
@@ -34,3 +33,4 @@ const RatingStars = ({ value }: RatingStarsProps) => {
 };
 
 export default RatingStars;
+

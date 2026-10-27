@@ -13,11 +13,11 @@
 
   &__title {
     font-size: var(--text-size-16);
-    color: var(--checkoption-title-color);
+    color: var(--color-black);
   }
 
   &__description {
     font-size: var(--text-size-14);
-    color: var(--checkoption-description-color);
+    color: var(--color-gray-dark);
   }
 }

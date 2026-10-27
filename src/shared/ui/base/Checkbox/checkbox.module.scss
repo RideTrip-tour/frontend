@@ -15,8 +15,8 @@
 
   border-radius: 6px;
 
-  background-color: var(--checkbox-bg);
-  border: 1px solid var(--checkbox-border);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray);
 
   display: flex;
   align-items: center;
@@ -28,8 +28,8 @@
 }
 
 .checkbox__input:checked + .checkbox__box {
-  background-color: var(--checkbox-bg-active);
-  border-color: var(--checkbox-bg-active);
+  background-color: var(--color-blue);
+  border-color: var(--color-blue);
 }
 
 .checkbox[data-disabled='true'] {
@@ -49,6 +49,6 @@
 }
 
 .checkbox__input:focus-visible + .checkbox__box {
-  outline: 2px solid var(--checkbox-bg-active);
+  outline: 2px solid var(--color-blue);
   outline-offset: 3px;
 }

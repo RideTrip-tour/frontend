@@ -14,7 +14,6 @@ import {
 
 import style from './drumroller.module.scss';
 
-import './variables.css';
 
 export interface DrumRollerProps {
   items: readonly string[];
@@ -30,7 +29,7 @@ function DrumRoller({
   minValidIndex = 0,
   maxValidIndex,
   onChange,
-}: DrumRollerProps) {
+}: Readonly<DrumRollerProps>) {
   const maxValid = maxValidIndex ?? items.length - 1;
 
   const [dragOffsetPx, setDragOffsetPx] = useState(0);
@@ -169,6 +168,9 @@ function DrumRoller({
         position: 'relative',
         height: containerHeightPx,
       }}
+      role="listbox"
+      aria-label="Выбор значения"
+      tabIndex={0}
       onMouseDown={handleMouseDown}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -206,11 +208,13 @@ function DrumRoller({
 
         return (
           <button
-            key={index}
+            key={label}
             type="button"
             className={itemClass}
             style={{ top: itemTopPx }}
             disabled={isOutOfRange}
+            role="option"
+            aria-selected={isAtCenter}
             onClick={(e) => {
               e.stopPropagation();
               if (!isOutOfRange && !didMoveBeyondThresholdRef.current) onChange(index);
@@ -228,3 +232,4 @@ function DrumRoller({
 }
 
 export default DrumRoller;
+

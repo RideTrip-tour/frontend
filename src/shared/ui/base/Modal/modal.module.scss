@@ -7,7 +7,7 @@
     overflow-y: auto;
     border: 1px solid rgba(14, 104, 212, 0.45);
     border-radius: 20px;
-    background: var(--modal-bg, #ffffff);
+    background: var(--color-white);
     box-shadow: 0 16px 48px rgba(30, 77, 143, 0.2);
     display: flex;
     align-items: center;
@@ -22,7 +22,7 @@
 
   &__title {
     margin: 0 56px 28px 0;
-    color: var(--modal-title-color, #1a1a1a);
+    color: var(--color-black);
     font-family: var(--text-font-family-2);
     font-size: 28px;
     font-weight: 700;
@@ -30,7 +30,7 @@
   }
 
   &__body {
-    color: var(--modal-body-color, #1a1a1a);
+    color: var(--color-black);
   }
 
   &__close {
@@ -45,7 +45,7 @@
     padding: 0 0 4px;
     border: 0;
     border-radius: 50%;
-    color: var(--modal-close-color, #1a1a1a);
+    color: var(--color-gray-dark);
     background: transparent;
     font-size: 40px;
     font-weight: 300;

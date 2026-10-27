@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 
 import style from './personalblock.module.scss';
 
-import './variables.css';
 
 interface PersonalBlockProps {
   title: string;
@@ -39,3 +38,4 @@ const PersonalBlock = ({ title, subtitle, onEdit, children }: PersonalBlockProps
 );
 
 export default PersonalBlock;
+

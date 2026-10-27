@@ -2,7 +2,6 @@ import { type ChangeEvent, type KeyboardEvent, useEffect, useRef, useState } fro
 
 import style from './input.module.scss';
 
-import './variables.css';
 
 interface InputProps {
   onSubmit: (value: string) => void;
@@ -201,3 +200,4 @@ const Input = ({
 };
 
 export default Input;
+

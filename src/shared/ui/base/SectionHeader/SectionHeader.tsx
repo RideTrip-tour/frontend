@@ -1,6 +1,5 @@
 import style from './sectionheader.module.scss';
 
-import './variables.css';
 
 interface SectionHeaderProps {
   title: string;
@@ -22,3 +21,4 @@ const SectionHeader = ({ title, subtitle, variant = 'default' }: SectionHeaderPr
 };
 
 export default SectionHeader;
+

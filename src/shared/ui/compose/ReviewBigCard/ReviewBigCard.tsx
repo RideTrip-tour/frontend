@@ -2,8 +2,6 @@ import { Icon } from '@iconify/react';
 
 import style from './reviewbigcard.module.scss';
 
-import './variables.css';
-
 interface ReviewBigCardProps {
   photo: string;
   name: string;
@@ -31,7 +29,7 @@ const ReviewBigCard = ({ photo, name, category, rating, date, text }: ReviewBigC
           <div className={style.card__stars}>
             {stars.map((active, i) => (
               <Icon
-                key={i}
+                key={`star-${i}-${active}`}
                 icon={
                   active ? 'material-symbols:star-rounded' : 'material-symbols:star-outline-rounded'
                 }

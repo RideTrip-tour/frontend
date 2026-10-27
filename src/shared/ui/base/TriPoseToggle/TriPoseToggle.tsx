@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import style from './triposetoggle.module.scss';
 
-import './variables.css';
 
 type TriState = 'default' | 'included' | 'excluded';
 
@@ -26,8 +25,14 @@ const TriPoseToggle = ({
   const [state, setState] = useState<TriState>('default');
 
   const handleClick = () => {
-    const nextState =
-      state === 'default' ? 'included' : state === 'included' ? 'excluded' : 'default';
+    let nextState: TriState;
+    if (state === 'default') {
+      nextState = 'included';
+    } else if (state === 'included') {
+      nextState = 'excluded';
+    } else {
+      nextState = 'default';
+    }
 
     setState(nextState);
 
@@ -36,12 +41,21 @@ const TriPoseToggle = ({
     else onExcluded?.();
   };
 
-  const iconSrc = state === 'included' ? includedIcon : state === 'excluded' ? excludedIcon : null;
+  let iconSrc: string | null;
+  if (state === 'included') {
+    iconSrc = includedIcon;
+  } else if (state === 'excluded') {
+    iconSrc = excludedIcon;
+  } else {
+    iconSrc = null;
+  }
+  const stateModifier = style[`triposetoggle--${state}`];
+  const stateClass = `${style.triposetoggle} ${stateModifier}`;
 
   return (
     <button
       type="button"
-      className={`${style.triposetoggle} ${style[`triposetoggle--${state}`]}`}
+      className={stateClass}
       onClick={handleClick}
       aria-pressed={state !== 'default'}
     >
@@ -61,3 +75,4 @@ const TriPoseToggle = ({
 };
 
 export default TriPoseToggle;
+

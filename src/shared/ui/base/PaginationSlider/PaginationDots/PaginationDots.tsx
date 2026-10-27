@@ -2,7 +2,6 @@ import type { CSSProperties } from 'react';
 
 import style from './paginationdots.module.scss';
 
-import './variables.css';
 
 interface PaginationDotsProps {
   total: number;
@@ -84,3 +83,4 @@ const PaginationDots = ({
 };
 
 export default PaginationDots;
+

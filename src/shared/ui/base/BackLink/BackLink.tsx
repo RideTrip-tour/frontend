@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router';
 
 import style from './backlink.module.scss';
 
-import './variables.css';
-
 interface BackLinkProps {
   text: string;
   to: string;

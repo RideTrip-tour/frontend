@@ -9,7 +9,6 @@ import PaginationDots from './PaginationDots';
 
 import style from './paginationslider.module.scss';
 
-import './variables.css';
 
 interface PaginationSliderProps {
   children: ReactNode;
@@ -110,11 +109,17 @@ const PaginationSlider = ({
     className: style.paginationslider__slide,
   });
 
-  return (
+return (
     <div className={`${style.paginationslider} ${className || ''}`}>
       <div
         ref={sliderRef}
         className={style.paginationslider__wrapper}
+        role="slider"
+        aria-label="Carousel"
+        aria-valuenow={currentSlide + 1}
+        aria-valuemin={1}
+        aria-valuemax={totalSlides}
+        tabIndex={0}
         onMouseDown={handleStart}
         onMouseMove={handleMove}
         onMouseUp={handleEnd}
@@ -156,3 +161,4 @@ const PaginationSlider = ({
 };
 
 export default PaginationSlider;
+

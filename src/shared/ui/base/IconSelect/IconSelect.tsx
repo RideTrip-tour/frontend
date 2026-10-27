@@ -3,8 +3,6 @@ import { useState } from 'react';
 
 import style from './iconselect.module.scss';
 
-import './variables.css';
-
 interface Option {
   value: string;
   label: string;

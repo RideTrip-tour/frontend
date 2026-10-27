@@ -1,6 +1,5 @@
 import style from './switch.module.scss';
 
-import './variables.css';
 
 interface SwitchProps {
   checked: boolean;
@@ -36,3 +35,4 @@ const Switch = ({ checked, onChange, disabled = false }: SwitchProps) => {
 };
 
 export default Switch;
+

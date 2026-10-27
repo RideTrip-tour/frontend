@@ -1,4 +1,3 @@
-import './variables.css';
 
 interface LoaderProps {
   size?: number;
@@ -29,3 +28,4 @@ const Loader = ({
 };
 
 export default Loader;
+

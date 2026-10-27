@@ -7,7 +7,6 @@ import { wrapSliderChildren } from '@/utils/wrapChildrenWithIndex';
 
 import style from './scrollslider.module.scss';
 
-import './variables.css';
 
 type ScrollDirection = 'horizontal' | 'vertical' | 'grid';
 
@@ -114,3 +113,4 @@ const ScrollSlider = forwardRef<HTMLDivElement, ScrollSliderProps>(
 
 ScrollSlider.displayName = 'ScrollSlider';
 export default ScrollSlider;
+

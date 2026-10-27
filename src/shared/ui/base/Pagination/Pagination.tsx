@@ -1,6 +1,5 @@
 import { useState, type ChangeEvent, type KeyboardEvent } from 'react';
 
-import './variables.css';
 
 interface PaginationProps {
   currentPage: number;
@@ -15,9 +14,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
     setInputValue(e.target.value);
   };
 
-  const handleGo = () => {
-    const page = parseInt(inputValue);
-    if (!isNaN(page) && page >= 1 && page <= totalPages) {
+const handleGo = () => {
+    const page = Number.parseInt(inputValue, 10);
+    if (!Number.isNaN(page) && page >= 1 && page <= totalPages) {
       onPageChange(page);
     } else {
       setInputValue(currentPage.toString());
@@ -42,9 +41,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
     return pages;
   };
 
-  const pages = renderPages();
+const pages = renderPages();
   const showFirstEllipsis = pages[0] > 2;
-  const showLastEllipsis = pages[pages.length - 1] < totalPages - 1;
+  const showLastEllipsis = pages.at(-1) < totalPages - 1;
 
   return (
     <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
@@ -120,3 +119,4 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
 };
 
 export default Pagination;
+

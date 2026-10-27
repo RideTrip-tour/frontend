@@ -25,7 +25,7 @@
   }
 
   &__header__title {
-    color: var(--personalblock-title-color);
+    color: #1a1a1a;
     font-size: 18px;
     font-weight: 700;
     line-height: 24px;
@@ -33,7 +33,7 @@
   }
 
   &__header__subtitle {
-    color: var(--personalblock-subtitle-color);
+    color: #5f6c7b;
     font-size: 16px;
     font-weight: 400;
     line-height: 20px;
@@ -52,7 +52,7 @@
   }
 
   &__header__edit__text {
-    color: var(--personalblock-edit-color);
+    color: #0e68d4;
     font-size: 16px;
     font-weight: 700;
     line-height: 20px;
@@ -63,7 +63,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--personalblock-edit-color);
+    color: #0e68d4;
     width: 24px;
     height: 24px;
   }

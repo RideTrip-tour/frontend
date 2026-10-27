@@ -6,18 +6,18 @@
 
   padding: 14px 24px 14px 0;
 
-  background: var(--menurow-bg);
+  background: var(--color-white);
   border: none;
   cursor: pointer;
 
   &__text {
     font-size: var(--text-size-16);
-    color: var(--menurow-text-color);
+    color: var(--color-black);
   }
 
   &__icon {
     width: var(--icons-size-24);
     height: var(--icons-size-24);
-    color: var(--menurow-icon-color);
+    color: var(--color-gray);
   }
 }

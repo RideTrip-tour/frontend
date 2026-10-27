@@ -1,7 +1,5 @@
 import style from './inforow.module.scss';
 
-import './variables.css';
-
 interface InfoRowProps {
   label: string;
   value: string;

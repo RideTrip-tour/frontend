@@ -2,7 +2,6 @@ import { Icon } from '@iconify/react';
 
 import style from './menurow.module.scss';
 
-import './variables.css';
 
 interface MenuRowProps {
   text: string;
@@ -27,3 +26,4 @@ const MenuRow = ({ text, icon = 'iconamoon:arrow-right-2', onClick }: MenuRowPro
 };
 
 export default MenuRow;
+

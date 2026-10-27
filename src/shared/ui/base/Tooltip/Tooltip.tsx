@@ -2,7 +2,6 @@ import { type ReactNode, useState } from 'react';
 
 import style from './tooltip.module.scss';
 
-import './variables.css';
 
 interface TooltipProps {
   text: string;
@@ -15,6 +14,8 @@ const Tooltip = ({ text, position = 'top', visible, children }: TooltipProps) =>
   const [hoverVisible, setHoverVisible] = useState(false);
 
   const isVisible = visible === true || (visible === undefined && hoverVisible);
+  const positionClass = style[`tooltip__content--${position}`];
+  const contentClass = `${style.tooltip__content} ${positionClass}`;
 
   return (
     <div
@@ -25,7 +26,7 @@ const Tooltip = ({ text, position = 'top', visible, children }: TooltipProps) =>
       {children}
 
       {isVisible && (
-        <div className={`${style.tooltip__content} ${style[`tooltip__content--${position}`]}`}>
+        <div className={contentClass}>
           {text}
         </div>
       )}
@@ -34,3 +35,4 @@ const Tooltip = ({ text, position = 'top', visible, children }: TooltipProps) =>
 };
 
 export default Tooltip;
+

@@ -4,7 +4,6 @@ import ModalOverlay from '@/shared/ui/base/ModalOverlay';
 
 import style from './modal.module.scss';
 
-import './variables.css';
 
 interface ModalProps {
   isOpen: boolean;
@@ -72,3 +71,4 @@ const Modal = ({
 };
 
 export default Modal;
+

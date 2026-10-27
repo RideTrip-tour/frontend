@@ -1,8 +1,7 @@
 import style from './weekdayheadercell.module.scss';
 
-import './variables.css';
 
-function WeekdayHeaderCell({ label }: { label: string }) {
+function WeekdayHeaderCell({ label }: Readonly<{ label: string }>) {
   const isWeekend = label === 'Сб' || label === 'Вс';
 
   const className = [style.weekdayheadercell, isWeekend && style.weekend].filter(Boolean).join(' ');
@@ -11,3 +10,4 @@ function WeekdayHeaderCell({ label }: { label: string }) {
 }
 
 export default WeekdayHeaderCell;
+

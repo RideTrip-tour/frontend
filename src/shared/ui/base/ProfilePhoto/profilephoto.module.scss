@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: center;
 
-  background: var(--profile-photo-bg);
+  background: var(--color-blue-dark-1-10);
 
   .state {
     position: absolute;
@@ -25,7 +25,7 @@
 
     gap: 8px;
 
-    color: var(--profile-photo-icon);
+    color: var(--color-blue);
 
     opacity: 1;
     transition: opacity var(--animation-speed-200);

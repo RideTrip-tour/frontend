@@ -1,10 +1,10 @@
 .daterangepickermodal {
-  background: var(--drpm-bg);
+  background: #ffffff;
   border-radius: 16px;
-  box-shadow: var(--drpm-shadow);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.13), 0 2px 8px rgba(0, 0, 0, 0.06);
   padding: 20px;
   width: 330px;
-  border: 1px solid var(--drpm-border);
+  border: 1px solid #f3f4f6;
 
   &__tabs {
     display: flex;
@@ -16,8 +16,8 @@
     flex: 1;
     padding: 9px 10px;
     border-radius: 10px;
-    border: 1.5px solid var(--drpm-tab-border);
-    background: var(--drpm-tab-bg);
+    border: 1.5px solid #e5e7eb;
+    background: #f9fafb;
     font: inherit;
     text-align: left;
     color: inherit;
@@ -27,14 +27,14 @@
       background 0.2s;
 
     &--active {
-      border-color: var(--drpm-primary);
-      background: var(--drpm-primary-soft);
+      border-color: #4f46e5;
+      background: #eef2ff;
     }
   }
 
   &__tabLabel {
     font-size: 10px;
-    color: var(--drpm-text-muted);
+    color: #9ca3af;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -44,14 +44,14 @@
   &__tabValue {
     font-size: 13px;
     font-weight: 700;
-    color: var(--drpm-text);
+    color: #374151;
 
     &--active {
-      color: var(--drpm-primary);
+      color: #4f46e5;
     }
 
     &--empty {
-      color: var(--drpm-text-disabled);
+      color: #d1d5db;
     }
   }
 
@@ -59,7 +59,7 @@
     padding: 0 16px;
     border-radius: 10px;
     border: none;
-    background: var(--drpm-primary);
+    background: #4f46e5;
     color: #fff;
     font-weight: 700;
     font-size: 13px;
@@ -78,18 +78,18 @@
   &__drumTitle {
     font-weight: 700;
     font-size: 15px;
-    color: var(--drpm-text-main);
+    color: #111827;
   }
 
   &__doneButton {
     border: none;
-    background: var(--drpm-primary-soft);
+    background: #eef2ff;
     border-radius: 8px;
     padding: 6px 14px;
     cursor: pointer;
     font-size: 12px;
     font-weight: 700;
-    color: var(--drpm-primary);
+    color: #4f46e5;
   }
 
   &__drums {
@@ -109,7 +109,7 @@
   &__drumLabel {
     text-align: center;
     font-size: 10px;
-    color: var(--drpm-text-muted);
+    color: #9ca3af;
     font-weight: 700;
     letter-spacing: 0.05em;
     margin-bottom: 4px;

@@ -1,7 +1,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: var(--modalchildren-overlay-bg);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,11 +14,11 @@
   height: 600px;
   padding: 80px 78px;
 
-  background: var(--modalchildren-bg);
-  box-shadow: var(--modalchildren-shadow);
+  background: var(--color-white);
+  box-shadow: 0 4px 20px rgba(14, 104, 212, 0.25);
 
   border-radius: 40px;
-  outline: 1px solid var(--modalchildren-outline);
+  outline: 1px solid var(--color-blue);
   outline-offset: -1px;
 
   overflow: hidden;
@@ -42,5 +42,5 @@
   cursor: pointer;
   padding: 0;
 
-  color: var(--modalchildren-close-color);
+  color: var(--color-black);
 }

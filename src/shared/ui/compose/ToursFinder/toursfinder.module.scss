@@ -1,6 +1,6 @@
 .toursFinder {
   width: 100%;
-  background: var(--tours-finder-bg);
+  background: var(--color-white);
   padding: 32px 20px;
   border-radius: var(--radius-40);
   box-shadow: var(--shadow-2);
@@ -34,7 +34,7 @@
     font-weight: var(--font-semi-bold);
     font-size: var(--font-body-1-size);
     line-height: var(--text-line-height-24);
-    color: var(--tours-finder-title-color);
+    color: var(--color-black);
   }
 
   &__button {
@@ -50,9 +50,9 @@
       align-items: center;
       gap: 12px;
       border-radius: var(--radius-100);
-      background: var(--tours-finder-button-bg);
+      background: var(--color-blue);
       box-shadow: var(--shadow-2);
-      color: var(--tours-finder-button-text);
+      color: var(--color-white);
       font-family: var(--text-font-family), sans-serif;
       font-weight: var(--font-medium);
       font-size: var(--font-body-1-size);

@@ -2,7 +2,7 @@
   align-self: stretch;
   padding: 20px 24px;
 
-  background-color: var(--advantage-card-bg);
+  background-color: var(--color-white-1);
   box-shadow: var(--shadow-2);
   border-radius: var(--radius-24);
 
@@ -17,7 +17,7 @@
     width: 60px;
     height: 60px;
 
-    background: var(--advantage-card-icon-bg);
+    background: var(--color-blue-dark-1-10);
     box-shadow: var(--shadow-2);
     border-radius: var(--radius-100);
 
@@ -30,13 +30,13 @@
 
   &__icon {
     width: 20px;
-    color: var(--advantage-card-icon-color);
+    color: var(--color-blue);
   }
 
   &__title {
     margin: 0;
 
-    color: var(--advantage-card-title-color);
+    color: var(--color-black);
 
     font-family: var(--text-font-family), sans-serif;
     font-size: var(--font-body-1-size);
@@ -50,7 +50,7 @@
     margin: 0;
     align-self: stretch;
 
-    color: var(--advantage-card-text-color);
+    color: var(--color-gray-dark);
 
     font-family: var(--text-font-family), sans-serif;
     font-size: var(--font-body-2-size);

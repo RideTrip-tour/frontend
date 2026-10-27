@@ -1,6 +1,5 @@
 import style from './card.module.scss';
 
-import './variables.css';
 
 interface CardProps {
   imageSrc: string;
@@ -48,3 +47,4 @@ const Card = ({ imageSrc, title, description, onClick }: CardProps) => {
 };
 
 export default Card;
+

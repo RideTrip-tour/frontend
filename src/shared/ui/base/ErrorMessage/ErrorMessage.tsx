@@ -1,6 +1,5 @@
 import style from './errormessage.module.scss';
 
-import './variables.css';
 
 interface ErrorMessageProps {
   message: string;
@@ -18,3 +17,4 @@ const ErrorMessage = ({ message, visible = true }: ErrorMessageProps) => {
 };
 
 export default ErrorMessage;
+

@@ -5,7 +5,6 @@ import ModalOverlay from '@/shared/ui/base/ModalOverlay';
 
 import style from './modalchildren.module.scss';
 
-import './variables.css';
 
 interface ModalChildrenProps {
   onClose: () => void;
@@ -45,3 +44,4 @@ const ModalChildren = ({
 };
 
 export default ModalChildren;
+

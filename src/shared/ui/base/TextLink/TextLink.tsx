@@ -1,6 +1,5 @@
 import style from './textlink.module.scss';
 
-import './variables.css';
 
 interface TextLinkProps {
   text: string;
@@ -23,3 +22,4 @@ const TextLink = ({ text, to, fontSize = 14 }: TextLinkProps) => {
 };
 
 export default TextLink;
+

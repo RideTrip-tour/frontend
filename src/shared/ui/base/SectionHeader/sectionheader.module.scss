@@ -8,12 +8,12 @@
   &__title {
     font-size: var(--text-size-18);
     font-weight: bold;
-    color: var(--sectionheader-title-color);
+    color: var(--color-black);
   }
 
   &__subtitle {
     font-size: var(--text-size-16);
-    color: var(--sectionheader-subtitle-color);
+    color: var(--color-gray-dark);
   }
 
   &--muted {
@@ -23,7 +23,7 @@
 
     .sectionheader__subtitle {
       font-size: var(--text-size-14);
-      color: var(--sectionheader-subtitle-color-muted);
+      color: var(--color-gray);
     }
   }
 }

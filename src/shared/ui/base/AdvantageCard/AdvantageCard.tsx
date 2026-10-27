@@ -2,8 +2,6 @@ import { Icon } from '@iconify/react';
 
 import style from './advantagecard.module.scss';
 
-import './variables.css';
-
 interface AdvantageCardProps {
   icon: string;
   title: string;

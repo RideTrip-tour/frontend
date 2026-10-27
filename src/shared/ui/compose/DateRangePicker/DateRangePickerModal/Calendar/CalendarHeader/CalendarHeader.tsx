@@ -2,7 +2,6 @@ import { MONTH_LABELS_RU } from '@/shared/ui/compose/DateRangePicker/constants.t
 
 import style from './calendarheader.module.scss';
 
-import './variables.css';
 
 interface CalendarHeaderProps {
   displayYear: number;
@@ -22,7 +21,7 @@ function CalendarHeader({
   onPrevMonth,
   onNextMonth,
   onOpenDrumPicker,
-}: CalendarHeaderProps) {
+}: Readonly<CalendarHeaderProps>) {
   const prevBtnClass = [
     style.calendarheader__navButton,
     isPrevMonthDisabled && style['calendarheader__navButton--disabled'],
@@ -85,3 +84,4 @@ function CalendarHeader({
 }
 
 export default CalendarHeader;
+

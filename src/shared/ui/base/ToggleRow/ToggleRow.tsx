@@ -2,7 +2,6 @@ import Switch from '../Switch';
 
 import style from './togglerow.module.scss';
 
-import './variables.css';
 
 interface ToggleRowProps {
   label: string;
@@ -23,3 +22,4 @@ const ToggleRow = ({ label, checked, onChange }: ToggleRowProps) => {
 };
 
 export default ToggleRow;
+

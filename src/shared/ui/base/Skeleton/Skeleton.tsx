@@ -1,6 +1,5 @@
 import style from './skeleton.module.scss';
 
-import './variables.css';
 
 interface SkeletonProps {
   width?: number | string;
@@ -21,3 +20,4 @@ const Skeleton = ({ width = '100%', height = 20, borderRadius = 4, className }: 
 };
 
 export default Skeleton;
+
