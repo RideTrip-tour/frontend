@@ -13,6 +13,24 @@ const RegisterPage = lazy(() =>
 );
 const TripBuilderPage = lazy(() => import('@/pages/trip-builder'));
 const RegistrationVerifyPage = lazy(() => import('@/pages/RegistrationVerifyPage'));
+const PrivacyPolicyPage = lazy(() =>
+  import('@/pages/Legal/LegalPages').then((m) => ({ default: m.PrivacyPolicyPage })),
+);
+const TermsOfServicePage = lazy(() =>
+  import('@/pages/Legal/LegalPages').then((m) => ({ default: m.TermsOfServicePage })),
+);
+const PrivacyConsentPage = lazy(() =>
+  import('@/pages/Legal/LegalPages').then((m) => ({ default: m.PrivacyConsentPage })),
+);
+const MarketingConsentPage = lazy(() =>
+  import('@/pages/Legal/LegalPages').then((m) => ({ default: m.MarketingConsentPage })),
+);
+const PublicOfferPage = lazy(() =>
+  import('@/pages/Legal/LegalPages').then((m) => ({ default: m.PublicOfferPage })),
+);
+const UserAgreementPage = lazy(() =>
+  import('@/pages/Legal/LegalPages').then((m) => ({ default: m.UserAgreementPage })),
+);
 
 export function AppRouter() {
   return (
@@ -38,6 +56,35 @@ export function AppRouter() {
           path="/trip-builder"
           element={<TripBuilderPage />}
         />
+
+        <Route element={<PaddedLayout />}>
+          <Route
+            path="/legal/privacy-policy"
+            element={<PrivacyPolicyPage />}
+          />
+          <Route
+            path="/legal/terms-of-service"
+            element={<TermsOfServicePage />}
+          />
+          <Route
+            path="/legal/privacy-consent"
+            element={<PrivacyConsentPage />}
+          />
+          <Route
+            path="/legal/marketing-consent"
+            element={<MarketingConsentPage />}
+          />
+          <Route
+            path="/legal/public-offer"
+            element={<PublicOfferPage />}
+          />
+          <Route element={<PaddedLayout />}>
+            <Route
+              path="/legal/user-agreement"
+              element={<UserAgreementPage />}
+            />
+          </Route>
+        </Route>
 
         <Route element={<ProtectedRoute />}>
           <Route element={<PaddedLayout />}>
