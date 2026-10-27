@@ -1,0 +1,22 @@
+.securityblock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__rows {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__edit {
+    width: 360px;
+    max-width: 100%;
+  }
+}

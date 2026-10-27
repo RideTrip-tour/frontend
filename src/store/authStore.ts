@@ -1,74 +1,88 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { meRequest } from "@/services/authService";
+import { create } from 'zustand';
 
-type User = {
-  id: string;
-  email: string;
-  name: string;
-};
+import { meRequest, type CurrentUser } from '@/services/usersService';
+import { setSessionExpiredHandler } from '@/shared/api/sessionEvents';
+
+type AuthStatus = 'checking' | 'authenticated' | 'anonymous';
 
 type AuthState = {
-  user: User | null;
-  token: string | null;
+  user: CurrentUser | null;
   isAuth: boolean;
-  isLoading: boolean;
+  authStatus: AuthStatus;
 
-  login: (data: { user: User; token: string }) => void;
+  setUser: (user: CurrentUser) => void;
   logout: () => void;
-  checkAuth: () => Promise<void>;
+  checkAuth: () => Promise<CurrentUser | null>;
 };
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set, get) => ({
-      user: null,
-      token: null,
-      isAuth: false,
-      isLoading: false,
+let authCheckPromise: Promise<CurrentUser | null> | null = null;
+let authBootstrapCompleted = false;
 
-      login: ({ user, token }) => {
+export const useAuthStore = create<AuthState>((set, get) => ({
+  user: null,
+  isAuth: false,
+  authStatus: 'checking',
+
+  setUser: (user) => {
+    authBootstrapCompleted = true;
+
+    set({
+      user,
+      isAuth: true,
+      authStatus: 'authenticated',
+    });
+  },
+
+  logout: () => {
+    authBootstrapCompleted = true;
+
+    set({
+      user: null,
+      isAuth: false,
+      authStatus: 'anonymous',
+    });
+  },
+
+  checkAuth: () => {
+    if (authBootstrapCompleted) {
+      return Promise.resolve(get().user);
+    }
+
+    if (authCheckPromise) {
+      return authCheckPromise;
+    }
+
+    authCheckPromise = (async () => {
+      set({ authStatus: 'checking' });
+
+      try {
+        const user = await meRequest();
+
         set({
           user,
-          token,
-          isAuth: true
+          isAuth: true,
+          authStatus: 'authenticated',
         });
-      },
 
-      logout: () => {
+        return user;
+      } catch {
         set({
           user: null,
-          token: null,
-          isAuth: false
+          isAuth: false,
+          authStatus: 'anonymous',
         });
-      },
 
-      checkAuth: async () => {
-        try {
-          set({ isLoading: true });
-
-          const token = get().token;
-          if (!token) {
-            set({ isAuth: false, user: null });
-            return;
-          }
-
-          const user = await meRequest();
-          set({ user, isAuth: true });
-        } catch {
-          set({ user: null, token: null, isAuth: false });
-        } finally {
-          set({ isLoading: false });
-        }
+        return null;
+      } finally {
+        authBootstrapCompleted = true;
+        authCheckPromise = null;
       }
-    }),
-    {
-      name: "auth-storage", //TODO ключ в localStorage
-      partialize: (state) => ({
-        user: state.user,
-        token: state.token,
-        isAuth: state.isAuth
-      })
-    }
-  )
-);
+    })();
+
+    return authCheckPromise;
+  },
+}));
+
+setSessionExpiredHandler(() => {
+  useAuthStore.getState().logout();
+});

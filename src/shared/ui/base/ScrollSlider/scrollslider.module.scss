@@ -1,0 +1,50 @@
+.scrollslider {
+  width: 100%;
+}
+
+.scrollslider--horizontal {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.scrollslider--horizontal .scrollslider__track {
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+}
+
+.scrollslider--vertical {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.scrollslider--vertical .scrollslider__track {
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollslider--grid {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.scrollslider--grid .scrollslider__track {
+  display: grid;
+}
+
+.scrollslider__track {
+  width: 100%;
+}
+
+.scrollslider__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+  flex: 0 0 auto;
+}
