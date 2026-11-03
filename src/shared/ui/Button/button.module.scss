@@ -41,8 +41,8 @@
   }
 
   &__text {
-    font-family: var(--text-font-family-2);
-    font-size: 16px;
+    font-family: var(--text-font-family-2), sans-serif;
+    font-size: var(--text-size-16);
     font-weight: 500;
     line-height: 20px;
     letter-spacing: 0.015em;
@@ -92,6 +92,25 @@
   &:not(:disabled):hover {
     --btn-bg: var(--color-blue);
     --btn-text: var(--color-white);
+    --btn-icon-bg: var(--color-white);
+    --btn-icon: var(--color-blue);
+  }
+
+  &:not(:disabled):active {
+    --btn-bg: var(--color-blue-dark-2);
+    --btn-text: var(--color-white);
+  }
+}
+
+.button--accent {
+  --btn-bg: var(--color-blue);
+  --btn-text: var(--color-white);
+  --btn-icon-bg: var(--color-blue);
+  --btn-icon: var(--color-white);
+
+  &:not(:disabled):hover {
+    --btn-bg: var(--color-blue);
+    --btn-text: var(--color-white);
     --btn-icon-bg: var(--color-blue);
     --btn-icon: var(--color-white);
   }
@@ -105,6 +124,12 @@
 .button--iconWithText {
   gap: 12px;
   padding: 4px 4px 4px 16px;
+
+  .button__icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
 }
 
 .button--iconRight {
@@ -131,7 +156,7 @@
   justify-content: center;
   padding: 12px 16px;
   border-radius: 28px;
-  font-size: 16px;
+  font-size: var(--text-size-16);
   line-height: 20px;
   font-weight: 500;
 
@@ -158,5 +183,48 @@
 
   &:not(:disabled):hover {
     background: #0956b2;
+  }
+}
+
+.button--outline {
+  justify-content: center;
+  border-radius: 100px;
+  color: var(--color-blue);
+  background: var(--color-white);
+  border: none;
+  outline: 1px solid var(--color-blue);
+  outline-offset: -1px;
+  box-shadow: var(--shadow-2);
+  white-space: nowrap;
+  transition:
+    background-color var(--animation-speed-100) ease,
+    color var(--animation-speed-100) ease,
+    outline-color var(--animation-speed-100) ease;
+
+  &:not(:disabled):hover,
+  &:not(:disabled):active {
+    background: var(--color-blue);
+    color: var(--color-white);
+    outline-color: var(--color-blue);
+  }
+
+  &:not(:disabled):hover .button__icon,
+  &:not(:disabled):active .button__icon {
+    transform: none;
+  }
+
+  .button__text {
+    font-family: var(--text-font-family-3), sans-serif;
+    color: var(--color-blue);
+    font-size: var(--text-size-16);
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.24px;
+    transition: color var(--animation-speed-100) ease;
+  }
+
+  &:not(:disabled):hover .button__text,
+  &:not(:disabled):active .button__text {
+    color: var(--color-white);
   }
 }

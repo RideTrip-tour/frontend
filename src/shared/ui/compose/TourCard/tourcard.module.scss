@@ -1,0 +1,175 @@
+.tourcard {
+  align-self: stretch;
+  padding: var(--spacing-16);
+  background: var(--color-white);
+  outline: 1px solid transparent;
+  outline-offset: -1px;
+  border-radius: var(--radius-20);
+  box-shadow: var(--shadow-2);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+
+  &--active {
+    outline-color: var(--color-green);
+  }
+
+  &--booking {
+    outline-color: var(--color-orange);
+  }
+
+  &--archive {
+    outline-color: var(--color-white);
+  }
+
+  &__body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--spacing-16);
+    align-self: stretch;
+  }
+
+  &__image {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius-24);
+    flex-shrink: 0;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex: 1;
+    min-width: 0;
+    height: 200px;
+  }
+
+  &__info {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--spacing-20);
+  }
+
+  &__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-self: stretch;
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+  }
+
+  &__title {
+    color: var(--color-black);
+    font-family: var(--text-font-family-2), sans-serif;
+    font-size: var(--text-size-28);
+    font-weight: var(--font-semi-bold);
+    line-height: 44px;
+    letter-spacing: -0.005em;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--spacing-8);
+    color: var(--color-black);
+    font-family: var(--text-font-family-2), sans-serif;
+    font-size: var(--text-size-18);
+    font-weight: var(--font-medium);
+    line-height: var(--text-line-height-24);
+    letter-spacing: 0.27px;
+  }
+
+  &__dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-black);
+    flex-shrink: 0;
+  }
+
+  &__details {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: var(--spacing-16);
+  }
+
+  &__detail {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--spacing-8);
+    color: var(--color-gray-dark);
+    font-family: var(--text-font-family-2), sans-serif;
+    font-size: var(--text-size-16);
+    font-weight: var(--font-medium);
+    line-height: var(--text-line-height-20);
+    letter-spacing: 0.24px;
+  }
+
+  &__detailIcon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--color-blue);
+  }
+
+  &__footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: var(--spacing-20);
+    align-self: stretch;
+    padding-top: var(--spacing-16);
+    border-top: 1px solid var(--color-blue-dark-1-10);
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  &__priceValue {
+    color: var(--color-black);
+    font-family: var(--text-font-family-2), sans-serif;
+    font-size: var(--text-size-18);
+    font-weight: var(--font-bold);
+    line-height: var(--text-line-height-24);
+    letter-spacing: 0.27px;
+  }
+
+  &__priceCaption {
+    color: var(--color-gray-dark);
+    font-family: var(--text-font-family-3), sans-serif;
+    font-size: var(--text-size-16);
+    font-weight: var(--font-regular);
+    line-height: var(--text-line-height-20);
+    letter-spacing: 0.24px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex: 1;
+    gap: var(--spacing-20);
+  }
+}

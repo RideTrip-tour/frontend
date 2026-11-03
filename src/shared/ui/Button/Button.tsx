@@ -8,7 +8,7 @@ export interface ButtonProps {
   text: string;
   type?: 'button' | 'submit' | 'reset';
   icon?: ReactNode;
-  variant?: 'primary' | 'secondary' | 'light' | 'solid';
+  variant?: 'primary' | 'secondary' | 'accent' | 'light' | 'solid' | 'outline';
   iconVariant?: 'default' | 'plain';
   iconPosition?: 'left' | 'right';
   disabled?: boolean;

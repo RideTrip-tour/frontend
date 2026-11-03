@@ -1,0 +1,264 @@
+.tourcard {
+  align-self: stretch;
+  padding: var(--spacing-16);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-dark);
+  border-radius: var(--radius-20);
+  box-shadow: var(--shadow-2);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+
+  &__body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--spacing-16);
+    align-self: stretch;
+  }
+
+  &__image {
+    width: 470px;
+    height: 313px;
+    object-fit: cover;
+    border-radius: var(--radius-24);
+    flex-shrink: 0;
+  }
+
+  &__placeholder {
+    width: 470px;
+    height: 313px;
+    border-radius: var(--radius-24);
+    background: var(--color-light-gray-25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__placeholderIcon {
+    width: 100px;
+    height: 100px;
+    color: var(--color-gray-dark);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex: 1;
+    min-width: 0;
+    height: 313px;
+    gap: var(--spacing-16);
+  }
+
+  &__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-self: stretch;
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+  }
+
+  &__title {
+    color: var(--color-black);
+    font-family: var(--text-font-family-2), sans-serif;
+    font-size: var(--text-size-28);
+    font-weight: var(--font-semi-bold);
+    line-height: 36px;
+    letter-spacing: -0.14px;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--spacing-8);
+    color: var(--color-black);
+    font-family: var(--text-font-family-2), sans-serif;
+    font-size: var(--text-size-18);
+    font-weight: var(--font-medium);
+    line-height: var(--text-line-height-24);
+    letter-spacing: 0.27px;
+  }
+
+  &__dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-black);
+    flex-shrink: 0;
+  }
+
+  &__progress {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--spacing-4);
+    gap: var(--spacing-4);
+  }
+
+  &__progressTrack {
+    align-self: stretch;
+    height: 8px;
+    border-radius: var(--radius-8);
+    background: var(--color-blue-dark-1-10);
+    overflow: hidden;
+  }
+
+  &__progressFill {
+    height: 100%;
+    border-radius: var(--radius-8);
+    background: var(--color-blue);
+    transition: width var(--animation-speed-300) ease;
+  }
+
+  &__progressText {
+    color: var(--color-blue-dark-1);
+    font-family: var(--text-font-family-3), sans-serif;
+    font-size: var(--text-size-14);
+    font-weight: var(--font-regular);
+    line-height: var(--text-line-height-16);
+    text-align: center;
+  }
+
+  &__details {
+    margin-top: var(--spacing-4);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: var(--spacing-16);
+  }
+
+  &__detail {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--spacing-8);
+    color: var(--color-gray-dark);
+    font-family: var(--text-font-family-3), sans-serif;
+    font-size: var(--text-size-16);
+    font-weight: var(--font-medium);
+    line-height: var(--text-line-height-20);
+    letter-spacing: 0.24px;
+  }
+
+  &__detailIcon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--color-blue);
+  }
+
+  &__hints {
+    align-self: stretch;
+    padding: var(--spacing-16) var(--spacing-32);
+    border-radius: var(--radius-24);
+    background: rgba(14, 104, 212, 0.1);
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-4);
+    font-family: var(--text-font-family-3), sans-serif;
+    font-size: var(--text-size-16);
+    font-weight: var(--font-semi-bold);
+    line-height: var(--text-line-height-20);
+    letter-spacing: 0.24px;
+
+    span:last-child {
+      color: var(--color-gray-dark);
+    }
+  }
+
+  &__hintsTitle {
+    color: var(--color-black);
+    white-space: nowrap;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: var(--spacing-20);
+    align-self: stretch;
+    padding-top: var(--spacing-16);
+    border-top: 1px solid var(--color-light-gray-25);
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  &__priceValue {
+    color: var(--color-black);
+    font-family: var(--text-font-family-2), sans-serif;
+    font-size: var(--text-size-18);
+    font-weight: var(--font-bold);
+    line-height: var(--text-line-height-24);
+    letter-spacing: 0.27px;
+  }
+
+  &__priceCaption {
+    color: var(--color-gray-dark);
+    font-family: var(--text-font-family-3), sans-serif;
+    font-size: var(--text-size-16);
+    font-weight: var(--font-regular);
+    line-height: var(--text-line-height-20);
+    letter-spacing: 0.24px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex: 1;
+    gap: var(--spacing-20);
+    height: 44px;
+  }
+
+  &__empty {
+    align-self: stretch;
+    padding: 40px var(--spacing-24);
+    border-radius: var(--radius-12);
+    background: var(--color-white-1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-12);
+  }
+
+  &__emptyTitle {
+    margin: 0;
+    color: var(--color-black);
+    font-family: var(--text-font-family-2), sans-serif;
+    font-size: var(--text-size-18);
+    font-weight: var(--font-bold);
+    line-height: var(--text-line-height-24);
+    letter-spacing: 0.27px;
+    text-align: center;
+  }
+
+  &__emptyDescription {
+    margin: 0;
+    color: var(--color-gray-dark);
+    font-family: var(--text-font-family-3), sans-serif;
+    font-size: var(--text-size-16);
+    font-weight: var(--font-medium);
+    line-height: var(--text-line-height-20);
+    letter-spacing: 0.24px;
+    text-align: center;
+  }
+}

@@ -31,6 +31,7 @@ const PublicOfferPage = lazy(() =>
 const UserAgreementPage = lazy(() =>
   import('@/pages/Legal/LegalPages').then((m) => ({ default: m.UserAgreementPage })),
 );
+const MyToursPage = lazy(() => import('@/pages/MyTours').then((m) => ({ default: m.MyToursPage })));
 
 export function AppRouter() {
   return (
@@ -98,6 +99,10 @@ export function AppRouter() {
                 element={<ProfileSettingsPage />}
               />
             </Route>
+            <Route
+              path="/my-tours"
+              element={<MyToursPage />}
+            />
           </Route>
         </Route>
       </Routes>
