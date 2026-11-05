@@ -1,0 +1,11 @@
+export { default as anastasia } from './anastasia.png';
+export { default as evgeniy } from './evgeniy.png';
+export { default as filipp } from './filipp.png';
+export { default as irina } from './irina.png';
+export { default as kamilla } from './kamilla.png';
+export { default as kristina } from './kristina.png';
+export { default as natalya } from './natalya.png';
+export { default as sergey } from './sergey.png';
+export { default as tamara } from './tamara.png';
+export { default as viktor } from './viktor.png';
+export { default as vyacheslav } from './vyacheslav.png';
