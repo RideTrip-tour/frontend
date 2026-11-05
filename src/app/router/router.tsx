@@ -32,7 +32,7 @@ const UserAgreementPage = lazy(() =>
   import('@/pages/Legal/LegalPages').then((m) => ({ default: m.UserAgreementPage })),
 );
 
-const AboutPage = lazy(() => import('@/pages/About'))
+const AboutPage = lazy(() => import('@/pages/About'));
 
 export function AppRouter() {
   return (

@@ -1,11 +1,11 @@
-import type { AnchorHTMLAttributes, ReactNode } from 'react'
+import type { AnchorHTMLAttributes, ReactNode } from 'react';
 
-import style from './LinkButton.module.scss'
+import style from './LinkButton.module.scss';
 
 interface LinkButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
-  href: string
-  icon?: ReactNode
-  variant?: 'shadow' | 'outline'
+  href: string;
+  icon?: ReactNode;
+  variant?: 'shadow' | 'outline';
 }
 
 export function LinkButton({
@@ -16,9 +16,12 @@ export function LinkButton({
   ...props
 }: LinkButtonProps) {
   return (
-    <a className={`${style.root} ${style[variant]} ${className}`} {...props}>
+    <a
+      className={`${style.root} ${style[variant]} ${className}`}
+      {...props}
+    >
       {icon && <span className={style.icon}>{icon}</span>}
       {children}
     </a>
-  )
+  );
 }
