@@ -32,6 +32,8 @@ const UserAgreementPage = lazy(() =>
   import('@/pages/Legal/LegalPages').then((m) => ({ default: m.UserAgreementPage })),
 );
 
+const AboutPage = lazy(() => import('@/pages/About'));
+
 export function AppRouter() {
   return (
     <Suspense fallback={<div>Loading page...</div>}>
@@ -55,6 +57,10 @@ export function AppRouter() {
         <Route
           path="/trip-builder"
           element={<TripBuilderPage />}
+        />
+        <Route
+          path="/about"
+          element={<AboutPage />}
         />
 
         <Route element={<PaddedLayout />}>
