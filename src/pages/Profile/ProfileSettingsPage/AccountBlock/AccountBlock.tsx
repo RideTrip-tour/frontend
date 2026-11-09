@@ -1,0 +1,133 @@
+import { Icon } from '@iconify/react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+
+import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
+import { logoutRequest } from '@/services/authService';
+import { deleteMyProfileRequest } from '@/services/profileService';
+import SectionHeader from '@/shared/ui/base/SectionHeader';
+import DeleteAccountModal from '@/shared/ui/compose/Modals/DeleteAccountModal';
+import LogoutConfirmModal from '@/shared/ui/compose/Modals/LogoutConfirmModal';
+import PageSection from '@/shared/ui/page/PageSection';
+import { useAuthStore, useProfileStore } from '@/store';
+
+import style from './accountblock.module.scss';
+
+import './variables.css';
+
+function AccountBlock() {
+  const navigate = useNavigate();
+  const reset = useProfileStore((s) => s.reset);
+  const userEmail = useProfileStore((s) => s.userEmail);
+  const logout = useAuthStore((s) => s.logout);
+
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleLogout = async () => {
+    setError('');
+    setIsLoading(true);
+    try {
+      await logoutRequest();
+    } catch (e) {
+      setError(getAuthApiErrorMessage(e));
+      setIsLoading(false);
+      return;
+    }
+    reset();
+    void navigate('/login');
+  };
+
+  const handleDelete = async () => {
+    setError('');
+    setIsLoading(true);
+    try {
+      await deleteMyProfileRequest();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Ошибка сервера');
+      setIsLoading(false);
+      return;
+    }
+    reset();
+    logout();
+    void navigate('/login');
+  };
+
+  return (
+    <PageSection
+      paddingVertical={32}
+      paddingHorizontal={40}
+    >
+      <div className={style.accountblock}>
+        <div className={style.accountblock__content}>
+          <SectionHeader
+            title="Аккаунт"
+            subtitle="Управление вашим аккаунтом"
+            variant="muted"
+          />
+          <div className={style.accountblock__actions}>
+            <button
+              type="button"
+              className={style.accountblock__logoutBtn}
+              onClick={() => {
+                setError('');
+                setIsLogoutOpen(true);
+              }}
+            >
+              <Icon
+                icon="uil:exit"
+                className={style.accountblock__logoutIcon}
+              />
+              <span className={style.accountblock__logoutText}>Выйти из аккаунта</span>
+            </button>
+            <div className={style.accountblock__deleteInfo}>
+              <button
+                type="button"
+                className={style.accountblock__deleteText}
+                onClick={() => {
+                  setError('');
+                  setIsDeleteOpen(true);
+                }}
+              >
+                Удалить аккаунт
+              </button>
+              <span className={style.accountblock__warning}>
+                После удаления вся информация об учётной записи будет стёрта. Восстановить её будет
+                невозможно.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <LogoutConfirmModal
+        isOpen={isLogoutOpen}
+        isLoading={isLoading}
+        serverError={error}
+        onClose={() => {
+          setError('');
+          setIsLoading(false);
+          setIsLogoutOpen(false);
+        }}
+        onConfirm={handleLogout}
+      />
+
+      <DeleteAccountModal
+        isOpen={isDeleteOpen}
+        expectedEmail={userEmail}
+        isLoading={isLoading}
+        serverError={error}
+        onClose={() => {
+          setError('');
+          setIsLoading(false);
+          setIsDeleteOpen(false);
+        }}
+        onConfirm={handleDelete}
+      />
+    </PageSection>
+  );
+}
+
+export default AccountBlock;

@@ -1,4 +1,4 @@
-import { Component, type ReactNode } from "react";
+import { Component, type ReactNode } from 'react';
 
 type Props = { children: ReactNode };
 type State = { hasError: boolean };
@@ -11,7 +11,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: unknown) {
-    console.error("App error:", error);
+    console.error('App error:', error);
   }
 
   render() {

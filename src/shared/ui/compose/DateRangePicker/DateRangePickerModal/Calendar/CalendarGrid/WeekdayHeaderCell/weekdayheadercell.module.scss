@@ -1,0 +1,13 @@
+.weekdayheadercell {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 0;
+  user-select: none;
+
+  color: var(--weekday-text);
+}
+
+.weekend {
+  color: var(--weekday-weekend-text);
+}

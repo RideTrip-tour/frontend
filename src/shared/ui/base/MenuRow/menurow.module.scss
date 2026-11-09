@@ -1,0 +1,23 @@
+.menurow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  padding: 14px 24px 14px 0;
+
+  background: var(--menurow-bg);
+  border: none;
+  cursor: pointer;
+
+  &__text {
+    font-size: var(--text-size-16);
+    color: var(--menurow-text-color);
+  }
+
+  &__icon {
+    width: var(--icons-size-24);
+    height: var(--icons-size-24);
+    color: var(--menurow-icon-color);
+  }
+}

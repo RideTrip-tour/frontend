@@ -1,0 +1,8 @@
+node_modules
+dist
+coverage
+
+src/shared/api/generated/**
+
+*.tsbuildinfo
+package-lock.json

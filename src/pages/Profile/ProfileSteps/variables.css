@@ -1,0 +1,20 @@
+:root {
+}
+
+body[data-theme='light'] {
+  --profilesteps-card-bg: #ffffff;
+  --profilesteps-title-color: #1a1a1a;
+  --profilesteps-subtitle-color: #5f6c7b;
+  --profilesteps-edit-color: #0e68d4;
+  --profilesteps-hint-color: #5f6c7b;
+  --profilesteps-group-title-color: #1a1a1a;
+  --profilesteps-consent-text-color: #1a1a1a;
+  --profilesteps-checkbox-border: #afb6bd;
+  --profilesteps-checkbox-active: #0e68d4;
+  --profilesteps-card-active-border: #0e68d4;
+  --profilesteps-divider-color: #1e4d8f1a;
+  --profilesteps-level-text-color: var(--color-gray-dark);
+}
+
+body[data-theme='dark'] {
+}

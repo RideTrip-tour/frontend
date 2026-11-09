@@ -1,0 +1,11 @@
+:root {
+}
+
+body[data-theme='light'] {
+  --personalblock-title-color: #1a1a1a;
+  --personalblock-subtitle-color: #5f6c7b;
+  --personalblock-edit-color: #0e68d4;
+}
+
+body[data-theme='dark'] {
+}
