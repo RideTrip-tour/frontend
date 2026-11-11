@@ -17,6 +17,7 @@ export const TOTAL_FIELDS = 8;
 
 export interface ConstructorStore extends ConstructorState {
   activeSelectorId: ConstructorSelectionId | null;
+  resetRevision: number;
 
   setFromCity: (city: City | null) => void;
   setFromCountry: (country: Country | null) => void;
@@ -91,6 +92,7 @@ export function selectProgress(state: ConstructorStore) {
 
 export const useConstructor = create<ConstructorStore>((set) => ({
   ...createInitialState(),
+  resetRevision: 0,
 
   setFromCity: (fromCity) => set({ fromCity }),
   setFromCountry: (fromCountry) => set({ fromCountry }),
@@ -178,5 +180,9 @@ export const useConstructor = create<ConstructorStore>((set) => ({
       activeSelectorId: state.activeSelectorId === 'additional' ? null : state.activeSelectorId,
     })),
 
-  resetConstructor: () => set(createInitialState()),
+  resetConstructor: () =>
+    set((state) => ({
+      ...createInitialState(),
+      resetRevision: state.resetRevision + 1,
+    })),
 }));

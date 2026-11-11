@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import { DownloadIcon, SadfaceIcon, ResetIcon, SaveIcon } from '@/assets/icons/constructor';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
@@ -42,6 +42,14 @@ function PriceLine({ price, note }: PriceLineProps) {
 
 export function ConstructorCart() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const partnerOffersReturnTo = (location.state as { partnerOffersReturnTo?: unknown } | null)
+    ?.partnerOffersReturnTo;
+  const checkoutPath =
+    typeof partnerOffersReturnTo === 'string' &&
+    /^\/trip-builder\/partner-offers\/?(?:[?#]|$)/.test(partnerOffersReturnTo)
+      ? partnerOffersReturnTo
+      : 'partner-offers';
   const isAuth = useAuthStore((state) => state.isAuth);
   const [modal, setModal] = useState<CartModalState>(null);
   const closeModal = () => setModal(null);
@@ -64,6 +72,7 @@ export function ConstructorCart() {
     level,
     additional,
     activeSelectorId,
+    setActiveSelectorId,
     clearActivities,
     clearAccommodation,
     clearAdditional,
@@ -73,6 +82,11 @@ export function ConstructorCart() {
     clearTransfer,
     resetConstructor: resetCart,
   } = useConstructor();
+
+  const handleCheckout = () => {
+    setActiveSelectorId(null);
+    navigate(checkoutPath);
+  };
 
   const isSelectingFrom = activeSelectorId === 'from';
   const isSelectingTo = activeSelectorId === 'to';
@@ -423,7 +437,7 @@ export function ConstructorCart() {
       <div className={style.checkoutSection}>
         <CartSummary
           hasSelectedItems={hasSelectedItems}
-          onCheckout={() => window.alert('В разработке')}
+          onCheckout={handleCheckout}
           totalPrice={totalPrice}
         />
 

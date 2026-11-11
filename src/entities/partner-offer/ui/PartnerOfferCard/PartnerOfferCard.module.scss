@@ -1,0 +1,215 @@
+.card {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 352px;
+  padding: 16px;
+  outline: 1px solid transparent;
+  outline-offset: -1px;
+  border-radius: 20px;
+  background: var(--surface-primary, #fff);
+  box-shadow: 0 4px 10px 2px #1e4d8f1a;
+}
+
+.cardContent {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+  flex-direction: row;
+}
+
+.imageWrapper {
+  position: relative;
+  flex: 0 0 480px;
+  width: 480px;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #eef1f4;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.favoriteButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: #343b43;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgb(16 24 40 / 8%);
+}
+
+.favoriteButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.favoriteButtonActive {
+  color: #e2bd00;
+}
+
+.description {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.headingRow,
+.titleLine {
+  display: flex;
+  align-items: center;
+}
+
+.headingRow {
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.titleLine {
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  min-width: 0;
+  gap: 8px 16px;
+}
+
+.cardTitle {
+  max-width: 100%;
+  margin: 0;
+  color: #17191c;
+  font-size: 28px;
+  line-height: 34px;
+  overflow-wrap: anywhere;
+}
+
+.rating {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  color: #626a73;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.star {
+  color: #f4c400;
+}
+
+.count,
+.ratingDivider {
+  color: #8b939d;
+}
+
+.location {
+  margin: 0;
+  color: #a6afb8;
+  font-size: 16px;
+}
+
+.body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.badge {
+  padding: 7px 10px;
+  border-radius: 100px;
+  color: #44505c;
+  background: #eaf1fa;
+  font-size: 13px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.price strong {
+  color: #17191c;
+  font-size: 20px;
+}
+
+.price span,
+.price small {
+  color: #68717c;
+  font-size: 12px;
+}
+
+.selectButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: #0e68d4;
+  font-weight: 600;
+  line-height: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.selectButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.card:hover:not(:has(:focus-visible)),
+.card:focus-visible {
+  outline-color: #0e68d4;
+  box-shadow: 0 4px 20px 0 #0e68d440;
+}
+
+.providerAndAction {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.providerLogo {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}

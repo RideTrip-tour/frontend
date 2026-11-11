@@ -12,6 +12,7 @@ const RegisterPage = lazy(() =>
   import('@/pages/RegisterPage').then((m) => ({ default: m.RegisterPage })),
 );
 const TripBuilderPage = lazy(() => import('@/pages/trip-builder'));
+const PartnerOffersPage = lazy(() => import('@/pages/partner-offers'));
 const RegistrationVerifyPage = lazy(() => import('@/pages/RegistrationVerifyPage'));
 const PrivacyPolicyPage = lazy(() =>
   import('@/pages/Legal/LegalPages').then((m) => ({ default: m.PrivacyPolicyPage })),
@@ -52,10 +53,16 @@ export function AppRouter() {
           path="/auth/verify"
           element={<RegistrationVerifyPage />}
         />
-        <Route
-          path="/trip-builder"
-          element={<TripBuilderPage />}
-        />
+        <Route path="/trip-builder">
+          <Route
+            index
+            element={<TripBuilderPage />}
+          />
+          <Route
+            path="partner-offers"
+            element={<PartnerOffersPage />}
+          />
+        </Route>
 
         <Route element={<PaddedLayout />}>
           <Route
