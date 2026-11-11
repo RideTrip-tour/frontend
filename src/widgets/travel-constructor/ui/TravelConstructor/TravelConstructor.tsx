@@ -66,11 +66,18 @@ export function TravelConstructor() {
     setActiveSelectorId,
   } = useConstructor();
 
-  const [openItems, setOpenItems] = useState(INITIAL_OPEN_ITEMS);
+  const [openItems, setOpenItems] = useState(() => ({
+    ...INITIAL_OPEN_ITEMS,
+    ...(activeSelectorId ? { [activeSelectorId]: true } : {}),
+  }));
   const [showAdditional, setShowAdditional] = useState(false);
   const {
     cities,
     countries,
+    isCitiesLoading,
+    isCountriesLoading,
+    citiesError,
+    countriesError,
     isSkiStylesLoading,
     isSkiLevelsLoading,
     searchCities,
@@ -140,6 +147,10 @@ export function TravelConstructor() {
         <DeparturePlaceSelector
           cities={cities}
           countries={countries}
+          citiesError={citiesError}
+          countriesError={countriesError}
+          isCitiesLoading={isCitiesLoading}
+          isCountriesLoading={isCountriesLoading}
           onCitySearch={searchCities}
           idPrefix="from"
           onCitySelect={(city) => {
