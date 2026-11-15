@@ -1,0 +1,114 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  width: 320px;
+  height: 516px;
+  max-width: 100%;
+  padding: 12px;
+  font-family: var(--text-font-family-3);
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+  opacity: 1;
+}
+
+.top {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.avatar {
+  display: block;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.firstName {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 44px;
+  color: var(--color-black);
+  font-family: var(--text-font-family-2);
+}
+
+.lastName {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-gray-dark);
+}
+
+.role {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+.bio {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.bioText {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: var(--font-regular);
+  line-height: 20px;
+  color: var(--color-gray-dark);
+  white-space: pre-line;
+  -webkit-box-orient: vertical;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill {
+  padding: 4px 6px;
+  font-size: 14px;
+  font-weight: var(--font-semi-bold);
+  line-height: 1.5;
+  color: var(--color-blue-dark-1);
+  background: var(--color-blue-dark-1-10);
+  border-radius: 999px;
+}
+
+.divider {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid #e9ecf2;
+}
+
+.actions {
+  display: flex;
+  gap: 19px;
+}
+
+.action {
+  flex: 1;
+}
