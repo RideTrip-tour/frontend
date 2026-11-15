@@ -2,6 +2,12 @@ import { SKI_LEVEL_HINTS } from '@/widgets/travel-constructor/config/skiLevels';
 
 import styles from './SkiLevelSelector.module.scss';
 
+const SKI_LEVEL_OPTIONS = ['Новичок', 'Средний', 'Продвинутый'];
+
+function normalizeLevelName(name: string) {
+  return name.trim().toLocaleLowerCase('ru-RU');
+}
+
 interface SkiLevelSelectorProps {
   value: string | null;
   onChange: (level: string) => void;
@@ -15,6 +21,12 @@ export function SkiLevelSelector({
   levels,
   isLoading = false,
 }: Readonly<SkiLevelSelectorProps>) {
+  const availableLevels = new Set(levels.map(normalizeLevelName));
+  const selectableLevels = SKI_LEVEL_OPTIONS.filter(
+    (level) => level === 'Средний' || availableLevels.has(normalizeLevelName(level)),
+  );
+  const selectedLevel = value === null ? null : normalizeLevelName(value);
+
   return (
     <div className={styles.selector}>
       <fieldset className={styles.levels}>
@@ -23,13 +35,13 @@ export function SkiLevelSelector({
         {isLoading ? (
           <p>Загрузка уровней...</p>
         ) : (
-          levels.map((level) => (
+          selectableLevels.map((level) => (
             <label
               className={styles.levelOption}
               key={level}
             >
               <input
-                checked={value === level}
+                checked={selectedLevel === normalizeLevelName(level)}
                 name="ski-level"
                 onChange={() => onChange(level)}
                 type="radio"
@@ -47,7 +59,7 @@ export function SkiLevelSelector({
           id="ski-level-hint"
           role="tooltip"
         >
-          {levels.map((levelOption) => (
+          {selectableLevels.map((levelOption) => (
             <section
               className={styles.hintSection}
               key={levelOption}

@@ -1,0 +1,85 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 20px;
+}
+
+.filterButton,
+.sortLabel select {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 12px;
+  font-family: var(--text-font-family-2);
+  color: #1a1a1a;
+  background: #fff;
+  box-shadow: 0px 3px 10px 2px #1a1a1a1a;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.filterButtonIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.filterButtonPrimary {
+  display: flex;
+  gap: 12px;
+  color: #1a1a1a;
+  background: #eaf3ff;
+}
+
+.sortLabel select {
+  min-width: 204px;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #1a1a1a 50%),
+    linear-gradient(135deg, #1a1a1a 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) 20px,
+    calc(100% - 12px) 20px;
+  background-repeat: no-repeat;
+  background-size: 6px 6px;
+}
+
+.resultsHeader {
+  margin-top: 32px;
+}
+
+.similarResultsHeader {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.resultsTitle {
+  margin: 0 0 24px;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 44px;
+}
+
+.resultsTitlePlaceholder {
+  height: 44px;
+  margin-bottom: 24px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}

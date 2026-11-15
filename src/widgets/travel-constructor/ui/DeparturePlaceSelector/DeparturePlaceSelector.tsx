@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { AlertIcon } from '@/assets/icons/constructor';
+import ConnectionErrorIcon from '@/assets/icons/partner-offers/ConnectionError.svg?react';
 import { CityList, type City } from '@/entities/city';
 import { CountryList, type Country } from '@/entities/country';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
@@ -19,6 +20,26 @@ interface DeparturePlaceSelectorProps {
   onCountrySelect: (country: Country) => void;
   onComplete: () => void;
   onCitySearch?: (query: string) => Promise<void>;
+  isCitiesLoading?: boolean;
+  isCountriesLoading?: boolean;
+  citiesError?: Error | null;
+  countriesError?: Error | null;
+}
+
+function LocationLoadError() {
+  return (
+    <EmptyState
+      description="Попробуйте обновить через пару минут."
+      icon={
+        <ConnectionErrorIcon
+          aria-hidden="true"
+          height={80}
+          width={80}
+        />
+      }
+      title="Ой, кажется что-то сломалось"
+    />
+  );
 }
 
 function normalizeName(name: string): string {
@@ -37,6 +58,10 @@ export function DeparturePlaceSelector({
   onCountrySelect,
   onComplete,
   onCitySearch,
+  isCitiesLoading = false,
+  isCountriesLoading = false,
+  citiesError = null,
+  countriesError = null,
 }: Readonly<DeparturePlaceSelectorProps>) {
   const [searchQuery, setSearchQuery] = useState('');
   const isInitialSearchRef = useRef(true);
@@ -88,6 +113,8 @@ export function DeparturePlaceSelector({
     (city) => !popularCityNames.has(normalizeName(city.name)),
   );
   const hasResults = sortedCities.length > 0 || filteredCountries.length > 0;
+  const isLoading = isCitiesLoading || isCountriesLoading;
+  const hasLocationsError = citiesError !== null || countriesError !== null;
 
   const completeCitySelection = (city: City) => {
     onCitySelect(city);
@@ -116,10 +143,15 @@ export function DeparturePlaceSelector({
       ) : null}
 
       {hasResults ? (
-        <div className={styles.container}>
-          {sortedCities.length > 0 ? (
+        <div
+          aria-busy={isLoading}
+          className={styles.container}
+        >
+          {sortedCities.length > 0 || citiesError ? (
             <section className={styles.citySection}>
               <h2 className={styles.title}>Города России</h2>
+
+              {citiesError && <LocationLoadError />}
 
               {popularCities.length > 0 ? (
                 <CityList
@@ -138,16 +170,28 @@ export function DeparturePlaceSelector({
             </section>
           ) : null}
 
-          {filteredCountries.length > 0 ? (
+          {filteredCountries.length > 0 || countriesError ? (
             <section className={styles.countrySection}>
               <h2 className={styles.title}>Другие страны</h2>
-              <CountryList
-                countries={filteredCountries}
-                onSelect={completeCountrySelection}
-              />
+              {countriesError ? (
+                <LocationLoadError />
+              ) : (
+                <CountryList
+                  countries={filteredCountries}
+                  onSelect={completeCountrySelection}
+                />
+              )}
             </section>
           ) : null}
         </div>
+      ) : isLoading ? (
+        <div
+          aria-busy="true"
+          aria-label="Загрузка локаций"
+          role="status"
+        />
+      ) : hasLocationsError ? (
+        <LocationLoadError />
       ) : (
         <EmptyState
           description="Проверьте написание — или выберите город из списка."
