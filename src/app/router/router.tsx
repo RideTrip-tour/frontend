@@ -13,6 +13,7 @@ const RegisterPage = lazy(() =>
 );
 const TripBuilderPage = lazy(() => import('@/pages/trip-builder'));
 const PartnerOffersPage = lazy(() => import('@/pages/partner-offers'));
+const ResortsPage = lazy(() => import('@/pages/resorts'));
 const RegistrationVerifyPage = lazy(() => import('@/pages/RegistrationVerifyPage'));
 const PrivacyPolicyPage = lazy(() =>
   import('@/pages/Legal/LegalPages').then((m) => ({ default: m.PrivacyPolicyPage })),
@@ -63,6 +64,10 @@ export function AppRouter() {
           <Route
             path="partner-offers"
             element={<PartnerOffersPage />}
+          />
+          <Route
+            path="resorts"
+            element={<ResortsPage />}
           />
         </Route>
 

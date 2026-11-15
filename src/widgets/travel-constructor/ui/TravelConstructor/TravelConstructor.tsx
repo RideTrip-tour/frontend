@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import {
   MapMarkerIcon,
@@ -11,6 +12,7 @@ import {
   SkilLevelIcon,
   ShieldIcon,
 } from '@/assets/icons/constructor';
+import { Button } from '@/shared/ui/Button';
 import { INITIAL_OPEN_ITEMS } from '@/widgets/travel-constructor/config/constructorSections';
 import { formatTripDates } from '@/widgets/travel-constructor/lib/formatters';
 import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
@@ -34,6 +36,7 @@ import { TravelConstructorSections, type ConstructorItem } from './TravelConstru
 import style from './TravelConstructor.module.scss';
 
 export function TravelConstructor() {
+  const navigate = useNavigate();
   const {
     fromCity,
     fromCountry,
@@ -188,7 +191,13 @@ export function TravelConstructor() {
             setToCountry(null);
           }}
           onComplete={() => closeItem('to')}
-        />
+        >
+          <Button
+            onClick={() => navigate('/trip-builder/resorts')}
+            text="Показать все курорты"
+            variant="light"
+          />
+        </PlaceSelector>
       ),
     },
     {

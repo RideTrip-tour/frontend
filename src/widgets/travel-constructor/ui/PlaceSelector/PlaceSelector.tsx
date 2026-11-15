@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 import { AlertIcon } from '@/assets/icons/constructor';
 import ConnectionErrorIcon from '@/assets/icons/partner-offers/ConnectionError.svg?react';
@@ -14,6 +14,7 @@ const MIN_SEARCH_LENGTH = 3;
 
 interface PlaceSelectorProps {
   idPrefix: string;
+  children?: ReactNode;
   cities: City[];
   countries?: Country[];
   onCitySelect: (city: City) => void;
@@ -52,6 +53,7 @@ function removeDuplicateCities(cities: City[]): City[] {
 
 export function PlaceSelector({
   idPrefix,
+  children,
   cities,
   countries = [],
   onCitySelect,
@@ -142,6 +144,8 @@ export function PlaceSelector({
       {isShortQuery ? (
         <p className={styles.searchHint}>Введите минимум 3 символа для поиска</p>
       ) : null}
+
+      {children}
 
       {hasResults ? (
         <div
