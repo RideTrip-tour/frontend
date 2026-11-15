@@ -65,7 +65,7 @@ export function AppRouter() {
             element={<PartnerOffersPage />}
           />
         </Route>
-        
+
         <Route
           path="/about"
           element={<AboutPage />}
