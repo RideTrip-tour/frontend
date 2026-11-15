@@ -11,14 +11,13 @@ import {
   SkilLevelIcon,
   ShieldIcon,
 } from '@/assets/icons/constructor';
-import { cities as mockCities } from '@/entities/city';
-import { countries as mockCountries } from '@/entities/country';
 import { INITIAL_OPEN_ITEMS } from '@/widgets/travel-constructor/config/constructorSections';
 import { formatTripDates } from '@/widgets/travel-constructor/lib/formatters';
 import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
 import { formatSelectionSummary } from '@/widgets/travel-constructor/lib/selectionSummary';
 import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
 import type { ConstructorSelectionId } from '@/widgets/travel-constructor/model/types';
+import { useCitySearch } from '@/widgets/travel-constructor/model/useCitySearch';
 import { useLocationReferences } from '@/widgets/travel-constructor/model/useLocationReferences';
 
 import { AccommodationSelector } from '../AccommodationSelector';
@@ -26,8 +25,8 @@ import { ActivitySelector } from '../ActivitySelector';
 import { AdditionalOptionsSelector } from '../AdditionalOptionsSelector';
 import { ConstructorCart } from '../ConstructorCart';
 import { DateRangePicker } from '../DateRangePicker';
-import { DeparturePlaceSelector } from '../DeparturePlaceSelector';
 import { GuestSelector } from '../GuestSelector';
+import { PlaceSelector } from '../PlaceSelector';
 import { SkiLevelSelector } from '../SkiLevelSelector';
 import { TransferSelector } from '../TransferSelector';
 import { TravelConstructorSections, type ConstructorItem } from './TravelConstructorSections';
@@ -72,18 +71,24 @@ export function TravelConstructor() {
   }));
   const [showAdditional, setShowAdditional] = useState(false);
   const {
-    cities,
+    cities: departureCities,
     countries,
-    isCitiesLoading,
+    isCitiesLoading: isDepartureCitiesLoading,
     isCountriesLoading,
-    citiesError,
+    citiesError: departureCitiesError,
     countriesError,
     isSkiStylesLoading,
     isSkiLevelsLoading,
-    searchCities,
+    searchCities: searchDepartureCities,
     skiStyles,
     skiLevels,
   } = useLocationReferences();
+  const {
+    cities: destinationCities,
+    isCitiesLoading: isDestinationCitiesLoading,
+    citiesError: destinationCitiesError,
+    searchCities: searchDestinationCities,
+  } = useCitySearch();
 
   const displayValueFrom = fromCountry?.name ?? fromCity?.name;
   const displayValueTo = toCountry?.name ?? toCity?.name;
@@ -144,14 +149,14 @@ export function TravelConstructor() {
       description: 'Например "Москва"',
       value: displayValueFrom,
       children: (
-        <DeparturePlaceSelector
-          cities={cities}
+        <PlaceSelector
+          cities={departureCities}
           countries={countries}
-          citiesError={citiesError}
+          citiesError={departureCitiesError}
           countriesError={countriesError}
-          isCitiesLoading={isCitiesLoading}
+          isCitiesLoading={isDepartureCitiesLoading}
           isCountriesLoading={isCountriesLoading}
-          onCitySearch={searchCities}
+          onCitySearch={searchDepartureCities}
           idPrefix="from"
           onCitySelect={(city) => {
             setFromCity(city);
@@ -172,19 +177,17 @@ export function TravelConstructor() {
       description: 'Например "Москва"',
       value: displayValueTo,
       children: (
-        <DeparturePlaceSelector
-          cities={mockCities}
-          countries={mockCountries}
+        <PlaceSelector
+          cities={destinationCities}
+          citiesError={destinationCitiesError}
+          isCitiesLoading={isDestinationCitiesLoading}
+          onCitySearch={searchDestinationCities}
           idPrefix="to"
           onCitySelect={(city) => {
             setToCity(city);
             setToCountry(null);
           }}
           onComplete={() => closeItem('to')}
-          onCountrySelect={(country) => {
-            setToCountry(country);
-            setToCity(null);
-          }}
         />
       ),
     },

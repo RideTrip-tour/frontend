@@ -8,16 +8,16 @@ import { EmptyState } from '@/shared/ui/base/EmptyState';
 import { SearchInput } from '@/shared/ui/base/SearchInput';
 import { POPULAR_CITY_NAMES } from '@/widgets/travel-constructor/config/citySelector';
 
-import styles from './DeparturePlaceSelector.module.scss';
+import styles from './PlaceSelector.module.scss';
 
 const MIN_SEARCH_LENGTH = 3;
 
-interface DeparturePlaceSelectorProps {
+interface PlaceSelectorProps {
   idPrefix: string;
   cities: City[];
-  countries: Country[];
+  countries?: Country[];
   onCitySelect: (city: City) => void;
-  onCountrySelect: (country: Country) => void;
+  onCountrySelect?: (country: Country) => void;
   onComplete: () => void;
   onCitySearch?: (query: string) => Promise<void>;
   isCitiesLoading?: boolean;
@@ -50,10 +50,10 @@ function removeDuplicateCities(cities: City[]): City[] {
   return Array.from(new Map(cities.map((city) => [normalizeName(city.name), city])).values());
 }
 
-export function DeparturePlaceSelector({
+export function PlaceSelector({
   idPrefix,
   cities,
-  countries,
+  countries = [],
   onCitySelect,
   onCountrySelect,
   onComplete,
@@ -62,7 +62,7 @@ export function DeparturePlaceSelector({
   isCountriesLoading = false,
   citiesError = null,
   countriesError = null,
-}: Readonly<DeparturePlaceSelectorProps>) {
+}: Readonly<PlaceSelectorProps>) {
   const [searchQuery, setSearchQuery] = useState('');
   const isInitialSearchRef = useRef(true);
   const normalizedQuery = normalizeName(searchQuery);
@@ -75,6 +75,7 @@ export function DeparturePlaceSelector({
 
     if (isInitialSearchRef.current) {
       isInitialSearchRef.current = false;
+      void onCitySearch('');
       return;
     }
 
@@ -123,7 +124,7 @@ export function DeparturePlaceSelector({
   };
 
   const completeCountrySelection = (country: Country) => {
-    onCountrySelect(country);
+    onCountrySelect?.(country);
     setSearchQuery('');
     onComplete();
   };
