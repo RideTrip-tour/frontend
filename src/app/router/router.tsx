@@ -34,6 +34,7 @@ const UserAgreementPage = lazy(() =>
 );
 
 const AboutPage = lazy(() => import('@/pages/About'));
+const WhatToTakePage = lazy(() => import('@/pages/WhatToTake'));
 
 export function AppRouter() {
   return (
@@ -69,6 +70,11 @@ export function AppRouter() {
         <Route
           path="/about"
           element={<AboutPage />}
+        />
+
+        <Route
+          path="/what-to-take"
+          element={<WhatToTakePage />}
         />
 
         <Route element={<PaddedLayout />}>
