@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router';
 
 import { ProtectedRoute } from '@/app/router/ProtectedRoute';
 import PaddedLayout from '@/components/layout/PaddedLayout';
+import { LEGAL_ROUTE } from '@/shared/config';
 
 const HomePage = lazy(() => import('@/pages/Home'));
 const ProfilePage = lazy(() => import('@/pages/Profile'));
@@ -13,24 +14,7 @@ const RegisterPage = lazy(() =>
 );
 const TripBuilderPage = lazy(() => import('@/pages/trip-builder'));
 const RegistrationVerifyPage = lazy(() => import('@/pages/RegistrationVerifyPage'));
-const PrivacyPolicyPage = lazy(() =>
-  import('@/pages/Legal/LegalPages').then((m) => ({ default: m.PrivacyPolicyPage })),
-);
-const TermsOfServicePage = lazy(() =>
-  import('@/pages/Legal/LegalPages').then((m) => ({ default: m.TermsOfServicePage })),
-);
-const PrivacyConsentPage = lazy(() =>
-  import('@/pages/Legal/LegalPages').then((m) => ({ default: m.PrivacyConsentPage })),
-);
-const MarketingConsentPage = lazy(() =>
-  import('@/pages/Legal/LegalPages').then((m) => ({ default: m.MarketingConsentPage })),
-);
-const PublicOfferPage = lazy(() =>
-  import('@/pages/Legal/LegalPages').then((m) => ({ default: m.PublicOfferPage })),
-);
-const UserAgreementPage = lazy(() =>
-  import('@/pages/Legal/LegalPages').then((m) => ({ default: m.UserAgreementPage })),
-);
+const LegalDocumentPage = lazy(() => import('@/pages/Legal'));
 
 const AboutPage = lazy(() => import('@/pages/About'));
 
@@ -65,31 +49,9 @@ export function AppRouter() {
 
         <Route element={<PaddedLayout />}>
           <Route
-            path="/legal/privacy-policy"
-            element={<PrivacyPolicyPage />}
+            path={LEGAL_ROUTE}
+            element={<LegalDocumentPage />}
           />
-          <Route
-            path="/legal/terms-of-service"
-            element={<TermsOfServicePage />}
-          />
-          <Route
-            path="/legal/privacy-consent"
-            element={<PrivacyConsentPage />}
-          />
-          <Route
-            path="/legal/marketing-consent"
-            element={<MarketingConsentPage />}
-          />
-          <Route
-            path="/legal/public-offer"
-            element={<PublicOfferPage />}
-          />
-          <Route element={<PaddedLayout />}>
-            <Route
-              path="/legal/user-agreement"
-              element={<UserAgreementPage />}
-            />
-          </Route>
         </Route>
 
         <Route element={<ProtectedRoute />}>
