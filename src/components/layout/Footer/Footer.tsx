@@ -128,7 +128,7 @@ export function Footer() {
 
         <div className={style.footer__bottom}>
           <a
-            href="/privacy"
+            href="/legal/privacy-policy"
             className={style.footer__bottomItem}
           >
             Политика конфиденциальности
@@ -137,7 +137,7 @@ export function Footer() {
             2026 &ldquo;Тришагадо&rdquo;. Все права защищены.
           </span>
           <a
-            href="/terms"
+            href="/legal/terms-of-service"
             className={style.footer__bottomItem}
           >
             Условия использования

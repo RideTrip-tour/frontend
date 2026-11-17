@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router';
+
 import { useCopyToClipboard } from '@/hooks';
+import { getLegalDocumentPath, LEGAL_DOCUMENTS } from '@/shared/config';
 import Divider from '@/shared/ui/base/Divider';
 import MenuRow from '@/shared/ui/base/MenuRow';
 import SectionHeader from '@/shared/ui/base/SectionHeader';
@@ -11,17 +14,9 @@ import './variables.css';
 
 const SUPPORT_EMAIL = 'support.travel@mail.ru';
 
-const DOCUMENTS = [
-  'Политика конфиденциальности',
-  'Пользовательское соглашение',
-  'Условия использования сервиса',
-  'Оферта продажи туров',
-  'Согласие на обработку персональных данных',
-  'Политика обработки файлов cookie',
-];
-
 function DocumentsBlock() {
   const { copied, copy } = useCopyToClipboard();
+  const navigate = useNavigate();
 
   const handleCopyEmail = () => {
     copy(SUPPORT_EMAIL);
@@ -40,12 +35,15 @@ function DocumentsBlock() {
         />
         <Divider />
         <div className={style.documentsblock__list}>
-          {DOCUMENTS.map((doc) => (
+          {LEGAL_DOCUMENTS.map(({ slug, title }) => (
             <div
-              key={doc}
+              key={slug}
               className={style.documentsblock__item}
             >
-              <MenuRow text={doc} />
+              <MenuRow
+                text={title}
+                onClick={() => navigate(getLegalDocumentPath(slug))}
+              />
               <Divider />
             </div>
           ))}

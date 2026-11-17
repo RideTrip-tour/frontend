@@ -4,6 +4,7 @@ import { useId, useMemo, useState, type FormEvent } from 'react';
 import CloseIcon from '@/assets/icons/close.svg';
 import Loader from '@/assets/icons/loader.svg';
 import { isValidPassword, PASSWORD_HINT } from '@/features/auth/lib/passwordValidation';
+import { getLegalDocumentPath } from '@/shared/config';
 import ModalOverlay from '@/shared/ui/base/ModalOverlay';
 
 import AuthField from './AuthField';
@@ -323,13 +324,14 @@ export default function UnifiedAuthModal({
                   >
                     <span>
                       Я соглашаюсь с{' '}
-                      <button
-                        type="button"
+                      <a
+                        href={getLegalDocumentPath('terms-of-service')}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className={formStyles.linkButtonInline}
-                        onClick={() => console.log('terms')}
                       >
                         Условиями использования
-                      </button>
+                      </a>
                     </span>
                   </AuthCheckbox>
                 </motion.div>
