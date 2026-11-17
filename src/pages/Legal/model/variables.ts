@@ -1,7 +1,7 @@
 export const legalVariables = {
   COMPANY_NAME: 'Travel Designer',
   SERVICE_NAME: 'Travel Designer',
-  SITE_URL: window.location.origin,
+  SITE_URL: import.meta.env.VITE_API_URL ?? 'trip.elmobil.ru',
   PRIVACY_EMAIL: 'support.travel@mail.ru',
   SUPPORT_EMAIL: 'support.travel@mail.ru',
   LEGAL_EMAIL: 'support.travel@mail.ru',
