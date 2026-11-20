@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
 
 import {
   MapMarkerIcon,
@@ -12,9 +11,8 @@ import {
   SkilLevelIcon,
   ShieldIcon,
 } from '@/assets/icons/constructor';
-import { Button } from '@/shared/ui/Button';
 import { INITIAL_OPEN_ITEMS } from '@/widgets/travel-constructor/config/constructorSections';
-import { formatTripDates } from '@/widgets/travel-constructor/lib/formatters';
+import { formatDestination, formatTripDates } from '@/widgets/travel-constructor/lib/formatters';
 import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
 import { formatSelectionSummary } from '@/widgets/travel-constructor/lib/selectionSummary';
 import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
@@ -27,6 +25,7 @@ import { ActivitySelector } from '../ActivitySelector';
 import { AdditionalOptionsSelector } from '../AdditionalOptionsSelector';
 import { ConstructorCart } from '../ConstructorCart';
 import { DateRangePicker } from '../DateRangePicker';
+import { DestinationSelector } from '../DestinationSelector';
 import { GuestSelector } from '../GuestSelector';
 import { PlaceSelector } from '../PlaceSelector';
 import { SkiLevelSelector } from '../SkiLevelSelector';
@@ -36,12 +35,12 @@ import { TravelConstructorSections, type ConstructorItem } from './TravelConstru
 import style from './TravelConstructor.module.scss';
 
 export function TravelConstructor() {
-  const navigate = useNavigate();
   const {
     fromCity,
     fromCountry,
     toCity,
     toCountry,
+    selectedResort,
     departureDate,
     returnDate,
     activities,
@@ -72,7 +71,9 @@ export function TravelConstructor() {
     ...INITIAL_OPEN_ITEMS,
     ...(activeSelectorId ? { [activeSelectorId]: true } : {}),
   }));
-  const [showAdditional, setShowAdditional] = useState(false);
+  const [showAdditional, setShowAdditional] = useState(
+    activeSelectorId !== null && ['people', 'level', 'additional'].includes(activeSelectorId),
+  );
   const {
     cities: departureCities,
     countries,
@@ -94,7 +95,7 @@ export function TravelConstructor() {
   } = useCitySearch();
 
   const displayValueFrom = fromCountry?.name ?? fromCity?.name;
-  const displayValueTo = toCountry?.name ?? toCity?.name;
+  const displayValueTo = formatDestination({ selectedResort, toCity, toCountry });
   const displayWhenDate = formatTripDates(departureDate, returnDate);
   const displayActivity = formatSelectionSummary([...activities, ...liftTypes]);
   const displayAccommodation = accommodation?.name;
@@ -178,26 +179,20 @@ export function TravelConstructor() {
       icon: <RoadFinishIcon />,
       title: 'Куда едем?',
       description: 'Например "Москва"',
-      value: displayValueTo,
+      value: openItems.to ? undefined : displayValueTo,
+      isComplete: Boolean(displayValueTo),
       children: (
-        <PlaceSelector
+        <DestinationSelector
           cities={destinationCities}
           citiesError={destinationCitiesError}
           isCitiesLoading={isDestinationCitiesLoading}
           onCitySearch={searchDestinationCities}
-          idPrefix="to"
           onCitySelect={(city) => {
             setToCity(city);
             setToCountry(null);
           }}
           onComplete={() => closeItem('to')}
-        >
-          <Button
-            onClick={() => navigate('/trip-builder/resorts')}
-            text="Показать все курорты"
-            variant="light"
-          />
-        </PlaceSelector>
+        />
       ),
     },
     {

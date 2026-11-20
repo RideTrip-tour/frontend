@@ -11,6 +11,13 @@ export interface PartnerOffer {
   provider: string;
   providerLogo: string;
   badges: string[];
+  accommodationType?: string;
+  minRating?: number;
+  providerPhone?: string;
+  checkInTime?: string;
+  checkOutTime?: string;
+  bookingNumber?: string;
+  bookingUrl?: string;
   featured?: boolean;
   recommendation?: {
     label: string;

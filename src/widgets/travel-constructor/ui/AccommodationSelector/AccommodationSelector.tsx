@@ -118,6 +118,16 @@ export function AccommodationSelector({
     ? filteredAccommodations.length
     : MOCK_TOTAL_ACCOMMODATION_COUNT;
 
+  const selectAccommodation = (option: Accommodation) => {
+    onSelect({
+      ...option,
+      minRating:
+        ratingFilter === RATING_FILTERS[0]
+          ? undefined
+          : Number.parseFloat(ratingFilter.replace(',', '.')),
+    });
+  };
+
   return (
     <div className={styles.selector}>
       <SearchInput
@@ -153,7 +163,7 @@ export function AccommodationSelector({
         hasActiveFilters={hasActiveFilters}
         hasNoAvailableRooms={hasNoAvailableRooms}
         onOpenMap={() => setIsMapOpen(true)}
-        onSelect={onSelect}
+        onSelect={selectAccommodation}
         resultCount={resultCount}
         selectedAccommodationId={selectedAccommodationId}
       />

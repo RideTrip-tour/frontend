@@ -1,0 +1,26 @@
+.toolbar {
+  margin-bottom: 32px;
+}
+
+.filterIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.modal {
+  display: block;
+}
+
+.modalControls {
+  display: grid;
+  gap: 20px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 28px;
+}

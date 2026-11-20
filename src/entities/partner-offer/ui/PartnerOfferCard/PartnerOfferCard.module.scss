@@ -59,7 +59,7 @@
 }
 
 .favoriteButtonActive {
-  color: #e2bd00;
+  color: #d92d20;
 }
 
 .description {
@@ -187,6 +187,10 @@
   line-height: 20px;
   white-space: nowrap;
   cursor: pointer;
+}
+
+.selectButton:disabled {
+  cursor: default;
 }
 
 .selectButton svg {

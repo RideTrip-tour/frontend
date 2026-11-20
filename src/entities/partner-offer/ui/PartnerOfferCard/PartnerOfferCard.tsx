@@ -13,6 +13,7 @@ const priceFormatter = new Intl.NumberFormat('ru-RU');
 interface PartnerOfferCardProps {
   offer: PartnerOffer;
   isFavorite?: boolean;
+  isSelected?: boolean;
   onSelect?: (offer: PartnerOffer) => void;
   onFavoriteToggle?: (offer: PartnerOffer) => void;
 }
@@ -20,6 +21,7 @@ interface PartnerOfferCardProps {
 export function PartnerOfferCard({
   offer,
   isFavorite: controlledFavorite,
+  isSelected = false,
   onSelect,
   onFavoriteToggle,
 }: Readonly<PartnerOfferCardProps>) {
@@ -121,10 +123,11 @@ export function PartnerOfferCard({
               />
               <button
                 className={styles.selectButton}
+                disabled={isSelected}
                 onClick={() => onSelect?.(offer)}
                 type="button"
               >
-                Перейти к бронированию
+                {isSelected ? 'Добавлено в план' : 'Добавить в план'}
                 <ArrowRightIcon aria-hidden="true" />
               </button>
             </div>

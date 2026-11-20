@@ -1,0 +1,418 @@
+.card {
+  display: flex;
+  gap: 16px;
+  min-height: 352px;
+  padding: 16px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  color: var(--color-black, #1a1a1a);
+  background: var(--surface-primary, #fff);
+  box-shadow: 0 4px 10px 2px #1e4d8f1a;
+}
+
+.selected {
+  border-color: var(--color-blue, #0e68d4);
+  box-shadow: 0 4px 20px #0e68d440;
+}
+
+.imageWrapper {
+  flex: 0 0 480px;
+  width: 480px;
+  min-height: 320px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #eef1f4;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.headingRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--text-font-family-2);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 40px;
+  overflow-wrap: anywhere;
+}
+
+.rating {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  color: #5f6c7b;
+  font-family: var(--text-font-family-2);
+  font-size: 18px;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.star {
+  color: #ffd200;
+  font-size: 25px;
+}
+.reviewCount,
+.ratingDivider {
+  color: #969eac;
+}
+
+.location {
+  margin: 0;
+  color: #a9b2bf;
+  font-family: var(--text-font-family-2);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.conditions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+  font-family: var(--text-font-family-2);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.trails,
+.difficulties,
+.status,
+.elevation {
+  display: inline-flex;
+  align-items: center;
+}
+.trails {
+  gap: 12px;
+}
+.trailsLabel {
+  font-weight: 600;
+}
+.difficulties {
+  gap: 4px;
+}
+.difficulty {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #f1f3f7;
+}
+.green {
+  background: #35b574;
+}
+.blue {
+  background: #0e68d4;
+}
+.red {
+  background: #e82b25;
+}
+.black {
+  background: #1a1a1a;
+}
+.status {
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 100px;
+  font-weight: 500;
+}
+.openStatus {
+  color: #24b567;
+  background: #eaf8f0;
+}
+.closedStatus {
+  color: #7c8796;
+  background: #eef0f4;
+}
+.elevation {
+  gap: 8px;
+  color: #5f6c7b;
+  svg {
+    flex-shrink: 0;
+    color: #204f8f;
+  }
+}
+
+.amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.amenity {
+  padding: 4px 8px;
+  border-radius: 100px;
+  background: #e7f0fc;
+  font-family: var(--text-font-family-2);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: auto;
+}
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  color: #5f6c7b;
+  font-family: var(--text-font-family-2);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  strong {
+    color: #1a1a1a;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 36px;
+  }
+}
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 20px;
+}
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  font-family: var(--text-font-family-2);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #1a1a1a26;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+  &:focus-visible {
+    outline: 3px solid #0e68d4;
+    outline-offset: 3px;
+  }
+}
+.detailsButton {
+  border-color: #0e68d4;
+  color: #0e68d4;
+  background: #fff;
+  &:hover {
+    background: #edf5ff;
+  }
+}
+.selectButton {
+  min-width: 126px;
+  color: #fff;
+  background: #0e68d4;
+  &:not(:disabled):hover {
+    background: #0956b2;
+  }
+  &:disabled {
+    background: #7e8996;
+    cursor: not-allowed;
+  }
+}
+.selected .selectButton {
+  background: #1e4d8f;
+}
+.closed {
+  background: #f6f7f9;
+  .image,
+  .header,
+  .conditions,
+  .amenities,
+  .price {
+    opacity: 0.7;
+  }
+  .detailsButton {
+    border-color: #7e8996;
+    color: #7e8996;
+    background: #f6f7f9;
+  }
+}
+
+.compact {
+  container: resort-card / inline-size;
+  flex-direction: row;
+  gap: 16px;
+  min-width: 0;
+  min-height: 208px;
+  padding: 4px;
+  border-radius: 12px;
+
+  .imageWrapper {
+    flex: 0 0 200px;
+    width: 200px;
+    height: 200px;
+    min-height: 200px;
+    aspect-ratio: auto;
+    border-radius: 10px;
+  }
+
+  .image {
+    min-height: 0;
+  }
+
+  .content {
+    gap: 16px;
+    padding: 12px 12px 12px 0;
+  }
+
+  .header {
+    gap: 4px;
+  }
+
+  .headingRow {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .title {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .location {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .rating {
+    gap: 3px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .star {
+    font-size: 22px;
+  }
+
+  .reviewCount {
+    font-size: 14px;
+  }
+
+  .conditions {
+    gap: 12px 16px;
+  }
+
+  .footer {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .price {
+    gap: 6px;
+  }
+
+  .actions {
+    flex: 0 0 auto;
+    gap: 12px;
+    width: auto;
+    margin: 0;
+  }
+
+  .action {
+    flex: none;
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 16px;
+  }
+
+  .selectButton {
+    min-width: 110px;
+  }
+}
+
+@container resort-card (max-width: 740px) {
+  .compact .headingRow {
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+
+  .compact .footer {
+    flex-wrap: wrap;
+  }
+
+  .compact .actions {
+    margin-left: auto;
+  }
+}
+
+@container resort-card (max-width: 540px) {
+  .compact .imageWrapper {
+    flex-basis: 128px;
+    width: 128px;
+    height: auto;
+  }
+
+  .compact .content {
+    gap: 12px;
+    padding: 8px 8px 8px 0;
+  }
+
+  .compact .headingRow {
+    flex-direction: column;
+  }
+
+  .compact .price {
+    gap: 4px;
+    font-size: 14px;
+
+    strong {
+      font-size: 24px;
+      line-height: 32px;
+    }
+  }
+
+  .compact .actions {
+    flex: 1;
+    gap: 8px;
+    width: 100%;
+    margin: 0;
+  }
+
+  .compact .action {
+    flex: 1;
+    min-width: 0;
+    padding-inline: 8px;
+    font-size: 14px;
+  }
+}

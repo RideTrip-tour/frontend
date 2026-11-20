@@ -1,9 +1,11 @@
 import type { Accommodation } from '@/entities/accommodation/model/types';
 import type { City } from '@/entities/city/model/types';
 import type { Country } from '@/entities/country/model/types';
+import type { Resort } from '@/entities/resort';
 
 export type TransferType = 'needed' | 'self' | 'own-car';
 export type ParkingPreference = 'needed' | 'not-needed';
+export type ConstructorFlowStage = 'constructor' | 'offers' | 'plan';
 export type AdditionalOption =
   | 'Безбарьерная среда'
   | 'Пандусы и лифты'
@@ -47,6 +49,7 @@ export interface ConstructorState {
   fromCountry: Country | null;
   toCity: City | null;
   toCountry: Country | null;
+  selectedResort: Resort | null;
   departureDate: Date | null;
   returnDate: Date | null;
   activities: string[];
@@ -56,4 +59,8 @@ export interface ConstructorState {
   people: GuestSelection | null;
   level: string | null;
   additional: AdditionalOption[];
+}
+
+export interface ConstructorSessionState extends ConstructorState {
+  flowStage: ConstructorFlowStage;
 }

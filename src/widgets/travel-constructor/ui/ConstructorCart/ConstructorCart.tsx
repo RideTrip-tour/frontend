@@ -4,8 +4,13 @@ import { useLocation, useNavigate } from 'react-router';
 import { DownloadIcon, SadfaceIcon, ResetIcon, SaveIcon } from '@/assets/icons/constructor';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
 import { useAuthStore } from '@/store/authStore';
-import { formatCartDate, formatPrice } from '@/widgets/travel-constructor/lib/formatters';
+import {
+  formatCartDate,
+  formatDestination,
+  formatPrice,
+} from '@/widgets/travel-constructor/lib/formatters';
 import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
+import { getPartnerOffersReturnPath } from '@/widgets/travel-constructor/lib/navigation';
 import {
   calculateActivityPrice,
   calculateAdditionalOptionsPrice,
@@ -15,6 +20,7 @@ import {
   MOCK_TICKET_PRICE,
 } from '@/widgets/travel-constructor/mocks/prices';
 import type { CartModalState } from '@/widgets/travel-constructor/model/cartModalTypes';
+import { hasConstructorSelections } from '@/widgets/travel-constructor/model/constructorFlow';
 import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
 import { ConstructorCartModal } from '@/widgets/travel-constructor/ui/ConstructorCartModal';
 
@@ -43,13 +49,7 @@ function PriceLine({ price, note }: PriceLineProps) {
 export function ConstructorCart() {
   const navigate = useNavigate();
   const location = useLocation();
-  const partnerOffersReturnTo = (location.state as { partnerOffersReturnTo?: unknown } | null)
-    ?.partnerOffersReturnTo;
-  const checkoutPath =
-    typeof partnerOffersReturnTo === 'string' &&
-    /^\/trip-builder\/partner-offers\/?(?:[?#]|$)/.test(partnerOffersReturnTo)
-      ? partnerOffersReturnTo
-      : 'partner-offers';
+  const checkoutPath = getPartnerOffersReturnPath(location.state);
   const isAuth = useAuthStore((state) => state.isAuth);
   const [modal, setModal] = useState<CartModalState>(null);
   const closeModal = () => setModal(null);
@@ -57,11 +57,13 @@ export function ConstructorCart() {
     closeModal();
     navigate(`/?auth=${view}`);
   };
+  const trip = useConstructor();
   const {
     fromCity,
     fromCountry,
     toCity,
     toCountry,
+    selectedResort,
     departureDate,
     returnDate,
     activities,
@@ -72,7 +74,7 @@ export function ConstructorCart() {
     level,
     additional,
     activeSelectorId,
-    setActiveSelectorId,
+    proceedToPartnerOffers,
     clearActivities,
     clearAccommodation,
     clearAdditional,
@@ -81,10 +83,10 @@ export function ConstructorCart() {
     clearTickets,
     clearTransfer,
     resetConstructor: resetCart,
-  } = useConstructor();
+  } = trip;
 
   const handleCheckout = () => {
-    setActiveSelectorId(null);
+    if (!proceedToPartnerOffers()) return;
     navigate(checkoutPath);
   };
 
@@ -100,7 +102,7 @@ export function ConstructorCart() {
   const isSelectingAdditional = activeSelectorId === 'additional';
 
   const origin = fromCity?.name ?? fromCountry?.name ?? null;
-  const destination = toCity?.name ?? toCountry?.name ?? null;
+  const destination = formatDestination({ selectedResort, toCity, toCountry }) ?? null;
   const hasTicketDetails = Boolean(origin || destination || departureDate || returnDate);
 
   const route = origin || destination ? `${origin ?? 'Откуда'} - ${destination ?? 'Куда'}` : null;
@@ -138,14 +140,7 @@ export function ConstructorCart() {
     levelPrice +
     additionalOptionsPrice;
 
-  const hasSelectedItems =
-    hasTicketDetails ||
-    hasActivityDetails ||
-    Boolean(accommodation) ||
-    Boolean(transfer) ||
-    Boolean(people) ||
-    Boolean(level) ||
-    additional.length > 0;
+  const hasSelectedItems = hasConstructorSelections(trip);
   const hasVisibleItems = hasSelectedItems || activeSelectorId !== null;
 
   const saveCart = () => {
@@ -162,6 +157,7 @@ export function ConstructorCart() {
       fromCountry,
       toCity,
       toCountry,
+      selectedResort,
       departureDate: departureDate?.toISOString() ?? null,
       returnDate: returnDate?.toISOString() ?? null,
       activities,

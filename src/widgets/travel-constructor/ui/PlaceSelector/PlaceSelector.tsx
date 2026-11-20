@@ -15,6 +15,12 @@ const MIN_SEARCH_LENGTH = 3;
 interface PlaceSelectorProps {
   idPrefix: string;
   children?: ReactNode;
+  searchQuery?: string;
+  onSearchQueryChange?: (query: string) => void;
+  searchPlaceholder?: string;
+  searchAriaLabel?: string;
+  minSearchHint?: string;
+  emptyState?: ReactNode;
   cities: City[];
   countries?: Country[];
   onCitySelect: (city: City) => void;
@@ -54,6 +60,12 @@ function removeDuplicateCities(cities: City[]): City[] {
 export function PlaceSelector({
   idPrefix,
   children,
+  searchQuery,
+  onSearchQueryChange,
+  searchPlaceholder = 'Начните вводить название',
+  searchAriaLabel = 'Поиск',
+  minSearchHint = 'Введите минимум 3 символа для поиска',
+  emptyState,
   cities,
   countries = [],
   onCitySelect,
@@ -65,9 +77,10 @@ export function PlaceSelector({
   citiesError = null,
   countriesError = null,
 }: Readonly<PlaceSelectorProps>) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [internalSearchQuery, setInternalSearchQuery] = useState('');
+  const effectiveQuery = searchQuery ?? internalSearchQuery;
   const isInitialSearchRef = useRef(true);
-  const normalizedQuery = normalizeName(searchQuery);
+  const normalizedQuery = normalizeName(effectiveQuery);
   const isShortQuery = normalizedQuery.length > 0 && normalizedQuery.length < MIN_SEARCH_LENGTH;
 
   useEffect(() => {
@@ -81,7 +94,7 @@ export function PlaceSelector({
       return;
     }
 
-    const query = searchQuery.trim();
+    const query = effectiveQuery.trim();
 
     if (query.length > 0 && query.length < MIN_SEARCH_LENGTH) {
       return;
@@ -92,7 +105,7 @@ export function PlaceSelector({
     }, 300);
 
     return () => window.clearTimeout(timeoutId);
-  }, [onCitySearch, searchQuery]);
+  }, [onCitySearch, effectiveQuery]);
 
   const filteredCountries = useMemo(() => {
     const filtered = normalizedQuery
@@ -119,15 +132,23 @@ export function PlaceSelector({
   const isLoading = isCitiesLoading || isCountriesLoading;
   const hasLocationsError = citiesError !== null || countriesError !== null;
 
+  const handleSearchQueryChange = (query: string) => {
+    if (searchQuery === undefined) {
+      setInternalSearchQuery(query);
+    }
+
+    onSearchQueryChange?.(query);
+  };
+
   const completeCitySelection = (city: City) => {
     onCitySelect(city);
-    setSearchQuery('');
+    handleSearchQueryChange('');
     onComplete();
   };
 
   const completeCountrySelection = (country: Country) => {
     onCountrySelect?.(country);
-    setSearchQuery('');
+    handleSearchQueryChange('');
     onComplete();
   };
 
@@ -136,14 +157,13 @@ export function PlaceSelector({
       <SearchInput
         id={`city-search-${idPrefix}`}
         name={`city-search-${idPrefix}`}
-        onChange={setSearchQuery}
-        placeholder="Начните вводить название"
-        value={searchQuery}
+        onChange={handleSearchQueryChange}
+        placeholder={searchPlaceholder}
+        ariaLabel={searchAriaLabel}
+        value={effectiveQuery}
       />
 
-      {isShortQuery ? (
-        <p className={styles.searchHint}>Введите минимум 3 символа для поиска</p>
-      ) : null}
+      {isShortQuery ? <p className={styles.searchHint}>{minSearchHint}</p> : null}
 
       {children}
 
@@ -197,6 +217,8 @@ export function PlaceSelector({
         />
       ) : hasLocationsError ? (
         <LocationLoadError />
+      ) : emptyState !== undefined ? (
+        emptyState
       ) : (
         <EmptyState
           description="Проверьте написание — или выберите город из списка."

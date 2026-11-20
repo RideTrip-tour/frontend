@@ -13,6 +13,7 @@ import {
 } from '@/assets/icons/constructor';
 import {
   type ConstructorState,
+  formatDestination,
   formatGuestSummary,
   formatSelectionSummary,
 } from '@/widgets/travel-constructor';
@@ -42,6 +43,8 @@ interface PartnerOffersTripSummaryProps {
   status: PartnerOffersStatus;
   trip: ConstructorState;
   onEdit: () => void;
+  onOpenPlan: () => void;
+  selectedAccommodationName?: string;
 }
 
 function TripSummaryItem({ Icon, title, description, iconClassName }: TripSummaryItemProps) {
@@ -57,12 +60,19 @@ function TripSummaryItem({ Icon, title, description, iconClassName }: TripSummar
   );
 }
 
-export function PartnerOffersTripSummary({ status, trip, onEdit }: PartnerOffersTripSummaryProps) {
+export function PartnerOffersTripSummary({
+  status,
+  trip,
+  onEdit,
+  onOpenPlan,
+  selectedAccommodationName,
+}: PartnerOffersTripSummaryProps) {
   if (status === 'error') return null;
 
   const {
     toCity,
     toCountry,
+    selectedResort,
     departureDate,
     returnDate,
     activities,
@@ -72,7 +82,7 @@ export function PartnerOffersTripSummary({ status, trip, onEdit }: PartnerOffers
     accommodation,
     transfer,
   } = trip;
-  const destination = toCountry?.name ?? toCity?.name;
+  const destination = formatDestination({ selectedResort, toCity, toCountry });
   const activityLabel = formatSelectionSummary([...activities, ...liftTypes]);
   const levelIconClass = SKI_LEVEL_ICON_CLASSES.get(level?.trim().toLocaleLowerCase('ru-RU') ?? '');
 
@@ -97,6 +107,7 @@ export function PartnerOffersTripSummary({ status, trip, onEdit }: PartnerOffers
           </button>
           <button
             className={styles.planButton}
+            onClick={onOpenPlan}
             type="button"
           >
             План поездки
@@ -140,7 +151,7 @@ export function PartnerOffersTripSummary({ status, trip, onEdit }: PartnerOffers
         <TripSummaryItem
           Icon={HotelIcon}
           description="Проживание"
-          title={accommodation?.name ?? UNSELECTED_LABEL}
+          title={selectedAccommodationName ?? accommodation?.name ?? UNSELECTED_LABEL}
         />
         <TripSummaryItem
           Icon={TaxiIcon}
