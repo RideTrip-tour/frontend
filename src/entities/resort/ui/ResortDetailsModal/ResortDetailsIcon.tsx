@@ -99,10 +99,10 @@ const glyphs: Record<ResortDetailsIconName, ReactNode> = {
 export function ResortDetailsIcon({
   name,
   className,
-}: {
+}: Readonly<{
   name: ResortDetailsIconName;
   className?: string;
-}) {
+}>) {
   return (
     <svg
       aria-hidden="true"

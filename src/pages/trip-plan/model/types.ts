@@ -4,7 +4,7 @@ import type {
   TripPlanField,
   TripPlanTraveler,
 } from '@/entities/trip-plan';
-import type { ConstructorSelectionId } from '@/widgets/travel-constructor';
+import type { ConstructorSelectionId, GuestSelection } from '@/widgets/travel-constructor';
 
 export type TripPlanEditTarget = ConstructorSelectionId | 'offers';
 
@@ -31,4 +31,30 @@ export interface TripPlanPageData {
   travelers: TripPlanTraveler[];
   additional?: string[];
   costs: TripPlanCostItem[];
+}
+
+export interface TripGuestInfo {
+  people: GuestSelection | null;
+  count: number | null;
+  label: string;
+  priceLabel: string;
+}
+
+export interface TripDetails {
+  title: string;
+  destination: string | undefined;
+  origin: string;
+  arrival: string;
+  nights: number | null;
+  nightLabel: string;
+  dateRange: string;
+}
+
+export interface TripPrices {
+  ticketPrice: number | null;
+  perPersonTicketPrice: number | null;
+  perPersonHotelPrice: number | null;
+  transferRate: number | null;
+  totalLabel: string;
+  perPersonTotalLabel: string;
 }

@@ -28,7 +28,11 @@ type ResortFilterControlsProps = Pick<
   'filters' | 'onFilterChange' | 'countries'
 >;
 
-function ResortFilterControls({ filters, onFilterChange, countries }: ResortFilterControlsProps) {
+function ResortFilterControls({
+  filters,
+  onFilterChange,
+  countries,
+}: Readonly<ResortFilterControlsProps>) {
   return (
     <>
       <FilterSelect
@@ -92,7 +96,7 @@ export function ResortFilters({
   onSortChange,
   onReset,
   totalCount,
-}: ResortFiltersProps) {
+}: Readonly<ResortFiltersProps>) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

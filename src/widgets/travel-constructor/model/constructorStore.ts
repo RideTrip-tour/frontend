@@ -139,14 +139,17 @@ const createConstructorStore: StateCreator<ConstructorStore> = (set, get) => ({
           : state.toCity.name.trim().toLocaleLowerCase('ru-RU') ===
             selectedResort.cityName.trim().toLocaleLowerCase('ru-RU'));
 
+      let toCity: City | null = null;
+      if (matchesCity) {
+        toCity = state.toCity;
+      } else if (selectedResort.cityId !== null) {
+        toCity = { id: selectedResort.cityId, name: selectedResort.cityName };
+      }
+
       return {
         flowStage: 'constructor',
         selectedResort,
-        toCity: matchesCity
-          ? state.toCity
-          : selectedResort.cityId !== null
-            ? { id: selectedResort.cityId, name: selectedResort.cityName }
-            : null,
+        toCity,
         toCountry: null,
       };
     });

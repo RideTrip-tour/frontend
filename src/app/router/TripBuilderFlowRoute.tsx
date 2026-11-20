@@ -10,7 +10,7 @@ interface TripBuilderFlowRouteProps {
   requiredStage: 'offers' | 'plan';
 }
 
-export function TripBuilderFlowRoute({ requiredStage }: TripBuilderFlowRouteProps) {
+export function TripBuilderFlowRoute({ requiredStage }: Readonly<TripBuilderFlowRouteProps>) {
   const hasSelections = useConstructor(hasConstructorSelections);
   const flowStage = useConstructor((state) => state.flowStage);
   const location = useLocation();

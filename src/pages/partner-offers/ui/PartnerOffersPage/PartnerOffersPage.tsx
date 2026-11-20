@@ -3,7 +3,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router';
 
 import type { PartnerOffer } from '@/entities/partner-offer';
-import { getTripPlanContextKey, useTripPlan } from '@/entities/trip-plan';
+import {
+  getTripPlanContextKey,
+  type TripPlanAccommodationOffer,
+  useTripPlan,
+} from '@/entities/trip-plan';
 import { type ConstructorSelectionId, useConstructor } from '@/widgets/travel-constructor';
 
 import { formatSearchDate } from '../../lib/formatters';
@@ -22,6 +26,19 @@ import {
 import { PartnerOffersTripSummary } from '../PartnerOffersTripSummary/PartnerOffersTripSummary';
 
 import styles from './PartnerOffersPage.module.scss';
+
+function getOfferPriceBasis(priceLabel: string): TripPlanAccommodationOffer['priceBasis'] {
+  switch (priceLabel) {
+    case 'за человека':
+      return 'person';
+    case 'за ночь':
+      return 'night';
+    case 'за поездку':
+      return 'trip';
+    default:
+      return 'unknown';
+  }
+}
 
 export default function PartnerOffersPage() {
   const location = useLocation();
@@ -108,14 +125,7 @@ export default function PartnerOffersPage() {
   };
 
   const addOfferToPlan = (offer: PartnerOffer) => {
-    const priceBasis =
-      offer.priceLabel === 'за человека'
-        ? 'person'
-        : offer.priceLabel === 'за ночь'
-          ? 'night'
-          : offer.priceLabel === 'за поездку'
-            ? 'trip'
-            : 'unknown';
+    const priceBasis = getOfferPriceBasis(offer.priceLabel);
     selectAccommodation(
       {
         id: offer.id,

@@ -8,7 +8,7 @@ export interface CardListProps {
   className?: string;
 }
 
-export function CardList({ children, className }: CardListProps) {
+export function CardList({ children, className }: Readonly<CardListProps>) {
   return (
     <div
       aria-live="polite"

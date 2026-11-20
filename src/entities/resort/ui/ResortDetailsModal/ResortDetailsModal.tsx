@@ -26,7 +26,23 @@ const trailTypes = [
   { key: 'black', label: 'Чёрные (экстремальные)' },
 ] as const;
 
-function InfoRow({ icon, children }: { icon: ResortDetailsIconName; children: ReactNode }) {
+function getSelectionLabels(isOpen: boolean, isSelected: boolean) {
+  if (!isOpen) {
+    return { text: 'Недоступен', hint: 'Курорт сейчас недоступен для выбора' };
+  }
+  if (isSelected) {
+    return { text: 'Выбран', hint: 'Курорт уже добавлен в конструктор' };
+  }
+  return {
+    text: 'Выбрать',
+    hint: 'Нажмите «Выбрать», чтобы добавить курорт в конструктор',
+  };
+}
+
+function InfoRow({
+  icon,
+  children,
+}: Readonly<{ icon: ResortDetailsIconName; children: ReactNode }>) {
   return (
     <li className={styles.infoRow}>
       <ResortDetailsIcon
@@ -43,7 +59,7 @@ export function ResortDetailsModal({
   isSelected,
   onClose,
   onSelect,
-}: ResortDetailsModalProps) {
+}: Readonly<ResortDetailsModalProps>) {
   const titleId = useId();
   if (!resort) return null;
 
@@ -54,6 +70,7 @@ export function ResortDetailsModal({
     ? resort.location
     : `${resort.location}, ${resort.country}`;
   const reviewWord = reviewWords[reviewPluralRules.select(resort.reviewsCount)] ?? 'отзывов';
+  const selectionLabels = getSelectionLabels(resort.isOpen, isSelected);
 
   const selectResort = () => {
     if (!resort.isOpen || isSelected) return;
@@ -244,13 +261,7 @@ export function ResortDetailsModal({
         </div>
 
         <footer className={styles.footer}>
-          <p className={styles.hint}>
-            {!resort.isOpen
-              ? 'Курорт сейчас недоступен для выбора'
-              : isSelected
-                ? 'Курорт уже добавлен в конструктор'
-                : 'Нажмите «Выбрать», чтобы добавить курорт в конструктор'}
-          </p>
+          <p className={styles.hint}>{selectionLabels.hint}</p>
           <div className={styles.actions}>
             <Button
               className={`${styles.action} ${styles.closeAction}`}
@@ -261,7 +272,7 @@ export function ResortDetailsModal({
             <Button
               className={`${styles.action} ${styles.selectAction}`}
               disabled={!resort.isOpen || isSelected}
-              text={!resort.isOpen ? 'Недоступен' : isSelected ? 'Выбран' : 'Выбрать'}
+              text={selectionLabels.text}
               icon={
                 <ResortDetailsIcon
                   name="arrow"

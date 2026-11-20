@@ -17,7 +17,7 @@ export function TripPlanTravelersSection({
   travelers,
   additional,
   onEdit,
-}: TripPlanTravelersSectionProps) {
+}: Readonly<TripPlanTravelersSectionProps>) {
   return (
     <TripPlanSection
       title="Состав поездки"

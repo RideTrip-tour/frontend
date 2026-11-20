@@ -9,7 +9,12 @@ export interface TripPlanSectionProps {
   className?: string;
 }
 
-export function TripPlanSection({ title, icon, children, className }: TripPlanSectionProps) {
+export function TripPlanSection({
+  title,
+  icon,
+  children,
+  className,
+}: Readonly<TripPlanSectionProps>) {
   return (
     <section className={[styles.section, className].filter(Boolean).join(' ')}>
       <h2 className={styles.heading}>

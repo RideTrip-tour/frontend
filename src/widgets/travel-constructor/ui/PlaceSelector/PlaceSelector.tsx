@@ -33,6 +33,18 @@ interface PlaceSelectorProps {
   countriesError?: Error | null;
 }
 
+interface LocationResultsProps {
+  popularCities: City[];
+  regularCities: City[];
+  countries: Country[];
+  isLoading: boolean;
+  citiesError: Error | null;
+  countriesError: Error | null;
+  emptyState?: ReactNode;
+  onCitySelect: (city: City) => void;
+  onCountrySelect: (country: Country) => void;
+}
+
 function LocationLoadError() {
   return (
     <EmptyState
@@ -55,6 +67,89 @@ function normalizeName(name: string): string {
 
 function removeDuplicateCities(cities: City[]): City[] {
   return Array.from(new Map(cities.map((city) => [normalizeName(city.name), city])).values());
+}
+
+function LocationGroups({
+  popularCities,
+  regularCities,
+  countries,
+  isLoading,
+  citiesError,
+  countriesError,
+  onCitySelect,
+  onCountrySelect,
+}: Readonly<Omit<LocationResultsProps, 'emptyState'>>) {
+  return (
+    <div
+      aria-busy={isLoading}
+      className={styles.container}
+    >
+      {popularCities.length > 0 || regularCities.length > 0 || citiesError ? (
+        <section className={styles.citySection}>
+          <h2 className={styles.title}>Города России</h2>
+
+          {citiesError && <LocationLoadError />}
+
+          {popularCities.length > 0 ? (
+            <CityList
+              cities={popularCities}
+              highlighted
+              onSelect={onCitySelect}
+            />
+          ) : null}
+
+          {regularCities.length > 0 ? (
+            <CityList
+              cities={regularCities}
+              onSelect={onCitySelect}
+            />
+          ) : null}
+        </section>
+      ) : null}
+
+      {countries.length > 0 || countriesError ? (
+        <section className={styles.countrySection}>
+          <h2 className={styles.title}>Другие страны</h2>
+          {countriesError ? (
+            <LocationLoadError />
+          ) : (
+            <CountryList
+              countries={countries}
+              onSelect={onCountrySelect}
+            />
+          )}
+        </section>
+      ) : null}
+    </div>
+  );
+}
+
+function LocationResults({ emptyState, ...groups }: Readonly<LocationResultsProps>) {
+  const hasResults =
+    groups.popularCities.length > 0 ||
+    groups.regularCities.length > 0 ||
+    groups.countries.length > 0;
+  if (hasResults) return <LocationGroups {...groups} />;
+  if (groups.isLoading) {
+    return (
+      <div
+        aria-busy="true"
+        aria-label="Загрузка локаций"
+        role="status"
+      />
+    );
+  }
+  if (groups.citiesError !== null || groups.countriesError !== null) {
+    return <LocationLoadError />;
+  }
+  if (emptyState !== undefined) return emptyState;
+  return (
+    <EmptyState
+      description="Проверьте написание — или выберите город из списка."
+      icon={<AlertIcon aria-hidden="true" />}
+      title="Город не найден"
+    />
+  );
 }
 
 export function PlaceSelector({
@@ -128,9 +223,7 @@ export function PlaceSelector({
   const regularCities = sortedCities.filter(
     (city) => !popularCityNames.has(normalizeName(city.name)),
   );
-  const hasResults = sortedCities.length > 0 || filteredCountries.length > 0;
   const isLoading = isCitiesLoading || isCountriesLoading;
-  const hasLocationsError = citiesError !== null || countriesError !== null;
 
   const handleSearchQueryChange = (query: string) => {
     if (searchQuery === undefined) {
@@ -167,65 +260,17 @@ export function PlaceSelector({
 
       {children}
 
-      {hasResults ? (
-        <div
-          aria-busy={isLoading}
-          className={styles.container}
-        >
-          {sortedCities.length > 0 || citiesError ? (
-            <section className={styles.citySection}>
-              <h2 className={styles.title}>Города России</h2>
-
-              {citiesError && <LocationLoadError />}
-
-              {popularCities.length > 0 ? (
-                <CityList
-                  cities={popularCities}
-                  highlighted
-                  onSelect={completeCitySelection}
-                />
-              ) : null}
-
-              {regularCities.length > 0 ? (
-                <CityList
-                  cities={regularCities}
-                  onSelect={completeCitySelection}
-                />
-              ) : null}
-            </section>
-          ) : null}
-
-          {filteredCountries.length > 0 || countriesError ? (
-            <section className={styles.countrySection}>
-              <h2 className={styles.title}>Другие страны</h2>
-              {countriesError ? (
-                <LocationLoadError />
-              ) : (
-                <CountryList
-                  countries={filteredCountries}
-                  onSelect={completeCountrySelection}
-                />
-              )}
-            </section>
-          ) : null}
-        </div>
-      ) : isLoading ? (
-        <div
-          aria-busy="true"
-          aria-label="Загрузка локаций"
-          role="status"
-        />
-      ) : hasLocationsError ? (
-        <LocationLoadError />
-      ) : emptyState !== undefined ? (
-        emptyState
-      ) : (
-        <EmptyState
-          description="Проверьте написание — или выберите город из списка."
-          icon={<AlertIcon aria-hidden="true" />}
-          title="Город не найден"
-        />
-      )}
+      <LocationResults
+        popularCities={popularCities}
+        regularCities={regularCities}
+        countries={filteredCountries}
+        isLoading={isLoading}
+        citiesError={citiesError}
+        countriesError={countriesError}
+        emptyState={emptyState}
+        onCitySelect={completeCitySelection}
+        onCountrySelect={completeCountrySelection}
+      />
     </>
   );
 }

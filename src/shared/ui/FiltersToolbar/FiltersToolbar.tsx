@@ -9,7 +9,11 @@ export interface FiltersToolbarProps {
   className?: string;
 }
 
-export function FiltersToolbar({ children, sortControl, className }: FiltersToolbarProps) {
+export function FiltersToolbar({
+  children,
+  sortControl,
+  className,
+}: Readonly<FiltersToolbarProps>) {
   return (
     <div className={clsx(styles.toolbar, className)}>
       <div className={styles.filterGroup}>{children}</div>
@@ -28,7 +32,7 @@ export function FilterButton({
   type = 'button',
   variant = 'default',
   ...props
-}: FilterButtonProps) {
+}: Readonly<FilterButtonProps>) {
   return (
     <button
       {...props}
@@ -42,7 +46,7 @@ export function FilterButton({
 
 export type FilterSelectProps = SelectHTMLAttributes<HTMLSelectElement>;
 
-export function FilterSelect({ children, className, ...props }: FilterSelectProps) {
+export function FilterSelect({ children, className, ...props }: Readonly<FilterSelectProps>) {
   return (
     <select
       {...props}
@@ -55,7 +59,7 @@ export function FilterSelect({ children, className, ...props }: FilterSelectProp
 
 export type SortSelectProps = SelectHTMLAttributes<HTMLSelectElement>;
 
-export function SortSelect({ children, className, ...props }: SortSelectProps) {
+export function SortSelect({ children, className, ...props }: Readonly<SortSelectProps>) {
   return (
     <select
       {...props}

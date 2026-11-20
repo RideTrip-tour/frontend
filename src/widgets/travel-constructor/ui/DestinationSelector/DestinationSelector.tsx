@@ -78,9 +78,8 @@ export function DestinationSelector({
       >
         <div className={styles.resortsSection}>
           {filteredResorts.length > 0 && (
-            <div
+            <section
               className={styles.preview}
-              role="region"
               aria-label="Список курортов"
               tabIndex={0}
             >
@@ -96,7 +95,7 @@ export function DestinationSelector({
                   />
                 ))}
               </CardList>
-            </div>
+            </section>
           )}
           <Link
             className={styles.showAll}

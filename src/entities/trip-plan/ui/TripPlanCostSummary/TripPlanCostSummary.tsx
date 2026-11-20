@@ -12,7 +12,11 @@ export interface TripPlanCostSummaryProps {
   totalNote?: string;
 }
 
-export function TripPlanCostSummary({ costs, totalLabel, totalNote }: TripPlanCostSummaryProps) {
+export function TripPlanCostSummary({
+  costs,
+  totalLabel,
+  totalNote,
+}: Readonly<TripPlanCostSummaryProps>) {
   return (
     <TripPlanSection
       className={styles.costSection}

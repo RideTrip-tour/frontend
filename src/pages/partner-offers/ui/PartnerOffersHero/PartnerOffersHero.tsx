@@ -14,12 +14,30 @@ interface PartnerOffersHeroProps {
   onBack: () => void;
 }
 
+function getDescription(status: PartnerOffersStatus, mode: PartnerOffersMode) {
+  if (status === 'error' || status === 'empty') return undefined;
+  if (mode === 'similar') {
+    return (
+      <>
+        Но нашли похожие варианты, которые
+        <br />
+        могут вам подойти.
+      </>
+    );
+  }
+  return (
+    <>
+      Выберите подходящее предложение
+      <br />и перейдите к бронированию у партнёра
+    </>
+  );
+}
+
 export function PartnerOffersHero({ status, mode, totalCount, onBack }: PartnerOffersHeroProps) {
   const isError = status === 'error';
   const isEmpty = status === 'empty';
   const isLoading = status === 'loading';
   const isSimilar = mode === 'similar';
-  const hasDescription = !isError && !isEmpty;
 
   return (
     <>
@@ -40,22 +58,7 @@ export function PartnerOffersHero({ status, mode, totalCount, onBack }: PartnerO
             ? formatResultCount(totalCount)
             : undefined
         }
-        description={
-          hasDescription ? (
-            isSimilar ? (
-              <>
-                Но нашли похожие варианты, которые
-                <br />
-                могут вам подойти.
-              </>
-            ) : (
-              <>
-                Выберите подходящее предложение
-                <br />и перейдите к бронированию у партнёра
-              </>
-            )
-          ) : undefined
-        }
+        description={getDescription(status, mode)}
         image={snowyMountains}
         imageAlt="Заснеженные горы и канатная дорога"
         variant={isError ? 'error' : 'default'}

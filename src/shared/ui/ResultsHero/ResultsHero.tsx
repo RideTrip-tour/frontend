@@ -23,7 +23,7 @@ export function ResultsHero({
   imageAlt,
   className,
   variant = 'default',
-}: ResultsHeroProps) {
+}: Readonly<ResultsHeroProps>) {
   const hasDescription = description !== undefined && description !== null;
   const hasCount = count !== undefined && count !== null;
 

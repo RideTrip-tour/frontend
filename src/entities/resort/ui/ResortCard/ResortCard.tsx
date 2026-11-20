@@ -18,16 +18,21 @@ const difficultyLabels: Record<TrailDifficulty, string> = {
 function formatReviews(count: number): string {
   const lastTwoDigits = count % 100;
   const lastDigit = count % 10;
-  const word =
-    lastTwoDigits >= 11 && lastTwoDigits <= 14
-      ? 'отзывов'
-      : lastDigit === 1
-        ? 'отзыв'
-        : lastDigit >= 2 && lastDigit <= 4
-          ? 'отзыва'
-          : 'отзывов';
+  const formattedCount = numberFormatter.format(count);
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return `${formattedCount} отзывов`;
+  if (lastDigit === 1) return `${formattedCount} отзыв`;
+  if (lastDigit >= 2 && lastDigit <= 4) return `${formattedCount} отзыва`;
+  return `${formattedCount} отзывов`;
+}
 
-  return `${numberFormatter.format(count)} ${word}`;
+function getSelectionLabels(resort: Pick<Resort, 'name' | 'isOpen'>, isSelected: boolean) {
+  if (!resort.isOpen) {
+    return { text: 'Недоступен', ariaLabel: `Курорт ${resort.name} недоступен` };
+  }
+  if (isSelected) {
+    return { text: 'Выбран', ariaLabel: `Курорт ${resort.name} выбран` };
+  }
+  return { text: 'Выбрать', ariaLabel: `Выбрать курорт ${resort.name}` };
 }
 
 interface ResortCardProps {
@@ -47,6 +52,7 @@ export function ResortCard({
 }: Readonly<ResortCardProps>) {
   const titleId = useId();
   const isCompact = variant === 'compact';
+  const selectionLabels = getSelectionLabels(resort, isSelected);
 
   return (
     <article
@@ -180,20 +186,14 @@ export function ResortCard({
               Подробнее
             </button>
             <button
-              aria-label={
-                !resort.isOpen
-                  ? `Курорт ${resort.name} недоступен`
-                  : isSelected
-                    ? `Курорт ${resort.name} выбран`
-                    : `Выбрать курорт ${resort.name}`
-              }
+              aria-label={selectionLabels.ariaLabel}
               aria-pressed={isSelected}
               className={clsx(styles.action, styles.selectButton)}
               disabled={!resort.isOpen}
               onClick={() => onSelect(resort)}
               type="button"
             >
-              {!resort.isOpen ? 'Недоступен' : isSelected ? 'Выбран' : 'Выбрать'}
+              {selectionLabels.text}
             </button>
           </div>
         </footer>

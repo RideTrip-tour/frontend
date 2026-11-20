@@ -32,7 +32,7 @@ export function TripPlanInfoSection({
   amenities,
   action,
   className,
-}: TripPlanInfoSectionProps) {
+}: Readonly<TripPlanInfoSectionProps>) {
   const phone = footerPhone?.trim();
   const phoneHref = phone?.replace(/[^\d+]/g, '');
   const hasAmenities = Boolean(amenities?.length);

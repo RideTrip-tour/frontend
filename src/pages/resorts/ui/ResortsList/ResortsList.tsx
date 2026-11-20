@@ -20,7 +20,7 @@ export function ResortsList({
   onSelect,
   onDetails,
   onResetFilters,
-}: ResortsListProps) {
+}: Readonly<ResortsListProps>) {
   return (
     <CardList>
       {resorts.length ? (

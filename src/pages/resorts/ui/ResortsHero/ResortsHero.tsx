@@ -6,7 +6,7 @@ interface ResortsHeroProps {
   totalCount: number;
 }
 
-export function ResortsHero({ totalCount }: ResortsHeroProps) {
+export function ResortsHero({ totalCount }: Readonly<ResortsHeroProps>) {
   return (
     <ResultsHero
       id="resorts"

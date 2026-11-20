@@ -30,7 +30,7 @@ export function TripPlanHero({
   totalNote,
   priceHeading = 'Итоговая цена:',
   className,
-}: TripPlanHeroProps) {
+}: Readonly<TripPlanHeroProps>) {
   const titleId = useId();
 
   return (

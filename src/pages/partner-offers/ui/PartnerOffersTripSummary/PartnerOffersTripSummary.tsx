@@ -47,7 +47,12 @@ interface PartnerOffersTripSummaryProps {
   selectedAccommodationName?: string;
 }
 
-function TripSummaryItem({ Icon, title, description, iconClassName }: TripSummaryItemProps) {
+function TripSummaryItem({
+  Icon,
+  title,
+  description,
+  iconClassName,
+}: Readonly<TripSummaryItemProps>) {
   return (
     <div className={styles.tripItem}>
       <Icon
@@ -66,7 +71,7 @@ export function PartnerOffersTripSummary({
   onEdit,
   onOpenPlan,
   selectedAccommodationName,
-}: PartnerOffersTripSummaryProps) {
+}: Readonly<PartnerOffersTripSummaryProps>) {
   if (status === 'error') return null;
 
   const {

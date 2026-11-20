@@ -13,9 +13,10 @@ export function formatTripPlanForSharing(plan: TripPlanPageData): string {
     '',
     ...services.flatMap(([title, service]) => [
       title,
-      ...service.fields.map(
-        (field) => `${field.label}: ${field.value}${field.note ? ` (${field.note})` : ''}`,
-      ),
+      ...service.fields.map((field) => {
+        const note = field.note ? ` (${field.note})` : '';
+        return `${field.label}: ${field.value}${note}`;
+      }),
       [service.footer, service.footerPhone].filter(Boolean).join(' • '),
       '',
     ]),
