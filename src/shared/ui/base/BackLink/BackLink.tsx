@@ -5,26 +5,60 @@ import style from './backlink.module.scss';
 
 import './variables.css';
 
-interface BackLinkProps {
+interface BackLinkBaseProps {
   text: string;
-  to: string;
+  className?: string;
 }
 
-const BackLink = ({ text, to }: BackLinkProps) => {
-  const navigate = useNavigate();
+export type BackLinkProps = BackLinkBaseProps &
+  ({ to: string; onClick?: never } | { to?: never; onClick: () => void });
 
+function BackLinkButton({ text, onClick, className }: BackLinkBaseProps & { onClick: () => void }) {
   return (
     <button
       type="button"
-      className={style.backlink}
-      onClick={() => navigate(to)}
+      className={[style.backlink, className].filter(Boolean).join(' ')}
+      onClick={onClick}
     >
       <Icon
+        aria-hidden="true"
         icon="iconamoon:arrow-left-2"
         className={style.backlink__icon}
       />
-      <div className={style.backlink__text}>{text}</div>
+      <span className={style.backlink__text}>{text}</span>
     </button>
+  );
+}
+
+function NavigatingBackLink({ text, to, className }: BackLinkBaseProps & { to: string }) {
+  const navigate = useNavigate();
+
+  return (
+    <BackLinkButton
+      text={text}
+      className={className}
+      onClick={() => navigate(to)}
+    />
+  );
+}
+
+const BackLink = (props: BackLinkProps) => {
+  if (props.onClick !== undefined) {
+    return (
+      <BackLinkButton
+        text={props.text}
+        className={props.className}
+        onClick={props.onClick}
+      />
+    );
+  }
+
+  return (
+    <NavigatingBackLink
+      text={props.text}
+      className={props.className}
+      to={props.to}
+    />
   );
 };
 

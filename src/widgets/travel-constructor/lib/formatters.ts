@@ -1,3 +1,5 @@
+import type { ConstructorState } from '../model/types';
+
 const tripDateFormatter = new Intl.DateTimeFormat('ru-RU', {
   day: 'numeric',
   month: 'long',
@@ -10,6 +12,22 @@ const cartDateFormatter = new Intl.DateTimeFormat('ru-RU', {
 });
 
 export const priceFormatter = new Intl.NumberFormat('ru-RU');
+
+export function formatDestination({
+  selectedResort,
+  toCity,
+  toCountry,
+}: Pick<ConstructorState, 'selectedResort' | 'toCity' | 'toCountry'>): string | undefined {
+  if (selectedResort) {
+    const { name, cityName } = selectedResort;
+
+    return name.trim().toLocaleLowerCase('ru-RU') === cityName.trim().toLocaleLowerCase('ru-RU')
+      ? name
+      : `${name}, ${cityName}`;
+  }
+
+  return toCountry?.name ?? toCity?.name;
+}
 
 export function formatTripDates(
   departureDate: Date | null,

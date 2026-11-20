@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react';
 import clsx from 'clsx';
 
+import { FilterButton, FiltersToolbar, SortSelect } from '@/shared/ui/FiltersToolbar';
+
 import { formatSimilarResultCount } from '../../lib/formatters';
 import type { PartnerOffersMode, PartnerOffersStatus } from '../../model/types';
 
@@ -38,47 +40,41 @@ export function PartnerOfferFilters({
         ) : (
           <h2 className={styles.resultsTitle}>Мы нашли {formatSimilarResultCount(totalCount)}</h2>
         ))}
-      <div className={styles.toolbar}>
-        <div className={styles.filterGroup}>
-          <button
-            className={clsx(styles.filterButton, styles.filterButtonPrimary)}
-            type="button"
-          >
+      <FiltersToolbar
+        sortControl={
+          <label>
+            <span className={styles.visuallyHidden}>Сортировка вариантов</span>
+            <SortSelect
+              aria-label="Сортировка вариантов"
+              onChange={(event) => onSortChange(event.target.value as SortOption)}
+              value={sort}
+            >
+              <option value="recommended">Сначала лучшие</option>
+              <option value="price">Сначала дешевле</option>
+              <option value="rating">По рейтингу</option>
+            </SortSelect>
+          </label>
+        }
+      >
+        <FilterButton variant="primary">
+          <Icon
+            aria-hidden="true"
+            className={styles.filterButtonIcon}
+            icon="mage:filter-fill"
+          />
+          Фильтры
+        </FilterButton>
+        {filters.map((filter) => (
+          <FilterButton key={filter}>
+            {filter}
             <Icon
               aria-hidden="true"
               className={styles.filterButtonIcon}
-              icon="mage:filter-fill"
+              icon="iconamoon:arrow-down-2"
             />
-            Фильтры
-          </button>
-          {filters.map((filter) => (
-            <button
-              className={styles.filterButton}
-              key={filter}
-              type="button"
-            >
-              {filter}
-              <Icon
-                aria-hidden="true"
-                className={styles.filterButtonIcon}
-                icon="iconamoon:arrow-down-2"
-              />
-            </button>
-          ))}
-        </div>
-        <label className={styles.sortLabel}>
-          <span className={styles.visuallyHidden}>Сортировка вариантов</span>
-          <select
-            aria-label="Сортировка вариантов"
-            onChange={(event) => onSortChange(event.target.value as SortOption)}
-            value={sort}
-          >
-            <option value="recommended">Сначала лучшие</option>
-            <option value="price">Сначала дешевле</option>
-            <option value="rating">По рейтингу</option>
-          </select>
-        </label>
-      </div>
+          </FilterButton>
+        ))}
+      </FiltersToolbar>
     </div>
   );
 }

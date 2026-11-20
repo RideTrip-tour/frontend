@@ -11,14 +11,13 @@ import {
   SkilLevelIcon,
   ShieldIcon,
 } from '@/assets/icons/constructor';
-import { cities as mockCities } from '@/entities/city';
-import { countries as mockCountries } from '@/entities/country';
 import { INITIAL_OPEN_ITEMS } from '@/widgets/travel-constructor/config/constructorSections';
-import { formatTripDates } from '@/widgets/travel-constructor/lib/formatters';
+import { formatDestination, formatTripDates } from '@/widgets/travel-constructor/lib/formatters';
 import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
 import { formatSelectionSummary } from '@/widgets/travel-constructor/lib/selectionSummary';
 import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
 import type { ConstructorSelectionId } from '@/widgets/travel-constructor/model/types';
+import { useCitySearch } from '@/widgets/travel-constructor/model/useCitySearch';
 import { useLocationReferences } from '@/widgets/travel-constructor/model/useLocationReferences';
 
 import { AccommodationSelector } from '../AccommodationSelector';
@@ -26,8 +25,9 @@ import { ActivitySelector } from '../ActivitySelector';
 import { AdditionalOptionsSelector } from '../AdditionalOptionsSelector';
 import { ConstructorCart } from '../ConstructorCart';
 import { DateRangePicker } from '../DateRangePicker';
-import { DeparturePlaceSelector } from '../DeparturePlaceSelector';
+import { DestinationSelector } from '../DestinationSelector';
 import { GuestSelector } from '../GuestSelector';
+import { PlaceSelector } from '../PlaceSelector';
 import { SkiLevelSelector } from '../SkiLevelSelector';
 import { TransferSelector } from '../TransferSelector';
 import { TravelConstructorSections, type ConstructorItem } from './TravelConstructorSections';
@@ -40,6 +40,7 @@ export function TravelConstructor() {
     fromCountry,
     toCity,
     toCountry,
+    selectedResort,
     departureDate,
     returnDate,
     activities,
@@ -70,23 +71,31 @@ export function TravelConstructor() {
     ...INITIAL_OPEN_ITEMS,
     ...(activeSelectorId ? { [activeSelectorId]: true } : {}),
   }));
-  const [showAdditional, setShowAdditional] = useState(false);
+  const [showAdditional, setShowAdditional] = useState(
+    activeSelectorId !== null && ['people', 'level', 'additional'].includes(activeSelectorId),
+  );
   const {
-    cities,
+    cities: departureCities,
     countries,
-    isCitiesLoading,
+    isCitiesLoading: isDepartureCitiesLoading,
     isCountriesLoading,
-    citiesError,
+    citiesError: departureCitiesError,
     countriesError,
     isSkiStylesLoading,
     isSkiLevelsLoading,
-    searchCities,
+    searchCities: searchDepartureCities,
     skiStyles,
     skiLevels,
   } = useLocationReferences();
+  const {
+    cities: destinationCities,
+    isCitiesLoading: isDestinationCitiesLoading,
+    citiesError: destinationCitiesError,
+    searchCities: searchDestinationCities,
+  } = useCitySearch();
 
   const displayValueFrom = fromCountry?.name ?? fromCity?.name;
-  const displayValueTo = toCountry?.name ?? toCity?.name;
+  const displayValueTo = formatDestination({ selectedResort, toCity, toCountry });
   const displayWhenDate = formatTripDates(departureDate, returnDate);
   const displayActivity = formatSelectionSummary([...activities, ...liftTypes]);
   const displayAccommodation = accommodation?.name;
@@ -144,14 +153,14 @@ export function TravelConstructor() {
       description: 'Например "Москва"',
       value: displayValueFrom,
       children: (
-        <DeparturePlaceSelector
-          cities={cities}
+        <PlaceSelector
+          cities={departureCities}
           countries={countries}
-          citiesError={citiesError}
+          citiesError={departureCitiesError}
           countriesError={countriesError}
-          isCitiesLoading={isCitiesLoading}
+          isCitiesLoading={isDepartureCitiesLoading}
           isCountriesLoading={isCountriesLoading}
-          onCitySearch={searchCities}
+          onCitySearch={searchDepartureCities}
           idPrefix="from"
           onCitySelect={(city) => {
             setFromCity(city);
@@ -170,21 +179,19 @@ export function TravelConstructor() {
       icon: <RoadFinishIcon />,
       title: 'Куда едем?',
       description: 'Например "Москва"',
-      value: displayValueTo,
+      value: openItems.to ? undefined : displayValueTo,
+      isComplete: Boolean(displayValueTo),
       children: (
-        <DeparturePlaceSelector
-          cities={mockCities}
-          countries={mockCountries}
-          idPrefix="to"
+        <DestinationSelector
+          cities={destinationCities}
+          citiesError={destinationCitiesError}
+          isCitiesLoading={isDestinationCitiesLoading}
+          onCitySearch={searchDestinationCities}
           onCitySelect={(city) => {
             setToCity(city);
             setToCountry(null);
           }}
           onComplete={() => closeItem('to')}
-          onCountrySelect={(country) => {
-            setToCountry(country);
-            setToCity(null);
-          }}
         />
       ),
     },

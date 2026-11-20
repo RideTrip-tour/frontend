@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router';
 
 import { ProtectedRoute } from '@/app/router/ProtectedRoute';
+import { TripBuilderFlowRoute } from '@/app/router/TripBuilderFlowRoute';
 import PaddedLayout from '@/components/layout/PaddedLayout';
 import { LEGAL_ROUTE } from '@/shared/config';
 
@@ -14,6 +15,8 @@ const RegisterPage = lazy(() =>
 );
 const TripBuilderPage = lazy(() => import('@/pages/trip-builder'));
 const PartnerOffersPage = lazy(() => import('@/pages/partner-offers'));
+const TripPlanPage = lazy(() => import('@/pages/trip-plan'));
+const ResortsPage = lazy(() => import('@/pages/resorts'));
 const RegistrationVerifyPage = lazy(() => import('@/pages/RegistrationVerifyPage'));
 const LegalDocumentPage = lazy(() => import('@/pages/Legal'));
 
@@ -44,9 +47,21 @@ export function AppRouter() {
             index
             element={<TripBuilderPage />}
           />
+          <Route element={<TripBuilderFlowRoute requiredStage="offers" />}>
+            <Route
+              path="partner-offers"
+              element={<PartnerOffersPage />}
+            />
+          </Route>
+          <Route element={<TripBuilderFlowRoute requiredStage="plan" />}>
+            <Route
+              path="plan"
+              element={<TripPlanPage />}
+            />
+          </Route>
           <Route
-            path="partner-offers"
-            element={<PartnerOffersPage />}
+            path="resorts"
+            element={<ResortsPage />}
           />
         </Route>
 

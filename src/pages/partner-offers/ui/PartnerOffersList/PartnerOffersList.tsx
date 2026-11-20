@@ -1,6 +1,7 @@
 import ConnectionErrorIcon from '@/assets/icons/partner-offers/ConnectionError.svg?react';
 import { PartnerOfferCard, type PartnerOffer } from '@/entities/partner-offer';
 import { EmptyState } from '@/shared/ui/base/EmptyState';
+import { CardList } from '@/shared/ui/CardList';
 
 import type { PartnerOffersStatus } from '../../model/types';
 
@@ -11,6 +12,8 @@ interface PartnerOffersListProps {
   status: PartnerOffersStatus;
   favorites: ReadonlySet<string>;
   onFavoriteToggle: (offer: PartnerOffer) => void;
+  onSelect: (offer: PartnerOffer) => void;
+  selectedOfferId: string | null;
 }
 
 export function PartnerOffersList({
@@ -18,6 +21,8 @@ export function PartnerOffersList({
   status,
   favorites,
   onFavoriteToggle,
+  onSelect,
+  selectedOfferId,
 }: PartnerOffersListProps) {
   if (status === 'error') {
     return (
@@ -41,10 +46,7 @@ export function PartnerOffersList({
   }
 
   return (
-    <div
-      className={styles.resultsList}
-      aria-live="polite"
-    >
+    <CardList>
       {status === 'loading'
         ? Array.from({ length: 4 }, (_, index) => (
             <div
@@ -59,8 +61,10 @@ export function PartnerOffersList({
               key={offer.id}
               offer={offer}
               onFavoriteToggle={onFavoriteToggle}
+              onSelect={onSelect}
+              isSelected={selectedOfferId === offer.id}
             />
           ))}
-    </div>
+    </CardList>
   );
 }

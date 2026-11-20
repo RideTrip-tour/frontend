@@ -27,3 +27,4 @@ export { default as LikeFilledIcon } from './LikeFilledIcon.svg?react';
 export { default as CopyIcon } from './CopyIcon.svg?react';
 export { default as TelegramIcon } from './TelegramIcon.svg?react';
 export { default as WhatsappIcon } from './WhatsappIcon.svg?react';
+export { default as PlainIcon } from './PlainIcon.svg?react';

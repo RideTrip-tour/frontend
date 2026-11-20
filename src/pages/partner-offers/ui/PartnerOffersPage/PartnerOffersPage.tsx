@@ -3,6 +3,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router';
 
 import type { PartnerOffer } from '@/entities/partner-offer';
+import {
+  getTripPlanContextKey,
+  type TripPlanAccommodationOffer,
+  useTripPlan,
+} from '@/entities/trip-plan';
 import { type ConstructorSelectionId, useConstructor } from '@/widgets/travel-constructor';
 
 import { formatSearchDate } from '../../lib/formatters';
@@ -22,6 +27,19 @@ import { PartnerOffersTripSummary } from '../PartnerOffersTripSummary/PartnerOff
 
 import styles from './PartnerOffersPage.module.scss';
 
+function getOfferPriceBasis(priceLabel: string): TripPlanAccommodationOffer['priceBasis'] {
+  switch (priceLabel) {
+    case 'за человека':
+      return 'person';
+    case 'за ночь':
+      return 'night';
+    case 'за поездку':
+      return 'trip';
+    default:
+      return 'unknown';
+  }
+}
+
 export default function PartnerOffersPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -35,7 +53,19 @@ export default function PartnerOffersPage() {
     (state) => state.syncConstructorTransfer,
   );
   const trip = useConstructor();
-  const { departureDate, returnDate, transfer, resetRevision, setActiveSelectorId } = trip;
+  const selectedAccommodation = useTripPlan((state) => state.accommodation);
+  const selectAccommodation = useTripPlan((state) => state.selectAccommodation);
+  const tripContextKey = getTripPlanContextKey(trip);
+  const selectedOfferId =
+    selectedAccommodation?.contextKey === tripContextKey ? selectedAccommodation.offer.id : null;
+  const {
+    departureDate,
+    returnDate,
+    transfer,
+    resetRevision,
+    setActiveSelectorId,
+    proceedToTripPlan,
+  } = trip;
 
   const constructorTransferRequired = transfer === null ? null : transfer.type === 'needed';
   useEffect(() => {
@@ -87,6 +117,38 @@ export default function PartnerOffersPage() {
     });
   };
 
+  const openPlan = () => {
+    if (!proceedToTripPlan()) return;
+    navigate('/trip-builder/plan', {
+      state: { partnerOffersReturnTo: location.pathname + location.search + location.hash },
+    });
+  };
+
+  const addOfferToPlan = (offer: PartnerOffer) => {
+    const priceBasis = getOfferPriceBasis(offer.priceLabel);
+    selectAccommodation(
+      {
+        id: offer.id,
+        name: offer.name,
+        location: offer.location,
+        price: offer.price,
+        priceBasis,
+        priceLabel: offer.priceLabel,
+        provider: offer.provider,
+        amenities: offer.badges,
+        accommodationType: offer.accommodationType,
+        minRating: offer.minRating,
+        rating: offer.rating,
+        providerPhone: offer.providerPhone,
+        checkInTime: offer.checkInTime,
+        checkOutTime: offer.checkOutTime,
+        bookingNumber: offer.bookingNumber,
+        bookingUrl: offer.bookingUrl,
+      },
+      tripContextKey,
+    );
+  };
+
   const editSuggestedFilter = (filter: SuggestedFilter) => {
     if (filter === 'dates') {
       openConstructor('when');
@@ -108,6 +170,8 @@ export default function PartnerOffersPage() {
         status={result.status}
         trip={trip}
         onEdit={() => openConstructor()}
+        onOpenPlan={openPlan}
+        selectedAccommodationName={selectedOfferId ? selectedAccommodation?.offer.name : undefined}
       />
       <PartnerOffersNotices
         status={result.status}
@@ -133,6 +197,8 @@ export default function PartnerOffersPage() {
         offers={offers}
         favorites={favorites}
         onFavoriteToggle={toggleFavorite}
+        onSelect={addOfferToPlan}
+        selectedOfferId={selectedOfferId}
       />
       <PartnerOffersHelpers status={result.status} />
     </main>

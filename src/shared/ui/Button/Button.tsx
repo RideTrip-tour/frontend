@@ -4,7 +4,7 @@ import type { MouseEventHandler, ReactNode } from 'react';
 import style from './button.module.scss';
 
 export interface ButtonProps {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   text: string;
   type?: 'button' | 'submit' | 'reset';
   icon?: ReactNode;

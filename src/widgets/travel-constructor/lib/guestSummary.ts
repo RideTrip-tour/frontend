@@ -26,6 +26,10 @@ export function getGuestCounts(selection: GuestSelection) {
   };
 }
 
+export function normalizeGuestSelection(selection: GuestSelection | null): GuestSelection | null {
+  return selection && selection.adults + selection.children > 0 ? selection : null;
+}
+
 export function formatGuestSummary(selection: GuestSelection) {
   const { adults, children } = getGuestCounts(selection);
   const total = adults + children;
