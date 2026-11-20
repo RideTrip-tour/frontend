@@ -1,7 +1,6 @@
-import { Icon } from '@iconify/react';
-import clsx from 'clsx';
-
 import snowyMountains from '@/assets/images/SnowyMountains.png';
+import BackLink from '@/shared/ui/base/BackLink';
+import { ResultsHero } from '@/shared/ui/ResultsHero';
 import { formatResultCount } from '@/widgets/travel-constructor';
 
 import type { PartnerOffersMode, PartnerOffersStatus } from '../../model/types';
@@ -25,66 +24,42 @@ export function PartnerOffersHero({ status, mode, totalCount, onBack }: PartnerO
   return (
     <>
       {!isError && (
-        <button
+        <BackLink
           className={styles.back}
           onClick={onBack}
-          type="button"
-        >
-          <Icon
-            aria-hidden="true"
-            className={styles.backIcon}
-            icon="iconamoon:arrow-left-2"
-          />
-          К конструктору
-        </button>
+          text="К конструктору"
+        />
       )}
-      <section
-        aria-describedby={hasDescription ? 'partner-offers-description' : undefined}
-        aria-labelledby="partner-offers-title"
-        className={clsx(styles.hero, isError && styles.heroError)}
-      >
-        <div className={styles.heroCopy}>
-          <h1
-            className={styles.heroTitle}
-            id="partner-offers-title"
-          >
-            {isError || isSimilar || isEmpty ? (
-              'Мы не нашли точных совпадений'
+      <ResultsHero
+        id="partner-offers"
+        title={
+          isError || isSimilar || isEmpty ? 'Мы не нашли точных совпадений' : 'Мы подобрали для вас'
+        }
+        count={
+          !isError && !isSimilar && !isEmpty && !isLoading
+            ? formatResultCount(totalCount)
+            : undefined
+        }
+        description={
+          hasDescription ? (
+            isSimilar ? (
+              <>
+                Но нашли похожие варианты, которые
+                <br />
+                могут вам подойти.
+              </>
             ) : (
               <>
-                Мы подобрали для вас{' '}
-                {!isLoading && (
-                  <span className={styles.heroCount}>{formatResultCount(totalCount)}</span>
-                )}
+                Выберите подходящее предложение
+                <br />и перейдите к бронированию у партнёра
               </>
-            )}
-          </h1>
-          {hasDescription && (
-            <p
-              className={styles.heroDescription}
-              id="partner-offers-description"
-            >
-              {isSimilar ? (
-                <>
-                  Но нашли похожие варианты, которые
-                  <br />
-                  могут вам подойти.
-                </>
-              ) : (
-                <>
-                  Выберите подходящее предложение
-                  <br />и перейдите к бронированию у партнёра
-                </>
-              )}
-            </p>
-          )}
-        </div>
-        <img
-          alt="Заснеженные горы и канатная дорога"
-          className={styles.heroImage}
-          src={snowyMountains}
-        />
-      </section>
+            )
+          ) : undefined
+        }
+        image={snowyMountains}
+        imageAlt="Заснеженные горы и канатная дорога"
+        variant={isError ? 'error' : 'default'}
+      />
     </>
   );
 }

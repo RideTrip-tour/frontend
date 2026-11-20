@@ -1,80 +1,18 @@
 .back {
   display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 0;
-  border: 0;
   color: #0e68d4;
-  background: transparent;
   font-family: var(--text-font-family-3);
   font-size: 16px;
   font-weight: 600;
   line-height: 20px;
-  cursor: pointer;
-}
 
-.backIcon {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-}
+  span {
+    color: inherit;
+    font: inherit;
+  }
 
-.hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 168px;
-  margin: 40px 0 32px;
-}
-
-.heroImage {
-  flex: 0 0 456px;
-  width: 456px;
-  height: 168px;
-  object-fit: contain;
-}
-
-.heroCopy {
-  position: relative;
-  z-index: 1;
-  width: 600px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.heroTitle {
-  margin: 0;
-  color: #1a1a1a;
-  font-family: var(--text-font-family-2);
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 48px;
-}
-
-.heroCount {
-  display: block;
-  color: #0e68d4;
-  font-family: var(--text-font-family-2);
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 48px;
-}
-
-.heroDescription {
-  color: #5f6c7b;
-  font-family: var(--text-font-family-2);
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 24px;
-}
-
-.heroError {
-  align-items: flex-start;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.heroError .heroCopy {
-  width: 800px;
+  svg {
+    flex-shrink: 0;
+    color: inherit;
+  }
 }
