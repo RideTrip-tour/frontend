@@ -1,0 +1,1 @@
+export { cities } from '@/entities/city/mocks/cities';

@@ -1,0 +1,33 @@
+.triposetoggle {
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  user-select: none;
+}
+
+.triposetoggle__content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.triposetoggle__text {
+  font-size: 14px;
+}
+
+.triposetoggle__icon {
+  width: 16px;
+  height: 16px;
+}
+
+.triposetoggle--included {
+  color: green;
+}
+
+.triposetoggle--excluded {
+  color: red;
+}

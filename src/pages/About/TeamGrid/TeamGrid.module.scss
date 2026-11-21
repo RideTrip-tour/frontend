@@ -1,0 +1,13 @@
+.root {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 320px);
+  gap: 50px 46px;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+}

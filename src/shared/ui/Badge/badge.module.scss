@@ -1,0 +1,54 @@
+.badge {
+  --badge-notch: 12px;
+  --badge-radius: 12px;
+  --badge-padding-block: 10px;
+  --badge-padding-start: 19px;
+  --badge-padding-end: 35px;
+  --badge-font-size: var(--text-size-16, 16px);
+
+  display: inline-flex;
+  flex-shrink: 0;
+  vertical-align: middle;
+  filter: drop-shadow(0 4px 6px rgb(0 0 0 / 20%));
+}
+
+.badge__text {
+  display: block;
+  padding: var(--badge-padding-block) var(--badge-padding-end) var(--badge-padding-block)
+    var(--badge-padding-start);
+  border-radius: var(--badge-radius) 0 0 var(--badge-radius);
+  background: var(--badge-background);
+  color: var(--badge-color);
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--badge-notch)) 50%, 100% 100%, 0 100%);
+  font-family: var(--text-font-family), sans-serif;
+  font-size: var(--badge-font-size);
+  font-weight: var(--font-medium, 500);
+  line-height: 20px;
+  letter-spacing: 0.24px;
+  white-space: nowrap;
+}
+
+.badge--info {
+  --badge-background: #e7f0fb;
+  --badge-color: var(--color-blue, #0e68d4);
+}
+
+.badge--success {
+  --badge-background: #e7f7ef;
+  --badge-color: var(--color-green, #3cb371);
+}
+
+.badge--warning {
+  --badge-background: #fff3e3;
+  --badge-color: var(--color-orange, #ff8a00);
+}
+
+.badge--sm {
+  --badge-radius: 10px;
+  --badge-padding-block: 6px;
+  --badge-padding-start: 12px;
+  --badge-padding-end: 24px;
+  --badge-font-size: var(--text-size-14, 14px);
+
+  filter: none;
+}

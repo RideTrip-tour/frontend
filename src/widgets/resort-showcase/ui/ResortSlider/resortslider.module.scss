@@ -1,0 +1,38 @@
+.resortsliderWrapper {
+  width: 100%;
+}
+
+.resortslider__controls {
+  width: min(100%, 1440px);
+  margin: 50px auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.resortslider__buttons {
+  width: 72%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.resortslider__progressWrap {
+  width: 240px;
+  height: 16px;
+  border-radius: var(--radius-100);
+  background: rgba(95, 103, 123, 0.3);
+  overflow: hidden;
+  position: relative;
+}
+
+.resortslider__progressFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: var(--radius-100);
+  background: var(--color-blue);
+  transition: width var(--animation-speed-300) ease;
+}
