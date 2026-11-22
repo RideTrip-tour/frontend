@@ -111,6 +111,29 @@ email?: string | null;
 
 export const getFastAPI = (axiosInstance: AxiosInstance = axios.default) => {
 /**
+ * @summary Health Check
+ */
+const healthCheckApiAuthHealthGet = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<unknown>> => {
+    return axiosInstance.get(
+      `/api/auth/health`,options
+    );
+  }
+const getHealthCheckApiAuthHealthGetUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/auth/health`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
  * @summary Auth:Cookie.Login
  */
 const authCookieLoginApiAuthLoginPost = (
@@ -282,6 +305,30 @@ const usersCurrentUserApiUsersMeGet = (
     );
   }
 const getUsersCurrentUserApiUsersMeGetUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/users/me`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * Мягко удаляет аккаунт пользователя.
+ * @summary Users:Delete Current User
+ */
+const usersDeleteCurrentUserApiUsersMeDelete = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<StatusResponse>> => {
+    return axiosInstance.delete(
+      `/api/users/me`,options
+    );
+  }
+const getUsersDeleteCurrentUserApiUsersMeDeleteUrl = () => {
 
   return axiosInstance.create({
     baseURL: '',
@@ -467,30 +514,8 @@ const getTokenRefreshTokenApiAuthRefreshPostUrl = () => {
   });
 }
 
-/**
- * @summary Health Check
- */
-const healthCheckAuthHealthGet = (
-     options?: AxiosRequestConfig
- ): Promise<AxiosResponse<unknown>> => {
-    return axiosInstance.get(
-      `/auth/health`,options
-    );
-  }
-const getHealthCheckAuthHealthGetUrl = () => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/auth/health`,
-    baseURL: '',
-
-
-  });
-}
-
-return {authCookieLoginApiAuthLoginPost,authCookieLogoutApiAuthLogoutPost,registerRegisterApiAuthRegisterPost,resetForgotPasswordApiAuthForgotPasswordPost,resetResetPasswordApiAuthResetPasswordPost,verifyVerifyApiAuthVerifyPost,usersCurrentUserApiUsersMeGet,usersPatchPassCurrentUserApiUsersMeChangePasswordPost,usersPatchEmailCurrentUserApiUsersMeRequestChangeEmailPost,userDeleteApiAdminUsersIdDelete,userUpdateApiAdminUsersIdPatch,userCreateApiAdminUsersPost,getUserApiAdminUsersGet,tokenRefreshTokenApiAuthRefreshPost,healthCheckAuthHealthGet,getAuthCookieLoginApiAuthLoginPostUrl,getAuthCookieLogoutApiAuthLogoutPostUrl,getRegisterRegisterApiAuthRegisterPostUrl,getResetForgotPasswordApiAuthForgotPasswordPostUrl,getResetResetPasswordApiAuthResetPasswordPostUrl,getVerifyVerifyApiAuthVerifyPostUrl,getUsersCurrentUserApiUsersMeGetUrl,getUsersPatchPassCurrentUserApiUsersMeChangePasswordPostUrl,getUsersPatchEmailCurrentUserApiUsersMeRequestChangeEmailPostUrl,getUserDeleteApiAdminUsersIdDeleteUrl,getUserUpdateApiAdminUsersIdPatchUrl,getUserCreateApiAdminUsersPostUrl,getGetUserApiAdminUsersGetUrl,getTokenRefreshTokenApiAuthRefreshPostUrl,getHealthCheckAuthHealthGetUrl}};
+return {healthCheckApiAuthHealthGet,authCookieLoginApiAuthLoginPost,authCookieLogoutApiAuthLogoutPost,registerRegisterApiAuthRegisterPost,resetForgotPasswordApiAuthForgotPasswordPost,resetResetPasswordApiAuthResetPasswordPost,verifyVerifyApiAuthVerifyPost,usersCurrentUserApiUsersMeGet,usersDeleteCurrentUserApiUsersMeDelete,usersPatchPassCurrentUserApiUsersMeChangePasswordPost,usersPatchEmailCurrentUserApiUsersMeRequestChangeEmailPost,userDeleteApiAdminUsersIdDelete,userUpdateApiAdminUsersIdPatch,userCreateApiAdminUsersPost,getUserApiAdminUsersGet,tokenRefreshTokenApiAuthRefreshPost,getHealthCheckApiAuthHealthGetUrl,getAuthCookieLoginApiAuthLoginPostUrl,getAuthCookieLogoutApiAuthLogoutPostUrl,getRegisterRegisterApiAuthRegisterPostUrl,getResetForgotPasswordApiAuthForgotPasswordPostUrl,getResetResetPasswordApiAuthResetPasswordPostUrl,getVerifyVerifyApiAuthVerifyPostUrl,getUsersCurrentUserApiUsersMeGetUrl,getUsersDeleteCurrentUserApiUsersMeDeleteUrl,getUsersPatchPassCurrentUserApiUsersMeChangePasswordPostUrl,getUsersPatchEmailCurrentUserApiUsersMeRequestChangeEmailPostUrl,getUserDeleteApiAdminUsersIdDeleteUrl,getUserUpdateApiAdminUsersIdPatchUrl,getUserCreateApiAdminUsersPostUrl,getGetUserApiAdminUsersGetUrl,getTokenRefreshTokenApiAuthRefreshPostUrl}};
+export type HealthCheckApiAuthHealthGetResult = AxiosResponse<unknown>
 export type AuthCookieLoginApiAuthLoginPostResult = AxiosResponse<unknown | void>
 export type AuthCookieLogoutApiAuthLogoutPostResult = AxiosResponse<unknown | void>
 export type RegisterRegisterApiAuthRegisterPostResult = AxiosResponse<void>
@@ -498,6 +523,7 @@ export type ResetForgotPasswordApiAuthForgotPasswordPostResult = AxiosResponse<u
 export type ResetResetPasswordApiAuthResetPasswordPostResult = AxiosResponse<unknown>
 export type VerifyVerifyApiAuthVerifyPostResult = AxiosResponse<UserBeforeVerify>
 export type UsersCurrentUserApiUsersMeGetResult = AxiosResponse<UserRead>
+export type UsersDeleteCurrentUserApiUsersMeDeleteResult = AxiosResponse<StatusResponse>
 export type UsersPatchPassCurrentUserApiUsersMeChangePasswordPostResult = AxiosResponse<StatusResponse>
 export type UsersPatchEmailCurrentUserApiUsersMeRequestChangeEmailPostResult = AxiosResponse<StatusResponse>
 export type UserDeleteApiAdminUsersIdDeleteResult = AxiosResponse<void>
@@ -505,4 +531,3 @@ export type UserUpdateApiAdminUsersIdPatchResult = AxiosResponse<UserRead>
 export type UserCreateApiAdminUsersPostResult = AxiosResponse<UserRead>
 export type GetUserApiAdminUsersGetResult = AxiosResponse<UserRead[]>
 export type TokenRefreshTokenApiAuthRefreshPostResult = AxiosResponse<void>
-export type HealthCheckAuthHealthGetResult = AxiosResponse<unknown>

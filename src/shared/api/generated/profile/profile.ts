@@ -25,6 +25,15 @@ export interface FavoriteLocationsResponse {
   location_ids: FavoriteLocationResponse[];
 }
 
+export type Gender = typeof Gender[keyof typeof Gender];
+
+
+export const Gender = {
+  Мужской: 'Мужской',
+  Женский: 'Женский',
+  Не_указывать: 'Не указывать',
+} as const;
+
 export type ValidationErrorCtx = { [key: string]: unknown };
 
 export interface ValidationError {
@@ -43,6 +52,15 @@ export interface ProfileHiddenResponse {
   detail: string;
 }
 
+export type SkillLevel = typeof SkillLevel[keyof typeof SkillLevel];
+
+
+export const SkillLevel = {
+  Новичок: 'Новичок',
+  Средний: 'Средний',
+  Продвинутый: 'Продвинутый',
+} as const;
+
 export interface ProfileResponse {
   first_name?: string | null;
   last_name?: string | null;
@@ -53,12 +71,15 @@ export interface ProfileResponse {
   /**
      * External activity identifiers from activities service
      * @maxItems 25
+     * @items.minLength 1
+     * @items.maxLength 5
      */
   activities?: string[];
-  country?: string | null;
-  city?: string | null;
+  country_id?: number | null;
+  city_id?: number | null;
   citizenship?: string | null;
-  currency?: string | null;
+  gender?: Gender;
+  skill?: SkillLevel | null;
   id: number;
   user_id: number;
   role: string;
@@ -92,12 +113,15 @@ export interface ProfileUpdate {
   /**
      * External activity identifiers from activities service
      * @maxItems 25
+     * @items.minLength 1
+     * @items.maxLength 5
      */
   activities?: string[];
-  country?: string | null;
-  city?: string | null;
+  country_id?: number | null;
+  city_id?: number | null;
   citizenship?: string | null;
-  currency?: string | null;
+  gender?: Gender;
+  skill?: SkillLevel | null;
 }
 
 export interface AppSchemasAdminSchemasProfileCreate {
@@ -110,12 +134,15 @@ export interface AppSchemasAdminSchemasProfileCreate {
   /**
      * External activity identifiers from activities service
      * @maxItems 25
+     * @items.minLength 1
+     * @items.maxLength 5
      */
   activities?: string[];
-  country?: string | null;
-  city?: string | null;
+  country_id?: number | null;
+  city_id?: number | null;
   citizenship?: string | null;
-  currency?: string | null;
+  gender?: Gender;
+  skill?: SkillLevel | null;
   /** @exclusiveMinimum 0 */
   user_id: number;
 }
@@ -130,56 +157,35 @@ export interface AppSchemasProfilesSchemasProfileCreate {
   /**
      * External activity identifiers from activities service
      * @maxItems 25
+     * @items.minLength 1
+     * @items.maxLength 5
      */
   activities?: string[];
-  country?: string | null;
-  city?: string | null;
+  country_id?: number | null;
+  city_id?: number | null;
   citizenship?: string | null;
-  currency?: string | null;
+  gender?: Gender;
+  skill?: SkillLevel | null;
 }
 
 export const getProfileService = (axiosInstance: AxiosInstance = axios.default) => {
 /**
  * @summary Health Check
  */
-const healthCheckProfileHealthGet = (
+const healthCheckApiProfileHealthGet = (
      options?: AxiosRequestConfig
  ): Promise<AxiosResponse<unknown>> => {
     return axiosInstance.get(
-      `/profile/health`,options
+      `/api/profile/health`,options
     );
   }
-const getHealthCheckProfileHealthGetUrl = () => {
+const getHealthCheckApiProfileHealthGetUrl = () => {
 
   return axiosInstance.create({
     baseURL: '',
     params: null,
   }).getUri({
-    url: `/profile/health`,
-    baseURL: '',
-
-
-  });
-}
-
-/**
- * @summary Create New Profile
- */
-const createNewProfileApiProfileCreatePost = (
-    appSchemasProfilesSchemasProfileCreate: AppSchemasProfilesSchemasProfileCreate, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<ProfileResponse>> => {
-    return axiosInstance.post(
-      `/api/profile/create`,
-      appSchemasProfilesSchemasProfileCreate,options
-    );
-  }
-const getCreateNewProfileApiProfileCreatePostUrl = () => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/api/profile/create`,
+    url: `/api/profile/health`,
     baseURL: '',
 
 
@@ -420,6 +426,89 @@ const getUpdateSettingsApiProfileMeSettingsPatchUrl = () => {
 }
 
 /**
+ * Создание профиля пользователя.
+ *
+ * Ручка предназначена исключительно для внутреннего использования сервисом auth.
+ * Вызов из пользовательского клиента и других внутренних сервисов запрещён.
+ * @summary Create New Profile
+ */
+const createNewProfileApiInternalProfileCreatePost = (
+    appSchemasProfilesSchemasProfileCreate: AppSchemasProfilesSchemasProfileCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<ProfileResponse>> => {
+    return axiosInstance.post(
+      `/api/internal/profile/create`,
+      appSchemasProfilesSchemasProfileCreate,options
+    );
+  }
+const getCreateNewProfileApiInternalProfileCreatePostUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/internal/profile/create`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * Полное удаление профиля пользователя.
+ *
+ * Ручка предназначена исключительно для внутреннего использования сервисом auth.
+ * Вызов из пользовательского клиента и других внутренних сервисов запрещён.
+ * @summary Permanently Delete Profile
+ */
+const permanentlyDeleteProfileApiInternalProfileMePermanentDelete = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<void>> => {
+    return axiosInstance.delete(
+      `/api/internal/profile/me/permanent`,options
+    );
+  }
+const getPermanentlyDeleteProfileApiInternalProfileMePermanentDeleteUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/internal/profile/me/permanent`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * Восстановление профиля пользователя.
+ *
+ * Ручка предназначена исключительно для внутреннего использования сервисом auth.
+ * Вызов из пользовательского клиента и других внутренних сервисов запрещён.
+ * @summary Restore Profile
+ */
+const restoreProfileApiInternalProfileMeRestorePost = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<void>> => {
+    return axiosInstance.post(
+      `/api/internal/profile/me/restore`,
+      undefined,options
+    );
+  }
+const getRestoreProfileApiInternalProfileMeRestorePostUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/internal/profile/me/restore`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
  * @summary Create New Profile
  */
 const createNewProfileApiAdminProfilePost = (
@@ -585,9 +674,8 @@ const getDeleteProfileByUserIdApiAdminProfileByUserUserIdDeleteUrl = (userId: nu
   });
 }
 
-return {healthCheckProfileHealthGet,createNewProfileApiProfileCreatePost,getFavoriteLocationsApiProfileMeFavoriteLocationsGet,addFavoriteLocationApiProfileMeFavoriteLocationsPost,getMyProfileApiProfileMeGet,deleteProfileByIdApiProfileMeDelete,updateMyProfileApiProfileMePatch,getFavoriteLocationsByUserIdApiProfileUserIdFavoriteLocationsGet,getProfileByIdApiProfileUserIdGet,deleteFavoriteLocationApiProfileMeFavoriteLocationsLocationIdDelete,getSettingsApiProfileMeSettingsGet,updateSettingsApiProfileMeSettingsPatch,createNewProfileApiAdminProfilePost,getProfileByIdApiAdminProfileProfileIdGet,updateProfileByIdApiAdminProfileProfileIdPatch,deleteProfileByIdApiAdminProfileProfileIdDelete,getProfileByUserIdApiAdminProfileByUserUserIdGet,updateProfileByUserIdApiAdminProfileByUserUserIdPatch,deleteProfileByUserIdApiAdminProfileByUserUserIdDelete,getHealthCheckProfileHealthGetUrl,getCreateNewProfileApiProfileCreatePostUrl,getGetFavoriteLocationsApiProfileMeFavoriteLocationsGetUrl,getAddFavoriteLocationApiProfileMeFavoriteLocationsPostUrl,getGetMyProfileApiProfileMeGetUrl,getDeleteProfileByIdApiProfileMeDeleteUrl,getUpdateMyProfileApiProfileMePatchUrl,getGetFavoriteLocationsByUserIdApiProfileUserIdFavoriteLocationsGetUrl,getGetProfileByIdApiProfileUserIdGetUrl,getDeleteFavoriteLocationApiProfileMeFavoriteLocationsLocationIdDeleteUrl,getGetSettingsApiProfileMeSettingsGetUrl,getUpdateSettingsApiProfileMeSettingsPatchUrl,getCreateNewProfileApiAdminProfilePostUrl,getGetProfileByIdApiAdminProfileProfileIdGetUrl,getUpdateProfileByIdApiAdminProfileProfileIdPatchUrl,getDeleteProfileByIdApiAdminProfileProfileIdDeleteUrl,getGetProfileByUserIdApiAdminProfileByUserUserIdGetUrl,getUpdateProfileByUserIdApiAdminProfileByUserUserIdPatchUrl,getDeleteProfileByUserIdApiAdminProfileByUserUserIdDeleteUrl}};
-export type HealthCheckProfileHealthGetResult = AxiosResponse<unknown>
-export type CreateNewProfileApiProfileCreatePostResult = AxiosResponse<ProfileResponse>
+return {healthCheckApiProfileHealthGet,getFavoriteLocationsApiProfileMeFavoriteLocationsGet,addFavoriteLocationApiProfileMeFavoriteLocationsPost,getMyProfileApiProfileMeGet,deleteProfileByIdApiProfileMeDelete,updateMyProfileApiProfileMePatch,getFavoriteLocationsByUserIdApiProfileUserIdFavoriteLocationsGet,getProfileByIdApiProfileUserIdGet,deleteFavoriteLocationApiProfileMeFavoriteLocationsLocationIdDelete,getSettingsApiProfileMeSettingsGet,updateSettingsApiProfileMeSettingsPatch,createNewProfileApiInternalProfileCreatePost,permanentlyDeleteProfileApiInternalProfileMePermanentDelete,restoreProfileApiInternalProfileMeRestorePost,createNewProfileApiAdminProfilePost,getProfileByIdApiAdminProfileProfileIdGet,updateProfileByIdApiAdminProfileProfileIdPatch,deleteProfileByIdApiAdminProfileProfileIdDelete,getProfileByUserIdApiAdminProfileByUserUserIdGet,updateProfileByUserIdApiAdminProfileByUserUserIdPatch,deleteProfileByUserIdApiAdminProfileByUserUserIdDelete,getHealthCheckApiProfileHealthGetUrl,getGetFavoriteLocationsApiProfileMeFavoriteLocationsGetUrl,getAddFavoriteLocationApiProfileMeFavoriteLocationsPostUrl,getGetMyProfileApiProfileMeGetUrl,getDeleteProfileByIdApiProfileMeDeleteUrl,getUpdateMyProfileApiProfileMePatchUrl,getGetFavoriteLocationsByUserIdApiProfileUserIdFavoriteLocationsGetUrl,getGetProfileByIdApiProfileUserIdGetUrl,getDeleteFavoriteLocationApiProfileMeFavoriteLocationsLocationIdDeleteUrl,getGetSettingsApiProfileMeSettingsGetUrl,getUpdateSettingsApiProfileMeSettingsPatchUrl,getCreateNewProfileApiInternalProfileCreatePostUrl,getPermanentlyDeleteProfileApiInternalProfileMePermanentDeleteUrl,getRestoreProfileApiInternalProfileMeRestorePostUrl,getCreateNewProfileApiAdminProfilePostUrl,getGetProfileByIdApiAdminProfileProfileIdGetUrl,getUpdateProfileByIdApiAdminProfileProfileIdPatchUrl,getDeleteProfileByIdApiAdminProfileProfileIdDeleteUrl,getGetProfileByUserIdApiAdminProfileByUserUserIdGetUrl,getUpdateProfileByUserIdApiAdminProfileByUserUserIdPatchUrl,getDeleteProfileByUserIdApiAdminProfileByUserUserIdDeleteUrl}};
+export type HealthCheckApiProfileHealthGetResult = AxiosResponse<unknown>
 export type GetFavoriteLocationsApiProfileMeFavoriteLocationsGetResult = AxiosResponse<FavoriteLocationsResponse>
 export type AddFavoriteLocationApiProfileMeFavoriteLocationsPostResult = AxiosResponse<FavoriteLocationResponse>
 export type GetMyProfileApiProfileMeGetResult = AxiosResponse<ProfileResponse>
@@ -598,6 +686,9 @@ export type GetProfileByIdApiProfileUserIdGetResult = AxiosResponse<ProfileRespo
 export type DeleteFavoriteLocationApiProfileMeFavoriteLocationsLocationIdDeleteResult = AxiosResponse<void>
 export type GetSettingsApiProfileMeSettingsGetResult = AxiosResponse<ProfileSettings>
 export type UpdateSettingsApiProfileMeSettingsPatchResult = AxiosResponse<ProfileSettings>
+export type CreateNewProfileApiInternalProfileCreatePostResult = AxiosResponse<ProfileResponse>
+export type PermanentlyDeleteProfileApiInternalProfileMePermanentDeleteResult = AxiosResponse<void>
+export type RestoreProfileApiInternalProfileMeRestorePostResult = AxiosResponse<void>
 export type CreateNewProfileApiAdminProfilePostResult = AxiosResponse<ProfileResponse>
 export type GetProfileByIdApiAdminProfileProfileIdGetResult = AxiosResponse<ProfileResponse>
 export type UpdateProfileByIdApiAdminProfileProfileIdPatchResult = AxiosResponse<ProfileResponse>
