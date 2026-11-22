@@ -9,15 +9,15 @@ export const useInitProfile = (): void => {
   const resetProfile = useProfileStore((state) => state.reset);
 
   useEffect(() => {
-    if (authStatus === 'checking') {
-      return;
-    }
-
-    if (authStatus === 'anonymous' || !user) {
+    if (authStatus === 'anonymous') {
       resetProfile();
       return;
     }
 
-    void initProfile(user);
+    if (authStatus !== 'authenticated' || !user) return;
+
+    const controller = new AbortController();
+    void initProfile(user, controller.signal);
+    return () => controller.abort();
   }, [authStatus, user, resetProfile]);
 };
