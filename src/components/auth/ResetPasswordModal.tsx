@@ -11,7 +11,9 @@ type ResetPasswordModalProps = {
   isLoading?: boolean;
   serverError?: string;
   onClose?: () => void;
-  onSubmit?: (data: { password: string; confirmPassword: string }) => void | Promise<void>;
+  onClearError?: () => void;
+  onRequestNewLink?: () => void;
+  onSubmit: (data: { password: string; confirmPassword: string }) => void | Promise<void>;
 };
 
 type FieldStatus = 'default' | 'focus' | 'success' | 'error';
@@ -20,6 +22,8 @@ export default function ResetPasswordModal({
   isLoading = false,
   serverError = '',
   onClose,
+  onClearError,
+  onRequestNewLink,
   onSubmit,
 }: ResetPasswordModalProps) {
   const [password, setPassword] = useState('');
@@ -59,7 +63,7 @@ export default function ResetPasswordModal({
     e.preventDefault();
     if (!isSubmitEnabled) return;
 
-    await onSubmit?.({
+    await onSubmit({
       password,
       confirmPassword,
     });
@@ -86,7 +90,10 @@ export default function ResetPasswordModal({
           showToggle
           isPasswordVisible={showPassword}
           onToggleVisibility={() => setShowPassword((prev) => !prev)}
-          onChange={setPassword}
+          onChange={(value) => {
+            setPassword(value);
+            onClearError?.();
+          }}
           onFocus={() => setPasswordFocused(true)}
           onBlur={() => setPasswordFocused(false)}
           isLast={false}
@@ -104,13 +111,25 @@ export default function ResetPasswordModal({
           showToggle
           isPasswordVisible={showConfirmPassword}
           onToggleVisibility={() => setShowConfirmPassword((prev) => !prev)}
-          onChange={setConfirmPassword}
+          onChange={(value) => {
+            setConfirmPassword(value);
+            onClearError?.();
+          }}
           onFocus={() => setConfirmFocused(true)}
           onBlur={() => setConfirmFocused(false)}
           isLast={true}
         />
 
         {hasMismatchError && <p className={styles.centerError}>Введенные пароли не совпадают</p>}
+
+        {serverError && (
+          <p
+            className={styles.centerError}
+            role="alert"
+          >
+            {serverError}
+          </p>
+        )}
 
         <button
           type="submit"
@@ -119,6 +138,17 @@ export default function ResetPasswordModal({
         >
           {isLoading ? <span className={styles.loader} /> : 'Обновить пароль'}
         </button>
+
+        {onRequestNewLink && (
+          <button
+            type="button"
+            className={`${styles.footerLink} ${styles.resetLink}`}
+            onClick={onRequestNewLink}
+            disabled={isLoading}
+          >
+            Запросить новую ссылку
+          </button>
+        )}
       </form>
     </AuthShell>
   );

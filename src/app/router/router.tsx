@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router';
 import { ProtectedRoute } from '@/app/router/ProtectedRoute';
 import { TripBuilderFlowRoute } from '@/app/router/TripBuilderFlowRoute';
 import PaddedLayout from '@/components/layout/PaddedLayout';
+import { AUTH_PATHS } from '@/features/auth/model/authRoutes';
 import { LEGAL_ROUTE } from '@/shared/config';
 
 const HomePage = lazy(() => import('@/pages/Home'));
@@ -18,6 +19,7 @@ const PartnerOffersPage = lazy(() => import('@/pages/partner-offers'));
 const TripPlanPage = lazy(() => import('@/pages/trip-plan'));
 const ResortsPage = lazy(() => import('@/pages/resorts'));
 const RegistrationVerifyPage = lazy(() => import('@/pages/RegistrationVerifyPage'));
+const ResetPasswordPage = lazy(() => import('@/pages/ResetPasswordPage'));
 const LegalDocumentPage = lazy(() => import('@/pages/Legal'));
 
 const AboutPage = lazy(() => import('@/pages/About'));
@@ -31,16 +33,20 @@ export function AppRouter() {
           element={<HomePage />}
         />
         <Route
-          path="/login"
+          path={AUTH_PATHS.login}
           element={<LoginPage />}
         />
         <Route
-          path="/register"
+          path={AUTH_PATHS.register}
           element={<RegisterPage />}
         />
         <Route
-          path="/auth/verify"
+          path={AUTH_PATHS.verify}
           element={<RegistrationVerifyPage />}
+        />
+        <Route
+          path={AUTH_PATHS.resetPassword}
+          element={<ResetPasswordPage />}
         />
         <Route path="/trip-builder">
           <Route

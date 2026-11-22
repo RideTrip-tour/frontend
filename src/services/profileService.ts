@@ -41,9 +41,9 @@ export async function createProfileRequest(data: ProfileData) {
   }
 }
 
-export async function getMyProfileRequest() {
+export async function getMyProfileRequest(signal?: AbortSignal) {
   try {
-    const res = await apiClient.get<Profile>('/profile/me');
+    const res = await apiClient.get<Profile>('/profile/me', { signal });
     return res.data;
   } catch (e) {
     throw handleApiError(e);

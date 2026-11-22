@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router';
 import ExitIcon from '@/assets/icons/exit.svg';
 import { logoutRequest } from '@/services/authService';
 import LogoutConfirmModal from '@/shared/ui/compose/Modals/LogoutConfirmModal/LogoutConfirmModal';
-import { useAuthStore } from '@/store/authStore.ts';
 
 import style from './HeaderDropdown.module.scss';
 
@@ -17,7 +16,6 @@ interface ProfileDropdownProps {
 
 export function HeaderDropdown({ isOpen, onClose, buttonRef }: Readonly<ProfileDropdownProps>) {
   const navigate = useNavigate();
-  const logout = useAuthStore((s) => s.logout);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +49,6 @@ export function HeaderDropdown({ isOpen, onClose, buttonRef }: Readonly<ProfileD
       setIsLoading(false);
       return;
     }
-    logout();
     navigate('/');
   };
 
