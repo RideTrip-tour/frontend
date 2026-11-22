@@ -1,6 +1,11 @@
 import { authApi, authRequestOptions } from '@/shared/api/auth/authApi';
-import { handleApiError } from '@/shared/api/errors';
+import { ApiError, handleApiError } from '@/shared/api/errors';
 import type { UserCreate, ResetPass, UserBeforeVerify } from '@/shared/api/generated/auth/auth';
+import {
+  beginSessionTransition,
+  finishSessionTransition,
+  getSessionVersion,
+} from '@/shared/api/sessionEvents';
 import { useAuthStore } from '@/store/authStore';
 
 import { meRequest } from './usersService';
@@ -10,6 +15,9 @@ export type VerifiedUser = UserBeforeVerify & {
 };
 
 export async function loginRequest(email: string, password: string) {
+  const sessionVersion = beginSessionTransition();
+  const requestOptions = { ...authRequestOptions, sessionVersion };
+
   try {
     await authApi.authCookieLoginApiAuthLoginPost(
       {
@@ -17,13 +25,24 @@ export async function loginRequest(email: string, password: string) {
         username: email,
         password,
       },
-      authRequestOptions,
+      requestOptions,
     );
 
-    const user = await meRequest();
+    if (sessionVersion !== getSessionVersion()) {
+      throw new ApiError('Сессия изменилась. Повторите вход.');
+    }
+
+    const user = await meRequest({ sessionVersion });
+
+    if (sessionVersion !== getSessionVersion()) {
+      throw new ApiError('Сессия изменилась. Повторите вход.');
+    }
+
     useAuthStore.getState().setUser(user);
   } catch (error) {
     throw handleApiError(error);
+  } finally {
+    finishSessionTransition(sessionVersion);
   }
 }
 
@@ -107,9 +126,21 @@ export function getVerificationError(error: unknown) {
 }
 
 export async function logoutRequest() {
+  const sessionVersion = beginSessionTransition();
+  const requestOptions = { ...authRequestOptions, sessionVersion };
+
   try {
-    await authApi.authCookieLogoutApiAuthLogoutPost(authRequestOptions);
+    await authApi.authCookieLogoutApiAuthLogoutPost(requestOptions);
+    if (sessionVersion !== getSessionVersion()) {
+      throw new ApiError('Сессия изменилась во время выхода.');
+    }
+  } catch (error) {
+    throw handleApiError(error);
   } finally {
-    useAuthStore.getState().logout();
+    if (sessionVersion === getSessionVersion()) {
+      useAuthStore.getState().logout();
+    }
+
+    finishSessionTransition(sessionVersion);
   }
 }

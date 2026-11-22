@@ -1,9 +1,15 @@
 import { create } from 'zustand';
 
 import { meRequest, type CurrentUser } from '@/services/usersService';
-import { setSessionExpiredHandler } from '@/shared/api/sessionEvents';
+import { handleApiError } from '@/shared/api/errors';
+import {
+  advanceSessionVersion,
+  getPendingSessionTransition,
+  getSessionVersion,
+  setSessionExpiredHandler,
+} from '@/shared/api/sessionEvents';
 
-type AuthStatus = 'checking' | 'authenticated' | 'anonymous';
+type AuthStatus = 'idle' | 'checking' | 'authenticated' | 'anonymous' | 'error';
 
 type AuthState = {
   user: CurrentUser | null;
@@ -15,16 +21,19 @@ type AuthState = {
   checkAuth: () => Promise<CurrentUser | null>;
 };
 
-let authCheckPromise: Promise<CurrentUser | null> | null = null;
-let authBootstrapCompleted = false;
+let pendingAuthCheck: {
+  version: number;
+  promise: Promise<CurrentUser | null>;
+} | null = null;
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
   isAuth: false,
-  authStatus: 'checking',
+  authStatus: 'idle',
 
   setUser: (user) => {
-    authBootstrapCompleted = true;
+    advanceSessionVersion();
+    pendingAuthCheck = null;
 
     set({
       user,
@@ -34,7 +43,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   logout: () => {
-    authBootstrapCompleted = true;
+    advanceSessionVersion();
+    pendingAuthCheck = null;
 
     set({
       user: null,
@@ -44,45 +54,61 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   checkAuth: () => {
-    if (authBootstrapCompleted) {
+    const transition = getPendingSessionTransition();
+
+    if (transition) {
+      return transition.then(() => get().checkAuth());
+    }
+
+    if (get().authStatus === 'authenticated' || get().authStatus === 'anonymous') {
       return Promise.resolve(get().user);
     }
 
-    if (authCheckPromise) {
-      return authCheckPromise;
+    const version = getSessionVersion();
+
+    if (pendingAuthCheck?.version === version) {
+      return pendingAuthCheck.promise;
     }
 
-    authCheckPromise = (async () => {
+    const promise = (async () => {
       set({ authStatus: 'checking' });
 
       try {
-        const user = await meRequest();
+        const user = await meRequest({ authContext: 'bootstrap', sessionVersion: version });
 
-        set({
-          user,
-          isAuth: true,
-          authStatus: 'authenticated',
-        });
+        if (version !== getSessionVersion()) {
+          return get().checkAuth();
+        }
+
+        get().setUser(user);
 
         return user;
-      } catch {
-        set({
-          user: null,
-          isAuth: false,
-          authStatus: 'anonymous',
-        });
+      } catch (error) {
+        if (version !== getSessionVersion()) {
+          return get().checkAuth();
+        }
+
+        if (handleApiError(error).status === 401) {
+          get().logout();
+        } else {
+          set({ user: null, isAuth: false, authStatus: 'error' });
+        }
 
         return null;
       } finally {
-        authBootstrapCompleted = true;
-        authCheckPromise = null;
+        if (pendingAuthCheck?.version === version) {
+          pendingAuthCheck = null;
+        }
       }
     })();
 
-    return authCheckPromise;
+    pendingAuthCheck = { version, promise };
+    return promise;
   },
 }));
 
 setSessionExpiredHandler(() => {
-  useAuthStore.getState().logout();
+  const { isAuth, logout } = useAuthStore.getState();
+  logout();
+  return isAuth;
 });
