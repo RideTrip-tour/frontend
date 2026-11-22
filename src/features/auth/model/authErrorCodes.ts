@@ -1,7 +1,9 @@
 export const AUTH_ERROR_MESSAGES: Record<string, string> = {
   LOGIN_BAD_CREDENTIALS: 'Неправильный логин или пароль',
   REGISTER_USER_ALREADY_EXISTS: 'Пользователь уже зарегистрирован',
-  RESET_PASSWORD_BAD_TOKEN: 'Ошибка сброса пароля',
+  RESET_PASSWORD_BAD_TOKEN:
+    'Ссылка для сброса пароля недействительна, срок её действия истёк или пароль уже изменён. Запросите новую ссылку.',
+  RESET_PASSWORD_INVALID_PASSWORD: 'Пароль не соответствует требованиям. Введите другой пароль.',
   VERIFY_USER_BAD_TOKEN: 'Неверный токен верификации',
   UPDATE_USER_INVALID_PASSWORD: 'Неправильно задан пароль',
   UPDATE_USER_EMAIL_ALREADY_EXISTS: 'Email уже зарегистрирован',

@@ -67,8 +67,10 @@ export async function resendForgotPasswordEmail(email: string) {
 }
 
 export async function resetPasswordRequest(data: ResetPass) {
+  const requestOptions = { ...authRequestOptions, authContext: 'form' as const };
+
   try {
-    await authApi.resetResetPasswordApiAuthResetPasswordPost(data, authRequestOptions);
+    await authApi.resetResetPasswordApiAuthResetPasswordPost(data, requestOptions);
   } catch (error) {
     throw handleApiError(error);
   }

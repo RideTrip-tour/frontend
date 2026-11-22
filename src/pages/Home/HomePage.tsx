@@ -4,11 +4,9 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router';
 
 import {
   PasswordEmailSentModal,
-  PasswordResetSuccessModal,
   RegistrationEmailSentModal,
   RegistrationErrorModal,
   RegistrationSuccessModal,
-  ResetPasswordModal,
   TestMenuModal,
   UnifiedAuthModal,
   VerifyModal,
@@ -16,6 +14,7 @@ import {
 import VerificationErrorModal from '@/components/auth/VerificationErrorModal';
 import ScrollTopButton from '@/components/layout/ScrollTopButton';
 import { getAuthApiErrorMessage } from '@/features/auth/lib/getAuthApiErrorMessage';
+import { AUTH_PATHS, getAuthView } from '@/features/auth/model/authRoutes';
 import Choice from '@/pages/Home/Choice';
 import Clients from '@/pages/Home/Clients';
 import PersonalSelection from '@/pages/Home/PersonalSelection';
@@ -35,8 +34,6 @@ type View =
   | 'registration-error'
   | 'verify'
   | 'verification-error'
-  | 'reset-password'
-  | 'password-reset-success'
   | 'none';
 
 const t = { duration: 0.25, ease: 'easeInOut' } as const;
@@ -46,11 +43,6 @@ const fade = {
   exit: { opacity: 0 },
   transition: t,
 };
-
-function viewFromParam(param: string | null): View | null {
-  if (param === 'login' || param === 'register' || param === 'forgot') return param;
-  return null;
-}
 
 function HomePage() {
   const navigate = useNavigate();
@@ -68,7 +60,7 @@ function HomePage() {
       const params = new URLSearchParams({
         verify_token: searchParams.get('verify_token') ?? '',
       });
-      void navigate(`/auth/verify?${params}`, { replace: true });
+      void navigate(`${AUTH_PATHS.verify}?${params}`, { replace: true });
       return;
     }
 
@@ -78,7 +70,7 @@ function HomePage() {
       return;
     }
 
-    const auth = viewFromParam(searchParams.get('auth'));
+    const auth = getAuthView(searchParams.get('auth'));
     if (auth) {
       setView(auth);
       setServerError('');
@@ -143,10 +135,6 @@ function HomePage() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleResetPassword = () => {
-    setView('password-reset-success');
   };
 
   const showUnified = view === 'login' || view === 'register' || view === 'forgot';
@@ -251,32 +239,6 @@ function HomePage() {
             {...fade}
           >
             <VerifyModal onClose={closeAuth} />
-          </motion.div>
-        )}
-
-        {view === 'reset-password' && (
-          <motion.div
-            key="reset-password"
-            {...fade}
-          >
-            <ResetPasswordModal
-              isLoading={isLoading}
-              serverError={serverError}
-              onClose={closeAuth}
-              onSubmit={handleResetPassword}
-            />
-          </motion.div>
-        )}
-
-        {view === 'password-reset-success' && (
-          <motion.div
-            key="password-reset-success"
-            {...fade}
-          >
-            <PasswordResetSuccessModal
-              onClose={closeAuth}
-              onGoToCabinet={closeAuth}
-            />
           </motion.div>
         )}
       </AnimatePresence>
