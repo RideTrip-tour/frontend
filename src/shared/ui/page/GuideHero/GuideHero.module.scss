@@ -42,8 +42,8 @@
 }
 
 .image {
-  width: 456px;
-  height: 168px;
+  width: min(34%, 456px);
+  height: auto;
   flex: 0 0 auto;
   object-fit: contain;
 }
@@ -51,11 +51,23 @@
 @media (max-width: 900px) {
   .hero {
     flex-direction: column;
+    gap: 20px;
   }
 
   .image {
     width: 100%;
     max-width: 456px;
     align-self: center;
+  }
+}
+
+@media (max-width: 540px) {
+  .eyebrow,
+  .title {
+    font-size: 28px;
+  }
+
+  .description {
+    margin-top: 18px;
   }
 }

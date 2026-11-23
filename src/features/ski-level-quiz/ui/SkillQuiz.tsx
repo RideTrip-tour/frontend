@@ -156,7 +156,11 @@ const LoadingText = () => {
   );
 };
 
-const SkillQuiz = () => {
+interface SkillQuizProps {
+  onViewOptions: () => void;
+}
+
+const SkillQuiz = ({ onViewOptions }: SkillQuizProps) => {
   const [visibleStep, setVisibleStep] = useState<QuizStep>('intro');
   const [isExiting, setIsExiting] = useState(false);
   const [answers, setAnswers] = useState<Record<number, number>>({});
@@ -164,6 +168,8 @@ const SkillQuiz = () => {
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const transitionTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const resultTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const totalQ = QUESTIONS.length;
   const currentQ = typeof visibleStep === 'number' ? QUESTIONS[visibleStep - 1] : null;
@@ -188,9 +194,17 @@ const SkillQuiz = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(
+    () => () => {
+      clearTimeout(transitionTimer.current);
+      clearTimeout(resultTimer.current);
+    },
+    [],
+  );
+
   const transitionTo = (newStep: QuizStep) => {
     setIsExiting(true);
-    setTimeout(() => {
+    transitionTimer.current = setTimeout(() => {
       setVisibleStep(newStep);
       setIsExiting(false);
     }, 300);
@@ -211,7 +225,7 @@ const SkillQuiz = () => {
       transitionTo((visibleStep as number) + 1);
     } else {
       transitionTo('loading');
-      setTimeout(() => transitionTo('result'), 3300);
+      resultTimer.current = setTimeout(() => transitionTo('result'), 3300);
     }
   };
 
@@ -291,7 +305,7 @@ const SkillQuiz = () => {
               <div className={style.skillquiz__result__actions}>
                 <button
                   className={style.skillquiz__button}
-                  onClick={() => alert('Смотреть варианты')}
+                  onClick={onViewOptions}
                 >
                   Смотреть варианты
                 </button>

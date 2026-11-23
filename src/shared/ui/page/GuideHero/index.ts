@@ -1,0 +1,1 @@
+export { GuideHero } from './GuideHero';

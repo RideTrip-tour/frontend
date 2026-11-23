@@ -34,6 +34,7 @@ const UserAgreementPage = lazy(() =>
 );
 
 const AboutPage = lazy(() => import('@/pages/About'));
+const HowToBuildPage = lazy(() => import('@/pages/HowToBuild'));
 const WhatToTakePage = lazy(() => import('@/pages/WhatToTake'));
 
 export function AppRouter() {
@@ -72,6 +73,10 @@ export function AppRouter() {
           element={<AboutPage />}
         />
 
+        <Route
+          path="/how-to-build"
+          element={<HowToBuildPage />}
+        />
         <Route
           path="/what-to-take"
           element={<WhatToTakePage />}
