@@ -31,9 +31,28 @@
   gap: 18px;
 
   > :first-child {
-    color: var(--color-blue);
+    --btn-text: var(--color-blue);
+    --btn-icon: var(--color-blue);
+
     border: 1px solid var(--color-blue);
     box-shadow: 0 2px 8px rgba(14, 104, 212, 0.2);
+
+    svg path {
+      fill: currentColor;
+    }
+  }
+}
+
+.Button {
+  padding: 8px 8px 8px 16px;
+
+  svg {
+    width: 36px;
+    height: 36px;
+
+    path[stroke] {
+      stroke: currentColor;
+    }
   }
 }
 

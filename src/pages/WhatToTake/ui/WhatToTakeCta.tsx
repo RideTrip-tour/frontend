@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 
+import { ArrowRightIcon, DownloadIcon } from '@/assets/icons/constructor';
 import { Button } from '@/shared/ui/Button';
 
 import style from './WhatToTakeCta.module.scss';
@@ -13,15 +14,17 @@ export function WhatToTakeCta() {
       <p>Главное, взять паспорт, деньги, страховку и желание приключений.</p>
       <div className={style.actions}>
         <Button
+          className={style.Button}
           text="Скачать PDF"
-          icon="solar:download-minimalistic-bold"
+          icon={<DownloadIcon aria-hidden="true" />}
           variant="primary"
           iconVariant="plain"
           onClick={() => window.print()}
         />
         <Button
+          className={style.Button}
           text="Начать подбор"
-          icon="solar:arrow-right-linear"
+          icon={<ArrowRightIcon aria-hidden="true" />}
           variant="secondary"
           onClick={() => navigate('/trip-builder')}
         />
