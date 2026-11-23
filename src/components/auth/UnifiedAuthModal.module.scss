@@ -1,47 +1,60 @@
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+.modal {
+  --auth-padding: 0 130px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 672px;
+  overflow: hidden;
+}
+
+.viewContent {
+  position: relative;
+  height: var(--auth-view-height);
+}
+
+.animatedText {
+  position: relative;
+  display: block;
+  min-height: 1.2em;
+
+  > span {
+    display: block;
+  }
+}
+
+.submitContent {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10000;
-}
-
-.modal {
-  background: white;
-  padding: 20px;
-  border-radius: 16px;
-  position: relative;
   width: 100%;
-  max-width: 400px;
+  height: 100%;
 }
 
-.closeButton {
-  position: absolute;
-  top: 50px;
-  right: 50px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: #1f1f1f;
-  font-size: 32px;
-  line-height: 1;
-  cursor: pointer;
+.confirmHint,
+.consentMobile {
+  display: none;
 }
 
-.title {
-  margin: 0 0 52px;
-  text-align: center;
-  font-size: 28px;
-  line-height: 1.2;
-  font-weight: 700;
-  color: #1f1f1f;
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  .viewContent {
+    height: auto;
+  }
+
+  .viewDescription {
+    margin-bottom: 20px;
+  }
+
+  .confirmHint {
+    display: block;
+  }
+
+  .consentDesktop {
+    display: none;
+  }
+
+  .consentMobile {
+    display: inline;
+  }
 }

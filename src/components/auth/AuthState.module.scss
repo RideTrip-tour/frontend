@@ -1,5 +1,5 @@
 .centerContent {
-  min-height: 430px;
+  min-height: var(--auth-state-min-height, 430px);
   display: flex;
   flex-direction: column;
   align-items: center;

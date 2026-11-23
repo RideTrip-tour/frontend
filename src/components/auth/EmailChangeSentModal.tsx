@@ -38,7 +38,10 @@ export default function EmailChangeSentModal({
   const disabled = isLoading || cooldown > 0;
 
   return (
-    <AuthShell onClose={onClose}>
+    <AuthShell
+      onClose={onClose}
+      mobileLayout={false}
+    >
       <div className={styles.centerContent}>
         <div className={`${styles.iconBox} ${styles.blueBox}`}>
           <img
