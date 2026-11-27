@@ -2,6 +2,7 @@ import type { Accommodation } from '@/entities/accommodation/model/types';
 import type { City } from '@/entities/city/model/types';
 import type { Country } from '@/entities/country/model/types';
 import type { Resort } from '@/entities/resort';
+import type { GuestSelection, TourPackageQuote } from '@/entities/tour/model/package';
 
 export type TransferType = 'needed' | 'self' | 'own-car';
 export type ParkingPreference = 'needed' | 'not-needed';
@@ -24,13 +25,7 @@ export interface TransferSelection {
   parking?: ParkingPreference;
 }
 
-export type ChildAgeGroup = 'До 3-х лет' | '4-12 лет' | '13-17 лет';
-
-export interface GuestSelection {
-  adults: number;
-  children: number;
-  childAgeGroups: Array<ChildAgeGroup | null>;
-}
+export type { GuestSelection, ChildAgeGroup } from '@/entities/tour/model/package';
 
 export type ConstructorSelectionId =
   'from' | 'to' | 'when' | 'activity' | 'hotel' | 'transfer' | 'people' | 'level' | 'additional';
@@ -45,6 +40,7 @@ export interface ReadyTourSelection {
 }
 
 export interface ConstructorState {
+  tourPackage: TourPackageQuote | null;
   fromCity: City | null;
   fromCountry: Country | null;
   toCity: City | null;

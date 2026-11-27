@@ -164,6 +164,12 @@ export function PartnerOffersTripSummary({
           title={transfer?.label ?? UNSELECTED_LABEL}
         />
       </div>
+      {trip.tourPackage && (
+        <p>
+          При выборе другого отеля пакет «{trip.tourPackage.title}» и его допуслуги будут сняты.
+          Конструктор пересчитает поездку по отдельным услугам.
+        </p>
+      )}
     </section>
   );
 }

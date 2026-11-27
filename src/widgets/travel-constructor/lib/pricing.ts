@@ -1,3 +1,4 @@
+import { calculateTourPackageTotal, type TourPackageQuote } from '@/entities/tour/model/package';
 import {
   MOCK_ACTIVITY_PRICES,
   MOCK_ADDITIONAL_OPTION_PRICES,
@@ -14,4 +15,11 @@ export function calculateActivityPrice(activities: string[], liftTypes: string[]
 
 export function calculateAdditionalOptionsPrice(options: AdditionalOption[]) {
   return options.reduce((total, option) => total + MOCK_ADDITIONAL_OPTION_PRICES[option], 0);
+}
+
+export function calculateConfiguredPackagePrice(
+  quote: TourPackageQuote,
+  options: AdditionalOption[],
+) {
+  return calculateTourPackageTotal(quote) + calculateAdditionalOptionsPrice(options);
 }

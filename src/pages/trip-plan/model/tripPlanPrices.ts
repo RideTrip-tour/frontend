@@ -1,5 +1,6 @@
 import type { TripPlanAccommodationOffer, TripPlanBookingDetails } from '@/entities/trip-plan';
 import type { ConstructorState } from '@/widgets/travel-constructor';
+import { calculateConfiguredPackagePrice } from '@/widgets/travel-constructor/lib/pricing';
 
 import { amount, price } from '../lib/tripPlanFormatters';
 import type { TripPrices } from './types';
@@ -29,7 +30,7 @@ function getAccommodationTotal(
   nights: number | null,
 ): number | null {
   if (selectedOffer) return calculateAccommodationTotal(selectedOffer, guestCount, nights);
-  if (!accommodation) return null;
+  if (accommodation?.pricePerNight == null) return null;
   return calculateAccommodationTotal(
     { price: accommodation.pricePerNight, priceBasis: 'night' },
     guestCount,
@@ -61,6 +62,17 @@ export function calculateTripPrices(
   guestCount: number | null,
   nights: number | null,
 ): TripPrices {
+  if (trip.tourPackage) {
+    const perPerson = calculateConfiguredPackagePrice(trip.tourPackage, trip.additional);
+    return {
+      ticketPrice: null,
+      perPersonTicketPrice: null,
+      perPersonHotelPrice: null,
+      transferRate: null,
+      totalLabel: guestCount ? `от ${price(perPerson * guestCount)}` : `от ${price(perPerson)}`,
+      perPersonTotalLabel: `от ${price(perPerson)}`,
+    };
+  }
   const hotelPrice = getAccommodationTotal(trip.accommodation, selectedOffer, guestCount, nights);
   const transferRate = hasAirportTransfer(trip.transfer, bookings.transfer)
     ? (amount(bookings.transfer?.pricePerPerson) ?? amount(trip.transfer?.priceFrom))

@@ -109,7 +109,11 @@ export function buildTripHeader(
       .join(' • '),
     badges,
     totalLabel: prices.totalLabel,
-    totalNote: guests.priceLabel ? `за ${guests.priceLabel}` : '',
+    totalNote: guests.priceLabel
+      ? `за ${guests.priceLabel}`
+      : trip.tourPackage
+        ? 'за 1 человека'
+        : '',
   };
 }
 

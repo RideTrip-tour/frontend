@@ -1,7 +1,8 @@
 export interface Accommodation {
   id: string;
   name: string;
-  pricePerNight: number;
+  /** A package may include a stay without quoting a separate nightly rate. */
+  pricePerNight: number | null;
   accommodationType?: string;
   minRating?: number;
   rating?: number;
@@ -14,6 +15,7 @@ export interface Accommodation {
 }
 
 export interface AccommodationOption extends Accommodation {
+  pricePerNight: number;
   location: string;
   image: string;
   imageAlt: string;

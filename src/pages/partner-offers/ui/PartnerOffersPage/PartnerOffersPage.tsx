@@ -125,6 +125,7 @@ export default function PartnerOffersPage() {
   };
 
   const addOfferToPlan = (offer: PartnerOffer) => {
+    if (trip.tourPackage && offer.id !== trip.accommodation?.id) trip.discardTourPackage();
     const priceBasis = getOfferPriceBasis(offer.priceLabel);
     selectAccommodation(
       {
