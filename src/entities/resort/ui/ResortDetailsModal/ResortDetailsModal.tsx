@@ -4,6 +4,7 @@ import ModalOverlay from '@/shared/ui/base/ModalOverlay';
 import { Button } from '@/shared/ui/Button';
 
 import type { Resort } from '../../model/types';
+import { ResortRating, ResortStatus, ResortTrailBreakdown } from '../ResortFacts';
 import { ResortDetailsIcon, type ResortDetailsIconName } from './ResortDetailsIcon';
 
 import styles from './ResortDetailsModal.module.scss';
@@ -16,15 +17,6 @@ interface ResortDetailsModalProps {
 }
 
 const numberFormatter = new Intl.NumberFormat('ru-RU');
-const ratingFormatter = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 2 });
-const reviewPluralRules = new Intl.PluralRules('ru-RU');
-const reviewWords: Record<string, string> = { one: 'отзыв', few: 'отзыва', many: 'отзывов' };
-const trailTypes = [
-  { key: 'green', label: 'Зелёные (новички)' },
-  { key: 'blue', label: 'Синие (средние)' },
-  { key: 'red', label: 'Красные (продвинутые)' },
-  { key: 'black', label: 'Чёрные (экстремальные)' },
-] as const;
 
 function getSelectionLabels(isOpen: boolean, isSelected: boolean) {
   if (!isOpen) {
@@ -69,7 +61,6 @@ export function ResortDetailsModal({
     .includes(resort.country.toLocaleLowerCase('ru-RU'))
     ? resort.location
     : `${resort.location}, ${resort.country}`;
-  const reviewWord = reviewWords[reviewPluralRules.select(resort.reviewsCount)] ?? 'отзывов';
   const selectionLabels = getSelectionLabels(resort.isOpen, isSelected);
 
   const selectResort = () => {
@@ -104,38 +95,14 @@ export function ResortDetailsModal({
             >
               {resort.name}
             </h2>
-            <p className={styles.rating}>
-              <ResortDetailsIcon
-                name="star"
-                className={styles.star}
-              />
-              <span aria-label={`Рейтинг ${ratingFormatter.format(resort.rating)} из 5`}>
-                {ratingFormatter.format(resort.rating)}
-              </span>
-              <span
-                className={styles.ratingDivider}
-                aria-hidden="true"
-              >
-                |
-              </span>
-              <span>
-                {numberFormatter.format(resort.reviewsCount)} {reviewWord}
-              </span>
-            </p>
+            <ResortRating resort={resort} />
           </div>
           <p className={styles.location}>{location}</p>
           <p className={styles.description}>{resort.description}</p>
-          <span
-            className={`${styles.status} ${resort.isOpen ? styles.openStatus : styles.closedStatus}`}
-          >
-            <span
-              className={styles.statusDot}
-              aria-hidden="true"
-            />
-            {resort.isOpen
-              ? `Открыто | ${resort.openTrails}/${resort.totalTrails} трасс`
-              : 'Закрыто | сезон окончен'}
-          </span>
+          <ResortStatus
+            resort={resort}
+            className={styles.status}
+          />
         </header>
 
         <div className={styles.detailsRow}>
@@ -149,22 +116,7 @@ export function ResortDetailsModal({
             >
               Трассы
             </h3>
-            <ul className={styles.trails}>
-              {trailTypes.map(({ key, label }) => (
-                <li
-                  className={styles.trailRow}
-                  key={key}
-                >
-                  <span
-                    className={`${styles.trailDot} ${styles[key]}`}
-                    aria-hidden="true"
-                  />
-                  <span>
-                    {label} — {details.trailCounts[key]}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <ResortTrailBreakdown counts={details.trailCounts} />
             <p className={styles.elevation}>
               <ResortDetailsIcon
                 name="elevation"

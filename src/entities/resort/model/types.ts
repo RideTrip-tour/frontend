@@ -9,6 +9,14 @@ export interface ResortDetails {
   };
   hasSnowpark: boolean;
   hasFreeride: boolean;
+  trailLengthKm?: number;
+  hasNightSkiing?: boolean;
+  rentalLocations?: number;
+  hasInstructors?: boolean;
+  hasRescueService?: boolean;
+  hasLockers?: boolean;
+  accessibility?: readonly string[];
+  directions?: string;
   rentalPricePerDay: number;
   instructorPricePerHour: number;
   suitableFor: readonly string[];
