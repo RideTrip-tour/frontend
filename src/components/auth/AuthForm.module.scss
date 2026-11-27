@@ -383,3 +383,81 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  .mobileForm {
+    max-width: 400px;
+
+    .fieldGroup {
+      .inputWrapper {
+        height: 52px;
+      }
+
+      .input {
+        min-width: 0;
+      }
+
+      .floatingLabel:not(.floating) {
+        font-size: 14px;
+        color: var(--color-gray-dark);
+      }
+    }
+
+    .eyeButton {
+      flex: 0 0 44px;
+      height: 44px;
+      margin-right: 3px;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .hint {
+      margin: 2px 0 0 16px;
+      color: #8894a2;
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    .checkboxRow {
+      gap: 8px;
+      margin-top: 0;
+    }
+
+    .checkboxInput:focus-visible + .checkboxBox {
+      outline: 2px solid var(--color-blue);
+      outline-offset: 2px;
+    }
+
+    .linkButton {
+      min-height: 44px;
+      margin-bottom: 16px;
+    }
+
+    .submitButton {
+      display: flex;
+      height: 44px;
+
+      &:disabled {
+        background: var(--color-gray-dark);
+      }
+    }
+
+    .centerError {
+      margin: 8px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .divider {
+      gap: 12px;
+    }
+
+    .dividerText,
+    .footerText {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+}

@@ -19,12 +19,20 @@
   position: relative;
   width: 620px;
   min-height: 672px;
-  padding: 122px 130px;
+  padding: var(--auth-padding, 122px 130px);
   border: 1px solid #0e68d4;
   border-radius: 40px;
   background: #ffffff;
   box-shadow: 0 0 20px rgba(14, 104, 212, 0.18);
   box-sizing: border-box;
+}
+
+.wideContent {
+  padding-inline: 114px;
+}
+
+.logo {
+  display: none;
 }
 
 .closeButton {
@@ -52,4 +60,110 @@
   line-height: 1.2;
   font-weight: 700;
   color: #1f1f1f;
+}
+
+:global(html):has(.mobileOverlay[open]) {
+  overflow: hidden;
+}
+
+:global(body):has(.mobileOverlay[open]) {
+  min-width: 0;
+  overflow: hidden;
+
+  // Keep the page layout behind the dialog inside the clipped body.
+  // Delete after add adaptive for page
+  > :global(#root) {
+    min-width: var(--page-min-width);
+  }
+}
+
+.overlay.mobileOverlay {
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+@media (max-width: 767px), (max-height: 720px) {
+  .modal.mobileLayout {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 0;
+    max-height: 100%;
+    padding: 0;
+    overflow: hidden;
+
+    .content {
+      --auth-state-min-height: 300px;
+
+      position: relative;
+      z-index: 0;
+      flex: 1;
+      overflow: auto;
+      overflow-wrap: anywhere;
+      overscroll-behavior: contain;
+      scroll-padding-block: 54px 24px;
+      padding: 56px 32px 32px;
+    }
+
+    .closeButton {
+      z-index: 1;
+      top: 6px;
+      right: max(6px, env(safe-area-inset-right));
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--color-white);
+    }
+
+    .title {
+      margin-bottom: 32px;
+    }
+  }
+}
+
+@media (max-width: 767px), (max-height: 500px) and (pointer: coarse) {
+  .overlay.mobileOverlay {
+    align-items: stretch;
+    padding: max(52px, env(safe-area-inset-top)) 0 0;
+    background: rgba(0, 0, 0, 0.16);
+
+    @media (max-height: 500px) {
+      padding-top: max(12px, env(safe-area-inset-top));
+    }
+  }
+
+  .modal.mobileLayout {
+    width: 100%;
+    height: auto;
+    border: 0;
+    border-radius: 20px 20px 0 0;
+    box-shadow: none;
+
+    .content {
+      padding: clamp(56px, 10dvh, 76px) max(16px, env(safe-area-inset-right))
+        max(32px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    }
+
+    .closeButton img {
+      width: 14px;
+      height: 14px;
+    }
+
+    .logo {
+      display: block;
+      margin-bottom: 36px;
+      text-align: center;
+      font-family: var(--text-font-family-2, inherit);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 22px;
+    }
+
+    .title {
+      margin-bottom: 53px;
+      font-size: 18px;
+      line-height: 22px;
+    }
+  }
 }

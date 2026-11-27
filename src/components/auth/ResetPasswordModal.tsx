@@ -75,7 +75,7 @@ export default function ResetPasswordModal({
       onClose={onClose}
     >
       <form
-        className={styles.form}
+        className={`${styles.form} ${styles.mobileForm}`}
         onSubmit={handleSubmit}
       >
         <AuthField

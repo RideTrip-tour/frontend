@@ -16,7 +16,7 @@ export default function RegistrationSuccessModal({
   return (
     <AuthShell
       onClose={onClose}
-      customStyle={{ padding: '122px 114px' }}
+      wideContent
     >
       <div className={styles.centerContent}>
         <div className={styles.planeIcon}>

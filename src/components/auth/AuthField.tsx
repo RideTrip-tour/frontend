@@ -14,6 +14,7 @@ type Props = {
   placeholder?: string;
   status?: AuthFieldStatus;
   hint?: string;
+  hintClassName?: string;
   hintTone?: 'default' | 'success' | 'error';
   showToggle?: boolean;
   isPasswordVisible?: boolean;
@@ -34,6 +35,7 @@ export default function AuthField({
   placeholder = '',
   status = 'default',
   hint,
+  hintClassName = '',
   hintTone = 'default',
   showToggle = false,
   isPasswordVisible = false,
@@ -136,7 +138,7 @@ export default function AuthField({
 
       {hint && (
         <p
-          className={`${styles.hint} ${styles.visible} ${
+          className={`${styles.hint} ${styles.visible} ${hintClassName} ${
             hintTone === 'error'
               ? styles.hintError
               : hintTone === 'success'
