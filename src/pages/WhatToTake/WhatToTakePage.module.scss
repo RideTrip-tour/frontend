@@ -1,0 +1,40 @@
+.page {
+  width: 1420px;
+  margin: 50px auto 120px;
+  color: var(--color-black);
+  font-family: var(--text-font-family-3), sans-serif;
+}
+
+.breadcrumbs {
+  margin-bottom: 34px;
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 1500px) {
+  .page {
+    width: calc(100% - 80px);
+  }
+}
+
+@media (max-width: 900px) {
+  .page {
+    width: calc(100% - 32px);
+    margin-top: 32px;
+  }
+}
+
+@media print {
+  .breadcrumbs {
+    display: none;
+  }
+
+  .page {
+    width: 100%;
+    margin: 0;
+  }
+}

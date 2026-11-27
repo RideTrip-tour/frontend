@@ -23,6 +23,8 @@ const ResetPasswordPage = lazy(() => import('@/pages/ResetPasswordPage'));
 const LegalDocumentPage = lazy(() => import('@/pages/Legal'));
 
 const AboutPage = lazy(() => import('@/pages/About'));
+const HowToBuildPage = lazy(() => import('@/pages/HowToBuild'));
+const WhatToTakePage = lazy(() => import('@/pages/WhatToTake'));
 
 export function AppRouter() {
   return (
@@ -74,6 +76,15 @@ export function AppRouter() {
         <Route
           path="/about"
           element={<AboutPage />}
+        />
+
+        <Route
+          path="/how-to-build"
+          element={<HowToBuildPage />}
+        />
+        <Route
+          path="/what-to-take"
+          element={<WhatToTakePage />}
         />
 
         <Route element={<PaddedLayout />}>

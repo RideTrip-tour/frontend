@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 
-import SkillQuiz from '@/pages/Profile/ProfileSteps/SkillQuiz';
+import { SkillQuiz } from '@/features/ski-level-quiz';
 import { updateMyProfileRequest } from '@/services/profileService';
 import Checkbox from '@/shared/ui/base/Checkbox';
 import Divider from '@/shared/ui/base/Divider';
@@ -486,7 +486,7 @@ function ProfileSteps() {
           ariaLabel="Подбор уровня катания"
           onClose={() => setIsQuizOpen(false)}
         >
-          <SkillQuiz />
+          <SkillQuiz onViewOptions={() => window.alert('Смотреть варианты')} />
         </ModalChildren>
       )}
     </div>
