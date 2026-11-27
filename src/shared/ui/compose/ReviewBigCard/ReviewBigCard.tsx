@@ -1,5 +1,3 @@
-import { Icon } from '@iconify/react';
-
 import style from './reviewbigcard.module.scss';
 
 import './variables.css';
@@ -19,24 +17,29 @@ const ReviewBigCard = ({ photo, name, category, rating, date, text }: ReviewBigC
   return (
     <article className={style.card}>
       <div className={style.card__author}>
-        <img
-          src={photo}
-          alt={name}
-          className={style.card__avatar}
-        />
+        <div className={style.card__avatar}>
+          <img
+            src={photo}
+            alt={name}
+          />
+        </div>
         <div className={style.card__authorInfo}>
           <span className={style.card__name}>{name}</span>
           <span className={style.card__badge}>{category}</span>
           <span className={style.card__ratingLabel}>Оценка</span>
-          <div className={style.card__stars}>
+          <div
+            className={style.card__stars}
+            role="img"
+            aria-label={`Оценка ${rating} из 5`}
+          >
             {stars.map((active, i) => (
-              <Icon
+              <span
                 key={i}
-                icon={
-                  active ? 'material-symbols:star-rounded' : 'material-symbols:star-outline-rounded'
-                }
+                aria-hidden="true"
                 className={style.card__star}
-              />
+              >
+                {active ? '★' : '☆'}
+              </span>
             ))}
           </div>
         </div>

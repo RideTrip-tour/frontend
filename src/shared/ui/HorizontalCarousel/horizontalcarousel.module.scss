@@ -5,6 +5,8 @@
 
 .horizontalcarousel__window {
   position: relative;
+  box-sizing: border-box;
+  max-width: 100%;
   margin: 0 auto;
   overflow: hidden;
 }
