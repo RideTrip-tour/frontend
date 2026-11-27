@@ -2,13 +2,14 @@ import style from './skillslevel.module.scss';
 
 interface SkillsLevelProps {
   level: 0 | 1 | 2 | 3;
+  label?: string;
 }
 
-export const SkillsLevel = ({ level }: SkillsLevelProps) => {
+export const SkillsLevel = ({ level, label }: SkillsLevelProps) => {
   if (level === 0) {
     return (
       <div className={style.skillslevel}>
-        <div className={style.skillslevel__label}>Уровень: подходит всем</div>
+        <div className={style.skillslevel__label}>{label ?? 'Уровень: подходит всем'}</div>
       </div>
     );
   }
@@ -30,8 +31,8 @@ export const SkillsLevel = ({ level }: SkillsLevelProps) => {
   const colorClass = getLevelColorClass(level);
 
   return (
-    <div className={`${style.skillslevel} ${colorClass}`}>
-      <div className={style.skillslevel__label}>Уровень:</div>
+    <div className={`${style.skillslevel} ${colorClass} ${label ? style.stacked : ''}`}>
+      <div className={style.skillslevel__label}>{label ?? 'Уровень:'}</div>
 
       <div className={style.skillslevel__circles}>
         {circles.map((c) => (

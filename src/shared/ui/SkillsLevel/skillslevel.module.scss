@@ -45,3 +45,10 @@
     background: var(--color-red);
   }
 }
+
+.stacked {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 0;
+}

@@ -1,5 +1,7 @@
 import { Icon } from '@iconify/react';
+import { Link } from 'react-router';
 
+import { tourPath } from '@/entities/tour';
 import { Button } from '@/shared/ui/Button';
 import { READY_TOUR_ACTIVITY_ICONS, type ReadyTourPreset } from '@/widgets/ready-tours/model';
 
@@ -60,7 +62,18 @@ export function ReadyTourCard({ tour, onApply }: Readonly<ReadyTourCardProps>) {
       </div>
 
       <div className={style.card__content}>
-        <h2 className={style.card__title}>{tour.name}</h2>
+        <h2 className={style.card__title}>
+          {tour.tourId ? (
+            <Link
+              to={tourPath(tour.tourId)}
+              state={{ tourSource: 'ready-tours' }}
+            >
+              {tour.name}
+            </Link>
+          ) : (
+            tour.name
+          )}
+        </h2>
 
         <div className={style.card__level}>
           <span className={style.card__levelLabel}>Уровень:</span>
@@ -74,6 +87,16 @@ export function ReadyTourCard({ tour, onApply }: Readonly<ReadyTourCardProps>) {
             <span className={style.card__pricePer}>за человека</span>
           </div>
 
+          {tour.tourId && (
+            <Link
+              className={style.detailsLink}
+              to={tourPath(tour.tourId)}
+              state={{ tourSource: 'ready-tours' }}
+              aria-label={`Подробнее о туре «${tour.name}»`}
+            >
+              Подробнее
+            </Link>
+          )}
           <Button
             text="В конструктор"
             variant="light"
