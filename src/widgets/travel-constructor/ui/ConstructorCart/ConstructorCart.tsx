@@ -14,6 +14,7 @@ import { getPartnerOffersReturnPath } from '@/widgets/travel-constructor/lib/nav
 import {
   calculateActivityPrice,
   calculateAdditionalOptionsPrice,
+  calculateConfiguredPackagePrice,
 } from '@/widgets/travel-constructor/lib/pricing';
 import {
   MOCK_SKI_LEVEL_PRICES,
@@ -28,6 +29,7 @@ import { CartActions } from './CartActions';
 import { CartItemHeader } from './CartItemHeader';
 import { CartShareMenu } from './CartShareMenu';
 import { CartSummary } from './CartSummary';
+import { TourPackagePrices } from './TourPackagePrices';
 
 import style from './ConstructorCart.module.scss';
 
@@ -59,6 +61,7 @@ export function ConstructorCart() {
   };
   const trip = useConstructor();
   const {
+    tourPackage,
     fromCity,
     fromCountry,
     toCity,
@@ -132,13 +135,14 @@ export function ConstructorCart() {
   const levelPrice = level ? MOCK_SKI_LEVEL_PRICES[level] : 0;
   const additionalOptionsPrice = calculateAdditionalOptionsPrice(additional);
 
-  const totalPrice =
-    ticketPrice +
-    activityPrice +
-    accommodationPrice +
-    transferPrice +
-    levelPrice +
-    additionalOptionsPrice;
+  const totalPrice = tourPackage
+    ? calculateConfiguredPackagePrice(tourPackage, additional)
+    : ticketPrice +
+      activityPrice +
+      accommodationPrice +
+      transferPrice +
+      levelPrice +
+      additionalOptionsPrice;
 
   const hasSelectedItems = hasConstructorSelections(trip);
   const hasVisibleItems = hasSelectedItems || activeSelectorId !== null;
@@ -167,6 +171,7 @@ export function ConstructorCart() {
       people,
       level,
       additional,
+      ...(tourPackage ? { tourPackage } : {}),
       totalPrice,
     };
 
@@ -211,6 +216,7 @@ export function ConstructorCart() {
         ) : (
           <>
             <p className={style.subtitle}>Вот что вы выбрали</p>
+            {tourPackage && <TourPackagePrices quote={tourPackage} />}
             {(hasTicketDetails || isSelectingTickets) && (
               <section
                 className={style.cartItem}
@@ -247,7 +253,7 @@ export function ConstructorCart() {
                     </span>
                   )}
                 </p>
-                {hasCompleteRoute && <PriceLine price={ticketPrice} />}
+                {!tourPackage && hasCompleteRoute && <PriceLine price={ticketPrice} />}
               </section>
             )}
 
@@ -276,7 +282,7 @@ export function ConstructorCart() {
                         <span className={style.secondaryValue}>{liftTypesLabel}</span>
                       )}
                     </p>
-                    <PriceLine price={activityPrice} />
+                    {!tourPackage && <PriceLine price={activityPrice} />}
                   </>
                 )}
               </section>
@@ -303,9 +309,17 @@ export function ConstructorCart() {
                   <>
                     <p className={style.primaryValue}>
                       <span>{accommodation.name}</span>
-                      <span className={style.secondaryValue}> (цена за ночь)</span>
+                      <span className={style.secondaryValue}>
+                        {tourPackage && ' · Включено в тур'}
+                        {!tourPackage &&
+                          (accommodation.pricePerNight === null
+                            ? ' · Цена уточняется'
+                            : ' (цена за ночь)')}
+                      </span>
                     </p>
-                    <PriceLine price={accommodationPrice} />
+                    {!tourPackage && accommodation.pricePerNight !== null && (
+                      <PriceLine price={accommodationPrice} />
+                    )}
                   </>
                 ) : null}
               </section>
@@ -332,11 +346,11 @@ export function ConstructorCart() {
                   <>
                     <p className={style.primaryValue}>
                       <span>{transfer.label}</span>
-                      {transferDetails && (
+                      {!tourPackage && transferDetails && (
                         <span className={style.secondaryValue}>{transferDetails}</span>
                       )}
                     </p>
-                    <PriceLine price={transferPrice} />
+                    {!tourPackage && <PriceLine price={transferPrice} />}
                   </>
                 ) : null}
               </section>
@@ -373,7 +387,7 @@ export function ConstructorCart() {
                         <p className={style.primaryValue}>{formatGuestSummary(people)}</p>
                         {/* TODO: Переработать формат гостей, отделить описание (в скобках) от основы */}
                         {/* <span className={style.secondaryValue}>{formatGuestSummary(people)}</span> */}
-                        <PriceLine price={0} />
+                        {!tourPackage && <PriceLine price={0} />}
                       </>
                     ) : null}
                   </div>
@@ -396,7 +410,7 @@ export function ConstructorCart() {
                     ) : level ? (
                       <>
                         <p className={style.primaryValue}>{level}</p>
-                        <PriceLine price={levelPrice} />
+                        {!tourPackage && <PriceLine price={levelPrice} />}
                       </>
                     ) : null}
                   </div>

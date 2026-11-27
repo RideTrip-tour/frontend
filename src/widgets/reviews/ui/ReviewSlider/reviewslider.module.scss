@@ -25,4 +25,50 @@
   display: flex;
   gap: 20px;
   align-items: center;
+
+  button {
+    box-shadow: 0 2px 8px var(--color-blue-dark-1-10);
+  }
+  button:not(:disabled) img {
+    filter: invert(29%) sepia(99%) saturate(1530%) hue-rotate(194deg);
+  }
+}
+
+.previousIcon {
+  transform: rotate(180deg);
+}
+
+.viewAll > div {
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  svg path {
+    stroke: var(--btn-icon);
+  }
+}
+
+.dialog {
+  width: min(720px, 100%);
+  max-height: calc(100dvh - 48px);
+  padding: clamp(16px, 3vw, 32px);
+  overflow: auto;
+  border-radius: 24px;
+  background: var(--color-white);
+}
+
+.dialogHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  h2 {
+    margin: 0;
+  }
+}
+
+.allReviews {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
 }

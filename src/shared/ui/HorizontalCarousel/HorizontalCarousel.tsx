@@ -50,6 +50,8 @@ export function HorizontalCarousel({
   renderWindowControls,
 }: Readonly<HorizontalCarouselProps>) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const windowRef = useRef<HTMLDivElement>(null);
+  const [measuredWidth, setMeasuredWidth] = useState<number>();
   const [measurements, setMeasurements] = useState<CardMeasurement[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const children = Children.toArray(items);
@@ -62,7 +64,9 @@ export function HorizontalCarousel({
   const measure = useCallback(() => {
     const track = trackRef.current;
 
-    if (!track) return;
+    if (!track || !windowRef.current) return;
+
+    setMeasuredWidth(windowRef.current.clientWidth);
 
     const savedTransform = track.style.transform;
     track.style.transform = 'none';
@@ -98,13 +102,14 @@ export function HorizontalCarousel({
 
     const resizeObserver = new ResizeObserver(measure);
     resizeObserver.observe(track);
+    if (windowRef.current) resizeObserver.observe(windowRef.current);
 
     return () => resizeObserver.disconnect();
   }, [measure]);
 
   const lastCard = measurements.at(-1);
   const totalWidth = lastCard ? lastCard.left + lastCard.width : 0;
-  const viewportWidth = Math.max(0, windowWidth - paddingLeft - paddingRight);
+  const viewportWidth = Math.max(0, (measuredWidth ?? windowWidth) - paddingLeft - paddingRight);
   const maxOffset = Math.max(0, totalWidth - viewportWidth);
 
   const getOffset = useCallback(
@@ -169,7 +174,8 @@ export function HorizontalCarousel({
     progress,
   };
 
-  const trackStyle: CSSProperties = {
+  const trackStyle: CSSProperties & Record<'--carousel-content-width', string> = {
+    '--carousel-content-width': `${viewportWidth}px`,
     gap: typeof gap === 'number' ? `${gap}px` : gap,
     transform: `translateX(-${currentOffset}px)`,
   };
@@ -192,6 +198,7 @@ export function HorizontalCarousel({
   return (
     <div className={rootClassName}>
       <div
+        ref={windowRef}
         className={style.horizontalcarousel__window}
         style={windowStyle}
       >

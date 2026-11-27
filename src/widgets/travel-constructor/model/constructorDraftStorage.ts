@@ -1,5 +1,7 @@
 import type { PersistStorage } from 'zustand/middleware';
 
+import type { TourAddon, TourPackageQuote } from '@/entities/tour/model/package';
+
 import { OPTION_GROUPS } from '../config/additionalOptions';
 import { normalizeGuestSelection } from '../lib/guestSummary';
 import { hasConstructorSelections } from './constructorFlow';
@@ -29,6 +31,38 @@ function stringList(value: unknown): string[] {
   return Array.isArray(value) ? value.filter(isString) : [];
 }
 
+function isTourAddon(value: unknown): value is TourAddon {
+  return (
+    isRecord(value) &&
+    ['ski-pass', 'equipment', 'instructor'].includes(String(value.id)) &&
+    isString(value.label) &&
+    (value.unit === 'day' || value.unit === 'hour') &&
+    isNumber(value.unitPrice) &&
+    isNumber(value.quantity) &&
+    Number.isSafeInteger(value.quantity) &&
+    value.quantity > 0
+  );
+}
+
+function restoreTourPackage(value: unknown): TourPackageQuote | null {
+  if (
+    !isRecord(value) ||
+    !isString(value.tourId) ||
+    !isString(value.title) ||
+    !isNumber(value.basePricePerPerson) ||
+    !Array.isArray(value.addons) ||
+    !value.addons.every(isTourAddon) ||
+    new Set(value.addons.map((addon) => addon.id)).size !== value.addons.length
+  )
+    return null;
+  return {
+    tourId: value.tourId,
+    title: value.title,
+    basePricePerPerson: value.basePricePerPerson,
+    addons: value.addons,
+  };
+}
+
 function namedLocation(value: unknown): ConstructorState['fromCity'] {
   return isRecord(value) && Number.isInteger(value.id) && isString(value.name)
     ? { id: value.id as number, name: value.name }
@@ -40,7 +74,7 @@ function accommodation(value: unknown): ConstructorState['accommodation'] {
     !isRecord(value) ||
     !isString(value.id) ||
     !isString(value.name) ||
-    !isNumber(value.pricePerNight)
+    !(value.pricePerNight === null || isNumber(value.pricePerNight))
   ) {
     return null;
   }
@@ -171,6 +205,7 @@ function parseCalendarDate(value: unknown): Date | null {
 
 export function selectConstructorDraft(state: ConstructorState): ConstructorState {
   return {
+    tourPackage: state.tourPackage,
     fromCity: state.fromCity,
     fromCountry: state.fromCountry,
     toCity: state.toCity,
@@ -199,6 +234,7 @@ function serializeConstructorDraft(state: ConstructorState): ConstructorDraft {
 function restoreConstructorDraft(value: unknown): ConstructorState | null {
   if (!isRecord(value)) return null;
   return {
+    tourPackage: restoreTourPackage(value.tourPackage),
     fromCity: namedLocation(value.fromCity),
     fromCountry: namedLocation(value.fromCountry),
     toCity: namedLocation(value.toCity),

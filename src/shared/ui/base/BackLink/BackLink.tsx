@@ -1,5 +1,6 @@
-import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router';
+
+import { ChevronRightIcon } from '@/assets/icons';
 
 import style from './backlink.module.scss';
 
@@ -20,9 +21,8 @@ function BackLinkButton({ text, onClick, className }: BackLinkBaseProps & { onCl
       className={[style.backlink, className].filter(Boolean).join(' ')}
       onClick={onClick}
     >
-      <Icon
+      <ChevronRightIcon
         aria-hidden="true"
-        icon="iconamoon:arrow-left-2"
         className={style.backlink__icon}
       />
       <span className={style.backlink__text}>{text}</span>

@@ -1,4 +1,8 @@
+import { rosaJanuaryTour } from '@/entities/tour';
+
 import type { ReadyTourPreset } from './types';
+
+const january = rosaJanuaryTour.itinerary;
 
 export const READY_TOURS: ReadyTourPreset[] = [
   {
@@ -42,15 +46,16 @@ export const READY_TOURS: ReadyTourPreset[] = [
   },
   {
     id: 'rosa-khutor',
-    name: 'Роза Хутор, Россия',
+    tourId: january.tourId,
+    name: `${january.title}, Россия`,
     image: '/assets/images/imageBG.png',
     activity: 'лыжи',
-    activityOption: 'Трассовое катание',
-    destinationCity: { id: 104, name: 'Сочи' },
-    arrivalCity: 'Сочи',
-    transfer: 'не нужен',
-    transferType: 'self',
-    level: 'Средний',
-    price: 4600,
+    activityOption: january.activityOption,
+    destinationCity: january.destinationCity,
+    arrivalCity: january.destinationCity.name,
+    transfer: 'включён',
+    transferType: 'needed',
+    level: january.level,
+    price: january.basePricePerPerson,
   },
 ];

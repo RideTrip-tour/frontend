@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react';
 import type { ReactNode } from 'react';
 
+import { TripSection } from '@/entities/trip';
+
 import type { TripPlanField } from '../../model/presentation';
-import { TripPlanSection } from '../TripPlanSection/TripPlanSection';
 
 import styles from './TripPlanInfoSection.module.scss';
 
@@ -38,7 +39,7 @@ export function TripPlanInfoSection({
   const hasAmenities = Boolean(amenities?.length);
 
   return (
-    <TripPlanSection
+    <TripSection
       title={title}
       icon={icon}
       className={className}
@@ -130,6 +131,6 @@ export function TripPlanInfoSection({
           </div>
         </>
       )}
-    </TripPlanSection>
+    </TripSection>
   );
 }

@@ -5,6 +5,7 @@ export type ReadyTourActivity = 'лыжи' | 'сноуборд';
 
 export interface ReadyTourPreset {
   id: string;
+  tourId?: string;
   name: string;
   image: string;
   activity: ReadyTourActivity;

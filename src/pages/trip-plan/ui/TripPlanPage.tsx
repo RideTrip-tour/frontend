@@ -9,10 +9,9 @@ import {
   ShareIcon,
   TaxiIcon,
 } from '@/assets/icons/constructor';
+import { TripCostSummary, TripHero } from '@/entities/trip';
 import {
   getTripPlanContextKey,
-  TripPlanCostSummary,
-  TripPlanHero,
   type TripPlanInfoAction,
   TripPlanInfoSection,
   TripPlanTravelersSection,
@@ -95,7 +94,7 @@ export default function TripPlanPage() {
         onClick={() => navigate(offersPath)}
         text="К подобранным вариантам"
       />
-      <TripPlanHero
+      <TripHero
         title={plan.title}
         subtitle={plan.subtitle}
         badges={plan.badges}
@@ -173,7 +172,7 @@ export default function TripPlanPage() {
           additional={plan.additional}
           onEdit={() => edit('people')}
         />
-        <TripPlanCostSummary
+        <TripCostSummary
           costs={plan.costs}
           totalLabel={plan.perPersonTotalLabel}
           totalNote="за 1 человека"

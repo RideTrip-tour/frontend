@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { MinusIcon, PlusIcon } from '@/assets/icons/constructor';
+import { QuantityStepper } from '@/shared/ui/QuantityStepper';
 import type { ChildAgeGroup, GuestSelection } from '@/widgets/travel-constructor/model/types';
 
 import styles from './GuestSelector.module.scss';
@@ -38,14 +38,12 @@ export function GuestSelector({ value, onChange }: GuestSelectorProps) {
     });
   };
 
-  const changeAdults = (delta: number) => {
-    const nextAdults = Math.min(MAX_ADULTS, Math.max(0, adults + delta));
+  const changeAdults = (nextAdults: number) => {
     setAdults(nextAdults);
     updateSelection(nextAdults, children, childAgeGroups);
   };
 
-  const changeChildren = (delta: number) => {
-    const nextChildren = Math.min(MAX_CHILDREN, Math.max(0, children + delta));
+  const changeChildren = (nextChildren: number) => {
     const nextAgeGroups = createAgeGroups(nextChildren, childAgeGroups);
 
     setChildren(nextChildren);
@@ -66,48 +64,25 @@ export function GuestSelector({ value, onChange }: GuestSelectorProps) {
     <div className={styles.selector}>
       <div className={styles.counterGroup}>
         <span className={styles.sectionTitle}>Взрослые</span>
-        <div className={styles.counter}>
-          <button
-            aria-label="Уменьшить количество взрослых"
-            disabled={adults <= 1}
-            onClick={() => changeAdults(-1)}
-            type="button"
-          >
-            <MinusIcon aria-hidden="true" />
-          </button>
-          <output aria-live="polite">{adults}</output>
-          <button
-            aria-label="Увеличить количество взрослых"
-            disabled={adults >= MAX_ADULTS}
-            onClick={() => changeAdults(1)}
-            type="button"
-          >
-            <PlusIcon aria-hidden="true" />
-          </button>
-        </div>
+        <QuantityStepper
+          value={adults}
+          min={1}
+          max={MAX_ADULTS}
+          decrementLabel="Уменьшить количество взрослых"
+          incrementLabel="Увеличить количество взрослых"
+          onChange={changeAdults}
+        />
       </div>
 
       <div className={styles.counterGroup}>
         <h3 className={styles.sectionTitle}>Дети</h3>
-        <div className={styles.counter}>
-          <button
-            aria-label="Уменьшить количество детей"
-            disabled={children <= 0}
-            onClick={() => changeChildren(-1)}
-            type="button"
-          >
-            <MinusIcon aria-hidden="true" />
-          </button>
-          <output aria-live="polite">{children}</output>
-          <button
-            aria-label="Увеличить количество детей"
-            disabled={children >= MAX_CHILDREN}
-            onClick={() => changeChildren(1)}
-            type="button"
-          >
-            <PlusIcon aria-hidden="true" />
-          </button>
-        </div>
+        <QuantityStepper
+          value={children}
+          max={MAX_CHILDREN}
+          decrementLabel="Уменьшить количество детей"
+          incrementLabel="Увеличить количество детей"
+          onChange={changeChildren}
+        />
       </div>
 
       {children > 0 && (

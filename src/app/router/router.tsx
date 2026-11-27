@@ -17,6 +17,7 @@ const RegisterPage = lazy(() =>
 const TripBuilderPage = lazy(() => import('@/pages/trip-builder'));
 const PartnerOffersPage = lazy(() => import('@/pages/partner-offers'));
 const TripPlanPage = lazy(() => import('@/pages/trip-plan'));
+const TourDetailsPage = lazy(() => import('@/pages/tour-details'));
 const ResortsPage = lazy(() => import('@/pages/resorts'));
 const RegistrationVerifyPage = lazy(() => import('@/pages/RegistrationVerifyPage'));
 const ResetPasswordPage = lazy(() => import('@/pages/ResetPasswordPage'));
@@ -49,6 +50,10 @@ export function AppRouter() {
         <Route
           path={AUTH_PATHS.resetPassword}
           element={<ResetPasswordPage />}
+        />
+        <Route
+          path="/tour/:tourId"
+          element={<TourDetailsPage />}
         />
         <Route path="/trip-builder">
           <Route

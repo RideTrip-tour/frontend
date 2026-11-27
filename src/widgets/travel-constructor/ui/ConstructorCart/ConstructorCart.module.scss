@@ -65,6 +65,30 @@
   flex-direction: column;
 }
 
+.packagePrices {
+  display: grid;
+  gap: 6px;
+  margin: 8px 0;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  dd {
+    margin: 0;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+}
+
+.packageNote {
+  margin: 4px 0;
+  color: #5f6c7b;
+  font-size: 14px;
+}
+
 .cartItemHeader {
   display: flex;
   align-items: center;

@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react';
 
 import { PeopleIcon } from '@/assets/icons/constructor';
+import { TripSection } from '@/entities/trip';
 
 import type { TripPlanTraveler } from '../../model/presentation';
-import { TripPlanSection } from '../TripPlanSection/TripPlanSection';
 
 import styles from './TripPlanTravelersSection.module.scss';
 
@@ -19,7 +19,7 @@ export function TripPlanTravelersSection({
   onEdit,
 }: Readonly<TripPlanTravelersSectionProps>) {
   return (
-    <TripPlanSection
+    <TripSection
       title="Состав поездки"
       icon={<PeopleIcon />}
     >
@@ -67,6 +67,6 @@ export function TripPlanTravelersSection({
           </ul>
         </div>
       )}
-    </TripPlanSection>
+    </TripSection>
   );
 }

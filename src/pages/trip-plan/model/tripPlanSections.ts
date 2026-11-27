@@ -1,9 +1,11 @@
+import { calculateTourAddonCost, formatTourAddonQuantity } from '@/entities/tour/model/package';
 import type {
   TripPlanAccommodationOffer,
   TripPlanBookingDetails,
   TripPlanFlightLeg,
 } from '@/entities/trip-plan';
 import type { ConstructorState } from '@/widgets/travel-constructor';
+import { calculateAdditionalOptionsPrice } from '@/widgets/travel-constructor/lib/pricing';
 
 import { calendarDate, formatDate, plural, price, time } from '../lib/tripPlanFormatters';
 import { hasAirportTransfer } from './tripPlanPrices';
@@ -84,8 +86,13 @@ export function buildTicketsSection(
       },
       {
         label: 'Стоимость',
-        value: ticketPrice === null ? 'Уточняется' : price(ticketPrice),
-        note: guests.priceLabel ? `За ${guests.priceLabel}` : undefined,
+        value:
+          trip.tourPackage && trip.fromCity
+            ? 'Включено в тур'
+            : ticketPrice === null
+              ? 'Уточняется'
+              : price(ticketPrice),
+        note: !trip.tourPackage && guests.priceLabel ? `За ${guests.priceLabel}` : undefined,
       },
     ],
     footer: `Билеты на ${tickets?.airline || '—'}`,
@@ -136,14 +143,22 @@ export function buildAccommodationSection(
       },
       {
         label: 'Стоимость',
-        value: perPersonHotelPrice === null ? 'Уточняется' : `от ${price(perPersonHotelPrice)}`,
-        note: getAccommodationPriceNote(
-          trip.accommodation,
-          selectedOffer,
-          details,
-          perPersonHotelPrice,
-          guests.count,
-        ),
+        value:
+          trip.tourPackage && hotelDetails
+            ? 'Включено в тур'
+            : perPersonHotelPrice === null
+              ? 'Уточняется'
+              : `от ${price(perPersonHotelPrice)}`,
+        note:
+          trip.tourPackage && hotelDetails
+            ? undefined
+            : getAccommodationPriceNote(
+                trip.accommodation,
+                selectedOffer,
+                details,
+                perPersonHotelPrice,
+                guests.count,
+              ),
       },
     ],
     amenities: selectedOffer?.amenities,
@@ -219,7 +234,12 @@ export function buildTransferSection(
       },
       {
         label: 'Стоимость',
-        value: transferRate !== null ? `от ${price(transferRate)}` : 'Уточняется',
+        value:
+          trip.tourPackage && airportTransfer
+            ? 'Включено в тур'
+            : transferRate !== null
+              ? `от ${price(transferRate)}`
+              : 'Уточняется',
         note: transferRate !== null ? 'За человека' : undefined,
       },
     ],
@@ -243,6 +263,22 @@ export function buildCostSummary(
   details: TripDetails,
   prices: TripPrices,
 ): TripPlanPageData['costs'] {
+  if (trip.tourPackage) {
+    const quote = trip.tourPackage;
+    return [
+      { id: 'package', label: `Тур «${quote.title}»`, amount: price(quote.basePricePerPerson) },
+      ...quote.addons.map((addon) => ({
+        id: addon.id,
+        label: `${addon.label} · ${formatTourAddonQuantity(addon)}`,
+        amount: price(calculateTourAddonCost(addon)),
+      })),
+      ...trip.additional.map((option) => ({
+        id: option,
+        label: option,
+        amount: price(calculateAdditionalOptionsPrice([option])),
+      })),
+    ];
+  }
   const hotelName = selectedOffer?.name ?? trip.accommodation?.name;
   const hotelLabel = [hotelName, details.nights === null ? null : details.nightLabel]
     .filter(Boolean)

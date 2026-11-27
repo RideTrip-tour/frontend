@@ -10,11 +10,57 @@ export type ResortDetailsIconName =
   | 'parking'
   | 'airport'
   | 'elevation'
+  | 'rental'
+  | 'instructor'
+  | 'rescue'
+  | 'locker'
+  | 'pass'
   | 'close'
   | 'arrow'
   | 'star';
 
 const glyphs: Record<ResortDetailsIconName, ReactNode> = {
+  rental: (
+    <>
+      <path d="m18.5 3.5 2 2a3 3 0 0 1 0 4.2L9.7 20.5a3 3 0 0 1-4.2 0l-2-2a3 3 0 0 1 0-4.2L14.3 3.5a3 3 0 0 1 4.2 0Z" />
+      <path d="m8 13 3 3m2-8 3 3" />
+    </>
+  ),
+  instructor: (
+    <>
+      <path d="m2 8 10-5 10 5-10 5zM6 10v6c4 3 8 3 12 0v-6m4-2v7" />
+    </>
+  ),
+  rescue: (
+    <>
+      <rect
+        x="3"
+        y="7"
+        width="18"
+        height="14"
+        rx="2"
+      />
+      <path d="M8 7V4h8v3m-4 4v6m-3-3h6" />
+    </>
+  ),
+  locker: (
+    <>
+      <rect
+        x="5"
+        y="6"
+        width="14"
+        height="15"
+        rx="2"
+      />
+      <path d="M9 6V3h6v3m-7 15v1m8-1v1" />
+    </>
+  ),
+  pass: (
+    <>
+      <path d="M2 6h20v4a2 2 0 1 0 0 4v4H2v-4a2 2 0 1 0 0-4z" />
+      <path d="M15 8v1m0 2v2m0 2v1" />
+    </>
+  ),
   gondola: (
     <>
       <path d="m2 5 20-3M12 3.5V8" />

@@ -1,0 +1,99 @@
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 100px;
+  color: #258052;
+  background: #d7ebec;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.closed {
+  color: #596574;
+  background: #dfe5ed;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  margin: 0;
+  color: #5f6c7b;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+  white-space: nowrap;
+}
+
+.star {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  color: #ffd200;
+}
+
+.ratingValue {
+  font-family: var(--text-font-family-2);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.015em;
+}
+
+.reviewCount {
+  margin-inline-start: 4px;
+  border-inline-start: 1px solid #8f9aaa;
+  padding-inline-start: 4px;
+  font-family: var(--text-font-family-3);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.015em;
+}
+
+.trails {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  color: #5f6c7b;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
+
+.trailDot {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.green {
+  background: #35b574;
+}
+.blue {
+  background: #0e68d4;
+}
+.red {
+  background: #e82b25;
+}
+.black {
+  background: #1a1a1a;
+}
