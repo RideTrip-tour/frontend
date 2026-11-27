@@ -1,27 +1,30 @@
-import { Icon } from '@iconify/react';
-import { Fragment } from 'react';
+import { Fragment, type ReactNode } from 'react';
 
-import type { TripPlanCostItem } from '../../model/presentation';
-import { TripPlanSection } from '../TripPlanSection/TripPlanSection';
+import TripSummaryIcon from '@/assets/icons/constructor/TripSummaryIcon.svg?react';
 
-import styles from './TripPlanCostSummary.module.scss';
+import type { TripCostItem } from '../../model/presentation';
+import { TripSection } from '../TripSection/TripSection';
 
-export interface TripPlanCostSummaryProps {
-  costs: readonly TripPlanCostItem[];
+import styles from './TripCostSummary.module.scss';
+
+interface TripCostSummaryProps<T extends TripCostItem> {
+  costs: readonly T[];
   totalLabel: string;
   totalNote?: string;
+  renderRowControls?: (cost: T) => ReactNode;
 }
 
-export function TripPlanCostSummary({
+export function TripCostSummary<T extends TripCostItem>({
   costs,
   totalLabel,
   totalNote,
-}: Readonly<TripPlanCostSummaryProps>) {
+  renderRowControls,
+}: Readonly<TripCostSummaryProps<T>>) {
   return (
-    <TripPlanSection
+    <TripSection
       className={styles.costSection}
       title="Итог по поездке"
-      icon={<Icon icon="solar:clipboard-list-linear" />}
+      icon={<TripSummaryIcon />}
     >
       <div className={styles.costs}>
         {costs.map((cost) => (
@@ -31,7 +34,10 @@ export function TripPlanCostSummary({
                 {cost.label}
                 {cost.note && <span className={styles.fieldNote}>{cost.note}</span>}
               </dt>
-              <dd>{cost.amount}</dd>
+              <dd>
+                <span>{cost.amount}</span>
+                {renderRowControls?.(cost)}
+              </dd>
             </dl>
             <div
               className={styles.divider}
@@ -47,6 +53,6 @@ export function TripPlanCostSummary({
           {totalNote && <p className={styles.totalNote}>{totalNote}</p>}
         </div>
       </div>
-    </TripPlanSection>
+    </TripSection>
   );
 }

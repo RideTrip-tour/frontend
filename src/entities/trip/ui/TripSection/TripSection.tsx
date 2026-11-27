@@ -1,20 +1,22 @@
 import type { ReactNode } from 'react';
 
-import styles from './TripPlanSection.module.scss';
+import styles from './TripSection.module.scss';
 
-export interface TripPlanSectionProps {
+interface TripSectionProps {
   title: string;
   icon: ReactNode;
   children: ReactNode;
   className?: string;
+  divider?: boolean;
 }
 
-export function TripPlanSection({
+export function TripSection({
   title,
   icon,
   children,
   className,
-}: Readonly<TripPlanSectionProps>) {
+  divider = true,
+}: Readonly<TripSectionProps>) {
   return (
     <section className={[styles.section, className].filter(Boolean).join(' ')}>
       <h2 className={styles.heading}>
@@ -26,10 +28,12 @@ export function TripPlanSection({
         </span>
         {title}
       </h2>
-      <div
-        className={styles.divider}
-        aria-hidden="true"
-      />
+      {divider && (
+        <div
+          className={styles.divider}
+          aria-hidden="true"
+        />
+      )}
       {children}
     </section>
   );

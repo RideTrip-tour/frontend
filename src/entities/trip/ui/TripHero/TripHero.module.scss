@@ -20,7 +20,7 @@
     color: var(--color-blue-dark-1);
     font-size: var(--text-size-32);
     font-weight: var(--font-bold);
-    line-height: 1.25;
+    line-height: 48px;
     overflow-wrap: anywhere;
   }
 }
@@ -29,6 +29,7 @@
   color: var(--color-gray-dark);
   font-size: var(--text-size-20);
   font-weight: var(--font-semi-bold);
+  line-height: 24px;
   letter-spacing: 0.2px;
   overflow-wrap: anywhere;
 }
@@ -87,6 +88,84 @@
   margin-top: 10px;
   color: var(--color-gray-dark);
   font-size: var(--text-size-16);
+}
+
+.tour {
+  display: block;
+  padding: 20px;
+}
+
+.topRow,
+.tourPrice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.topRow {
+  margin-bottom: 12px;
+}
+
+.favorite {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-left: auto;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-white);
+  box-shadow: var(--shadow-4);
+  color: var(--color-black);
+  cursor: pointer;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &[aria-pressed='true'] {
+    color: var(--color-red);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--color-blue);
+    outline-offset: 4px;
+  }
+}
+
+.rating {
+  margin-top: 12px;
+}
+
+.tourPrice {
+  margin-top: 20px;
+}
+
+.partnerNote {
+  max-width: 230px;
+  font-size: var(--text-size-18);
+  font-weight: var(--font-bold);
+  line-height: 24px;
+}
+
+.tourAmount {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 0 5px;
+  color: var(--color-blue-dark-1);
+  font-size: var(--text-size-20);
+  font-weight: var(--font-semi-bold);
+  text-align: right;
+
+  .amount {
+    margin: 0;
+  }
 }
 
 @media print {

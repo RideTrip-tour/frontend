@@ -1,9 +1,5 @@
-import type {
-  TripPlanBadge,
-  TripPlanCostItem,
-  TripPlanField,
-  TripPlanTraveler,
-} from '@/entities/trip-plan';
+import type { TripBadge, TripCostItem } from '@/entities/trip';
+import type { TripPlanField, TripPlanTraveler } from '@/entities/trip-plan';
 import type { ConstructorSelectionId, GuestSelection } from '@/widgets/travel-constructor';
 
 export type TripPlanEditTarget = ConstructorSelectionId | 'offers';
@@ -21,7 +17,7 @@ export interface TripPlanServiceData {
 export interface TripPlanPageData {
   title: string;
   subtitle: string;
-  badges: TripPlanBadge[];
+  badges: TripBadge[];
   totalLabel: string;
   totalNote: string;
   perPersonTotalLabel: string;
@@ -30,7 +26,7 @@ export interface TripPlanPageData {
   transfer: TripPlanServiceData;
   travelers: TripPlanTraveler[];
   additional?: string[];
-  costs: TripPlanCostItem[];
+  costs: TripCostItem[];
 }
 
 export interface TripGuestInfo {
