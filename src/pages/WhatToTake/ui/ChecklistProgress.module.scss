@@ -1,0 +1,91 @@
+.root {
+  width: 1200px;
+  margin: 28px auto 36px;
+}
+
+.track {
+  height: 16px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-blue-dark-1-10);
+}
+
+.value {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-blue);
+  transition: width var(--animation-speed-300) ease;
+}
+
+.text {
+  margin: 8px 0 0;
+  color: var(--color-gray-dark);
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.actions {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--color-black);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.resetButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 14px;
+  color: var(--color-blue);
+  background: var(--color-white);
+  border: 1px solid var(--color-blue);
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(14, 104, 212, 0.2);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background-color var(--animation-speed-200) ease,
+    color var(--animation-speed-200) ease;
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  &:hover {
+    color: var(--color-white);
+    background: var(--color-blue);
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(14, 104, 212, 0.3);
+    outline-offset: 3px;
+  }
+}
+
+@media (max-width: 1500px) {
+  .root {
+    width: calc(100% - 180px);
+  }
+}
+
+@media (max-width: 900px) {
+  .root {
+    width: 100%;
+  }
+
+  .actions {
+    gap: 16px;
+  }
+}
+
+@media print {
+  .resetButton {
+    display: none;
+  }
+}
