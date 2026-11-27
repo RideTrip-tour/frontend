@@ -20,55 +20,9 @@
   line-height: 24px;
 }
 
-.counter {
-  display: flex;
-  align-items: center;
-}
-
-.counter button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border: 0;
-  border-radius: 8px;
-  background: #f1f3f5;
-  color: #5f6c7b;
-  cursor: pointer;
-}
-
-.counter button:hover:not(:disabled) {
-  background: #e5ebf2;
-}
-
-.counter button:focus-visible,
 .ageOption:focus-visible {
   outline: 3px solid rgba(14, 104, 212, 0.25);
   outline-offset: 3px;
-}
-
-.counter button:disabled {
-  color: #aeb5bc;
-  cursor: not-allowed;
-}
-
-.counter button :global(svg) {
-  display: block;
-  width: 28px;
-  height: 28px;
-}
-
-.counter output {
-  padding: 8px;
-  // min-width: 44px;
-  color: #1a1a1a;
-  font-family: var(--text-font-family-2);
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 24px;
-  text-align: center;
 }
 
 .ageSection {
