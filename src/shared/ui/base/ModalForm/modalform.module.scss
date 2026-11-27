@@ -1,0 +1,24 @@
+.form {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  font-family: var(--text-font-family), sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.form__body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  gap: 24px;
+}
+
+.centerError {
+  color: #d92d20;
+  text-align: center;
+  margin: 8px 0 0;
+  font-size: 14px;
+}

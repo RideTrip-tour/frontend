@@ -1,0 +1,37 @@
+.filterButtonIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.resultsHeader {
+  margin-top: 32px;
+}
+
+.similarResultsHeader {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.resultsTitle {
+  margin: 0 0 24px;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 44px;
+}
+
+.resultsTitlePlaceholder {
+  height: 44px;
+  margin-bottom: 24px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}

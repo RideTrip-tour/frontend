@@ -1,0 +1,46 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--modalchildren-overlay-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  padding: 80px 78px;
+
+  background: var(--modalchildren-bg);
+  box-shadow: var(--modalchildren-shadow);
+
+  border-radius: 40px;
+  outline: 1px solid var(--modalchildren-outline);
+  outline-offset: -1px;
+
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__close {
+  position: absolute;
+  top: 50px;
+  right: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  color: var(--modalchildren-close-color);
+}

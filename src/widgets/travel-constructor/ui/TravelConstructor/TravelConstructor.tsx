@@ -1,0 +1,338 @@
+import { useState } from 'react';
+
+import {
+  MapMarkerIcon,
+  RoadFinishIcon,
+  CalendarIcon,
+  MountainRoadIcon,
+  HotelIcon,
+  TaxiIcon,
+  PeopleIcon,
+  SkilLevelIcon,
+  ShieldIcon,
+} from '@/assets/icons/constructor';
+import { INITIAL_OPEN_ITEMS } from '@/widgets/travel-constructor/config/constructorSections';
+import { formatDestination, formatTripDates } from '@/widgets/travel-constructor/lib/formatters';
+import { formatGuestSummary } from '@/widgets/travel-constructor/lib/guestSummary';
+import { formatSelectionSummary } from '@/widgets/travel-constructor/lib/selectionSummary';
+import { useConstructor } from '@/widgets/travel-constructor/model/constructorStore';
+import type { ConstructorSelectionId } from '@/widgets/travel-constructor/model/types';
+import { useCitySearch } from '@/widgets/travel-constructor/model/useCitySearch';
+import { useLocationReferences } from '@/widgets/travel-constructor/model/useLocationReferences';
+
+import { AccommodationSelector } from '../AccommodationSelector';
+import { ActivitySelector } from '../ActivitySelector';
+import { AdditionalOptionsSelector } from '../AdditionalOptionsSelector';
+import { ConstructorCart } from '../ConstructorCart';
+import { DateRangePicker } from '../DateRangePicker';
+import { DestinationSelector } from '../DestinationSelector';
+import { GuestSelector } from '../GuestSelector';
+import { PlaceSelector } from '../PlaceSelector';
+import { SkiLevelSelector } from '../SkiLevelSelector';
+import { TransferSelector } from '../TransferSelector';
+import { TravelConstructorSections, type ConstructorItem } from './TravelConstructorSections';
+
+import style from './TravelConstructor.module.scss';
+
+export function TravelConstructor() {
+  const {
+    fromCity,
+    fromCountry,
+    toCity,
+    toCountry,
+    selectedResort,
+    departureDate,
+    returnDate,
+    activities,
+    liftTypes,
+    accommodation,
+    transfer,
+    people,
+    level,
+    additional,
+    activeSelectorId,
+    setFromCity,
+    setFromCountry,
+    setToCity,
+    setToCountry,
+    setDepartureDate,
+    setReturnDate,
+    setActivities,
+    setLiftTypes,
+    setAccommodation,
+    setTransfer,
+    setPeople,
+    setLevel,
+    setAdditional,
+    setActiveSelectorId,
+  } = useConstructor();
+
+  const [openItems, setOpenItems] = useState(() => ({
+    ...INITIAL_OPEN_ITEMS,
+    ...(activeSelectorId ? { [activeSelectorId]: true } : {}),
+  }));
+  const [showAdditional, setShowAdditional] = useState(
+    activeSelectorId !== null && ['people', 'level', 'additional'].includes(activeSelectorId),
+  );
+  const {
+    cities: departureCities,
+    countries,
+    isCitiesLoading: isDepartureCitiesLoading,
+    isCountriesLoading,
+    citiesError: departureCitiesError,
+    countriesError,
+    isSkiStylesLoading,
+    isSkiLevelsLoading,
+    searchCities: searchDepartureCities,
+    skiStyles,
+    skiLevels,
+  } = useLocationReferences();
+  const {
+    cities: destinationCities,
+    isCitiesLoading: isDestinationCitiesLoading,
+    citiesError: destinationCitiesError,
+    searchCities: searchDestinationCities,
+  } = useCitySearch();
+
+  const displayValueFrom = fromCountry?.name ?? fromCity?.name;
+  const displayValueTo = formatDestination({ selectedResort, toCity, toCountry });
+  const displayWhenDate = formatTripDates(departureDate, returnDate);
+  const displayActivity = formatSelectionSummary([...activities, ...liftTypes]);
+  const displayAccommodation = accommodation?.name;
+  const displayTransfer = transfer?.label;
+  const displayPeople = people ? formatGuestSummary(people) : undefined;
+  const displayLevel = level ?? undefined;
+  const displayAdditional = formatSelectionSummary(additional);
+
+  const toggleItem = (itemId: ConstructorSelectionId) => {
+    const shouldOpen = !openItems[itemId];
+
+    setOpenItems({
+      ...INITIAL_OPEN_ITEMS,
+      [itemId]: shouldOpen,
+    });
+    setActiveSelectorId(shouldOpen ? itemId : null);
+  };
+
+  const closeItem = (itemId: ConstructorSelectionId) => {
+    setOpenItems((currentItems) => ({
+      ...currentItems,
+      [itemId]: false,
+    }));
+    setActiveSelectorId(null);
+  };
+
+  const toggleAdditionalItems = () => {
+    const shouldShow = !showAdditional;
+
+    setShowAdditional(shouldShow);
+
+    if (!shouldShow) {
+      setOpenItems((currentItems) => ({
+        ...currentItems,
+        people: false,
+        level: false,
+        additional: false,
+      }));
+
+      if (
+        activeSelectorId === 'people' ||
+        activeSelectorId === 'level' ||
+        activeSelectorId === 'additional'
+      ) {
+        setActiveSelectorId(null);
+      }
+    }
+  };
+
+  const mainItems: ConstructorItem[] = [
+    {
+      id: 'from',
+      icon: <MapMarkerIcon />,
+      title: 'Откуда едем?',
+      description: 'Например "Москва"',
+      value: displayValueFrom,
+      children: (
+        <PlaceSelector
+          cities={departureCities}
+          countries={countries}
+          citiesError={departureCitiesError}
+          countriesError={countriesError}
+          isCitiesLoading={isDepartureCitiesLoading}
+          isCountriesLoading={isCountriesLoading}
+          onCitySearch={searchDepartureCities}
+          idPrefix="from"
+          onCitySelect={(city) => {
+            setFromCity(city);
+            setFromCountry(null);
+          }}
+          onComplete={() => closeItem('from')}
+          onCountrySelect={(country) => {
+            setFromCountry(country);
+            setFromCity(null);
+          }}
+        />
+      ),
+    },
+    {
+      id: 'to',
+      icon: <RoadFinishIcon />,
+      title: 'Куда едем?',
+      description: 'Например "Москва"',
+      value: openItems.to ? undefined : displayValueTo,
+      isComplete: Boolean(displayValueTo),
+      children: (
+        <DestinationSelector
+          cities={destinationCities}
+          citiesError={destinationCitiesError}
+          isCitiesLoading={isDestinationCitiesLoading}
+          onCitySearch={searchDestinationCities}
+          onCitySelect={(city) => {
+            setToCity(city);
+            setToCountry(null);
+          }}
+          onComplete={() => closeItem('to')}
+        />
+      ),
+    },
+    {
+      id: 'when',
+      icon: <CalendarIcon />,
+      title: 'Когда?',
+      description: 'Выберите удобные дни',
+      value: displayWhenDate,
+      isComplete: Boolean(departureDate && returnDate),
+      children: (
+        <DateRangePicker
+          departureDate={departureDate}
+          onChange={({ from, to }) => {
+            setDepartureDate(from);
+            setReturnDate(to);
+          }}
+          onComplete={() => closeItem('when')}
+          returnDate={returnDate}
+        />
+      ),
+    },
+    {
+      id: 'activity',
+      icon: <MountainRoadIcon />,
+      title: 'Чем займемся?',
+      description: 'Например, для "Фристайл"',
+      value: displayActivity,
+      isComplete: Boolean(activities.length || liftTypes.length),
+      children: (
+        <ActivitySelector
+          onActivitiesChange={setActivities}
+          onLiftTypesChange={setLiftTypes}
+          activities={skiStyles.map((style) => style.name)}
+          isActivitiesLoading={isSkiStylesLoading}
+          selectedActivities={activities}
+          selectedLiftTypes={liftTypes}
+        />
+      ),
+    },
+    {
+      id: 'hotel',
+      icon: <HotelIcon />,
+      title: 'Где остановимся?',
+      description: 'Подберите удобный вариант',
+      value: displayAccommodation,
+      isComplete: Boolean(accommodation),
+      children: (
+        <AccommodationSelector
+          onSelect={setAccommodation}
+          selectedAccommodationId={accommodation?.id ?? null}
+        />
+      ),
+    },
+    {
+      id: 'transfer',
+      icon: <TaxiIcon />,
+      title: 'Трансфер',
+      description: 'Для комфортного передвижения',
+      value: displayTransfer,
+      children: (
+        <TransferSelector
+          onChange={setTransfer}
+          onComplete={() => closeItem('transfer')}
+          value={transfer}
+        />
+      ),
+    },
+  ];
+
+  const additionalItems: ConstructorItem[] = [
+    {
+      id: 'people',
+      icon: <PeopleIcon />,
+      title: 'Кто едет?',
+      description: 'Состав поездки',
+      value: displayPeople,
+      children: (
+        <GuestSelector
+          onChange={setPeople}
+          value={people}
+        />
+      ),
+    },
+    {
+      id: 'level',
+      icon: <SkilLevelIcon />,
+      title: 'Уровень катания',
+      description: 'Например "Новичок"',
+      value: displayLevel,
+      children: (
+        <SkiLevelSelector
+          onChange={setLevel}
+          isLoading={isSkiLevelsLoading}
+          levels={skiLevels.map((item) => item.name)}
+          value={level}
+        />
+      ),
+    },
+    {
+      id: 'additional',
+      icon: <ShieldIcon />,
+      title: 'Дополнительные возможности',
+      description: 'Особые условия',
+      value: displayAdditional,
+      children: (
+        <AdditionalOptionsSelector
+          onChange={setAdditional}
+          selectedOptions={additional}
+        />
+      ),
+    },
+  ];
+
+  return (
+    <section className={style.travelConstructor}>
+      <div className={style.selectionList}>
+        <TravelConstructorSections
+          items={mainItems}
+          onToggle={toggleItem}
+          openItems={openItems}
+        />
+
+        <button
+          className={style.showMoreButton}
+          onClick={toggleAdditionalItems}
+          type="button"
+        >
+          {showAdditional ? 'Скрыть дополнительные услуги' : 'Дополнительные услуги +'}
+        </button>
+
+        {showAdditional && (
+          <TravelConstructorSections
+            items={additionalItems}
+            onToggle={toggleItem}
+            openItems={openItems}
+          />
+        )}
+      </div>
+
+      <ConstructorCart />
+    </section>
+  );
+}

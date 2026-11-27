@@ -1,0 +1,30 @@
+.loadingCard {
+  min-height: 350px;
+  border-radius: 20px;
+  background: #eaf1fa;
+}
+
+.errorContent {
+  margin-top: 40px;
+}
+
+.serviceError {
+  gap: 24px;
+  margin: 0;
+}
+
+.serviceError h3 {
+  color: var(--color-black);
+  font-size: 28px;
+  line-height: 44px;
+}
+
+.serviceError p {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.connectionIcon {
+  width: 200px;
+  height: 200px;
+}

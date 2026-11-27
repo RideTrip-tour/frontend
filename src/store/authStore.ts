@@ -1,74 +1,114 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { meRequest } from "@/services/authService";
+import { create } from 'zustand';
 
-type User = {
-  id: string;
-  email: string;
-  name: string;
-};
+import { meRequest, type CurrentUser } from '@/services/usersService';
+import { handleApiError } from '@/shared/api/errors';
+import {
+  advanceSessionVersion,
+  getPendingSessionTransition,
+  getSessionVersion,
+  setSessionExpiredHandler,
+} from '@/shared/api/sessionEvents';
+
+type AuthStatus = 'idle' | 'checking' | 'authenticated' | 'anonymous' | 'error';
 
 type AuthState = {
-  user: User | null;
-  token: string | null;
+  user: CurrentUser | null;
   isAuth: boolean;
-  isLoading: boolean;
+  authStatus: AuthStatus;
 
-  login: (data: { user: User; token: string }) => void;
+  setUser: (user: CurrentUser) => void;
   logout: () => void;
-  checkAuth: () => Promise<void>;
+  checkAuth: () => Promise<CurrentUser | null>;
 };
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set, get) => ({
+let pendingAuthCheck: {
+  version: number;
+  promise: Promise<CurrentUser | null>;
+} | null = null;
+
+export const useAuthStore = create<AuthState>((set, get) => ({
+  user: null,
+  isAuth: false,
+  authStatus: 'idle',
+
+  setUser: (user) => {
+    advanceSessionVersion();
+    pendingAuthCheck = null;
+
+    set({
+      user,
+      isAuth: true,
+      authStatus: 'authenticated',
+    });
+  },
+
+  logout: () => {
+    advanceSessionVersion();
+    pendingAuthCheck = null;
+
+    set({
       user: null,
-      token: null,
       isAuth: false,
-      isLoading: false,
+      authStatus: 'anonymous',
+    });
+  },
 
-      login: ({ user, token }) => {
-        set({
-          user,
-          token,
-          isAuth: true
-        });
-      },
+  checkAuth: () => {
+    const transition = getPendingSessionTransition();
 
-      logout: () => {
-        set({
-          user: null,
-          token: null,
-          isAuth: false
-        });
-      },
+    if (transition) {
+      return transition.then(() => get().checkAuth());
+    }
 
-      checkAuth: async () => {
-        try {
-          set({ isLoading: true });
+    if (get().authStatus === 'authenticated' || get().authStatus === 'anonymous') {
+      return Promise.resolve(get().user);
+    }
 
-          const token = get().token;
-          if (!token) {
-            set({ isAuth: false, user: null });
-            return;
-          }
+    const version = getSessionVersion();
 
-          const user = await meRequest();
-          set({ user, isAuth: true });
-        } catch {
-          set({ user: null, token: null, isAuth: false });
-        } finally {
-          set({ isLoading: false });
+    if (pendingAuthCheck?.version === version) {
+      return pendingAuthCheck.promise;
+    }
+
+    const promise = (async () => {
+      set({ authStatus: 'checking' });
+
+      try {
+        const user = await meRequest({ authContext: 'bootstrap', sessionVersion: version });
+
+        if (version !== getSessionVersion()) {
+          return get().checkAuth();
+        }
+
+        get().setUser(user);
+
+        return user;
+      } catch (error) {
+        if (version !== getSessionVersion()) {
+          return get().checkAuth();
+        }
+
+        if (handleApiError(error).status === 401) {
+          get().logout();
+        } else {
+          set({ user: null, isAuth: false, authStatus: 'error' });
+        }
+
+        return null;
+      } finally {
+        if (pendingAuthCheck?.version === version) {
+          pendingAuthCheck = null;
         }
       }
-    }),
-    {
-      name: "auth-storage", //TODO ключ в localStorage
-      partialize: (state) => ({
-        user: state.user,
-        token: state.token,
-        isAuth: state.isAuth
-      })
-    }
-  )
-);
+    })();
+
+    pendingAuthCheck = { version, promise };
+    return promise;
+  },
+}));
+
+setSessionExpiredHandler(() => {
+  const { isAuth, logout } = useAuthStore.getState();
+  logout();
+  return isAuth;
+});

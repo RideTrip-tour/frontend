@@ -1,0 +1,83 @@
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.actions_wrapped {
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-white);
+  border-radius: 40px;
+  outline: 1px solid var(--color-blue);
+}
+
+.iconButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 22px;
+  background: var(--color-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.iconButton:hover {
+  box-shadow: var(--shadow-2);
+  transition: box-shadow 150ms ease-in-out;
+}
+
+.iconButton.hasNotifications::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--color-red);
+  border-radius: 50%;
+  top: 25%;
+  right: 25%;
+}
+
+@keyframes start-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes rotate-pause {
+  0% {
+    transform: rotate(-10deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  75% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
+}
+
+.notificationButton:hover .bellIcon {
+  animation:
+    start-rotate 150ms ease-out forwards,
+    rotate-pause 800ms ease-in-out 400ms infinite;
+}
+
+.authButton {
+  border-radius: 100px;
+  svg {
+    width: 36px;
+    height: 36px;
+  }
+}

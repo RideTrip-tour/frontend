@@ -1,0 +1,118 @@
+.trip {
+  position: relative;
+  min-height: 270px;
+  padding: 20px 24px 22px;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgb(16 24 40 / 10%);
+}
+
+.tripHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.tripHeader h2 {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.tripActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 9px;
+}
+
+.editButton,
+.planButton {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.editButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid #0e68d4;
+  border-radius: 999px;
+  color: #0e68d4;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.buttonIcon {
+  flex-shrink: 0;
+}
+
+.planButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  color: #1a1a1a;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.tripItems {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 28px;
+}
+
+.tripItem {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.tripItemIcon {
+  width: 54px;
+  height: 54px;
+  margin-bottom: 2px;
+  color: #1a1a1a;
+}
+
+.tripItemIconNovice {
+  color: var(--color-green);
+}
+
+.tripItemIconIntermediate {
+  color: var(--color-blue);
+}
+
+.tripItemIconAdvanced {
+  color: var(--color-red);
+}
+
+.tripItemTitle {
+  display: block;
+  max-width: 165px;
+  color: #1a1a1a;
+  font-family: var(--text-font-family-2);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.tripItemDescription {
+  display: block;
+  max-width: 165px;
+  color: #8a949f;
+  font-family: var(--text-font-family-3);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}

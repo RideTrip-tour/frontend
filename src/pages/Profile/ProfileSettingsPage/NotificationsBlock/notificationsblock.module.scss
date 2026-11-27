@@ -1,0 +1,35 @@
+.notificationsblock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  &__groupTitle {
+    font-size: var(--text-size-18);
+    color: var(--notificationsblock-group-title-color);
+  }
+
+  &__toggles {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    gap: 20px;
+
+    &--tight {
+      gap: 16px;
+    }
+  }
+
+  &__checks {
+    display: flex;
+    flex-direction: column;
+    width: 340px;
+    gap: 20px;
+  }
+}
